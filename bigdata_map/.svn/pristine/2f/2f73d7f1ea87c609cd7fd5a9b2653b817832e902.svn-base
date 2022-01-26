@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataPassProvinceRateMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataPassProvinceRate" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="PASS_PROVINCE_RATE" property="passProvinceRate"/>
+			<result column="PASS_PROVINCE_RATE_FLAG" property="passProvinceRateFlag"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_TYPE" property="countType"/>
+			<result column="COUNT_TIME" property="countTime"/>
+			<result column="QUARTER_TYPE" property="quarterType"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataPassProvinceRateView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, PASS_PROVINCE_RATE, PASS_PROVINCE_RATE_FLAG, CAR_TYPE, COUNT_TYPE, COUNT_TIME, QUARTER_TYPE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataPassProvinceRateQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_pass_province_rate 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataPassProvinceRateQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_pass_province_rate 
+  		<include refid="where"/>
+  </select>
+
+
+	<select id="getPassProvinceRate" parameterType="com.edgedo.bigdata.queryvo.BigdataPassProvinceRateQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_pass_province_rate
+		WHERE CAR_TYPE = #{queryObj.carType} AND COUNT_TYPE = #{queryObj.countType}
+		<if test="queryObj.countType != null and queryObj.countType =='QUARTER'">
+			AND QUARTER_TYPE = #{queryObj.quarterType}
+			AND date_format(COUNT_TIME,'%Y') = date_format(#{queryObj.countTime},'%Y')
+		</if>
+		<if test="queryObj.countType != null and queryObj.countType =='MONTH'">
+			AND date_format(COUNT_TIME,'%Y%m') = date_format(#{queryObj.countTime},'%Y%m')
+		</if>
+	</select>
+  
+  
+</mapper>

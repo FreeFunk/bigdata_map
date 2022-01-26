@@ -1,0 +1,165 @@
+package com.edgedo.timetask;
+
+import com.edgedo.bigdata.entity.BigdataFenxiCount;
+import com.edgedo.bigdata.entity.BigdataTimeCarDayRec;
+import com.edgedo.bigdata.mapper.BigdataFenxiCountMapper;
+import com.edgedo.bigdata.mapper.BigdataTimeCarDayRecMapper;
+import com.edgedo.common.util.Guid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+/**
+ * //    大数据分析概况
+ * //    天(DAY) 周(WEEK) 月(MONTH)
+ * //    总(总) 客运(客运) 危货(危货) 普货(普货)
+ * //    区域统计类型 县区 城市
+ * //    一条记录对应一个统计日期
+ * //    一条记录对应一个车辆类型
+ * //    一条记录对应一个区域类型
+ * //    天数统计到7天集合成一周
+ * //    天数统计到30天集合成一个月
+ * //    一个县区统计天周月
+ * //    多个县区上升到市统计
+ */
+@Component
+public class BigdataFenXiCount {
+    @Autowired
+    private BigdataTimeCarDayRecMapper bigdataTimeCarDayRecMapper;
+    @Autowired
+    private BigdataFenxiCountMapper bigdataFenxiCountMapper;
+
+    @Scheduled(cron = "0/2 * * * * ?")
+    public void countInfo(){
+        //设置日期
+        Date dateCurr = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateStr = simpleDateFormat.format(dateCurr);
+        String[] str = dateStr.split("-");// 2019  09 08
+        Integer yearNum = new Integer(str[0]);//年
+        Integer countMonth = new Integer(str[0]+str[1]);//月
+        Integer countDay = new Integer(str[0]+str[1]+str[2]);//日
+        //行驶里程
+        //时间确定 DAY 20191008 201910 2019
+        List<BigdataTimeCarDayRec> list = bigdataTimeCarDayRecMapper.selectByDate(yearNum,countMonth,countDay);
+        List<BigdataTimeCarDayRec> listHaiGangQu = new ArrayList<>();//海港区
+        List<BigdataTimeCarDayRec> listShanHaiGuang = new ArrayList<>();//山海关区
+        List<BigdataTimeCarDayRec> listBeiDaiHe = new ArrayList<>();//北戴河区
+        List<BigdataTimeCarDayRec> listFuNing = new ArrayList<>();//抚宁区
+        List<BigdataTimeCarDayRec> listQingLong = new ArrayList<>();//青龙县
+        List<BigdataTimeCarDayRec> listChangLi = new ArrayList<>();//昌黎县
+        List<BigdataTimeCarDayRec> listLuLong = new ArrayList<>();//卢龙县
+        List<BigdataTimeCarDayRec> listKaiFaQu = new ArrayList<>();//开发区
+        //区域
+        for(BigdataTimeCarDayRec bigdataTimeCarDayRec : list){
+            if(bigdataTimeCarDayRec.getXianquName()!=null && bigdataTimeCarDayRec.getXianquName().equals("海港区")){
+                listHaiGangQu.add(bigdataTimeCarDayRec);
+            }else if(bigdataTimeCarDayRec.getXianquName()!=null && bigdataTimeCarDayRec.getXianquName().equals("山海关区")){
+                listShanHaiGuang.add(bigdataTimeCarDayRec);
+            }else if(bigdataTimeCarDayRec.getXianquName()!=null && bigdataTimeCarDayRec.getXianquName().equals("北戴河区")){
+                listBeiDaiHe.add(bigdataTimeCarDayRec);
+            }else if(bigdataTimeCarDayRec.getXianquName()!=null && bigdataTimeCarDayRec.getXianquName().equals("抚宁区")){
+                listFuNing.add(bigdataTimeCarDayRec);
+            }else if(bigdataTimeCarDayRec.getXianquName()!=null && bigdataTimeCarDayRec.getXianquName().equals("青龙县")){
+                listQingLong.add(bigdataTimeCarDayRec);
+            }else if(bigdataTimeCarDayRec.getXianquName()!=null && bigdataTimeCarDayRec.getXianquName().equals("昌黎县")){
+                listChangLi.add(bigdataTimeCarDayRec);
+            }else if(bigdataTimeCarDayRec.getXianquName()!=null && bigdataTimeCarDayRec.getXianquName().equals("卢龙县")){
+                listLuLong.add(bigdataTimeCarDayRec);
+            }else if(bigdataTimeCarDayRec.getXianquName()!=null && bigdataTimeCarDayRec.getXianquName().equals("开发区")){
+                listKaiFaQu.add(bigdataTimeCarDayRec);
+            }
+        }
+        //车辆类型 客运(客运) 危货(危货) 普货(普货)三个类型
+        Map<String,List<BigdataTimeCarDayRec>> mapHaiGangQu = getMap(listHaiGangQu);
+        setBigdataInfo(mapHaiGangQu);
+        Map<String,List<BigdataTimeCarDayRec>> mapShanHaiGuang = getMap(listShanHaiGuang);
+        setBigdataInfo(mapShanHaiGuang);
+        Map<String,List<BigdataTimeCarDayRec>> mapBeiDaiHe = getMap(listBeiDaiHe);
+        setBigdataInfo(mapBeiDaiHe);
+        Map<String,List<BigdataTimeCarDayRec>> mapFuNing = getMap(listFuNing);
+        setBigdataInfo(mapFuNing);
+        Map<String,List<BigdataTimeCarDayRec>> mapQingLong = getMap(listQingLong);
+        setBigdataInfo(mapQingLong);
+        Map<String,List<BigdataTimeCarDayRec>> mapChangLi = getMap(listChangLi);
+        setBigdataInfo(mapChangLi);
+        Map<String,List<BigdataTimeCarDayRec>> mapLuLong = getMap(listLuLong);
+        setBigdataInfo(mapLuLong);
+        Map<String,List<BigdataTimeCarDayRec>> mapKaiFaQu = getMap(listKaiFaQu);
+        setBigdataInfo(mapKaiFaQu);
+        //行驶时长
+
+    }
+
+    //上升到数据库
+    private void setBigdataInfo(Map<String, List<BigdataTimeCarDayRec>> mapHaiGangQu) {
+        //listPuHuo listKeYun listWeiHuo
+        List<BigdataTimeCarDayRec> listPuHuo = mapHaiGangQu.get("listPuHuo");
+        List<BigdataTimeCarDayRec> listKeYun = mapHaiGangQu.get("listKeYun");
+        List<BigdataTimeCarDayRec> listWeiHuo = mapHaiGangQu.get("listWeiHuo");
+        setPuHuo(listPuHuo);
+        setPuHuo(listKeYun);
+        setPuHuo(listWeiHuo);
+    }
+
+    private void setPuHuo(List<BigdataTimeCarDayRec> listPuHuo) {
+        BigdataFenxiCount bigdataFenxiCount = new BigdataFenxiCount();
+        //行驶时长
+        BigDecimal shiChang = new BigDecimal(0);
+        //行驶里程
+        BigDecimal liCheng = new BigDecimal(0);
+        for(BigdataTimeCarDayRec bigdataTimeCarDayRec : listPuHuo){
+            shiChang.add(bigdataTimeCarDayRec.getSumMileage());
+            liCheng.add(bigdataTimeCarDayRec.getSumDuration());
+        }
+        bigdataFenxiCount.setId(Guid.guid());//主键
+        bigdataFenxiCount.setRunTimeLengthHour(shiChang.divide(new BigDecimal(60),2, RoundingMode.HALF_UP));//时长
+        bigdataFenxiCount.setRunMileage(liCheng);//行驶里程
+        bigdataFenxiCount.setCreateTime(new Date());//创建时间
+        if (listPuHuo!=null && listPuHuo.size()>0) {
+            bigdataFenxiCount.setProvinceId(listPuHuo.get(0).getProvinceId());//省
+            bigdataFenxiCount.setProvinceName(listPuHuo.get(0).getProvinceName());
+            bigdataFenxiCount.setCityId(listPuHuo.get(0).getCityId());//市
+            bigdataFenxiCount.setCityName(listPuHuo.get(0).getCityName());
+            bigdataFenxiCount.setXianquId(listPuHuo.get(0).getXianquId());//县区
+            bigdataFenxiCount.setXianquName(listPuHuo.get(0).getXianquName());
+        }
+        bigdataFenxiCount.setCountType("XIANQU");//区域统计类型
+        bigdataFenxiCount.setTimeType("DAY");//时间类型
+        bigdataFenxiCount.setCarType(listPuHuo.get(0).getCarType());//车辆类型
+        bigdataFenxiCount.setCountDate(listPuHuo.get(0).getCountDate());//日
+        bigdataFenxiCount.setCountMonth(listPuHuo.get(0).getCountMonth());//月
+        bigdataFenxiCount.setYearNum(listPuHuo.get(0).getYearNum());//年
+        bigdataFenxiCountMapper.insert(bigdataFenxiCount);
+    }
+
+    public Map<String,List<BigdataTimeCarDayRec>> getMap(List<BigdataTimeCarDayRec> list){
+        //同一个县区
+        List<BigdataTimeCarDayRec> listPuHuo = new ArrayList<>();//普货
+        List<BigdataTimeCarDayRec> listKeYun = new ArrayList<>();//客运
+        List<BigdataTimeCarDayRec> listWeiHuo = new ArrayList<>();//危货
+        for(BigdataTimeCarDayRec bigdataTimeCarDayRec : list){
+            if(bigdataTimeCarDayRec.getCarType()!=null && bigdataTimeCarDayRec.getCarType().equals("普货")){
+                listPuHuo.add(bigdataTimeCarDayRec);
+            }else if(bigdataTimeCarDayRec.getCarType()!=null && bigdataTimeCarDayRec.getCarType().equals("客运")){
+                listKeYun.add(bigdataTimeCarDayRec);
+            }else if(bigdataTimeCarDayRec.getCarType()!=null && bigdataTimeCarDayRec.getCarType().equals("危货")){
+                listWeiHuo.add(bigdataTimeCarDayRec);
+            }
+        }
+        Map<String,List<BigdataTimeCarDayRec>> map = new HashMap<>();
+        map.put("listPuHuo",listPuHuo);
+        map.put("listKeYun",listKeYun);
+        map.put("listWeiHuo",listWeiHuo);
+        return map;
+    }
+
+
+
+
+}

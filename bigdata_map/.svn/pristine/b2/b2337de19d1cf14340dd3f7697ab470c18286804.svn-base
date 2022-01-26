@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>地图</title>
+<style type="text/css">
+	#box{
+        display:none;
+        background-color: goldenrod;
+        width: 180px;
+        height: 30px;
+    } 
+    #box-title{
+        display:block;
+    }
+	html,body{ height:100%}
+</style>
+<!-- flavr CSS -->
+<link rel="stylesheet" type="text/css" href="dialog/index_files/animate.css">
+<link rel="stylesheet" type="text/css" href="dialog/index_files/flavr.css">
+<!-- END flavr CSS -->
+<link rel="stylesheet" type="text/css" href="static/css/main.css">
+<script type="text/javascript" src="static/js/echarts.min.js"></script>
+<!-- 全国344个市、区、州对应的数字编号 -->
+<script type="text/javascript" src="static/js/citymap.js"></script>
+</head>
+<body>
+<div id="main" style="width: 100%; height:100%"></div>
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+<script type="text/javascript" src="static/js/app.js"></script>
+<!-- BEGIN flavr SCRIPT -->
+<script type="text/javascript" src="dialog/index_files/flavr.min.js"></script>
+<script type="text/javascript" src="dialog/index_files/bootstrap.min.js"></script>
+<!-- END flavr SCRIPT -->
+</body>
+</html>

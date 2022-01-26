@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="BigdataCarStopRecord-form" id="BigdataCarStopRecord-form" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属车辆</label>
+            <div class="layui-input-block">
+                <input type="text" name="carRealId" lay-verify="required" placeholder="请输入所属车辆" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车牌号</label>
+            <div class="layui-input-block">
+                <input type="text" name="carPlateNum" lay-verify="required" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">开始停留时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="beginTime" id="beginTime" lay-verify="required" placeholder="请输入开始停留时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">停留截止时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="endTime" id="endTime" lay-verify="required" placeholder="请输入停留截止时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">停留分钟数</label>
+            <div class="layui-input-block">
+                <input type="text" name="stopMiniteNum" lay-verify="required|number" placeholder="请输入停留分钟数" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车牌颜色</label>
+            <div class="layui-input-block">
+                <input type="text" name="carPlateColor" lay-verify="required" placeholder="请输入车牌颜色" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">位置国家</label>
+            <div class="layui-input-block">
+                <input type="text" name="mapCountry" lay-verify="required" placeholder="请输入位置国家" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">位置省份</label>
+            <div class="layui-input-block">
+                <input type="text" name="mapProvince" lay-verify="required" placeholder="请输入位置省份" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">位置城市</label>
+            <div class="layui-input-block">
+                <input type="text" name="mapCity" lay-verify="required" placeholder="请输入位置城市" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">位置县区</label>
+            <div class="layui-input-block">
+                <input type="text" name="mapXianqu" lay-verify="required" placeholder="请输入位置县区" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">详细位置</label>
+            <div class="layui-input-block">
+                <input type="text" name="mapDetail" lay-verify="required" placeholder="请输入详细位置" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">纬度</label>
+            <div class="layui-input-block">
+                <input type="text" name="pointLat" lay-verify="required|number" placeholder="请输入纬度" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">经度</label>
+            <div class="layui-input-block">
+                <input type="text" name="pointLong" lay-verify="required|number" placeholder="请输入经度" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">海拔</label>
+            <div class="layui-input-block">
+                <input type="text" name="altitude" lay-verify="required|number" placeholder="请输入海拔" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+   <!-- <div class="layui-form-item">
+        <label class="layui-form-label">省名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="name" lay-verify="required" placeholder="请输入省名" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">区域</label>
+        <div class="layui-input-inline">
+            <input type="text" name="area" lay-verify="required" placeholder="请输入区域" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="orderNumber" lay-verify="required" placeholder="请输入区域" autocomplete="off" class="layui-input">
+        </div>
+    </div>-->
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="BigdataCarStopRecord-form-submit" id="BigdataCarStopRecord-form-submit" value="确认添加">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'form','laydate'], function(){
+            var $ = layui.$
+                ,laydate = layui.laydate
+                ,admin  = layui.admin
+                ,form = layui.form;
+
+            //监听提交
+            form.on('submit(BigdataCarStopRecord-form-submit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //提交 Ajax 成功后，关闭当前弹层并重载表格
+                admin.req({
+                    url:layui.setter.basePath +'/admin/BIGDATACARSTOPRECORD/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('BigdataCarStopRecord-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('添加成功', {
+                            icon: 1
+                        });
+                    },
+                });
+
+            });
+            laydate.render({
+                elem: '#beginTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#endTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

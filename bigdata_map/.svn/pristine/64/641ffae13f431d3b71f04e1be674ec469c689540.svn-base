@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>秦皇岛市智慧交通北斗大数据分析平台</title>
+    <link href="css/animate.min.css" rel="stylesheet" type="text/css">
+    <link href="css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/datedropper.css">
+    <link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/tool.js"></script>
+</head>
+<body>
+
+<!-- 头部样式 -->
+<div class="top ">
+    <div class="top_r">
+        <div class="time">
+            <span style="float: right" id=localtime></span>
+            <script type="text/javascript">
+                function showLocale(objD){
+                    var str,colorhead,colorfoot;
+                    var yy = objD.getYear();
+                    if(yy<1900) yy = yy+1900;
+                    var MM = objD.getMonth()+1;
+                    if(MM<10) MM = '0' + MM;
+                    var dd = objD.getDate();
+                    if(dd<10) dd = '0' + dd;
+                    var hh = objD.getHours();
+                    if(hh<10) hh = '0' + hh;
+                    var mm = objD.getMinutes();
+                    if(mm<10) mm = '0' + mm;
+                    var ss = objD.getSeconds();
+                    if(ss<10) ss = '0' + ss;
+                    var ww = objD.getDay();
+                    if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+                    if  (ww==0)  ww="星期日";
+                    if  (ww==1)  ww="星期一";
+                    if  (ww==2)  ww="星期二";
+                    if  (ww==3)  ww="星期三";
+                    if  (ww==4)  ww="星期四";
+                    if  (ww==5)  ww="星期五";
+                    if  (ww==6)  ww="星期六";
+                    colorfoot="</font>"
+                    str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+                    return(str);
+                }
+
+                function tick(){
+                    var today;
+                    today = new Date();
+                    document.getElementById("localtime").innerHTML = showLocale(today);
+                    window.setTimeout("tick()", 1000);
+                }
+
+                tick();
+            </script>
+        </div>
+    </div>
+
+    <div class="top_l">
+        <div class="bt">
+            <div class="bt_name left">常去城市详情</div>
+            <a href="#" onclick="javaScript:history.back(-1);" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+    </div>
+
+    <div class="top_m ">
+        <div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="ind mt100" style="position: relative">
+        <span style="position:absolute; right:20px;" id="demo-alert" >
+            <span class="demo-actions">
+                <input type="text" class="input_rl " id="pickdate" onchange="yearChange()" style="width:130px; height: 20px; margin-right: 10px;"/>
+            </span>
+      </span>
+        <div style="height: 100px">
+        </div>
+        <div class="bd">
+            <ul class="lh">
+                <!-- 常去城市 -->
+                <div class="mk left" style="width:48%; height:650px;margin-left: 1%">
+                    <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                    <div class="tit">
+                        <span class="tit_l"></span>
+                        <span class="tit_m">常去城市分析</span>
+                        <span class="tit_r"></span>
+                    </div>
+                    <div class="con clearfix" style="margin-left: 80px">
+                        <!--<div>
+                            <div class="xs left" style="width:98%; margin-right:2%">
+                                <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                <h4>常去城市--唐山市</h4>
+                                <h3><label id="stopCity">3</label><em>次</em></h3>
+                            </div>
+                        </div>-->
+                        <div class="blank20"></div>
+                        <div style=" width:100%;height:500px;" id="stopCityChart"></div>
+
+                    </div>
+                </div>
+
+                <div class="mk right" style="width:48%; height:650px;margin-left: 1%">
+                    <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                    <div class="tit">
+                        <span class="tit_l"></span>
+                        <span class="tit_m">常去城市列表</span>
+                        <span class="tit_r"></span>
+                    </div>
+                    <div class="con clearfix">
+                        <div class="blank20"></div>
+                        <div class="tablebox" style=" width:100%;height:500px;">
+                            <table id="tableId1" border="0" cellspacing="0" cellpadding="0">
+                                <thead>
+                                <tr>
+                                    <th style="width: 10%">排名</th>
+                                    <th style="width: 50%">停靠城市</th>
+                                    <th style="width: 40%">次数</th>
+                                </tr>
+                                </thead>
+                                <tbody id="oftenStopCity">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+</body>
+
+<script src="js/echarts.min.js"></script>
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+    $("#pickdate").dateDropper({
+        animate: false,
+        format: 'Y',
+        maxYear: '2030'
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+        debugger;
+        var queryArgs = getQueryParam();
+        var driverId = decodeURI(queryArgs.driverId);
+        var yearNum = decodeURI(queryArgs.yearNum);
+
+        $("#pickdate").val(yearNum);
+
+        searchDriverStopCity(driverId,yearNum);
+        initStopCityEchart(driverId,yearNum);
+    })
+
+    //查询驾驶员常去城市
+    function searchDriverStopCity(driverId,yearNum){
+        $.ajax({
+            type:'POST',
+            url:basePathUrl + '/admin/bigdataDriverStopCount/selectDriverStopByDriverId.jsn',
+            data:{"queryObj.driverId":driverId,"queryObj.yearNum":yearNum},
+            dataType:"json",
+            beforeSend:function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    debugger;
+                    var dateList = data.data.dateList;
+                    var stopCityList = data.data.stopCityList;
+                    var cityList = data.data.cityList;
+
+                    var stopCityMap = new Array();
+                    var dateMap = new Array();
+                    var html = "";
+                    if(cityList.length > 0){
+                        for(var i=0;i<cityList.length;i++){
+                            //填充表格
+                            html += "<tr>";
+                            var cityStr = cityList[i];
+                            html += "<td>"+(i+1)+"</td>";
+                            html += "<td>"+cityStr+"</td>";
+                            var data = new Array();
+                            for(var j=0;j<stopCityList.length;j++){
+                                var cityData = stopCityList[j][cityStr];
+                                if(cityData > 0){
+                                    html += "<td>"+cityData+"次</td>";
+                                }
+                                data.push(cityData);
+                            }
+                            //var series = {name:cityStr,type:'line',data:data};
+                            var series = {name:cityStr,value:data};
+                            stopCityMap.push(series);
+                            html += "</tr>";
+                        }
+                    }else{
+                        html += "暂无相关信息";
+                    }
+                    $("#oftenStopCity").html(html);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        })
+    }
+
+    //驾驶员常去城市显示图表
+    function initStopCityEchart(driverId,yearNum){
+        $.ajax({
+            type:'POST',
+            url:basePathUrl + '/admin/bigdataDriverStopCount/selectDriverStopByDriverIdNew.jsn',
+            data:{"queryObj.driverId":driverId,"queryObj.yearNum":yearNum},
+            dataType:"json",
+            beforeSend:function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    var dataArr = [];
+                    var city = [];
+                    var itemStyle = ['#DA6464','#E28F32','#E5E63A','#66A7FA','#7EDB82','#8470F5'];
+                    var color = "";
+                    for(var i = 0;i<data.data.length;i++){
+                        if(i>=6){
+                            color = getRandomColor();
+                        }else {
+                            color = itemStyle[i];
+                        }
+                        var e = {
+                            value:data.data[i].stopNum,
+                            name:data.data[i].mapCity,
+                            itemStyle:{color:color}
+                        }
+                        city.push(data.data[i].mapCity);
+                        dataArr.push(e);
+                    }
+                    if(dataArr.length==0 || city.length==0){
+                        var e = {
+                            value:0,
+                            name:'暂无'
+                        }
+                        city.push('暂无');
+                        dataArr.push(e);
+                    }
+
+                    var myChart = echarts.init(document.getElementById('stopCityChart'));
+                    // 指定图表的配置项和数据
+                    option = {
+
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            left: 'center',
+                            bottom:'bottom',
+                            textStyle:{//图例文字的样式
+                                color:'#fff',
+                                fontSize:14
+                            },
+                            data: city
+                        },
+                        series : [
+                            {
+                                name: '去向分布',
+                                type: 'pie',
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        formatter: '{d}%'
+                                    }
+                                },
+                                radius : '70%',
+                                center: ['35%', '40%'],
+                                data:dataArr,
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.2)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        })
+    }
+
+    //选择不同年份显示不同数据
+    function yearChange(){
+        debugger;
+        var queryArgs = getQueryParam();
+        var driverId = decodeURI(queryArgs.driverId);
+        var yearNum = parseInt($("#pickdate").val());
+
+        searchDriverStopCity(driverId,yearNum);
+        initStopCityEchart(driverId,yearNum);
+    }
+    function goShouYe() {
+        window.location.href = "../bigdata/shouye.html";
+    }
+
+    var getRandomColor = function() {
+
+        return '#' +
+            (function(color) {
+                return (color += '0123456789abcdef' [Math.floor(Math.random() * 16)]) && (color.length == 6) ? color : arguments.callee(color);
+            })('');
+    }
+</script>
+</html>

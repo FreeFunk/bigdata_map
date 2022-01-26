@@ -1,0 +1,1136 @@
+package com.edgedo.timetask;
+
+import com.edgedo.bigdata.entity.BigdataCarRealtimeGps;
+import com.edgedo.bigdata.service.BigdataCarRealtimeGpsService;
+import com.edgedo.common.util.BaiDuMapApiUtil;
+import com.edgedo.common.util.MapPointInfo;
+import com.edgedo.common.util.RedisUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.ScanOptions;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.io.*;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**
+ * 分析车辆任务
+ */
+@Component
+public class BigDataAnalysisRealGpsCar {
+    //实时文件的路径
+    @Value("${bigdata.dataRealTimeGpsFilePath}")
+    private String dataRealTimeGpsFilePath;
+    @Value("${bigdata.dataHistoryGpsForder}")
+    private String dataHistoryGpsForder;
+    @Value("${bigdata.jdkStartEncode}")
+    private String jdkStartEncode;
+    @Value("${bigdata.carPlatePrefix}")
+    private String carPlatePrefix;
+
+
+
+    @Autowired
+    BigdataCarRealtimeGpsService bigdataCarRealtimeGpsService;
+    @Autowired
+    RedisUtil redisUtil ;
+    @Autowired
+    BaiDuMapApiUtil baiDuMapApiUtil;
+
+    //格式化
+    static  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    //格式化成整数
+    SimpleDateFormat sdfDayInt = new SimpleDateFormat("yyyyMMdd");
+
+    //清空地图点
+    @Scheduled(cron = "0 2 0 * * ?")
+    public void clearCatchGps(){
+        if(jdkStartEncode!=null && jdkStartEncode.equals("GBK")){
+            return;
+        }
+        try{
+            redisUtil.del(BigdataCarRealtimeGpsService.CAR_REAL_TIME_GPS_MAP_KEY);
+            bigdataCarRealtimeGpsService.delCarPlateIdSet();
+//            redisUtil.del(BigdataCarRealtimeGpsService.CAR_REAL_TIME_STOP_MAP_KEY);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //分析车辆实时位置
+/*   @Scheduled(cron = "0 * * * * ?")
+    @Deprecated
+    public void fenxiReadGps(){
+        if(jdkStartEncode!=null && jdkStartEncode.equals("GBK")){
+            return;
+        }
+        //如果时间在凌晨0点 5分之前返回
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minu = cal.get(Calendar.MINUTE);
+        int temNum = hour*10 +minu;
+        if(temNum<=5){
+            return;
+        }
+        try{
+
+            InputStreamReader isr = null;
+            BufferedReader br = null;
+            try {
+                isr = new InputStreamReader(new FileInputStream(dataRealTimeGpsFilePath), "GBK");
+                br = new BufferedReader(isr);
+                String temLine = null;
+                List<String> gpsLineList = new ArrayList<String>();
+                long start = System.currentTimeMillis();
+                while ((temLine = br.readLine()) != null) {
+                    BigdataCarRealtimeGps realtimeGps = fenxiOneRealPosition(temLine);
+                    if(realtimeGps==null){
+                        continue;
+                    }
+                    String carPlateNum = realtimeGps.getCarPlateNum();
+                    if(carPlateNum==null || carPlateNum.indexOf(carPlatePrefix)<0){
+                        continue;
+                    }
+                    String id = carPlateNum + "_" + realtimeGps.getCarPlateColor();
+                    realtimeGps.setId(id);
+
+                    bigdataCarRealtimeGpsService.putCarToCache(realtimeGps);
+
+                }
+                long end = System.currentTimeMillis();
+                long cah = end-start;
+                System.out.println(cah  +"===== fenxi gps done-timecount-" + new Date() );
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }finally {
+                try {
+                    if(br!=null){
+                        br.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if(isr!=null){
+                        isr.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }*/
+
+
+    //分析车辆实时位置
+    @Scheduled(cron = "0/25 * * * * ?")
+    public void UpdateReadGps(){
+        if(jdkStartEncode!=null && jdkStartEncode.equals("GBK")){
+            return;
+        }
+        //如果时间在凌晨0点 5分之前返回
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minu = cal.get(Calendar.MINUTE);
+        int temNum = hour*10 + minu;
+        if(temNum<=5){
+            return;
+        }
+        try{
+            InputStreamReader isr = null;
+            BufferedReader br = null;
+            try {
+                isr = new InputStreamReader(new FileInputStream(dataRealTimeGpsFilePath), "GBK");
+                br = new BufferedReader(isr);
+                String temLine = null;
+                long start = System.currentTimeMillis();
+                int i = 0;
+                while ((temLine = br.readLine()) != null) {
+                    BigdataCarRealtimeGps realtimeGps = fenxiOneRealPosition(temLine);
+                    if(realtimeGps==null){
+                        continue;
+                    }
+                    String carPlateNum = realtimeGps.getCarPlateNum();
+                    if(carPlateNum==null || carPlateNum.indexOf(carPlatePrefix)<0){
+                        continue;
+                    }
+                    String id = carPlateNum + "_" + realtimeGps.getCarPlateColor();
+                    String idGps = realtimeGps.getGpsCarPlateNum() +"_"+ realtimeGps.getCarPlateColor();
+                    realtimeGps.setId(id);
+                    bigdataCarRealtimeGpsService.updateCarLocaltion(realtimeGps);
+                    bigdataCarRealtimeGpsService.putCarPlateIdIntoSet(idGps);
+
+                    i++;
+                }
+                long end = System.currentTimeMillis();
+                long cah = end-start;
+                System.out.println(cah  +"===== fenxi gps done-realgps-" + new Date() );
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }finally {
+                try {
+                    if(br!=null){
+                        br.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if(isr!=null){
+                        isr.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //将redis缓存中的数据存入数据库并且查询出来地理区域
+    @Scheduled(cron = "0 13/30 * * * ?")
+    public void saveGpsFromRedis2dbWithCityInfo(){
+        if(jdkStartEncode!=null && jdkStartEncode.equals("GBK")){
+            return;
+        }
+        String key = "car-real-gps-map";
+        long startMill = System.currentTimeMillis();
+        Map<Object,Object> gpsMap = redisUtil.hmget(key);
+        Set<Map.Entry<Object,Object>> mapEntrySet = gpsMap.entrySet();
+        Object[] arr = mapEntrySet.toArray();
+        int length = arr.length;
+        int batchNum = 1000000;
+        int times = length/batchNum + 1;
+        for(int i=0;i<=times;i++){
+            int finalI = i;
+            Thread t = new Thread(){
+                public void run(){
+                    int index = finalI *batchNum;
+                    int end = (finalI +1)*batchNum;
+                    for( ; index<end&&index<arr.length; index++){
+                        Object temO = arr[index];
+                        Map.Entry<Object,Object> temEntry = (Map.Entry<Object,Object>)temO;
+                        Object obj = temEntry.getValue();
+                        if(obj!=null && obj instanceof  BigdataCarRealtimeGps){
+                            //查询地址
+
+                            BigdataCarRealtimeGps carGps = (BigdataCarRealtimeGps)obj;
+                            BigDecimal lng = carGps.getPointLong();
+                            BigDecimal lat = carGps.getPointLat();
+                            try {
+                                MapPointInfo mapPointInfo =  baiDuMapApiUtil.latLongSearch(lat + "," + lng);
+                                Object temObj = redisUtil.hget(key,carGps.getId());
+
+                                if(temObj!=null && mapPointInfo!=null){
+                                    carGps = (BigdataCarRealtimeGps)temObj;
+                                    carGps.setMapCountry(mapPointInfo.getCountry());
+                                    carGps.setMapProvince(mapPointInfo.getProvince());
+                                    String cityName = mapPointInfo.getCity();
+                                    if(cityName==null || cityName.equals("")){
+                                        carGps.setMapCity(mapPointInfo.getDistrict());
+                                    }else{
+                                        carGps.setMapCity(mapPointInfo.getCity());
+                                    }
+                                    carGps.setMapXianqu(mapPointInfo.getDistrict());
+                                    carGps.setMapDetail(mapPointInfo.getSematic_description());
+                                    carGps.setAreaUpTime(new Date());
+                                    redisUtil.hset(key,carGps.getId(),carGps);
+
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        try {
+                            Thread.currentThread().sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    long endMill = System.currentTimeMillis();
+                    System.out.print("总共耗时:" + (endMill - startMill));
+                }
+            };
+            t.start();
+        }
+
+
+
+    }
+
+    @Scheduled(cron = "0 0/6 * * * ?")
+    public void fenxiTest(){
+        Calendar cal = Calendar.getInstance();
+
+        if(jdkStartEncode==null || !jdkStartEncode.equals("GBK")){
+            return;
+        }
+
+        //分析
+        Set<Object> carPlateSet =  redisUtil.sGet(BigdataCarRealtimeGpsService.CAR_REAL_TIME_GPS_CAR_PLATE_ID_KEY);
+        int i = 0;
+        int j = 0;
+        for(Object obj : carPlateSet) {
+            j++;
+            String carPlateId = obj + "";
+            BigdataCarRealtimeGps gps = fenxiOneCarTimeAndMileOfDay(carPlateId, cal.getTime());
+            if (gps != null) {
+                i++;
+            }
+        }
+        System.out.println("分析车辆数为："  + i);
+        System.out.println("总共循环："  + j);
+
+    }
+
+
+    /*@Scheduled(cron = "0/20 * * * * ?")
+    public void fenxiTest1(){
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH,-1);
+        fenxiOneCarTimeAndMileOfDay("冀C79633",cal.getTime() );
+    }*/
+
+    //分析一辆车一天的行驶情况
+    public BigdataCarRealtimeGps fenxiOneCarTimeAndMileOfDay(String carPlateId,Date day){
+        String[] plateAndColor = carPlateId.split("_");
+        if(plateAndColor.length!=2)return null;
+        String carPlateNum = plateAndColor[0];
+        String carPlateColor = plateAndColor[1];
+        String dayStr = sdfDayInt.format(day);
+        BigdataCarRealtimeGps carTodayInfo = new BigdataCarRealtimeGps();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        //0.读到文件
+        try{
+            InputStreamReader isr = null;
+            BufferedReader br = null;
+            try {
+//                File forder = new File(dataHistoryGpsForder+File.separator+new String(carPlateNum.getBytes(),"GBK"));
+                File forder = new File(dataHistoryGpsForder+File.separator + carPlateNum);
+                File gpsFile = new File(forder, dayStr+".log");
+                if(!gpsFile.exists()){
+                    return null;
+                }
+                isr = new InputStreamReader(new FileInputStream(gpsFile), "GBK");
+                br = new BufferedReader(isr);
+                String temLine = null;
+                BigdataCarRealtimeGps todayFirstGps = null;
+                //上一个gps数据
+                BigdataCarRealtimeGps lastGps = null;
+
+                //总的计算：分段开始有速度的点
+                BigdataCarRealtimeGps totalStartSpeedGps = null;
+                BigdataCarRealtimeGps totalEndSpeedGps = null;
+                BigDecimal latestMileage = null;
+                //总的计算：总共行驶时长(秒)
+                BigDecimal totoalDriveSecond = new BigDecimal(0);
+                //凌晨(2点-5点)
+                BigdataCarRealtimeGps lingChenStartSpeedGps = null;
+                BigdataCarRealtimeGps lingChenEndSpeedGps = null;
+                BigDecimal lingChenDriveSecond = new BigDecimal(0);
+                BigDecimal lingchenBeginMileage = null;
+                //清晨(5点-7点)
+                BigdataCarRealtimeGps morningStartSpeedGps = null;
+                BigdataCarRealtimeGps morningEndSpeedGps = null;
+                BigDecimal morningDriveSecond = new BigDecimal(0);
+                BigDecimal morningBeginMileage = null;
+                //中午(12点-14点)
+                BigdataCarRealtimeGps noonStartSpeedGps = null;
+                BigdataCarRealtimeGps noonEndSpeedGps = null;
+                BigDecimal noonDriveSecond = new BigDecimal(0);
+                BigDecimal noonBeginMileage = null;
+                //黄昏(17点-19点)
+                BigdataCarRealtimeGps duskStartSpeedGps = null;
+                BigdataCarRealtimeGps duskEndSpeedGps = null;
+                BigDecimal duskDriveSecond = new BigDecimal(0);
+                BigDecimal duskBeginMileage = null;
+                //午夜(22-最后)
+                BigdataCarRealtimeGps nightStartSpeedGps = null;
+                BigdataCarRealtimeGps nightEndSpeedGps = null;
+                BigDecimal nightDriveSecond = new BigDecimal(0);
+                BigDecimal nightBeginMileage = null;
+
+                List<String> timePeriod = new ArrayList<String>();
+
+                while ((temLine = br.readLine()) != null) {
+                    BigdataCarRealtimeGps tempGps = fenxiOneRealPosition(temLine);
+                    if(tempGps==null){
+                        continue;
+                    }
+                    BigDecimal mileage = tempGps.getMileage();
+                    if(mileage==null || mileage.doubleValue()==0){
+                        continue;
+                    }
+                    Date positionTime = tempGps.getLastPositionTime();
+                    int hour = positionTime.getHours();
+
+                    //过滤掉跳日期的
+
+                    /*-------------------  总里程和时长  begin --------------------*/
+
+                    String positionDay = sdfDayInt.format(positionTime);
+                    if(!positionDay.equals(dayStr)){//跳天数的点忽略
+                        continue;
+                    }
+                    //跳时间的点
+
+                    //如果两个点之间相差大于10分钟说明 就算他停车拉闸了
+                    boolean  jumpTimeFlag = false;
+                    if(lastGps!=null){
+                        Date lastPositionTime = lastGps.getLastPositionTime();
+                        long timeCha = positionTime.getTime() - lastPositionTime.getTime();
+                        BigDecimal thisMile = tempGps.getMileage();
+                        BigDecimal lastMile = lastGps.getMileage();
+
+                        if(timeCha>=600000){
+                            jumpTimeFlag = true;
+                        }
+                    }
+                    double realSpeed = tempGps.getRealSpeed().doubleValue();
+                    double gpsSpeed = tempGps.getGpsSpeed().doubleValue();
+                    if(gpsSpeed>realSpeed){
+                        realSpeed = gpsSpeed;
+                    }
+                    //速度如果大于0但是本次的坐标和上次的坐标一至就是速度误报
+                    String thisPoint = tempGps.getPointLat()+"-" +tempGps.getPointLong();
+                    if(lastGps!=null){
+                        String lastPoint = lastGps.getPointLat() + "-" + lastGps.getPointLong();
+                        if(thisPoint.equals(lastPoint)){
+                            realSpeed = 0;
+                            continue;
+                        }
+                    }
+
+
+                    //1.行驶里程
+                    if(todayFirstGps==null){
+                        todayFirstGps = tempGps;
+                        BigDecimal beginMileage = todayFirstGps.getMileage();
+                        carTodayInfo.setBeginMileage(beginMileage);
+
+                    }
+                    //2.行驶时长
+                    if(jumpTimeFlag){
+                        //速度是0了，那么说明停车了，计算停车开始和行驶的结束
+                        if(totalStartSpeedGps!=null && lastGps!=null){//如果开始有速度的点 不为空说明是行驶一段时间然后停车了
+                            //计算本段的行驶时长
+                            Date stopSpeedTime = lastGps.getLastPositionTime();
+                            Date startSpeedTime = totalStartSpeedGps.getLastPositionTime();
+                            long milSec = stopSpeedTime.getTime() - startSpeedTime.getTime();
+                            long sec = milSec/1000;
+                            totoalDriveSecond = totoalDriveSecond.add(new BigDecimal(sec));
+
+                        }
+                        totalStartSpeedGps=null;
+                    }else{
+
+                        if(realSpeed>0){
+                            //如果分段开始的点为空----说明处在停车状态 并且 如果当前这个点时有速度那么说明从停车开始发动了
+                            //是行驶状态
+                            if(totalStartSpeedGps==null){
+                                totalStartSpeedGps  = tempGps;
+                            }
+                        }else{
+                            //速度是0了，那么说明停车了，计算停车开始和行驶的结束
+                            if(totalStartSpeedGps!=null && lastGps!=null){//如果开始有速度的点 不为空说明是行驶一段时间然后停车了
+                                //计算本段的行驶时长
+                                Date stopSpeedTime = lastGps.getLastPositionTime();
+                                Date startSpeedTime = totalStartSpeedGps.getLastPositionTime();
+                                long milSec = stopSpeedTime.getTime() - startSpeedTime.getTime();
+                                long sec = milSec/1000;
+                                totoalDriveSecond = totoalDriveSecond.add(new BigDecimal(sec));
+                                timePeriod.add(sdf.format(startSpeedTime) + "=====" + sdf.format(stopSpeedTime));
+                            }
+                            totalStartSpeedGps=null;
+                        }
+                    }
+                    totalEndSpeedGps = tempGps;
+
+
+                    /*-------------------  总里程和时长  end --------------------*/
+
+                    /*-------------------    停车点     begin --------------------*/
+
+                    /*-------------------    停车点     end --------------------*/
+
+                    //3.分段行驶时长
+                    //凌晨(2点-5点)
+                    if(hour>=2&& hour<5){
+                        //记录这个时段的开始里程数值
+                        if(lingchenBeginMileage==null){
+                            lingchenBeginMileage = tempGps.getMileage();
+                        }
+                        if(jumpTimeFlag){
+                            //速度是0了，那么说明停车了，计算停车开始和行驶的结束
+                            if(lingChenStartSpeedGps!=null && lastGps!=null){//如果开始有速度的点 不为空说明是行驶一段时间然后停车了
+                                //计算本段的行驶时长
+                                Date stopSpeedTime = lastGps.getLastPositionTime();
+                                Date startSpeedTime = lingChenStartSpeedGps.getLastPositionTime();
+                                long milSec = stopSpeedTime.getTime() - startSpeedTime.getTime();
+                                long sec = milSec/1000;
+                                lingChenDriveSecond = lingChenDriveSecond.add(new BigDecimal( sec ));
+
+
+                            }
+                            lingChenStartSpeedGps = null;
+                        }else{
+                            //凌晨的计算
+                            if(realSpeed>0){
+                                //如果分段开始的点为空----说明处在停车状态 并且 如果当前这个点时有速度那么说明从停车开始发动了
+                                //是行驶状态
+                                if(lingChenStartSpeedGps==null){
+                                    lingChenStartSpeedGps  = tempGps;
+                                }
+
+                            }else{
+                                //速度是0了，那么说明停车了，计算停车开始和行驶的结束
+                                if(lingChenStartSpeedGps!=null && lastGps!=null){//如果开始有速度的点 不为空说明是行驶一段时间然后停车了
+                                    //计算本段的行驶时长
+                                    Date stopSpeedTime = lastGps.getLastPositionTime();
+                                    Date startSpeedTime = lingChenStartSpeedGps.getLastPositionTime();
+                                    long milSec = stopSpeedTime.getTime() - startSpeedTime.getTime();
+                                    long sec = milSec/1000;
+                                    lingChenDriveSecond = lingChenDriveSecond.add(new BigDecimal( sec ));
+                                }
+                                lingChenStartSpeedGps = null;
+                            }
+                        }
+
+
+                        //有速度但是超过了时段的这样的时间处理
+                        lingChenEndSpeedGps = tempGps;
+                    }else if(hour>=5&& hour<7){//清晨(5点-7点)
+                        //记录这个时段的开始里程数值
+                        if(morningBeginMileage==null){
+                            morningBeginMileage = tempGps.getMileage();
+                        }
+
+                        if(jumpTimeFlag){
+                            if(morningStartSpeedGps!=null && lastGps!=null){//如果开始有速度的点 不为空说明是行驶一段时间然后停车了
+                                //计算本段的行驶时长
+                                Date stopSpeedTime = lastGps.getLastPositionTime();
+                                Date startSpeedTime = morningStartSpeedGps.getLastPositionTime();
+                                long milSec = stopSpeedTime.getTime() - startSpeedTime.getTime();
+                                long sec = milSec/1000;
+                                morningDriveSecond = morningDriveSecond.add(new BigDecimal( sec ));
+                            }
+                            morningStartSpeedGps = null;
+                        }else{
+                            //凌晨的计算
+                            if(realSpeed>0){
+                                //如果分段开始的点为空----说明处在停车状态 并且 如果当前这个点时有速度那么说明从停车开始发动了
+                                //是行驶状态
+                                if(morningStartSpeedGps==null){
+                                    morningStartSpeedGps  = tempGps;
+                                }
+
+                            }else{
+                                //速度是0了，那么说明停车了，计算停车开始和行驶的结束
+                                if(morningStartSpeedGps!=null && lastGps!=null){//如果开始有速度的点 不为空说明是行驶一段时间然后停车了
+                                    //计算本段的行驶时长
+                                    Date stopSpeedTime = lastGps.getLastPositionTime();
+                                    Date startSpeedTime = morningStartSpeedGps.getLastPositionTime();
+                                    long milSec = stopSpeedTime.getTime() - startSpeedTime.getTime();
+                                    long sec = milSec/1000;
+                                    morningDriveSecond = morningDriveSecond.add(new BigDecimal( sec ));
+                                }
+                                morningStartSpeedGps = null;
+                            }
+                        }
+                        //有速度但是超过了时段的这样的时间处理
+                        morningEndSpeedGps = tempGps;
+                    }else if(hour >=12 && hour<14){//中午(12点-14点)
+                        //记录这个时段的开始里程数值
+                        if(noonBeginMileage==null){
+                            noonBeginMileage = tempGps.getMileage();
+                        }
+
+                        if(jumpTimeFlag ){
+                            if(noonStartSpeedGps!=null && lastGps!=null){//如果开始有速度的点 不为空说明是行驶一段时间然后停车了
+                                //计算本段的行驶时长
+                                Date stopSpeedTime = lastGps.getLastPositionTime();
+                                Date startSpeedTime = noonStartSpeedGps.getLastPositionTime();
+                                long milSec = stopSpeedTime.getTime() - startSpeedTime.getTime();
+                                long sec = milSec/1000;
+                                noonDriveSecond = noonDriveSecond.add(new BigDecimal( sec ));
+                            }
+                            noonStartSpeedGps = null;
+                        }else{
+                            //凌晨的计算
+                            if(realSpeed>0){
+                                //如果分段开始的点为空----说明处在停车状态 并且 如果当前这个点时有速度那么说明从停车开始发动了
+                                //是行驶状态
+                                if(noonStartSpeedGps==null){
+                                    noonStartSpeedGps  = tempGps;
+                                }
+
+                            }else{
+                                //速度是0了，那么说明停车了，计算停车开始和行驶的结束
+                                if(noonStartSpeedGps!=null && lastGps!=null){//如果开始有速度的点 不为空说明是行驶一段时间然后停车了
+                                    //计算本段的行驶时长
+                                    Date stopSpeedTime = lastGps.getLastPositionTime();
+                                    Date startSpeedTime = noonStartSpeedGps.getLastPositionTime();
+                                    long milSec = stopSpeedTime.getTime() - startSpeedTime.getTime();
+                                    long sec = milSec/1000;
+                                    noonDriveSecond = noonDriveSecond.add(new BigDecimal( sec ));
+                                }
+                                noonStartSpeedGps = null;
+                            }
+                        }
+                        //有速度但是超过了时段的这样的时间处理
+                        noonEndSpeedGps = tempGps;
+                    }else if(hour>=17 && hour<19){//黄昏(17点-19点)
+                        //记录这个时段的开始里程数值
+                        if(duskBeginMileage==null){
+                            duskBeginMileage = tempGps.getMileage();
+                        }
+
+                        if(jumpTimeFlag){
+                            if(duskStartSpeedGps!=null && lastGps!=null){//如果开始有速度的点 不为空说明是行驶一段时间然后停车了
+                                //计算本段的行驶时长
+                                Date stopSpeedTime = lastGps.getLastPositionTime();
+                                Date startSpeedTime = duskStartSpeedGps.getLastPositionTime();
+                                long milSec = stopSpeedTime.getTime() - startSpeedTime.getTime();
+                                long sec = milSec/1000;
+                                duskDriveSecond = duskDriveSecond.add(new BigDecimal( sec ));
+                            }
+                            duskStartSpeedGps = null;
+                        }else{
+                            //凌晨的计算
+                            if(realSpeed>0){
+                                //如果分段开始的点为空----说明处在停车状态 并且 如果当前这个点时有速度那么说明从停车开始发动了
+                                //是行驶状态
+                                if(duskStartSpeedGps==null){
+                                    duskStartSpeedGps  = tempGps;
+                                }
+
+                            }else{
+                                //速度是0了，那么说明停车了，计算停车开始和行驶的结束
+                                if(duskStartSpeedGps!=null && lastGps!=null){//如果开始有速度的点 不为空说明是行驶一段时间然后停车了
+                                    //计算本段的行驶时长
+                                    Date stopSpeedTime = lastGps.getLastPositionTime();
+                                    Date startSpeedTime = duskStartSpeedGps.getLastPositionTime();
+                                    long milSec = stopSpeedTime.getTime() - startSpeedTime.getTime();
+                                    long sec = milSec/1000;
+                                    duskDriveSecond = duskDriveSecond.add(new BigDecimal( sec ));
+                                }
+                                duskStartSpeedGps = null;
+                            }
+
+                        }
+
+
+                        //有速度但是超过了时段的这样的时间处理
+                        duskEndSpeedGps = tempGps;
+                    }else if(hour>22){//午夜(22-最后)
+                        //记录这个时段的开始里程数值
+                        if(nightBeginMileage==null){
+                            nightBeginMileage = tempGps.getMileage();
+                        }
+
+                        if(jumpTimeFlag){
+                            if(nightStartSpeedGps!=null && lastGps!=null){//如果开始有速度的点 不为空说明是行驶一段时间然后停车了
+                                //计算本段的行驶时长
+                                Date stopSpeedTime = lastGps.getLastPositionTime();
+                                Date startSpeedTime = nightStartSpeedGps.getLastPositionTime();
+                                long milSec = stopSpeedTime.getTime() - startSpeedTime.getTime();
+                                long sec = milSec/1000;
+                                nightDriveSecond = nightDriveSecond.add(new BigDecimal( sec ));
+                            }
+                            nightStartSpeedGps = null;
+                        }else{
+                            //凌晨的计算
+                            if(realSpeed>0){
+                                //如果分段开始的点为空----说明处在停车状态 并且 如果当前这个点时有速度那么说明从停车开始发动了
+                                //是行驶状态
+                                if(nightStartSpeedGps==null){
+                                    nightStartSpeedGps  = tempGps;
+                                }
+
+                            }else{
+                                //速度是0了，那么说明停车了，计算停车开始和行驶的结束
+                                if(nightStartSpeedGps!=null && lastGps!=null){//如果开始有速度的点 不为空说明是行驶一段时间然后停车了
+                                    //计算本段的行驶时长
+                                    Date stopSpeedTime = lastGps.getLastPositionTime();
+                                    Date startSpeedTime = nightStartSpeedGps.getLastPositionTime();
+                                    long milSec = stopSpeedTime.getTime() - startSpeedTime.getTime();
+                                    long sec = milSec/1000;
+                                    nightDriveSecond = nightDriveSecond.add(new BigDecimal( sec ));
+                                }
+                                nightStartSpeedGps = null;
+                            }
+                        }
+                        //有速度但是超过了时段的这样的时间处理
+                        nightEndSpeedGps = tempGps;
+                    }
+                    //4.停车记录
+                    if(jumpTimeFlag){
+                        lastGps=null;
+                    }else{
+                        lastGps = tempGps;
+                        latestMileage = lastGps.getMileage();
+                    }
+
+
+                }
+
+
+                if(latestMileage==null || carTodayInfo.getBeginMileage()==null){
+                    return null;
+                }
+                carTodayInfo.setMileage(latestMileage);
+                //当日行驶里程
+                if(carTodayInfo.getBeginMileage()==null){
+                    carTodayInfo.setBeginMileage(carTodayInfo.getMileage());
+                }
+
+
+                carTodayInfo.setTodayMileageTotal(carTodayInfo.getMileage().subtract(carTodayInfo.getBeginMileage()));
+                //最后一段没结束的行驶时长
+                if(totalEndSpeedGps!=null && totalStartSpeedGps!=null){
+                    Date totalLastStartTime = totalStartSpeedGps.getLastPositionTime();
+                    Date totalLastEndTime = totalEndSpeedGps.getLastPositionTime();
+                    long milSec = totalLastEndTime.getTime() - totalLastStartTime.getTime();
+                    long sec = milSec/1000;
+                    totoalDriveSecond = totoalDriveSecond.add(new BigDecimal( sec ));
+                }
+
+                //当日行驶时长
+                BigDecimal totalDriveMini = totoalDriveSecond.divide(new BigDecimal(60),2,BigDecimal.ROUND_CEILING);
+                carTodayInfo.setTodayTimeTotal(totalDriveMini);
+
+
+                /*-------------------  凌晨里程和时长  begin --------------------*/
+                //看看凌晨时段的最后一段的时间和里程
+                if(lingChenEndSpeedGps!=null){
+                    BigDecimal lingChenCurrentMileDrive = lingChenEndSpeedGps.getMileage().subtract(lingchenBeginMileage);
+                    carTodayInfo.setLingchenMileage(lingChenCurrentMileDrive);
+
+                    if(lingChenStartSpeedGps!=null && lingChenEndSpeedGps!=null){//开始的不为空说明在时间临界点时也在开车
+                        Date lingChenLastStartTime = lingChenStartSpeedGps.getLastPositionTime();
+                        Date lingChenLastEndTime = lingChenEndSpeedGps.getLastPositionTime();
+                        long milSec = lingChenLastEndTime.getTime() - lingChenLastStartTime.getTime();
+                        long sec = milSec/1000;
+                        lingChenDriveSecond = lingChenDriveSecond.add(new BigDecimal( sec ));
+                    }
+                }else{
+                    carTodayInfo.setLingchenMileage(new BigDecimal(0));
+                }
+                //设置凌晨的总时长
+                BigDecimal lingChenDriveMini = lingChenDriveSecond.divide(new BigDecimal(60),2,BigDecimal.ROUND_CEILING);
+                carTodayInfo.setLingchenMinuteNum(lingChenDriveMini);
+                /*-------------------  凌晨里程和时长  end --------------------*/
+
+                 /*-------------------  清晨里程和时长  begin --------------------*/
+                //看看凌晨时段的最后一段的时间和里程
+                if(morningEndSpeedGps!=null){
+                    BigDecimal morningCurrentMileDrive = morningEndSpeedGps.getMileage().subtract(morningBeginMileage);
+                    carTodayInfo.setMorningMileage(morningCurrentMileDrive);
+
+                    if(morningStartSpeedGps!=null && morningEndSpeedGps!=null){//开始的不为空说明在时间临界点时也在开车
+                        Date morningLastStartTime = morningStartSpeedGps.getLastPositionTime();
+                        Date morningLastEndTime = morningEndSpeedGps.getLastPositionTime();
+                        long milSec = morningLastEndTime.getTime() - morningLastStartTime.getTime();
+                        long sec = milSec/1000;
+                        morningDriveSecond = morningDriveSecond.add(new BigDecimal( sec ));
+                    }
+                }else{
+                    carTodayInfo.setMorningMileage(new BigDecimal(0));
+                }
+                //设置凌晨的总时长
+                BigDecimal morningDriveMini = morningDriveSecond.divide(new BigDecimal(60),2,BigDecimal.ROUND_CEILING);
+                carTodayInfo.setMorningMinuteNum(morningDriveMini);
+                /*-------------------  清晨里程和时长  end --------------------*/
+
+                /*-------------------  中午里程和时长  begin --------------------*/
+                //看看凌晨时段的最后一段的时间和里程
+                if(noonEndSpeedGps!=null){
+                    BigDecimal noonCurrentMileDrive = noonEndSpeedGps.getMileage().subtract(noonBeginMileage);
+                    carTodayInfo.setNoonMileage(noonCurrentMileDrive);
+
+                    if(noonStartSpeedGps!=null && noonEndSpeedGps!=null){//开始的不为空说明在时间临界点时也在开车
+                        Date noonLastStartTime = noonStartSpeedGps.getLastPositionTime();
+                        Date noonLastEndTime = noonEndSpeedGps.getLastPositionTime();
+                        long milSec = noonLastEndTime.getTime() - noonLastStartTime.getTime();
+                        long sec = milSec/1000;
+                        noonDriveSecond = noonDriveSecond.add(new BigDecimal( sec ));
+                    }
+                }else{
+                    carTodayInfo.setNoonMileage(new BigDecimal(0));
+                }
+                //设置凌晨的总时长
+                BigDecimal noonDriveMini = noonDriveSecond.divide(new BigDecimal(60),2,BigDecimal.ROUND_CEILING);
+                carTodayInfo.setNoonMinuteNum(noonDriveMini);
+                /*-------------------  中午里程和时长  end --------------------*/
+
+                /*-------------------  黄昏里程和时长  begin --------------------*/
+                //看看凌晨时段的最后一段的时间和里程
+                if(duskEndSpeedGps!=null){
+                    BigDecimal duskCurrentMileDrive = duskEndSpeedGps.getMileage().subtract(duskBeginMileage);
+                    carTodayInfo.setDuskMileage(duskCurrentMileDrive);
+
+                    if(duskStartSpeedGps!=null&&duskStartSpeedGps!=null){//开始的不为空说明在时间临界点时也在开车
+                        Date duskLastStartTime = duskStartSpeedGps.getLastPositionTime();
+                        Date duskLastEndTime = duskEndSpeedGps.getLastPositionTime();
+                        long milSec = duskLastEndTime.getTime() - duskLastStartTime.getTime();
+                        long sec = milSec/1000;
+                        duskDriveSecond = duskDriveSecond.add(new BigDecimal( sec ));
+                    }
+                }else{
+                    carTodayInfo.setDuskMileage(new BigDecimal(0));
+                }
+                //设置凌晨的总时长
+                BigDecimal duskDriveMini = duskDriveSecond.divide(new BigDecimal(60),2,BigDecimal.ROUND_CEILING);
+                carTodayInfo.setDuskMinuteNum(duskDriveMini);
+                /*-------------------  黄昏里程和时长  end --------------------*/
+
+
+                /*-------------------  午夜里程和时长  begin --------------------*/
+                //看看凌晨时段的最后一段的时间和里程
+                if(nightEndSpeedGps!=null){
+                    BigDecimal nightCurrentMileDrive = nightEndSpeedGps.getMileage().subtract(nightBeginMileage);
+                    carTodayInfo.setMidnightMileage(nightCurrentMileDrive);
+
+                    if(nightStartSpeedGps!=null&&duskEndSpeedGps!=null){//开始的不为空说明在时间临界点时也在开车
+                        Date nightLastStartTime = nightStartSpeedGps.getLastPositionTime();
+                        Date nightLastEndTime = duskEndSpeedGps.getLastPositionTime();
+                        long milSec = nightLastEndTime.getTime() - nightLastStartTime.getTime();
+                        long sec = milSec/1000;
+                        nightDriveSecond = nightDriveSecond.add(new BigDecimal( sec ));
+                    }
+                }else{
+                    carTodayInfo.setMidnightMileage(new BigDecimal(0));
+                }
+                //设置凌晨的总时长
+                BigDecimal nightDriveMini = nightDriveSecond.divide(new BigDecimal(60),2,BigDecimal.ROUND_CEILING);
+                carTodayInfo.setMidnightMinuteNum(nightDriveMini);
+                /*-------------------  午夜里程和时长  end --------------------*/
+                String errMsg = checkCarGpsInfo(carTodayInfo);
+                //更新缓存数据
+                //转一下车牌号
+                String trimedCarPlateId = trimCarPlateNum(carPlateNum) + "_" + carPlateColor;
+                Object temObj = redisUtil.hget(
+                        BigdataCarRealtimeGpsService.CAR_REAL_TIME_GPS_MAP_KEY,
+                        trimedCarPlateId);
+
+                if(temObj!=null ){
+                    BigdataCarRealtimeGps carGps = (BigdataCarRealtimeGps)temObj;
+                    carGps.setBeginMileage(carTodayInfo.getBeginMileage());
+                    //设置统计信息
+//                    System.out.println("totol drive time = " + carTodayInfo.getTodayTimeTotal());
+                    carGps.setTodayTimeTotal(carTodayInfo.getTodayTimeTotal());
+//                    System.out.println("totol drive mile = " + carTodayInfo.getTodayMileageTotal());
+                    carGps.setTodayMileageTotal(carTodayInfo.getTodayMileageTotal());
+//                    System.out.println("lingchen drive mile = " + carTodayInfo.getLingchenMileage());
+                    carGps.setLingchenMileage(carTodayInfo.getLingchenMileage());
+//                    System.out.println("lingchen drive time = " + carTodayInfo.getLingchenMinuteNum());
+                    carGps.setLingchenMinuteNum(carTodayInfo.getLingchenMinuteNum());
+//                    System.out.println("morning drive mile = " + carTodayInfo.getMorningMileage());
+                    carGps.setMorningMileage(carTodayInfo.getMorningMileage());
+//                    System.out.println("morning drive time = " + carTodayInfo.getMorningMinuteNum());
+                    carGps.setMorningMinuteNum(carTodayInfo.getMorningMinuteNum());
+//                    System.out.println("noon drive mile = " + carTodayInfo.getNoonMileage());
+                    carGps.setNoonMileage(carTodayInfo.getNoonMileage());
+//                    System.out.println("noon drive time = " + carTodayInfo.getNoonMinuteNum());
+                    carGps.setNoonMinuteNum(carTodayInfo.getNoonMinuteNum());
+//                    System.out.println("Dusk drive mile = " + carTodayInfo.getDuskMileage());
+                    carGps.setDuskMileage(carTodayInfo.getDuskMileage());
+//                    System.out.println("Dusk drive time = " + carTodayInfo.getDuskMinuteNum());
+                    carGps.setDuskMinuteNum(carTodayInfo.getDuskMinuteNum());
+//                    System.out.println("Midnight drive mile = " + carTodayInfo.getMidnightMileage());
+                    carGps.setMidnightMileage(carTodayInfo.getMidnightMileage());
+//                    System.out.println("Midnight drive time = " + carTodayInfo.getMidnightMinuteNum());
+                    carGps.setMidnightMinuteNum(carTodayInfo.getMidnightMinuteNum());
+                    carGps.setOnlineState("1");
+                    //上线情况和运营情况
+                    BigDecimal todayMileageTotal = carTodayInfo.getTodayMileageTotal();
+                    if(todayMileageTotal!=null && todayMileageTotal.doubleValue()>0){
+                        carGps.setOperatFlag("1");
+                    }
+
+
+                    if(errMsg!=null && errMsg.length()>0){
+                        carGps.setQualifiedState(0);
+//                        System.out.println("-------------"  + carPlateNum +":" + errMsg);
+                    }else{
+                        carGps.setQualifiedState(1);
+                    }
+                    carGps.setErrMsg(errMsg);
+                    redisUtil.hset(
+                            BigdataCarRealtimeGpsService.CAR_REAL_TIME_GPS_MAP_KEY
+                            ,carGps.getId(),carGps);
+
+
+                }
+
+
+
+
+            }catch (IOException e){
+                e.printStackTrace();
+                return null;
+            }finally {
+                try {
+                    if(br!=null){
+                        br.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if(isr!=null){
+                        isr.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println(carTodayInfo+"-" + carTodayInfo.getMileage() + "-" + carTodayInfo.getBeginMileage());
+        }
+
+        return carTodayInfo;
+    }
+
+
+    private String checkCarGpsInfo(BigdataCarRealtimeGps carInfo){
+        //判断数据是否合格不合格
+        //整日平均速度和时长0 里程有值情况不合格
+        String errMsg = "";
+        BigDecimal todayTimeTotal = carInfo.getTodayTimeTotal();
+        BigDecimal todayMileTotal = carInfo.getTodayMileageTotal();
+        if(todayTimeTotal.doubleValue()<0){
+            errMsg += "当日时间跳点时间负值;";
+        }
+        if(todayMileTotal.doubleValue()<0){
+            errMsg += "当日里程跳点时间负值;";
+        }
+        if(todayTimeTotal.doubleValue()==0 ){
+            if(todayMileTotal.doubleValue()>0){
+                errMsg += "当日平均速度基数是0;";
+            }
+        }else{
+            if(todayTimeTotal.doubleValue()>10&&todayMileTotal.doubleValue()==0){
+                errMsg += "里程有值时长为0;";
+            }
+            double avgSpeed = todayMileTotal.divide(todayTimeTotal,2,BigDecimal.ROUND_FLOOR).doubleValue() * 60;
+            if(avgSpeed>130){
+                errMsg += "当日平均速度超130公里/小时;";
+            }
+        }
+
+
+
+        //凌晨
+//        BigDecimal lingchenTimeTotal = carInfo.getLingchenMinuteNum();
+        BigDecimal lingchenMileTotal = carInfo.getLingchenMileage();
+        /*if(lingchenTimeTotal.doubleValue()<0){
+            errMsg += "凌晨时间跳点时间负值;";
+        }*/
+        if(lingchenMileTotal.doubleValue()<0){
+            errMsg += "凌晨里程跳点里程负值;";
+        }
+       /* if(lingchenTimeTotal.doubleValue()==0 ){
+            if(lingchenMileTotal.doubleValue()>0){
+                errMsg += "凌晨平均速度基数是0;";
+            }
+        }else{
+            double avgSpeed = lingchenMileTotal.divide(lingchenTimeTotal,2,BigDecimal.ROUND_FLOOR).doubleValue() * 60;
+            if(avgSpeed>130){
+                errMsg += "凌晨平均速度超130公里/小时;";
+            }
+        }*/
+
+        //清晨
+//        BigDecimal morningTimeTotal = carInfo.getMorningMinuteNum();
+        BigDecimal morningMileTotal = carInfo.getMorningMileage();
+       /* if(morningTimeTotal.doubleValue()<0){
+            errMsg += "清晨时间跳点时间负值;";
+        }*/
+        if(morningMileTotal.doubleValue()<0){
+            errMsg += "清晨里程跳点里程负值;";
+        }
+      /*  if(morningTimeTotal.doubleValue()==0 ){
+            if(morningMileTotal.doubleValue()>0){
+                errMsg += "清晨平均速度基数是0;";
+            }
+        }else{
+            double avgSpeed = morningMileTotal.divide(morningTimeTotal,2,BigDecimal.ROUND_FLOOR).doubleValue() * 60;
+            if(avgSpeed>130){
+                errMsg += "清晨平均速度超130公里/小时;";
+            }
+        }*/
+
+        //中午
+//        BigDecimal noonTimeTotal = carInfo.getNoonMinuteNum();
+        BigDecimal noonMileTotal = carInfo.getNoonMileage();
+       /* if(noonTimeTotal.doubleValue()<0){
+            errMsg += "中午时间跳点时间负值;";
+        }*/
+        if(noonMileTotal.doubleValue()<0){
+            errMsg += "中午里程跳点里程负值;";
+        }
+       /* if(noonTimeTotal.doubleValue()==0 ){
+            if(noonMileTotal.doubleValue()>0){
+                errMsg += "中午平均速度基数是0;";
+            }
+        }else{
+            double avgSpeed = noonMileTotal.divide(noonTimeTotal,2,BigDecimal.ROUND_FLOOR).doubleValue() * 60;
+            if(avgSpeed>130){
+                errMsg += "中午平均速度超130公里/小时;";
+            }
+        }*/
+
+
+        //黄昏
+//        BigDecimal duskTimeTotal = carInfo.getDuskMinuteNum();
+        BigDecimal duskMileTotal = carInfo.getDuskMileage();
+        /*if(duskTimeTotal.doubleValue()<0){
+            errMsg += "黄昏时间跳点时间负值;";
+        }*/
+        if(duskMileTotal.doubleValue()<0){
+            errMsg += "黄昏里程跳点里程负值;";
+        }
+        /*if(duskTimeTotal.doubleValue()==0 ){
+            if(duskMileTotal.doubleValue()>0){
+                errMsg += "黄昏平均速度基数是0;";
+            }
+        }else{
+            double avgSpeed = duskMileTotal.divide(duskTimeTotal,2,BigDecimal.ROUND_FLOOR).doubleValue() * 60;
+            if(avgSpeed>130){
+                errMsg += "黄昏平均速度超130公里/小时;";
+            }
+        }*/
+
+        //午夜
+        BigDecimal midnightTimeTotal = carInfo.getMidnightMinuteNum();
+        BigDecimal midnightMileTotal = carInfo.getMidnightMileage();
+       /* if(midnightTimeTotal.doubleValue()<0){
+            errMsg += "午夜时间跳点时间负值;";
+        }*/
+        if(midnightMileTotal.doubleValue()<0){
+            errMsg += "午夜里程跳点里程负值;";
+        }
+        /*if(midnightTimeTotal.doubleValue()==0 ){
+            if(midnightMileTotal.doubleValue()>0){
+                errMsg += "午夜平均速度基数是0;";
+            }
+        }else{
+            double avgSpeed = midnightMileTotal.divide(midnightTimeTotal,2,BigDecimal.ROUND_FLOOR).doubleValue() * 60;
+            if(avgSpeed>130){
+                errMsg += "午夜平均速度超130公里/小时;";
+            }
+        }*/
+
+        return errMsg;
+
+    }
+
+    private BigdataCarRealtimeGps fenxiOneRealPosition(String temLine){
+        String key = "IP_KEY";
+        String[] arr = temLine.split(",");
+        if(arr.length<13){
+            return null;
+        }
+        String ip = arr[0];
+        //更新缓存的ip的时间
+        redisUtil.hset(key,ip,new Date());
+        //车牌号
+        String carPlateNum = arr[1];
+        //上次的更新时间
+        String lastPositionTime = arr[2];
+        //经度
+        String pointLong = arr[3];
+        //纬度
+        String pointLat = arr[4] ;
+        //实时速度
+        String realSpeed = arr[5];
+        //gps速度
+        String gpsSpeed = arr[6];
+        //里程
+        String mileage = arr[7];
+        //方向
+        String direction = arr[8];
+        //海拔
+        String altitude = arr[9];
+        //车辆状态
+        String carState = arr[10];
+        //报警状态
+        String alarmState = arr[11];
+        //车牌颜色
+        String carPlateColor = arr[12];
+        if(carPlateColor!=null && carPlateColor.length()>1){
+            return null;
+        }
+        if(arr.length==14){
+            lastPositionTime = arr[13];
+        }
+
+        BigdataCarRealtimeGps bigdataCarRealtimeGps = new BigdataCarRealtimeGps();
+        bigdataCarRealtimeGps.setGpsCarPlateNum(carPlateNum);
+        bigdataCarRealtimeGps.setIp(ip);
+        //先把配置的特殊符号去掉
+
+        carPlateNum = trimCarPlateNum(carPlateNum);
+        bigdataCarRealtimeGps.setCarPlateNum(carPlateNum);
+        Date lastPostime = new Date();
+        try{
+            lastPostime = sdf.parse(lastPositionTime);
+            bigdataCarRealtimeGps.setLastPositionTime(lastPostime);
+            bigdataCarRealtimeGps.setPointLat(new BigDecimal(pointLat));
+            bigdataCarRealtimeGps.setPointLong(new BigDecimal(pointLong));
+            bigdataCarRealtimeGps.setRealSpeed(new BigDecimal(realSpeed));
+            bigdataCarRealtimeGps.setGpsSpeed(new BigDecimal(gpsSpeed));
+            bigdataCarRealtimeGps.setMileage(new BigDecimal(mileage));
+            bigdataCarRealtimeGps.setDirection(new BigDecimal(direction));
+            bigdataCarRealtimeGps.setAltitude(new BigDecimal(altitude));
+            bigdataCarRealtimeGps.setCarState(carState);
+            bigdataCarRealtimeGps.setAlarmState(alarmState);
+            bigdataCarRealtimeGps.setCarPlateColor(carPlateColor);
+            bigdataCarRealtimeGps.setLastUpTime(new Date());
+            return bigdataCarRealtimeGps;
+        }catch (Exception e){}
+            return null;
+
+    }
+
+    /**
+     * 去掉车牌号的特殊字符
+     * @param carPlateNum
+     * @return
+     */
+    private String trimCarPlateNum(String carPlateNum){
+        carPlateNum = carPlateNum.replaceAll("[- _ #]","");
+        int index = carPlateNum.indexOf(carPlatePrefix);
+        if(index>0){
+            carPlateNum = carPlateNum.replaceAll(" ","");
+            carPlateNum = carPlateNum.substring(carPlateNum.indexOf(carPlatePrefix));
+        }
+        return carPlateNum;
+    }
+
+    /*public static void main(String[] args) {
+        String temStr = "123132#冀C_1231-1".replaceAll("[- _ #]","");
+        temStr = temStr.substring(temStr.indexOf("冀C"));
+        System.out.println(temStr);
+    }*/
+
+
+
+
+}
+
+
+

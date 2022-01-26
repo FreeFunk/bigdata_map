@@ -1,0 +1,349 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script type="text/javascript" src="js/laydate/laydate.js"></script>
+<script src="js/layer/layer.js"></script>
+
+<script src="js/tool.js"></script>
+</head>
+
+<body>
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+                
+                   
+                <!--<input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " /> -->
+            <!--<input type="text" class="input_rl " id="searchDate" style="width:150px; height: 48px; margin-right: 10px; ">-->
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+    <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">危险路段</div>
+             <a href="shouye.html" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+
+
+<div class="main">
+      <div class="ind mt80">
+                 
+         
+
+          
+             <div class="mk left w49" style="height: 850px">
+                           <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                            <div class="tit">
+                                 <span class="tit_l"></span>
+                                 <span class="tit_m">危险多发路段</span>
+                                 <span class="tit_r"></span>
+                           </div>
+                          <div class="con clearfix" >
+                                  <table width="100%" class="grid08">
+                                      <tbody id="dangerRoad">
+                                        <!--<tr>
+                                          <th  style="width: 10%">1</th>
+                                          <td  style="width: 30%">河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th  style="width: 10%" class="bg_ys2">98次</th>
+                                          <th  style="width: 10%">11</th>
+                                          <td  style="width: 30%">河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th  style="width: 10%" class="bg_ys3">56次</th>
+                                        </tr>
+                                        <tr>
+                                          <th>2</th>
+                                          <td>河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th class="bg_ys2">96次</th>
+                                          <th  style="width: 10%">12</th>
+                                          <td  style="width: 30%">河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th  style="width: 10%" class="bg_ys3">53次</th>
+                                        </tr>
+                                        <tr>
+                                          <th>3</th>
+                                          <td>河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th class="bg_ys1">70次</th>
+                                          <th  style="width: 10%">13</th>
+                                          <td  style="width: 30%">河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th  style="width: 10%" class="bg_ys3">48次</th>
+                                        </tr>
+                                        <tr>
+                                          <th>4</th>
+                                          <td>河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th class="bg_ys1">63次</th>
+                                          <th  style="width: 10%">14</th>
+                                          <td  style="width: 30%">河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th  style="width: 10%" class="bg_ys3">41次</th>
+                                        </tr>
+                                        <tr>
+                                          <th>5</th>
+                                          <td>河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th class="bg_ys1">67次</th>
+                                          <th  style="width: 10%">15</th>
+                                          <td  style="width: 30%">河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th  style="width: 10%" class="bg_ys3">39次</th>
+                                        </tr>
+                                        <tr>
+                                          <th>6</th>
+                                          <td>河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th class="bg_ys1">65次</th>
+                                          <th  style="width: 10%">16</th>
+                                          <td  style="width: 30%">河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th  style="width: 10%" class="bg_ys3">33次</th>
+                                        </tr>
+                                        <tr>
+                                          <th>7</th>
+                                          <td>河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th class="bg_ys1">65次</th>
+                                          <th  style="width: 10%">17</th>
+                                          <td  style="width: 30%">河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th  style="width: 10%" class="bg_ys3">31次</th>
+                                        </tr>
+                                        <tr>
+                                          <th>8</th>
+                                          <td>河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th class="bg_ys1">65次</th>
+                                          <th  style="width: 10%">18</th>
+                                          <td  style="width: 30%">河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th  style="width: 10%" class="bg_ys3">24次</th>
+                                        </tr>
+                                        <tr>
+                                          <th>9</th>
+                                          <td>河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th class="bg_ys1">65次</th>
+                                          <th  style="width: 10%">19</th>
+                                          <td  style="width: 30%">河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th  style="width: 10%" class="bg_ys3">21次</th>
+                                        </tr>
+                                        <tr>
+                                          <th>10</th>
+                                          <td>河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th class="bg_ys1">65次</th>
+                                          <th  style="width: 10%">20</th>
+                                          <td  style="width: 30%">河北秦皇岛青龙满族自治县335省道马山庄西北</td>
+                                          <th  style="width: 10%" class="bg_ys3">15次</th>
+                                        </tr>-->
+                                      </tbody>
+                                    </table>
+
+                          </div>
+                          
+                 
+             </div>
+          
+          
+          <div class="mk right w49" style="height: 850px">
+                           <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                           <div class="tit">
+                                 <span class="tit_l"></span>
+                                 <span class="tit_m">危险路段位置分布</span>
+                                 <span class="tit_r"></span>
+                           </div>
+              
+              
+                           <Div class="con">
+                              <iframe id="iframe3" scrolling="no" frameborder="0" width="100%" height="750" src="dangerRoad1_bdmap.html?T=1"></iframe>
+                          </Div>
+                          
+                 
+             </div>
+             
+      
+      </div> 
+</div>
+
+
+
+
+
+
+
+
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+</script>
+
+
+<script type="text/javascript">
+    //初始化数据
+    $(document).ready(function(){
+
+        //获取参数
+        var queryArgs = getQueryParam();
+        //初始化日期
+        initLayDate(queryArgs.searchTime);
+        deangerRoadDetail(queryArgs);
+    });
+
+    function initLayDate(searchTime) {
+        laydate.render({
+            elem: '#searchDate',
+            theme: '#884898',
+            value: searchTime,
+            btns: ['confirm'],
+            done: function(value, date, endDate){
+                if(value!=""){
+                    var queryArgs = getQueryParam();
+                    queryArgs.searchTime = value;
+                    deangerRoadDetail(queryArgs);
+                }
+            }
+        });
+    }
+    var porintArr = [];
+    //危险路段详情
+    function deangerRoadDetail(queryArgs) {
+        //一类
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataDangerRoadAnalysis/getDangerRoadClsDetailData.jsn",
+            data: {'queryObj.countTime':queryArgs.searchTime},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    var html = "";
+                    if(data.data.length>=20){
+                        for(var i=0;i<10;i++){
+                            html +="<tr>\n" +
+                                "<th  style=\"width: 10%\">"+(i+1)+"</th>\n" +
+                                "<td  style=\"width: 30%\" onclick='changeMapPoint(\""+data.data[i].ownerDangerRoadName+"\","+data.data[i].longitude+","+data.data[i].latitude+")'>"+data.data[i].ownerDangerRoadName+"</td>\n";
+                            if(data.data[i].dangerRoadNum>=80){
+                                html +=  "<th  style=\"width: 10%\" class=\"bg_ys2\">"+data.data[i].dangerRoadNum+"次</th>\n";
+                            }else if(data.data[i].dangerRoadNum>=50) {
+                                html +=  "<th  style=\"width: 10%\" class=\"bg_ys1\">"+data.data[i].dangerRoadNum+"次</th>\n";
+                            }else {
+                                html +=  "<th  style=\"width: 10%\" class=\"bg_ys3\">"+data.data[i].dangerRoadNum+"次</th>\n";
+                            }
+                            html += "<th  style=\"width: 10%\">"+(i+11)+"</th>\n" +
+                                "<td  style=\"width: 30%\" onclick='changeMapPoint(\""+data.data[i+10].ownerDangerRoadName+"\","+data.data[i+10].longitude+","+data.data[i+10].latitude+")' >"+data.data[i+10].ownerDangerRoadName+"</td>\n" ;
+                            if(data.data[i+10].dangerRoadNum>=80){
+                                html +=  "<th  style=\"width: 10%\" class=\"bg_ys2\">"+data.data[i+10].dangerRoadNum+"次</th>\n";
+                            }else if(data.data[i+10].dangerRoadNum>=50) {
+                                html +=  "<th  style=\"width: 10%\" class=\"bg_ys1\">"+data.data[i+10].dangerRoadNum+"次</th>\n";
+                            }else {
+                                html +=  "<th  style=\"width: 10%\" class=\"bg_ys3\">"+data.data[i+10].dangerRoadNum+"次</th>\n";
+                            }
+                            html +=  "</tr>";
+
+                            porintArr.push({
+                                longitude:data.data[i].longitude,
+                                latitude:data.data[i].latitude
+                            });
+                            porintArr.push({
+                                longitude:data.data[i+10].longitude,
+                                latitude:data.data[i+10].latitude
+                            });
+
+                        }
+                    }
+                    $("#dangerRoad").html(html);
+                    //加载所所有的点
+                    setTimeout(function(){
+                        addMapPoints(porintArr);
+                    },2000);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function changeMapPoint(name,longitude,latitude) {
+        var iframe3 = document.getElementById('iframe3').contentWindow;
+        iframe3.updateMapPoint(name,longitude,latitude);
+    }
+
+    function addMapPoints(porints) {
+        var iframe3 = document.getElementById('iframe3').contentWindow;
+        if(iframe3.updateMapPointArr){
+            iframe3.updateMapPointArr(porints);
+        }
+    }
+
+    function goShouYe() {
+        window.location.href = "shouye.html";
+    }
+</script>
+
+
+  
+</body>
+</html>

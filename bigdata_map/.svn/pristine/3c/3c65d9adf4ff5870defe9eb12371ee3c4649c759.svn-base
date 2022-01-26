@@ -1,0 +1,26 @@
+package com.edgedo.bigdata.mapper;
+
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.edgedo.bigdata.entity.AlarmVo;
+import com.edgedo.bigdata.entity.BigdataSafetyWarning;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+import java.util.Map;
+
+
+@Mapper
+public interface BigdataSafetyWarningMapper extends BaseMapper<BigdataSafetyWarning>{
+
+    //根据主键统计
+    int countById(BigdataSafetyWarning warning);
+
+    //根据分片字段修改
+    void updateByPkSelectiveAndFenPian(BigdataSafetyWarning warning);
+
+    int countByCarPlateNum(Map<String, Object> map);
+
+    List<AlarmVo> countByCarType(Map<String, Object> map);
+
+    List<AlarmVo> countByCarTypeMonth(Map<String, Object> map);
+}

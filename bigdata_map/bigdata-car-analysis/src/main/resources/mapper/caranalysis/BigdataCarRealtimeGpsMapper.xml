@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataCarRealtimeGpsMapper" >
+
+
+	<resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataCarRealtimeGps" >
+		<id column="ID" property="id"/>
+		<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+		<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+		<result column="LAST_POSITION_TIME" property="lastPositionTime"/>
+		<result column="POINT_LAT" property="pointLat"/>
+		<result column="POINT_LONG" property="pointLong"/>
+		<result column="REAL_SPEED" property="realSpeed"/>
+		<result column="GPS_SPEED" property="gpsSpeed"/>
+		<result column="MILEAGE" property="mileage"/>
+		<result column="DIRECTION" property="direction"/>
+		<result column="ALTITUDE" property="altitude"/>
+		<result column="CAR_STATE" property="carState"/>
+		<result column="ALARM_STATE" property="alarmState"/>
+		<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+		<result column="LAST_UP_TIME" property="lastUpTime"/>
+		<result column="MAP_COUNTRY" property="mapCountry"/>
+		<result column="MAP_PROVINCE" property="mapProvince"/>
+		<result column="MAP_PROVINCE_ID" property="mapProvinceId"/>
+		<result column="MAP_CITY" property="mapCity"/>
+		<result column="MAP_CITY_ID" property="mapCityId"/>
+		<result column="MAP_XIANQU" property="mapXianqu"/>
+		<result column="MAP_XIANQU_ID" property="mapXianquId"/>
+		<result column="MAP_DETAIL" property="mapDetail"/>
+		<result column="BEGIN_MILEAGE" property="beginMileage"/>
+		<result column="BEGIN_TIME" property="beginTime"/>
+		<result column="OPERAT_FLAG" property="operatFlag"/>
+		<result column="ONLINE_STATE" property="onlineState"/>
+		<result column="AREA_UP_TIME" property="areaUpTime"></result>
+		<result column="TODAY_TIME_TOTAL" property="todayTimeTotal"/>
+		<result column="TODAY_MILEAGE_TOTAL" property="todayMileageTotal"/>
+		<result column="IP" property="ip"/>
+		<result column="STOP_LAT" property="stopLat"></result>
+		<result column="STOP_LONG" property="stopLong"></result>
+		<result column="STOP_MINUTE_NUM" property="stopMinuteNum"></result>
+		<result column="STOP_BEGIN_TIME" property="stopBeginTime"></result>
+		<result column="STOP_END_TIME" property="stopEndTime"></result>
+		<result column="MORNING_MINUTE_NUM" property="morningMinuteNum"/>
+		<result column="NOON_MINUTE_NUM" property="noonMinuteNum"/>
+		<result column="DUSK_MINUTE_NUM" property="duskMinuteNum"/>
+		<result column="MIDNIGHT_MINUTE_NUM" property="midnightMinuteNum"/>
+		<result column="MORNING_MINUTE_NUM" property="morningMinuteNum"/>
+		<result column="NOON_MINUTE_NUM" property="noonMinuteNum"/>
+		<result column="DUSK_MINUTE_NUM" property="duskMinuteNum"/>
+		<result column="LINGCHEN_MINUTE_NUM" property="lingchenMinuteNum"/>
+		<result column="MIDNIGHT_MINUTE_NUM" property="midnightMinuteNum"/>
+		<result column="MORNING_MILEAGE" property="morningMileage"/>
+		<result column="NOON_MILEAGE" property="noonMileage"/>
+		<result column="DUSK_MILEAGE" property="duskMileage"/>
+		<result column="MIDNIGHT_MILEAGE" property="midnightMileage"/>
+		<result column="LINGCHEN_MILEAGE" property="lingchenMileage"/>
+		<result column="ERR_MSG" property="errMsg"/>
+		<result column="QUALIFIED_STATE" property="qualifiedState"/>
+
+
+	</resultMap>
+
+	<resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataCarRealtimeGpsView" extends="BaseResultMap">
+
+	</resultMap>
+
+
+	<!-- ******* 新增字段请修改这里  ******  -->
+	<sql id="Base_Column_List">
+		 ID, CAR_PLATE_NUM, CAR_FRAME_NUM, LAST_POSITION_TIME, POINT_LAT, POINT_LONG, REAL_SPEED, GPS_SPEED,
+		 MILEAGE, DIRECTION, ALTITUDE, CAR_STATE, ALARM_STATE, CAR_PLATE_COLOR, LAST_UP_TIME, MAP_PROVINCE,MAP_PROVINCE_ID,
+		 MAP_CITY,MAP_CITY_ID, MAP_XIANQU,MAP_XIANQU_ID, MAP_DETAIL, BEGIN_MILEAGE, BEGIN_TIME, OPERAT_FLAG,
+		  ONLINE_STATE,AREA_UP_TIME,TODAY_TIME_TOTAL,TODAY_MILEAGE_TOTAL,IP,STOP_LAT,STOP_LONG,STOP_MINUTE_NUM,STOP_BEGIN_TIME,
+	 	STOP_END_TIME, MORNING_MINUTE_NUM, NOON_MINUTE_NUM, DUSK_MINUTE_NUM, LINGCHEN_MINUTE_NUM, MIDNIGHT_MINUTE_NUM,
+	      MORNING_MILEAGE, NOON_MILEAGE, DUSK_MILEAGE, MIDNIGHT_MILEAGE, LINGCHEN_MILEAGE,ERR_MSG,QUALIFIED_STATE
+	</sql>
+
+	<!-- ******* 利用好这里的动态查询条件  ******  -->
+	<sql id="where">
+		<where>
+			<if test='queryObj != null and  queryObj.lastPositionTime != null'>
+				AND  LAST_POSITION_TIME = #{queryObj.lastPositionTime}
+			</if>
+			<if test='queryObj != null and  queryObj.lastUpTime != null'>
+				AND  LAST_UP_TIME = #{queryObj.lastUpTime}
+			</if>
+			<if test='queryObj != null and  queryObj.beginTime != null'>
+				AND  BEGIN_TIME = #{queryObj.beginTime}
+			</if>
+		</where>
+
+	</sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataCarRealtimeGpsQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_car_realtime_gps 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataCarRealtimeGpsQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_car_realtime_gps 
+  		<include refid="where"/>
+  </select>
+
+	<!-- 更新初始里程 -->
+	<update id="updateBeginMileageAndOperateStateAndOnlineState">
+		update bigdata_car_realtime_gps
+			set BEGIN_MILEAGE = MILEAGE,BEGIN_TIME=now(),
+			OPERAT_FLAG='0',ONLINE_STATE='0',
+			TODAY_TIME_TOTAL=0,TODAY_MILEAGE_TOTAL=0
+	</update>
+
+	<!--  更新运营状态  -->
+	<update id="updateOperatingFlag">
+		update bigdata_car_realtime_gps set OPERAT_FLAG='1' where MILEAGE>BEGIN_MILEAGE
+	</update>
+
+	<!-- 当天只要在线了就是上线了 -->
+	<update id="updateOnlineState">
+		update bigdata_car_realtime_gps set ONLINE_STATE='1'
+		 where ONLINE_STATE='0' and to_days(LAST_POSITION_TIME) = to_days(now())
+	</update>
+
+	<!--  根据车牌号和车架号查询 -->
+	<select id="selectCarByCarPlateAndPlateColor" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_car_realtime_gps
+		where CAR_PLATE_NUM like concat('%',#{carPlateNum},'') and CAR_PLATE_COLOR=#{carPlateColor}
+	</select>
+
+	<!--  清理gps信息 -->
+	<update id="updateClearAllGpsState">
+		update bigdata_car_realtime_gps set
+			LAST_UP_TIME=null,BEGIN_MILEAGE=0,BEGIN_TIME=null,
+			OPERAT_FLAG='0',ONLINE_STATE='0',AREA_UP_TIME=null,TODAY_TIME_TOTAL=0,
+			TODAY_MILEAGE_TOTAL=0,STOP_LAT=null,STOP_LONG=null,STOP_MINUTE_NUM=0,STOP_BEGIN_TIME=null,
+			STOP_END_TIME=null,MORNING_MINUTE_NUM=0,NOON_MINUTE_NUM=0,DUSK_MINUTE_NUM=0,
+			LINGCHEN_MINUTE_NUM=0,MIDNIGHT_MINUTE_NUM=0,MORNING_MILEAGE=0,
+			NOON_MILEAGE=0,DUSK_MILEAGE=0,MIDNIGHT_MILEAGE=0,LINGCHEN_MILEAGE=0,
+			ERR_MSG='',QUALIFIED_STATE=1
+	</update>
+
+	<!-- 根据主键查询 -->
+	<select id="selectCarGpsInfoByIds" resultMap="BaseResultMap" >
+		select <include refid="Base_Column_List"/> from bigdata_car_realtime_gps
+		where id in
+		<foreach collection="array"  open="(" separator="," close=")" item="id">
+			#{id}
+		</foreach>
+	</select>
+
+	<insert id="insertBigdataLinshiBatch" parameterType="java.lang.String">
+		insert into bigdata_linshi_batch (
+		ID, BATCH_ID, ORDER_NUMBER,
+		CAR_PLATE_NUM, CAR_FRAME_NUM, CAR_PLATE_COLOR,
+		CREATE_TIME)
+		SELECT
+		UUID(),#{batchId},@rowno:=@rowno+1 as rowno,CAR_PLATE_NUM,CAR_FRAME_NUM,CAR_PLATE_COLOR,now()
+		FROM bigdata_car_realtime_gps,(select @rowno:=0) t ORDER BY CAR_PLATE_NUM DESC
+	</insert>
+	<resultMap id="BigdataLinshiBatchMap" type="com.edgedo.bigdata.entity.BigdataLinshiBatch" >
+		<id column="ID" property="id"/>
+		<result column="BATCH_ID" property="batchId"/>
+		<result column="ORDER_NUMBER" property="orderNumber"/>
+		<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+		<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+		<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+		<result column="CREATE_TIME" property="createTime"/>
+	</resultMap>
+
+	<select id="selecBigdataLinshiBatch" resultMap="BigdataLinshiBatchMap" parameterType="java.lang.String">
+		select ID,BATCH_ID,ORDER_NUMBER,CAR_PLATE_NUM,CAR_FRAME_NUM,CAR_PLATE_COLOR,CREATE_TIME  from bigdata_linshi_batch WHERE BATCH_ID=#{batchId} limit 200;
+	</select>
+
+	<select id="selectOrderNumDesc" parameterType="java.lang.String" resultType="int">
+		select ORDER_NUMBER from bigdata_linshi_batch WHERE BATCH_ID=#{batchId}
+		order by ORDER_NUMBER desc limit 1
+	</select>
+
+	<select id="listByStartAndEndBySortNum" parameterType="map" resultMap="BigdataLinshiBatchMap">
+		select ID,BATCH_ID,ORDER_NUMBER,CAR_PLATE_NUM,CAR_FRAME_NUM,CAR_PLATE_COLOR,CREATE_TIME from bigdata_linshi_batch
+		where BATCH_ID=#{batchId} and ORDER_NUMBER >=#{start} and ORDER_NUMBER &lt;=#{end}
+	</select>
+
+	<!--  查询没有在car_info表中的车 -->
+	<select id="selectGpsCarNotInCarInfo" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_car_realtime_gps
+		where not exists(select id from car_info where bigdata_car_realtime_gps.id=car_info.id )
+	</select>
+
+	<!--  查询没有在今天定位的车辆 -->
+	<select id="selectNotInTodayGps" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_car_realtime_gps
+		where date_format(LAST_POSITION_TIME,'%Y%m%d') &lt; date_format(now(),'%Y%m%d')
+	</select>
+
+	<!--  清理gps信息 -->
+	<update id="updateClearCarStateById">
+		update bigdata_car_realtime_gps set
+		LAST_UP_TIME=null,BEGIN_MILEAGE=0,BEGIN_TIME=null,
+		OPERAT_FLAG='0',ONLINE_STATE='0',AREA_UP_TIME=null,TODAY_TIME_TOTAL=0,
+		TODAY_MILEAGE_TOTAL=0,STOP_LAT=null,STOP_LONG=null,STOP_MINUTE_NUM=0,STOP_BEGIN_TIME=null,
+		STOP_END_TIME=null,MORNING_MINUTE_NUM=0,NOON_MINUTE_NUM=0,DUSK_MINUTE_NUM=0,
+		LINGCHEN_MINUTE_NUM=0,MIDNIGHT_MINUTE_NUM=0,MORNING_MILEAGE=0,
+		NOON_MILEAGE=0,DUSK_MILEAGE=0,MIDNIGHT_MILEAGE=0,LINGCHEN_MILEAGE=0,
+		ERR_MSG='',QUALIFIED_STATE=1
+		WHERE ID = #{carId}
+	</update>
+
+	<!--  查询最新的一条定位的车  -->
+	<select id="loadLatestOneCar" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_car_realtime_gps
+		order by LAST_POSITION_TIME desc limit 1
+	</select>
+
+
+  
+</mapper>

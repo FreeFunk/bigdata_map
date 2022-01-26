@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.SysOrgMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.SysOrg" >
+			<id column="ID" property="id"/>
+			<result column="ORG_NAME" property="orgName"/>
+			<result column="PARENT_ID" property="parentId"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CREATE_USER_NAME" property="createUserName"/>
+			<result column="CREATE_USER_ID" property="createUserId"/>
+			<result column="ORDER_NUMBER" property="orderNumber"/>
+			<result column="ORG_DESC" property="orgDesc"/>
+			<result column="IS_LEAF" property="isLeaf"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.SysOrgView" extends="BaseResultMap">
+
+    </resultMap>
+
+	<resultMap id="BaseResultViewMapSyn" type="com.edgedo.sys.queryvo.SysOrgViewSyn" extends="BaseResultMap">
+
+	</resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, ORG_NAME, PARENT_ID, CREATE_TIME, CREATE_USER_NAME, CREATE_USER_ID, ORDER_NUMBER, ORG_DESC,IS_LEAF
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.parentId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.parentId)'>
+					AND  PARENT_ID = #{queryObj.parentId}
+				</if>
+				<if test='queryObj != null and  queryObj.orgName != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.orgName)'>
+					AND  ORG_NAME LIKE concat('%',#{queryObj.orgName},'%')
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.SysOrgQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_org 
+  		<include refid="where"/>
+	  order by ORDER_NUMBER ASC
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.SysOrgQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_org 
+  		<include refid="where"/>
+  </select>
+
+	<!-- 根据parentId 查询 -->
+	<select id="selectByPreantID" parameterType="string" resultMap="BaseResultViewMapSyn">
+		select <include refid="Base_Column_List"/>
+		from sys_org
+		where PARENT_ID = #{parentId} order by ORDER_NUMBER asc
+	</select>
+  
+  
+</mapper>

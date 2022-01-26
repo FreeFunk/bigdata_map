@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataMonthEmpAlarmSumMapper" >
+
+
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataMonthEmpAlarmSum" >
+        <id column="ID" property="id"></id>
+        <result column="CREATE_TIME" property="createTime"></result>
+        <result column="CAR_PLATE_NUM" property="carPlateNum"></result>
+        <result column="CAR_FRAME_NUM" property="carFrameNum"></result>
+        <result column="CAR_PLATE_COLOR" property="carPlateColor"></result>
+        <result column="EMP_ID" property="empId"></result>
+        <result column="EMP_NAME" property="empName"></result>
+        <result column="EMP_CODE" property="empCode"></result>
+        <result column="EMP_PHONE" property="empPhone"></result>
+        <result column="FATIGUED_NUM" property="fatiguedNum"></result>
+        <result column="SERIOUS_FATIGUED_NUM" property="seriousFatiguedNum"></result>
+        <result column="OVER_SPEED_NUM" property="overSpeedNum"></result>
+        <result column="SERIOUS_OVER_SPEED_NUM" property="seriousOverSpeedNum"></result>
+        <result column="STATUS" property="status"></result>
+        <result column="COUNT_MONTH" property="countMonth"></result>
+        <result column="YEAR_NUM" property="yearNum"></result>
+
+    </resultMap>
+
+    <sql id="BaseColumn">
+         ID,CREATE_TIME,CAR_PLATE_NUM,CAR_FRAME_NUM,CAR_PLATE_COLOR,EMP_ID,EMP_NAME,
+        EMP_CODE,EMP_PHONE,FATIGUED_NUM,SERIOUS_FATIGUED_NUM,OVER_SPEED_NUM,SERIOUS_OVER_SPEED_NUM,
+        STATUS,COUNT_MONTH,YEAR_NUM
+    </sql>
+
+    <!-- 查询某个从业人员的报警统计数据 -->
+    <select id="listEmpAlarmSumOfMonth" parameterType="map" resultMap="BaseResultMap">
+      select <include refid="BaseColumn"/> from bigdata_month_emp_alarm_sum
+      where EMP_ID=#{empId} and COUNT_MONTH=#{countMonth}
+    </select>
+
+
+    <!--  更新统计为已经发送 -->
+    <update id="updateEmpAlarmSumToSendStatus" parameterType="list">
+      update bigdata_month_emp_alarm_sum set STATUS='1' where
+        id in
+      <foreach collection="list" item="it" open="(" close=")" separator=",">
+        #{it.id}
+      </foreach>
+    </update>
+
+
+</mapper>

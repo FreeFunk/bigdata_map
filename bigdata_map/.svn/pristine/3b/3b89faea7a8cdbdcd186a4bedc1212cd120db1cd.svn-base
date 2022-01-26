@@ -1,0 +1,45 @@
+#日志配置
+logging:
+  config: log4j2-spring.xml
+  level:
+    com.edgedo: info
+#是否开启定时任务
+app.scheduling.enable: true
+#定时任务线程数量
+app.scheduling.threadnum: 10
+#是否启用mvc
+app.springmvc.enable: true
+#启用shiro 权限校验
+app.shiro.enable: true
+#启用mybatis扫描
+app.mybatis.enable: true
+
+#分析大数据文件夹
+bigdata.dataHistoryGpsForder: /server/vdb1/gpsdata/remoteFile
+#实时位置的文件夹
+bigdata.dataRealTimeGpsFilePath: /server/vdb1/xyxClient/RemoteInfo.log
+#数据分析城市id
+bigdata.cityId: 130300
+#数据查询接口url
+bigdata.commonSearchUrl: http://127.0.0.1:8098
+#分析车辆的车牌号
+bigdata.carPlatePrefix: 冀C
+
+
+
+#地图反查百度秘钥
+baidu.baidu_geocoder_ak: zQTyHWw2m3T2pGVUylSprh13n5680CYf
+localcityname: 秦皇岛
+#公共查询接口地址
+ReportDataUrl: http://localhost:8098
+#红树林主动安全的车辆静态数据地址
+TongBuCarInfoUrl: http://39.106.199.153:6013/carinfo?userid=123456&userkey=123456
+#红树林主动安全平台id
+gpsCompId: 123456
+
+#gps数据
+gpsUrl: http://49.4.67.20:8110
+#语音服务的appid
+app.voicemsg.appid: 1400295375
+#语音服务的秘钥
+app.voicemsg.appkey: e6b743e5a5b7b63d9af385349325c8b1

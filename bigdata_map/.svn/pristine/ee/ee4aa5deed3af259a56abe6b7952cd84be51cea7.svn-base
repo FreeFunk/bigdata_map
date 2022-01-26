@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>组织人员维护</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/font-awesome/css/font-awesome.min.css" media="all">
+    <script src="../../../../../layuiadmin/canvas.js"></script>
+    <script src="../../../../../layuiadmin/saveImage.js"></script>
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-form layui-hide">
+            <input type="text" id="selectId"/>
+            <input type="text" id="selectOrgName"/>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <button class="layui-btn layuiadmin-btn-comm" data-type="add">添加</button>
+                <div class="layui-card">
+                    <div class="layui-card-body" >
+                        <table id="orgManagerCofig" lay-filter="orgManagerCofig" class="layui-table"></table>
+                        <script type="text/html" id="orgManagerCofig-op">
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '../../../../../layuiadmin/' //静态资源所在路径
+    })
+        .extend({
+            index: 'lib/index' //主入口模块
+        })
+        .use(['index','table', 'form','laydate'], function(){
+            var $ = layui.$
+                ,table = layui.table
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+            var headers = layui.admin.getTokenHeader();
+
+            //获取传过来的组织id和组织名
+            var orgId = $("#selectId").val();
+            table.render({
+                elem: '#orgManagerCofig' //指定原始表格的选择器（id选择器）
+                ,url:layui.setter.basePath +'/admin/sysUser/listpage.jsn'
+                ,headers:headers,
+                 height: 365
+                ,method: 'post'
+                ,where:{
+                    'queryObj.deptId':orgId
+                }
+                ,parseData: function(res){ //res 即为原始返回的数据
+                    return {
+                        "code": res.success, //解析接口状态
+                        "msg": res.errMsg, //解析提示文本
+                        "count": res.totalCount, //解析数据长度
+                        "data": res.list //解析数据列表
+                    };
+                }
+                ,response: {
+                    statusCode: true //规定成功的状态码，默认：0
+                }
+                ,cols: [[
+                    {field: 'id',align: 'center', width:'13%' ,title: '主键',hide:true},
+                    {field: 'userName',align: 'center', width:  '26%', title: '用户名'}
+                    ,{field: 'phone',align: 'center', width:  '25%', title: '电话'}
+                    ,{field: 'age',align: 'center', width:  '16%', title: '年龄'}
+                    ,{field: 'userCode',align: 'center', width:  '20%', title: '用户代码',hide:true},
+                    ,{title: '操作', width:  '33%',align: 'center', fixed: 'right', toolbar: '#orgManagerCofig-op'}
+                ]]
+                ,autoSort: false
+                ,page: true
+                ,limit: 7
+                ,limits: [7, 10, 25, 30]
+                ,text: {
+                    none: '暂无相关数据'
+                }
+            });
+
+        })
+
+</script>
+</body>
+</html>

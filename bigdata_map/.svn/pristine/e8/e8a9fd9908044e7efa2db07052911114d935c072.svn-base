@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataTimeCarDayRecMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataTimeCarDayRec" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+			<result column="CAR_PLATE_COLOR_TEXT" property="carPlateColorText"/>
+			<result column="OWNER_TEAM_ID" property="ownerTeamId"/>
+			<result column="OWNER_TEAM_NAME" property="ownerTeamName"/>
+			<result column="EARLY_MORNING_MILEAGE" property="earlyMorningMileage"/>
+			<result column="EARLY_MORNING_TIME" property="earlyMorningTime"/>
+			<result column="NOON_MILEAGE" property="noonMileage"/>
+			<result column="NOON_TIME" property="noonTime"/>
+			<result column="DUSK_MILEAGE" property="duskMileage"/>
+			<result column="DUSK_TIME" property="duskTime"/>
+			<result column="NIGHT_MILEAGE" property="nightMileage"/>
+			<result column="NIGHT_TIME" property="nightTime"/>
+			<result column="LINGCHEN_TIME" property="lingchenTime"/>
+			<result column="LINGCHEN_MILEAGE" property="lingchenMileage"/>
+			<result column="SUM_MILEAGE" property="sumMileage"/>
+			<result column="SUM_DURATION" property="sumDuration"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_TIME" property="countTime"/>
+			<result column="PROVINCE_ID" property="provinceId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_ID" property="cityId"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="XIANQU_ID" property="xianquId"/>
+			<result column="XIANQU_NAME" property="xianquName"/>
+			<result column="ONLINE_STATE" property="onlineState"/>
+			<result column="OPERAT_FLAG" property="operatFlag"/>
+			<result column="FIRST_DANGER_TIME_FLAG" property="firstDangerTimeFlag"/>
+			<result column="SECOND_DANGER_TIME_FLAG" property="secondDangerTimeFlag"/>
+			<result column="THIRD_DANGER_TIME_FLAG" property="thirdDangerTimeFlag"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+			<result column="OWNER_NAME" property="ownerName"/>
+			<result column="OWNER_PHONE_NUM" property="ownerPhoneNum"/>
+			<result column="IS_OVER_SPEED" property="isOverSpeed"/>
+			<result column="OVER_SPEED_NUM" property="overSpeedNum"/>
+			<result column="IS_FATIGUE" property="isFatigue"/>
+			<result column="FATIGUE_NUM" property="fatigueNum"/>
+			<result column="IS_SERIOUS_OVER_SPEED" property="isSeriousOverSpeed"/>
+			<result column="SERIOUS_OVER_SPEED_NUM" property="seriousOverSpeedNum"/>
+			<result column="IS_SERIOUS_FATIGUE" property="isSeriousFatigue"/>
+			<result column="IS_HIGH_WAY_OVER_SPEED" property="isHighWayOverSpeed"/>
+			<result column="HIGH_WAY_OVER_SPEED_NUM" property="highWayOverSpeedNum"/>
+			<result column="IS_GUODAO_OVER_SPEED" property="isGuodaoOverSpeed"/>
+			<result column="GUODAO_OVER_SPEED_NUM" property="guodaoOverSpeedNum"/>
+			<result column="IS_DANGER_OVER_SPEED" property="isDangerOverSpeed"/>
+			<result column="DANGER_OVER_SPEED_NUM" property="dangerOverSpeedNum"/>
+			<result column="IS_DANGER_FATIGUE" property="isDangerFatigue"/>
+			<result column="DANGER_FATIGUE_NUM" property="dangerFatigueNum"/>
+
+			<result column="IS_HIGH_WAY_SER_OVER_SPEED" property="isHighWaySerOverSpeed"/>
+			<result column="HIGH_WAY_SER_OVER_SPEED_NUM" property="highWaySerOverSpeedNum"/>
+			<result column="IS_GUODAO_SER_OVER_SPEED" property="isGuodaoSerOverSpeed"/>
+			<result column="GUODAO_SER_OVER_SPEED_NUM" property="guodaoSerOverSpeedNum"/>
+			<result column="IS_GUODAO_DANGER_OVER_SPEED" property="isGuodaoDangerOverSpeed"/>
+			<result column="GUODAO_DANGER_OVER_SPEED_NUM" property="guodaoDangerOverSpeedNum"/>
+			<result column="IS_HIGH_WAY_DANGER_OVER_SPEED" property="isHighWayDangerOverSpeed"/>
+			<result column="HIGH_WAY_DANGER_OVER_SPEED_NUM" property="highWayDangerOverSpeedNum"/>
+
+			<result column="EMP_NAME" property="empName"/>
+			<result column="EMP_CODE" property="empCode"/>
+			<result column="EMP_PHONE" property="empPhone"/>
+			<result column="EMP_ID" property="empId"/>
+
+			<result column="AVG_SPEED" property="avgSpeed"/>
+			<result column="TRANSIT_TYPE" property="transitType"/>
+			<result column="SAFE_SCORE" property="safeScore"/>
+			<result column="ALARM_NUM" property="alarmNum"/>
+			<result column="COMMON_ALARM_NUM" property="commonAlarmNum"/>
+			<result column="COMMON_HANDLE_NUM" property="commonHandleNum"/>
+			<result column="SAFE_ALARM_NUM" property="safeAlarmNum"/>
+			<result column="SAFE_HANDLE_NUM" property="safeHandleNum"/>
+			<result column="IS_ALARM" property="isAlarm"/>
+
+	</resultMap>
+
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataTimeCarDayRecView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CAR_PLATE_NUM, CAR_FRAME_NUM, CAR_PLATE_COLOR, CAR_PLATE_COLOR_TEXT, OWNER_TEAM_ID, OWNER_TEAM_NAME,
+	  EARLY_MORNING_MILEAGE, EARLY_MORNING_TIME, NOON_MILEAGE, NOON_TIME, DUSK_MILEAGE, DUSK_TIME, NIGHT_MILEAGE, NIGHT_TIME,
+	  LINGCHEN_TIME, LINGCHEN_MILEAGE, SUM_MILEAGE, SUM_DURATION, CAR_TYPE, COUNT_TIME, PROVINCE_ID, PROVINCE_NAME, CITY_ID,
+	   CITY_NAME, XIANQU_ID, XIANQU_NAME, ONLINE_STATE, OPERAT_FLAG, FIRST_DANGER_TIME_FLAG, SECOND_DANGER_TIME_FLAG,
+	   THIRD_DANGER_TIME_FLAG, COUNT_DATE, COUNT_MONTH,YEAR_NUM,OWNER_NAME,OWNER_PHONE_NUM,IS_OVER_SPEED,OVER_SPEED_NUM,
+	   IS_FATIGUE,FATIGUE_NUM,IS_SERIOUS_OVER_SPEED,SERIOUS_OVER_SPEED_NUM,IS_SERIOUS_FATIGUE,IS_HIGH_WAY_OVER_SPEED,
+	   HIGH_WAY_OVER_SPEED_NUM,IS_GUODAO_OVER_SPEED,GUODAO_OVER_SPEED_NUM,IS_DANGER_OVER_SPEED,DANGER_OVER_SPEED_NUM,IS_DANGER_FATIGUE,
+	   DANGER_FATIGUE_NUM,IS_HIGH_WAY_SER_OVER_SPEED,HIGH_WAY_SER_OVER_SPEED_NUM,IS_GUODAO_SER_OVER_SPEED,GUODAO_SER_OVER_SPEED_NUM,
+	IS_GUODAO_DANGER_OVER_SPEED,GUODAO_DANGER_OVER_SPEED_NUM,IS_HIGH_WAY_DANGER_OVER_SPEED,HIGH_WAY_DANGER_OVER_SPEED_NUM,
+	EMP_NAME,EMP_CODE,EMP_PHONE,EMP_ID,AVG_SPEED,TRANSIT_TYPE,SAFE_SCORE,ALARM_NUM,COMMON_ALARM_NUM,COMMON_HANDLE_NUM,SAFE_ALARM_NUM,
+	SAFE_HANDLE_NUM,IS_ALARM
+  </sql>
+
+	<update id="updateByFenPian" parameterType="com.edgedo.bigdata.entity.BigdataTimeCarDayRec">
+		update bigdata_time_car_day_rec
+
+		<set>
+			<if test="createTime!=null" >
+				CREATE_TIME=#{createTime},
+			</if>
+			<if test="carPlateNum!=null" >
+				CAR_PLATE_NUM=#{carPlateNum},
+			</if>
+			<if test="carFrameNum!=null" >
+				CAR_FRAME_NUM=#{carFrameNum},
+			</if>
+			<if test="carPlateColor!=null" >
+				CAR_PLATE_COLOR=#{carPlateColor},
+			</if>
+			<if test="carPlateColorText!=null" >
+				CAR_PLATE_COLOR_TEXT=#{carPlateColorText},
+			</if>
+			<if test="ownerTeamId!=null" >
+				OWNER_TEAM_ID=#{ownerTeamId},
+			</if>
+			<if test="ownerTeamName!=null" >
+				OWNER_TEAM_NAME=#{ownerTeamName},
+			</if>
+			<if test="earlyMorningMileage!=null" >
+				EARLY_MORNING_MILEAGE=#{earlyMorningMileage},
+			</if>
+			<if test="earlyMorningTime!=null" >
+				EARLY_MORNING_TIME=#{earlyMorningTime},
+			</if>
+			<if test="noonMileage!=null" >
+				NOON_MILEAGE=#{noonMileage},
+			</if>
+			<if test="noonTime!=null" >
+				NOON_TIME=#{noonTime},
+			</if>
+			<if test="duskMileage!=null" >
+				DUSK_MILEAGE=#{duskMileage},
+			</if>
+			<if test="duskTime!=null" >
+				DUSK_TIME=#{duskTime},
+			</if>
+			<if test="nightMileage!=null" >
+				NIGHT_MILEAGE=#{nightMileage},
+			</if>
+			<if test="nightTime!=null" >
+				NIGHT_TIME=#{nightTime},
+			</if>
+			<if test="lingchenTime!=null" >
+				LINGCHEN_TIME=#{lingchenTime},
+			</if>
+			<if test="lingchenMileage!=null" >
+				LINGCHEN_MILEAGE=#{lingchenMileage},
+			</if>
+			<if test="sumMileage!=null" >
+				SUM_MILEAGE=#{sumMileage},
+			</if>
+			<if test="sumDuration!=null" >
+				SUM_DURATION=#{sumDuration},
+			</if>
+			<if test="carType!=null" >
+				CAR_TYPE=#{carType},
+			</if>
+			<if test="countTime!=null" >
+				COUNT_TIME=#{countTime},
+			</if>
+			<if test="provinceId!=null" >
+				PROVINCE_ID=#{provinceId},
+			</if>
+			<if test="provinceName!=null" >
+				PROVINCE_NAME=#{provinceName},
+			</if>
+			<if test="cityId!=null" >
+				CITY_ID=#{cityId},
+			</if>
+			<if test="cityName!=null" >
+				CITY_NAME=#{cityName},
+			</if>
+			<if test="xianquId!=null" >
+				XIANQU_ID=#{xianquId},
+			</if>
+			<if test="xianquName!=null" >
+				XIANQU_NAME=#{xianquName},
+			</if>
+			<if test="onlineState!=null" >
+				ONLINE_STATE=#{onlineState},
+			</if>
+			<if test="operatFlag!=null" >
+				OPERAT_FLAG=#{operatFlag},
+			</if>
+			<if test="firstDangerTimeFlag!=null" >
+				FIRST_DANGER_TIME_FLAG=#{firstDangerTimeFlag},
+			</if>
+			<if test="secondDangerTimeFlag!=null" >
+				SECOND_DANGER_TIME_FLAG=#{secondDangerTimeFlag},
+			</if>
+			<if test="thirdDangerTimeFlag!=null" >
+				THIRD_DANGER_TIME_FLAG=#{thirdDangerTimeFlag},
+			</if>
+			<if test="yearNum!=null" >
+				YEAR_NUM=#{yearNum},
+			</if>
+			<if test="ownerName!=null" >
+				OWNER_NAME=#{ownerName},
+			</if>
+			<if test="ownerPhoneNum!=null" >
+				OWNER_PHONE_NUM=#{ownerPhoneNum},
+			</if>
+			<if test="isOverSpeed!=null" >
+				IS_OVER_SPEED=#{isOverSpeed},
+			</if>
+			<if test="overSpeedNum!=null" >
+				OVER_SPEED_NUM=#{overSpeedNum},
+			</if>
+			<if test="isFatigue!=null" >
+				IS_FATIGUE=#{isFatigue},
+			</if>
+			<if test="fatigueNum!=null" >
+				FATIGUE_NUM=#{fatigueNum},
+			</if>
+			<if test="isSeriousOverSpeed!=null" >
+				IS_SERIOUS_OVER_SPEED=#{isSeriousOverSpeed},
+			</if>
+			<if test="seriousOverSpeedNum!=null" >
+				SERIOUS_OVER_SPEED_NUM=#{seriousOverSpeedNum},
+			</if>
+			<if test="isSeriousFatigue!=null" >
+				IS_SERIOUS_FATIGUE=#{isSeriousFatigue},
+			</if>
+			<if test="isHighWayOverSpeed!=null" >
+				IS_HIGH_WAY_OVER_SPEED=#{isHighWayOverSpeed},
+			</if>
+			<if test="highWayOverSpeedNum!=null" >
+				HIGH_WAY_OVER_SPEED_NUM=#{highWayOverSpeedNum},
+			</if>
+			<if test="isGuodaoOverSpeed!=null" >
+				IS_GUODAO_OVER_SPEED=#{isGuodaoOverSpeed},
+			</if>
+			<if test="guodaoOverSpeedNum!=null" >
+				GUODAO_OVER_SPEED_NUM=#{guodaoOverSpeedNum},
+			</if>
+			<if test="isDangerOverSpeed!=null" >
+				IS_DANGER_OVER_SPEED=#{isDangerOverSpeed},
+			</if>
+			<if test="dangerOverSpeedNum!=null" >
+				DANGER_OVER_SPEED_NUM=#{dangerOverSpeedNum},
+			</if>
+			<if test="isDangerFatigue!=null" >
+				IS_DANGER_FATIGUE=#{isDangerFatigue},
+			</if>
+			<if test="dangerFatigueNum!=null" >
+				DANGER_FATIGUE_NUM=#{dangerFatigueNum},
+			</if>
+			<if test="isHighWaySerOverSpeed!=null" >
+				IS_HIGH_WAY_SER_OVER_SPEED=#{isHighWaySerOverSpeed},
+			</if>
+			<if test="highWaySerOverSpeedNum!=null" >
+				HIGH_WAY_SER_OVER_SPEED_NUM=#{highWaySerOverSpeedNum},
+			</if>
+			<if test="isGuodaoSerOverSpeed!=null" >
+				IS_GUODAO_SER_OVER_SPEED=#{isGuodaoSerOverSpeed},
+			</if>
+			<if test="guodaoSerOverSpeedNum!=null" >
+				GUODAO_SER_OVER_SPEED_NUM=#{guodaoSerOverSpeedNum},
+			</if>
+			<if test="isGuodaoDangerOverSpeed!=null" >
+				IS_GUODAO_DANGER_OVER_SPEED=#{isGuodaoDangerOverSpeed},
+			</if>
+			<if test="guodaoDangerOverSpeedNum!=null" >
+				GUODAO_DANGER_OVER_SPEED_NUM=#{guodaoDangerOverSpeedNum},
+			</if>
+			<if test="isHighWayDangerOverSpeed!=null" >
+				IS_HIGH_WAY_DANGER_OVER_SPEED=#{isHighWayDangerOverSpeed},
+			</if>
+
+			<if test="highWayDangerOverSpeedNum!=null" >
+				HIGH_WAY_DANGER_OVER_SPEED_NUM=#{highWayDangerOverSpeedNum},
+			</if>
+			<if test="empName!=null" >
+				EMP_NAME=#{empName},
+			</if>
+			<if test="empCode!=null" >
+				EMP_CODE=#{empCode},
+			</if>
+			<if test="empPhone!=null" >
+				EMP_PHONE=#{empPhone},
+			</if>
+			<if test="empId!=null" >
+				EMP_ID=#{empId},
+			</if>
+			<if test="avgSpeed!=null" >
+				AVG_SPEED=#{avgSpeed},
+			</if>
+			<if test="alarmNum!=null" >
+				ALARM_NUM=#{alarmNum},
+			</if>
+			<if test="commonAlarmNum!=null" >
+				COMMON_ALARM_NUM=#{commonAlarmNum},
+			</if>
+			<if test="commonHandleNum!=null" >
+				COMMON_HANDLE_NUM=#{commonHandleNum},
+			</if>
+			<if test="safeAlarmNum!=null" >
+				SAFE_ALARM_NUM=#{safeAlarmNum},
+			</if>
+			<if test="safeHandleNum!=null" >
+				SAFE_HANDLE_NUM=#{safeHandleNum},
+			</if>
+			<if test="isAlarm!=null" >
+				IS_ALARM=#{isAlarm}
+			</if>
+		</set>
+		where ID=#{id} and COUNT_MONTH = #{countMonth}
+	</update>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+				<if test='queryObj != null and  queryObj.firstDangerTimeFlag != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.firstDangerTimeFlag)'>
+					AND  FIRST_DANGER_TIME_FLAG = #{queryObj.firstDangerTimeFlag}
+				</if>
+				<if test='queryObj != null and  queryObj.secondDangerTimeFlag != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.secondDangerTimeFlag)'>
+					AND  SECOND_DANGER_TIME_FLAG = #{queryObj.secondDangerTimeFlag}
+				</if>
+				<if test='queryObj != null and  queryObj.thirdDangerTimeFlag != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.thirdDangerTimeFlag)'>
+					AND  THIRD_DANGER_TIME_FLAG = #{queryObj.thirdDangerTimeFlag}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataTimeCarDayRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_time_car_day_rec 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataTimeCarDayRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_time_car_day_rec 
+  		<include refid="where"/>
+  </select>
+
+	<!--  分组统计  -->
+	<select id="sumGroupByCarType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+			sum(EARLY_MORNING_MILEAGE) EARLY_MORNING_MILEAGE,
+			sum(EARLY_MORNING_TIME) EARLY_MORNING_TIME,
+			sum(NOON_MILEAGE) NOON_MILEAGE,
+			sum(NOON_TIME) NOON_TIME,
+			sum(DUSK_MILEAGE) DUSK_MILEAGE,
+			sum(DUSK_TIME) DUSK_TIME,
+			sum(NIGHT_MILEAGE) NIGHT_MILEAGE,
+			sum(NIGHT_TIME) NIGHT_TIME,
+			sum(LINGCHEN_TIME) LINGCHEN_TIME,
+			sum(LINGCHEN_MILEAGE) LINGCHEN_MILEAGE,
+			sum(SUM_MILEAGE) SUM_MILEAGE,
+			sum(SUM_DURATION) SUM_DURATION,
+			sum(FIRST_DANGER_TIME_FLAG) FIRST_DANGER_TIME_FLAG,
+			sum(SECOND_DANGER_TIME_FLAG) SECOND_DANGER_TIME_FLAG,
+			sum(THIRD_DANGER_TIME_FLAG) THIRD_DANGER_TIME_FLAG,
+			CAR_TYPE
+		from bigdata_time_car_day_rec  where COUNT_DATE = #{countDate}
+		group by CAR_TYPE
+	</select>
+
+	<!--  根据日期和分片字段分组统计   -->
+	<select id="sumGroupByCarTypeOfDay" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		sum(EARLY_MORNING_MILEAGE) EARLY_MORNING_MILEAGE,
+		sum(EARLY_MORNING_TIME) EARLY_MORNING_TIME,
+		sum(NOON_MILEAGE) NOON_MILEAGE,
+		sum(NOON_TIME) NOON_TIME,
+		sum(DUSK_MILEAGE) DUSK_MILEAGE,
+		sum(DUSK_TIME) DUSK_TIME,
+		sum(NIGHT_MILEAGE) NIGHT_MILEAGE,
+		sum(NIGHT_TIME) NIGHT_TIME,
+		sum(LINGCHEN_TIME) LINGCHEN_TIME,
+		sum(LINGCHEN_MILEAGE) LINGCHEN_MILEAGE,
+		sum(SUM_MILEAGE) SUM_MILEAGE,
+		sum(SUM_DURATION) SUM_DURATION,
+		sum(FIRST_DANGER_TIME_FLAG) FIRST_DANGER_TIME_FLAG,
+		sum(SECOND_DANGER_TIME_FLAG) SECOND_DANGER_TIME_FLAG,
+		sum(THIRD_DANGER_TIME_FLAG) THIRD_DANGER_TIME_FLAG,
+		CAR_TYPE
+		from bigdata_time_car_day_rec
+		where COUNT_DATE = #{countDate} and COUNT_MONTH=#{countMonth}
+		group by CAR_TYPE
+	</select>
+
+
+	<!--  统计某月的一类危险路段的车辆数 -->
+	<select id="selectSumGroupCarInfoMonthFirstCount" parameterType="map" resultMap="BaseResultMap">
+		select CAR_PLATE_NUM,CAR_PLATE_COLOR,FIRST_DANGER_TIME_FLAG
+			from bigdata_time_car_day_rec
+			where CAR_TYPE=#{carType} and FIRST_DANGER_TIME_FLAG>0
+			and COUNT_MONTH=#{countMonth}
+			group by CAR_PLATE_NUM,CAR_PLATE_COLOR
+	</select>
+
+	<!--  统计某月的二类危险路段的车辆数 -->
+	<select id="selectSumGroupCarInfoMonthSecondCount" parameterType="map" resultMap="BaseResultMap">
+		select CAR_PLATE_NUM,CAR_PLATE_COLOR,FIRST_DANGER_TIME_FLAG
+		from bigdata_time_car_day_rec
+		where CAR_TYPE=#{carType} and SECOND_DANGER_TIME_FLAG>0
+		and COUNT_MONTH=#{countMonth}
+		group by CAR_PLATE_NUM,CAR_PLATE_COLOR
+	</select>
+
+	<!--  统计某月的二类危险路段的车辆数 -->
+	<select id="selectSumGroupCarInfoMonthThirdCount" parameterType="map" resultMap="BaseResultMap">
+		select CAR_PLATE_NUM,CAR_PLATE_COLOR,FIRST_DANGER_TIME_FLAG
+		from bigdata_time_car_day_rec
+		where CAR_TYPE=#{carType} and THIRD_DANGER_TIME_FLAG>0
+		and COUNT_MONTH=#{countMonth}
+		group by CAR_PLATE_NUM,CAR_PLATE_COLOR
+	</select>
+
+	<!--  根据主键和分片字段查询 -->
+	<select id="loadByIdAndDate" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_time_car_day_rec
+		where ID=#{id} and COUNT_MONTH=#{countMonth}
+	</select>
+
+	<!--   从业人员角度查询  -->
+	<select id="selectGroupSumInfoForEmpAlarm" parameterType="map" resultType="com.edgedo.bigdata.entity.BigdataMonthEmpAlarmSum">
+		select
+			sum(OVER_SPEED_NUM) overSpeedNum,sum(SERIOUS_OVER_SPEED_NUM) seriousOverSpeedNum,
+			sum(IS_FATIGUE) fatiguedNum ,sum(IS_SERIOUS_FATIGUE) seriousFatiguedNum,
+			CAR_PLATE_NUM carPlateNum,CAR_PLATE_COLOR carPlateColor,CAR_FRAME_NUM carFrameNum
+		 from bigdata_time_car_day_rec
+		where EMP_ID=#{empId} and COUNT_MONTH=#{countMonth}
+		group by CAR_PLATE_NUM,CAR_PLATE_COLOR
+	</select>
+
+
+	<select id="selectByTeamId" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_time_car_day_rec
+		where
+		OWNER_TEAM_ID = #{id} and COUNT_DATE=#{countDay} and COUNT_MONTH=#{countMonth}  and YEAR_NUM=#{yearNum}
+	</select>
+	<select id="countMileageByWeek" parameterType="map" resultType="com.edgedo.bigdata.entity.BigdataFenxiCarWeek">
+		SELECT
+			SUM(SUM_MILEAGE) runMileage,SUM(SUM_DURATION) runTimeLength ,SUM(ALARM_NUM) alarmNum
+			FROM bigdata_time_car_day_rec
+		where CAR_PLATE_NUM=#{carPlateNum} and CAR_PLATE_COLOR =#{carPlateColor} and COUNT_MONTH=#{countMonth}
+		AND DATE_FORMAT(COUNT_DATE,'%Y%m%d') >= DATE_FORMAT(#{beginDate},'%Y%m%d')
+		and DATE_FORMAT(COUNT_DATE,'%Y%m%d') &lt;= DATE_FORMAT(#{endDate},'%Y%m%d')
+	</select>
+
+	<select id="countMileageByMonth" parameterType="map" resultType="com.edgedo.bigdata.entity.BigdataFenxiCarMonth">
+		SELECT
+		SUM(SUM_MILEAGE) runMileage,SUM(SUM_DURATION) runTimeLength ,SUM(ALARM_NUM) alarmNum
+		FROM bigdata_time_car_day_rec
+		where CAR_PLATE_NUM=#{carPlateNum} and CAR_PLATE_COLOR =#{carPlateColor} and COUNT_MONTH=#{countMonth}
+	</select>
+
+
+	<select id="selectByDate" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_time_car_day_rec
+		where
+		COUNT_DATE=#{countDay} and COUNT_MONTH=#{countMonth} and YEAR_NUM=#{yearNum}
+	</select>
+
+
+	<select id="selectAlarmNum" resultType="java.lang.Integer">
+		select COUNT(1) from bigdata_time_car_day_rec
+		where
+		COUNT_DATE=#{countDay} and COUNT_MONTH=#{countMonth} and YEAR_NUM=#{yearNum} and IS_ALARM='1'
+	</select>
+
+	<select id="selectCompNum" resultType="java.lang.Integer">
+		select COUNT(DISTINCT OWNER_TEAM_NAME) from bigdata_time_car_day_rec
+		where
+			COUNT_DATE=#{countDay} and COUNT_MONTH=#{countMonth} and YEAR_NUM=#{yearNum} and IS_ALARM='1'
+	</select>
+
+	<select id="selectAlarmNumXianQu" resultType="java.lang.Integer">
+		select COUNT(1) from bigdata_time_car_day_rec
+		where
+			COUNT_DATE=#{countDay} and COUNT_MONTH=#{countMonth}
+		  and YEAR_NUM=#{yearNum} AND XIANQU_ID=#{xianQuId} and IS_ALARM='1'
+		  and  CAR_TYPE=#{carType}
+	</select>
+
+	<select id="selectCompNumXianQu" resultType="java.lang.Integer">
+		select COUNT(DISTINCT OWNER_TEAM_NAME) from bigdata_time_car_day_rec
+		where
+			COUNT_DATE=#{countDay} and COUNT_MONTH=#{countMonth}
+		  and YEAR_NUM=#{yearNum} AND XIANQU_ID=#{xianQuId} and IS_ALARM='1'
+			and  CAR_TYPE=#{carType}
+	</select>
+
+	<select id="selectAlarmNumXianQuAll" resultType="java.lang.Integer">
+		select COUNT(1) from bigdata_time_car_day_rec
+		where
+			COUNT_DATE=#{countDay} and COUNT_MONTH=#{countMonth} and YEAR_NUM=#{yearNum} AND XIANQU_ID=#{xianQuId} and IS_ALARM='1'
+	</select>
+
+	<select id="selectCompNumXianQuAll" resultType="java.lang.Integer">
+		select COUNT(DISTINCT OWNER_TEAM_NAME) from bigdata_time_car_day_rec
+		where
+			COUNT_DATE=#{countDay} and COUNT_MONTH=#{countMonth} and YEAR_NUM=#{yearNum} AND XIANQU_ID=#{xianQuId} and IS_ALARM='1'
+	</select>
+
+	<select id="selectByWeekCountTop" parameterType="map" resultType="String">
+		SELECT
+			DISTINCT CAR_PLATE_NUM
+		FROM bigdata_time_car_day_rec
+		where OWNER_TEAM_ID=#{teamId} and COUNT_MONTH=#{countMonth}  and YEAR_NUM=#{yearNum}
+		AND DATE_FORMAT(COUNT_DATE,'%Y%m%d') >= DATE_FORMAT(#{beginDate},'%Y%m%d')
+		and DATE_FORMAT(COUNT_DATE,'%Y%m%d') &lt;= DATE_FORMAT(#{endDate},'%Y%m%d')
+	</select>
+
+	<select id="selectByMonthCountTop" parameterType="map" resultType="String">
+		SELECT
+			DISTINCT CAR_PLATE_NUM
+		FROM bigdata_time_car_day_rec
+		where OWNER_TEAM_ID=#{teamId} and COUNT_MONTH=#{countMonth}  and YEAR_NUM=#{yearNum}
+	</select>
+
+	<select id="selectWeekCarNum" resultType="java.lang.Integer">
+		SELECT
+			SUM(ALARM_NUM)
+		FROM bigdata_time_car_day_rec
+		where OWNER_TEAM_ID=#{teamId} and COUNT_MONTH=#{countMonth}  and YEAR_NUM=#{weekYear}
+		  AND DATE_FORMAT(COUNT_DATE,'%Y%m%d') >= DATE_FORMAT(#{beginDate},'%Y%m%d')
+		  and DATE_FORMAT(COUNT_DATE,'%Y%m%d') &lt;= DATE_FORMAT(#{endDate},'%Y%m%d')
+			and CAR_PLATE_NUM=#{carNum}
+	</select>
+
+	<select id="selectWeekCarNumLiCheng" resultType="java.math.BigDecimal">
+		SELECT
+			SUM(SUM_MILEAGE)
+		FROM bigdata_time_car_day_rec
+		where OWNER_TEAM_ID=#{teamId} and COUNT_MONTH=#{countMonth}  and YEAR_NUM=#{weekYear}
+		  AND DATE_FORMAT(COUNT_DATE,'%Y%m%d') >= DATE_FORMAT(#{beginDate},'%Y%m%d')
+		  and DATE_FORMAT(COUNT_DATE,'%Y%m%d') &lt;= DATE_FORMAT(#{endDate},'%Y%m%d')
+		  and CAR_PLATE_NUM=#{carNum}
+	</select>
+
+	<select id="selectMonthCarNum" resultType="java.lang.Integer">
+		SELECT
+			SUM(ALARM_NUM)
+		FROM bigdata_time_car_day_rec
+		where OWNER_TEAM_ID=#{teamId} and COUNT_MONTH=#{countMonth}  and YEAR_NUM=#{yearNum}
+		  and CAR_PLATE_NUM=#{carNum}
+	</select>
+
+
+	<select id="selecMonthCarNumLiCheng" resultType="java.math.BigDecimal">
+		SELECT
+			SUM(SUM_MILEAGE)
+		FROM bigdata_time_car_day_rec
+		where OWNER_TEAM_ID=#{teamId} and COUNT_MONTH=#{countMonth}  and YEAR_NUM=#{yearNum}
+		  and CAR_PLATE_NUM=#{carNum}
+	</select>
+
+	<select id="countNum" resultType="map">
+		SELECT
+			SUM(SUM_MILEAGE) runMileage,SUM(SUM_DURATION) runTimeLength ,SUM(ALARM_NUM) alarmNum
+		FROM bigdata_time_car_day_rec
+		where OWNER_TEAM_ID=#{teamId} and COUNT_MONTH=#{countMonth}  and YEAR_NUM=#{yearNum} and COUNT_DATE=#{countDay}
+	</select>
+
+</mapper>

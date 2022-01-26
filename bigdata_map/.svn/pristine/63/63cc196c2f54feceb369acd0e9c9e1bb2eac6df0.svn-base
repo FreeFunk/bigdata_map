@@ -1,0 +1,30 @@
+#####################内网部署的配置文件#########################
+#永不执行的表达式 '-'
+timetask:
+  car:
+    BigDataAnalysisRealGpsCar:
+      enable: true
+      cron:
+        #清空地图点 0 2 0 * * ?
+        clearCatchGps: 0 2 0 * * ?
+        #分析车辆实时位置 0/10 * * * * ?
+        UpdateReadGps: '-'
+        #将redis缓存中的数据存入数据库并且查询出来地理区域 0 13/30 * * * ?
+        saveGpsWithCityInfoToRedis: '-'
+        #分析车辆的行驶轨迹情况 0 17 * * * ?
+        fenxiAllCarTrailOfToday: 0/10 * * * * ?
+  driver:
+    BigDataDriverPatitionGpsTrainFenxi:
+      enable: true
+      cron:
+        #分析队列中的司机驾驶习惯 0 * * * * ?
+        fenxiPartitionQueue: '-'
+  jt809:
+    BigDataRealGpsTransmitJob:
+      enable: true
+      cron:
+        #将定位数据插入转发队列 0/3 * * * * ?
+        compareGpsAndTransfer: 0/3 * * * * ?
+        #将转发队列的车辆权限重新加载到内存 0 0/7 * * * ?
+        loadTransmitQueCarPermit: '-'
+

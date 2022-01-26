@@ -1,0 +1,8 @@
+package com.edgedo.sys.queryvo;
+
+import com.edgedo.sys.entity.BigdataDriverDrawInfo;
+
+public class BigdataDriverDrawInfoView extends BigdataDriverDrawInfo {
+
+
+}

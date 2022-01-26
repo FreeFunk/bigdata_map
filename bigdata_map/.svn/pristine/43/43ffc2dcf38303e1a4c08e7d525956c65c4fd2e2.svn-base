@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.alarm.mapper.AlterlogsMapper" >
+
+    <!--  查询秦皇岛的车辆报警数据  -->
+    <select id="listRecentLogs" resultType="com.edgedo.alarm.entity.Alterlogs" parameterType="map">
+      select aid,acarcode,aphone,atype,atime,drivers,longitude,latitude,type,aspeed,remark,t.tcarcolour
+      from alterlogs a INNER JOIN terminal t on a.aphone=t.tsimcode
+       where a.acarcode like '冀C%'
+        and (
+            a.atime like concat('%',#{searchTime1},'%')
+            or a.atime like concat('%',#{searchTime2},'%')
+            or a.atime like concat('%',#{searchTime3},'%')
+        )
+        and atype!=3
+    </select>
+
+
+</mapper>

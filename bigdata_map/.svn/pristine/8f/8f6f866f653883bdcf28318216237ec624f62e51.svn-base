@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataCoefficientRecMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataCoefficientRec" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="OVERSPEED_WARNING_NUM" property="overspeedWarningNum"/>
+			<result column="OVERSPEED_WARNING_NUM_FLAG" property="overspeedWarningNumFlag"/>
+			<result column="FATIGUE_RUN_NUM" property="fatigueRunNum"/>
+			<result column="FATIGUE_RUN_NUM_FLAG" property="fatigueRunNumFlag"/>
+			<result column="DANGER_ROAD_RUN_NUM" property="dangerRoadRunNum"/>
+			<result column="DANGER_ROAD_RUN_NUM_FLAG" property="dangerRoadRunNumFlag"/>
+			<result column="DANGER_ROAD_PASS_NUM" property="dangerRoadPassNum"/>
+			<result column="DANGER_ROAD_PASS_NUM_FLAG" property="dangerRoadPassNumFlag"/>
+			<result column="SAFETY_NIUM" property="safetyNium"/>
+			<result column="SAFETY_NIUM_FLAG" property="safetyNiumFlag"/>
+			<result column="JIANTOU" property="jiantou"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_TIME" property="countTime"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataCoefficientRecView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, OVERSPEED_WARNING_NUM, OVERSPEED_WARNING_NUM_FLAG, FATIGUE_RUN_NUM, FATIGUE_RUN_NUM_FLAG, DANGER_ROAD_RUN_NUM, DANGER_ROAD_RUN_NUM_FLAG, DANGER_ROAD_PASS_NUM, DANGER_ROAD_PASS_NUM_FLAG, SAFETY_NIUM, SAFETY_NIUM_FLAG, JIANTOU,CAR_TYPE, COUNT_TIME
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataCoefficientRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_coefficient_rec 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataCoefficientRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_coefficient_rec 
+  		<include refid="where"/>
+  </select>
+
+
+	<select id="getCoefficientNum" parameterType="com.edgedo.bigdata.queryvo.BigdataCoefficientRecQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_coefficient_rec
+		WHERE CAR_TYPE = #{queryObj.carType}
+		AND date_format(COUNT_TIME,'%Y%m%d') = date_format(#{queryObj.countTime},'%Y%m%d')  limit 1
+	</select>
+  
+  
+</mapper>

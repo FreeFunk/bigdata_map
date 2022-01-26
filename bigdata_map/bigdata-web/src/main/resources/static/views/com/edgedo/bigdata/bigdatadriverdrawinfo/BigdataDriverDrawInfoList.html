@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>标题</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">搜索条件1</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="queryObj.name" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">搜索条件2</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="queryObj.name" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="BigdataDriverDrawInfo-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel">删除</button>
+                <button class="layui-btn layuiadmin-btn-comm" data-type="add">添加</button>
+            </div>
+            <table id="BigdataDriverDrawInfo-list" lay-filter="BigdataDriverDrawInfo-list"></table>
+            <script type="text/html" id="table-BigdataDriverDrawInfo-list">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+            </script>
+        </div>
+    </div>
+</div>
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index:'lib/index',
+            common:'common'
+        }).use(['index','table', 'form','common'], function(exports){
+            var $ = layui.$
+                ,table = layui.table
+                ,common = layui.common
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            //查询
+            form.on('submit(BigdataDriverDrawInfo-search)', function(data){
+                var field = data.field;
+
+                //执行重载
+                table.reload('BigdataDriverDrawInfo-list', {
+                    where: field
+                });
+            });
+
+            /*
+            * 定义表格
+            * */
+            defineTable = function () {
+                var headers = layui.admin.getTokenHeader();
+                table.render({
+                    elem: '#BigdataDriverDrawInfo-list' //指定原始表格的选择器（id选择器）
+                    ,url:layui.setter.basePath +'/admin/bigdataDriverDrawInfo/listpage.jsn' //模拟接口
+                    ,headers:headers
+                    ,method: 'post'
+                    ,parseData: function(res){ //res 即为原始返回的数据
+                        return {
+                            "code": res.success, //解析接口状态
+                            "msg": res.errMsg, //解析提示文本
+                            "count": res.totalCount, //解析数据长度
+                            "data": res.list //解析数据列表
+                        };
+                    }
+                    ,response: {
+                        statusCode: true //规定成功的状态码，默认：0
+                    }
+                    ,cols: [[
+                        {type: 'checkbox', fixed: 'left'}
+                    ,{field: 'id',align: 'center', width: 200, title: '主键',sort: true,hide:true}
+                    ,{field: 'createTime',align: 'center', width: 200, title: '创建时间',templet: function(d){
+                    return common.DateFormat(d.createTime,"yyyy-MM-dd");},sort: true}
+            ,{field: 'compId',align: 'center', width: 200, title: '所属运营商',sort: true}
+            ,{field: 'compName',align: 'center', width: 200, title: '运营商名',sort: true}
+            ,{field: 'teamId',align: 'center', width: 200, title: '所属企业',sort: true}
+            ,{field: 'teamName',align: 'center', width: 200, title: '企业名',sort: true}
+            ,{field: 'provinceId',align: 'center', width: 200, title: '省ID',sort: true}
+            ,{field: 'provinceName',align: 'center', width: 200, title: '省名',sort: true}
+            ,{field: 'cityId',align: 'center', width: 200, title: '城市ID',sort: true}
+            ,{field: 'cityName',align: 'center', width: 200, title: '城市名',sort: true}
+            ,{field: 'xianquId',align: 'center', width: 200, title: '县区ID',sort: true}
+            ,{field: 'xianquName',align: 'center', width: 200, title: '县区名',sort: true}
+            ,{field: 'driverName',align: 'center', width: 200, title: '驾驶员姓名',sort: true}
+            ,{field: 'driverSex',align: 'center', width: 200, title: '驾驶员性别',sort: true}
+            ,{field: 'driverAge',align: 'center', width: 200, title: '驾驶员年龄',sort: true}
+            ,{field: 'driverPhone',align: 'center', width: 200, title: '驾驶员电话',sort: true}
+                    ,{field: 'driverEntryDay',align: 'center', width: 200, title: '驾驶员入职日期',templet: function(d){
+                    return common.DateFormat(d.driverEntryDay,"yyyy-MM-dd");},sort: true}
+            ,{field: 'driverIdCard',align: 'center', width: 200, title: '驾驶员身份证号',sort: true}
+            ,{field: 'driverCode',align: 'center', width: 200, title: '驾驶员资格证号',sort: true}
+            ,{field: 'driverLicenceType',align: 'center', width: 200, title: '驾驶证类型',sort: true}
+            ,{field: 'driverLicenceNum',align: 'center', width: 200, title: '驾驶证号',sort: true}
+            ,{field: 'driverCarType',align: 'center', width: 200, title: '准驾车型',sort: true}
+            ,{field: 'driverPhotoUrl',align: 'center', width: 200, title: '驾驶员照片',sort: true}
+            ,{field: 'carPlateNum',align: 'center', width: 200, title: '车牌号',sort: true}
+            ,{field: 'carPlateColor',align: 'center', width: 200, title: '车牌颜色',sort: true}
+            ,{field: 'carPlateColorText',align: 'center', width: 200, title: '车牌颜色文本',sort: true}
+            ,{field: 'carFrameNum',align: 'center', width: 200, title: '车架号',sort: true}
+            ,{field: 'carType',align: 'center', width: 200, title: '车辆类型',sort: true}
+                    ,{field: 'bindTime',align: 'center', width: 200, title: '关联时间',templet: function(d){
+                    return common.DateFormat(d.bindTime,"yyyy-MM-dd");},sort: true}
+            ,{field: 'isRealState',align: 'center', width: 200, title: '是否实名认证',sort: true}
+            ,{field: 'safeLevel',align: 'center', width: 200, title: '安全评定等级',sort: true}
+            ,{field: 'yearRunTimeLength',align: 'center', width: 200, title: '全年行驶时长',sort: true}
+            ,{field: 'dangerRunTimeLength',align: 'center', width: 200, title: '危险时段行驶时长',sort: true}
+            ,{field: 'dayRunTimeLength',align: 'center', width: 200, title: '白天行驶时长(分钟)',sort: true}
+            ,{field: 'nightRunTimeLength',align: 'center', width: 200, title: '夜晚行驶时长(分钟)',sort: true}
+            ,{field: 'runTimeLengthLevel',align: 'center', width: 200, title: '行驶时长评分',sort: true}
+            ,{field: 'yearRunMileage',align: 'center', width: 200, title: '年行驶里程',sort: true}
+            ,{field: 'nationalRoadMileage',align: 'center', width: 200, title: '国道里程',sort: true}
+            ,{field: 'highSpeedMileage',align: 'center', width: 200, title: '高速里程',sort: true}
+            ,{field: 'otherRoadMileage',align: 'center', width: 200, title: '其他道路里程',sort: true}
+            ,{field: 'runMileageLevel',align: 'center', width: 200, title: '行驶里程评分',sort: true}
+            ,{field: 'overspeedNum',align: 'center', width: 200, title: '超速次数',sort: true}
+            ,{field: 'seriousOverspeedNum',align: 'center', width: 200, title: '严重超速次数',sort: true}
+            ,{field: 'tiredNum',align: 'center', width: 200, title: '疲劳次数',sort: true}
+            ,{field: 'seriousTiredNum',align: 'center', width: 200, title: '严重疲劳次数',sort: true}
+            ,{field: 'safetyWarningNum',align: 'center', width: 200, title: '主动安全报警次数',sort: true}
+            ,{field: 'dangerRunLevel',align: 'center', width: 200, title: '危险驾驶评分',sort: true}
+            ,{field: 'safetrainNum',align: 'center', width: 200, title: '安全培训次数',sort: true}
+            ,{field: 'safetrainLevel',align: 'center', width: 200, title: '安全培训评分',sort: true}
+            ,{field: 'healthRec',align: 'center', width: 200, title: '健康档案描述',sort: true}
+            ,{field: 'healthLevel',align: 'center', width: 200, title: '健康档案评分',sort: true}
+            ,{field: 'stopCity',align: 'center', width: 200, title: '常去城市(5个)',sort: true}
+            ,{field: 'stopCityLevel',align: 'center', width: 200, title: '常去城市评分',sort: true}
+            ,{field: 'highestSpeed',align: 'center', width: 200, title: '最高速度',sort: true}
+            ,{field: 'averageSpeed',align: 'center', width: 200, title: '平均速度',sort: true}
+            ,{field: 'runSpeedLevel',align: 'center', width: 200, title: '行驶速度评分',sort: true}
+            ,{field: 'empDesc',align: 'center', width: 200, title: '本地从业描述',sort: true}
+            ,{field: 'warningRate',align: 'center', width: 200, title: '百公里报警系数',sort: true}
+            ,{field: 'safetyDesc',align: 'center', width: 200, title: '安全生产描述',sort: true}
+            ,{field: 'jyLevel',align: 'center', width: 200, title: '经营分析评分',sort: true}
+            ,{field: 'countDate',align: 'center', width: 200, title: '统计日期',sort: true}
+            ,{field: 'countMonth',align: 'center', width: 200, title: '统计月份',sort: true}
+            ,{field: 'yearNum',align: 'center', width: 200, title: '统计年份',sort: true}
+                    ,{title: '操作', minWidth: 150, align: 'center', fixed: 'right', toolbar: '#table-BigdataDriverDrawInfo-list'}
+            ]]
+            ,autoSort: false
+                    ,page: true
+                    ,limit: 10
+                    ,limits: [10, 20, 30,40]
+                    ,text: {
+                    none: '暂无相关数据'
+                }
+            });
+
+                //为toolbar添加事件响应
+                table.on('tool(BigdataDriverDrawInfo-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                    /*var data = obj.data;*///获得当前行数据
+                    //区分事件
+                    switch(obj.event){
+                        case 'del':
+                            deleteVo(obj);
+                            break;
+                        case 'edit':
+                            editVo(obj);
+                            break;
+                    };
+                });
+
+                //监听排序事件
+                table.on('sort(BigdataDriverDrawInfo-list)', function(obj){ //注：sort是工具条事件名，LAY-app-province-list是table原始容器的属性 lay-filter="对应的值"
+                    var sort = obj.field;
+                    //默认排序
+                    switch(obj.field){
+                        case 'id':
+                            sort ="ID";
+                            break;
+                        case 'createTime':
+                            sort ="CREATE_TIME";
+                            break;
+                        case 'compId':
+                            sort ="COMP_ID";
+                            break;
+                        case 'compName':
+                            sort ="COMP_NAME";
+                            break;
+                        case 'teamId':
+                            sort ="TEAM_ID";
+                            break;
+                        case 'teamName':
+                            sort ="TEAM_NAME";
+                            break;
+                        case 'provinceId':
+                            sort ="PROVINCE_ID";
+                            break;
+                        case 'provinceName':
+                            sort ="PROVINCE_NAME";
+                            break;
+                        case 'cityId':
+                            sort ="CITY_ID";
+                            break;
+                        case 'cityName':
+                            sort ="CITY_NAME";
+                            break;
+                        case 'xianquId':
+                            sort ="XIANQU_ID";
+                            break;
+                        case 'xianquName':
+                            sort ="XIANQU_NAME";
+                            break;
+                        case 'driverName':
+                            sort ="DRIVER_NAME";
+                            break;
+                        case 'driverSex':
+                            sort ="DRIVER_SEX";
+                            break;
+                        case 'driverAge':
+                            sort ="DRIVER_AGE";
+                            break;
+                        case 'driverPhone':
+                            sort ="DRIVER_PHONE";
+                            break;
+                        case 'driverEntryDay':
+                            sort ="DRIVER_ENTRY_DAY";
+                            break;
+                        case 'driverIdCard':
+                            sort ="DRIVER_ID_CARD";
+                            break;
+                        case 'driverCode':
+                            sort ="DRIVER_CODE";
+                            break;
+                        case 'driverLicenceType':
+                            sort ="DRIVER_LICENCE_TYPE";
+                            break;
+                        case 'driverLicenceNum':
+                            sort ="DRIVER_LICENCE_NUM";
+                            break;
+                        case 'driverCarType':
+                            sort ="DRIVER_CAR_TYPE";
+                            break;
+                        case 'driverPhotoUrl':
+                            sort ="DRIVER_PHOTO_URL";
+                            break;
+                        case 'carPlateNum':
+                            sort ="CAR_PLATE_NUM";
+                            break;
+                        case 'carPlateColor':
+                            sort ="CAR_PLATE_COLOR";
+                            break;
+                        case 'carPlateColorText':
+                            sort ="CAR_PLATE_COLOR_TEXT";
+                            break;
+                        case 'carFrameNum':
+                            sort ="CAR_FRAME_NUM";
+                            break;
+                        case 'carType':
+                            sort ="CAR_TYPE";
+                            break;
+                        case 'bindTime':
+                            sort ="BIND_TIME";
+                            break;
+                        case 'isRealState':
+                            sort ="IS_REAL_STATE";
+                            break;
+                        case 'safeLevel':
+                            sort ="SAFE_LEVEL";
+                            break;
+                        case 'yearRunTimeLength':
+                            sort ="YEAR_RUN_TIME_LENGTH";
+                            break;
+                        case 'dangerRunTimeLength':
+                            sort ="DANGER_RUN_TIME_LENGTH";
+                            break;
+                        case 'dayRunTimeLength':
+                            sort ="DAY_RUN_TIME_LENGTH";
+                            break;
+                        case 'nightRunTimeLength':
+                            sort ="NIGHT_RUN_TIME_LENGTH";
+                            break;
+                        case 'runTimeLengthLevel':
+                            sort ="RUN_TIME_LENGTH_LEVEL";
+                            break;
+                        case 'yearRunMileage':
+                            sort ="YEAR_RUN_MILEAGE";
+                            break;
+                        case 'nationalRoadMileage':
+                            sort ="NATIONAL_ROAD_MILEAGE";
+                            break;
+                        case 'highSpeedMileage':
+                            sort ="HIGH_SPEED_MILEAGE";
+                            break;
+                        case 'otherRoadMileage':
+                            sort ="OTHER_ROAD_MILEAGE";
+                            break;
+                        case 'runMileageLevel':
+                            sort ="RUN_MILEAGE_LEVEL";
+                            break;
+                        case 'overspeedNum':
+                            sort ="OVERSPEED_NUM";
+                            break;
+                        case 'seriousOverspeedNum':
+                            sort ="SERIOUS_OVERSPEED_NUM";
+                            break;
+                        case 'tiredNum':
+                            sort ="TIRED_NUM";
+                            break;
+                        case 'seriousTiredNum':
+                            sort ="SERIOUS_TIRED_NUM";
+                            break;
+                        case 'safetyWarningNum':
+                            sort ="SAFETY_WARNING_NUM";
+                            break;
+                        case 'dangerRunLevel':
+                            sort ="DANGER_RUN_LEVEL";
+                            break;
+                        case 'safetrainNum':
+                            sort ="SAFETRAIN_NUM";
+                            break;
+                        case 'safetrainLevel':
+                            sort ="SAFETRAIN_LEVEL";
+                            break;
+                        case 'healthRec':
+                            sort ="HEALTH_REC";
+                            break;
+                        case 'healthLevel':
+                            sort ="HEALTH_LEVEL";
+                            break;
+                        case 'stopCity':
+                            sort ="STOP_CITY";
+                            break;
+                        case 'stopCityLevel':
+                            sort ="STOP_CITY_LEVEL";
+                            break;
+                        case 'highestSpeed':
+                            sort ="HIGHEST_SPEED";
+                            break;
+                        case 'averageSpeed':
+                            sort ="AVERAGE_SPEED";
+                            break;
+                        case 'runSpeedLevel':
+                            sort ="RUN_SPEED_LEVEL";
+                            break;
+                        case 'empDesc':
+                            sort ="EMP_DESC";
+                            break;
+                        case 'warningRate':
+                            sort ="WARNING_RATE";
+                            break;
+                        case 'safetyDesc':
+                            sort ="SAFETY_DESC";
+                            break;
+                        case 'jyLevel':
+                            sort ="JY_LEVEL";
+                            break;
+                        case 'countDate':
+                            sort ="COUNT_DATE";
+                            break;
+                        case 'countMonth':
+                            sort ="COUNT_MONTH";
+                            break;
+                        case 'yearNum':
+                            sort ="YEAR_NUM";
+                            break;
+                    };
+                    if(obj.type==null){
+                        return;
+                    }
+                    //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+                    table.reload('BigdataDriverDrawInfo-list', {
+                        initSort: obj//记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                        ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                            orderBy: sort+" "+obj.type //排序字段
+                        }
+                    });
+                });
+            }
+            defineTable();
+
+            //删除
+            deleteVo = function (obj) {
+                layer.confirm('确定删除此记录吗？', function(index){
+                    admin.req({
+                        url:layui.setter.basePath +'/admin/bigdataDriverDrawInfo/deleteByIds.jsn',
+                        data:{'ids':obj.data.id},
+                        method:"post",
+                        success:function (data) {
+                            table.reload('BigdataDriverDrawInfo-list',
+                                {page:
+                                    { curr: common.deleteJumpPage(obj) // 执行页面跳转方法
+                                    }
+                                }
+                            );
+                            layer.close(index);
+                            layer.msg('删除成功', {
+                                icon: 1
+                            });
+                        },
+                    });
+                });
+            }
+            //编辑
+            editVo = function (obj) {
+                layer.open({
+                    type: 2
+                    ,title: '编辑'
+                    ,content: 'BigdataDriverDrawInfoEdit.html'
+                    ,maxmin: true
+                    ,area: ['550px', '550px']
+                    ,btn: ['确定', '取消']
+                    ,success: function(layero, index){
+                        var s = layero.find('iframe');
+                        $("id",s[0].contentWindow.document).val(obj.data.id);
+                        //给iframe元素赋值
+                        var othis = layero.find('iframe').contents().find("#BigdataDriverDrawInfo-form").click();
+
+                        othis.find('input[name="id"]').val(obj.data.id);
+                        othis.find('input[name="createTime"]').val(obj.data.createTime);
+                        othis.find('input[name="compId"]').val(obj.data.compId);
+                        othis.find('input[name="compName"]').val(obj.data.compName);
+                        othis.find('input[name="teamId"]').val(obj.data.teamId);
+                        othis.find('input[name="teamName"]').val(obj.data.teamName);
+                        othis.find('input[name="provinceId"]').val(obj.data.provinceId);
+                        othis.find('input[name="provinceName"]').val(obj.data.provinceName);
+                        othis.find('input[name="cityId"]').val(obj.data.cityId);
+                        othis.find('input[name="cityName"]').val(obj.data.cityName);
+                        othis.find('input[name="xianquId"]').val(obj.data.xianquId);
+                        othis.find('input[name="xianquName"]').val(obj.data.xianquName);
+                        othis.find('input[name="driverName"]').val(obj.data.driverName);
+                        othis.find('input[name="driverSex"]').val(obj.data.driverSex);
+                        othis.find('input[name="driverAge"]').val(obj.data.driverAge);
+                        othis.find('input[name="driverPhone"]').val(obj.data.driverPhone);
+                        othis.find('input[name="driverEntryDay"]').val(obj.data.driverEntryDay);
+                        othis.find('input[name="driverIdCard"]').val(obj.data.driverIdCard);
+                        othis.find('input[name="driverCode"]').val(obj.data.driverCode);
+                        othis.find('input[name="driverLicenceType"]').val(obj.data.driverLicenceType);
+                        othis.find('input[name="driverLicenceNum"]').val(obj.data.driverLicenceNum);
+                        othis.find('input[name="driverCarType"]').val(obj.data.driverCarType);
+                        othis.find('input[name="driverPhotoUrl"]').val(obj.data.driverPhotoUrl);
+                        othis.find('input[name="carPlateNum"]').val(obj.data.carPlateNum);
+                        othis.find('input[name="carPlateColor"]').val(obj.data.carPlateColor);
+                        othis.find('input[name="carPlateColorText"]').val(obj.data.carPlateColorText);
+                        othis.find('input[name="carFrameNum"]').val(obj.data.carFrameNum);
+                        othis.find('input[name="carType"]').val(obj.data.carType);
+                        othis.find('input[name="bindTime"]').val(obj.data.bindTime);
+                        othis.find('input[name="isRealState"]').val(obj.data.isRealState);
+                        othis.find('input[name="safeLevel"]').val(obj.data.safeLevel);
+                        othis.find('input[name="yearRunTimeLength"]').val(obj.data.yearRunTimeLength);
+                        othis.find('input[name="dangerRunTimeLength"]').val(obj.data.dangerRunTimeLength);
+                        othis.find('input[name="dayRunTimeLength"]').val(obj.data.dayRunTimeLength);
+                        othis.find('input[name="nightRunTimeLength"]').val(obj.data.nightRunTimeLength);
+                        othis.find('input[name="runTimeLengthLevel"]').val(obj.data.runTimeLengthLevel);
+                        othis.find('input[name="yearRunMileage"]').val(obj.data.yearRunMileage);
+                        othis.find('input[name="nationalRoadMileage"]').val(obj.data.nationalRoadMileage);
+                        othis.find('input[name="highSpeedMileage"]').val(obj.data.highSpeedMileage);
+                        othis.find('input[name="otherRoadMileage"]').val(obj.data.otherRoadMileage);
+                        othis.find('input[name="runMileageLevel"]').val(obj.data.runMileageLevel);
+                        othis.find('input[name="overspeedNum"]').val(obj.data.overspeedNum);
+                        othis.find('input[name="seriousOverspeedNum"]').val(obj.data.seriousOverspeedNum);
+                        othis.find('input[name="tiredNum"]').val(obj.data.tiredNum);
+                        othis.find('input[name="seriousTiredNum"]').val(obj.data.seriousTiredNum);
+                        othis.find('input[name="safetyWarningNum"]').val(obj.data.safetyWarningNum);
+                        othis.find('input[name="dangerRunLevel"]').val(obj.data.dangerRunLevel);
+                        othis.find('input[name="safetrainNum"]').val(obj.data.safetrainNum);
+                        othis.find('input[name="safetrainLevel"]').val(obj.data.safetrainLevel);
+                        othis.find('input[name="healthRec"]').val(obj.data.healthRec);
+                        othis.find('input[name="healthLevel"]').val(obj.data.healthLevel);
+                        othis.find('input[name="stopCity"]').val(obj.data.stopCity);
+                        othis.find('input[name="stopCityLevel"]').val(obj.data.stopCityLevel);
+                        othis.find('input[name="highestSpeed"]').val(obj.data.highestSpeed);
+                        othis.find('input[name="averageSpeed"]').val(obj.data.averageSpeed);
+                        othis.find('input[name="runSpeedLevel"]').val(obj.data.runSpeedLevel);
+                        othis.find('input[name="empDesc"]').val(obj.data.empDesc);
+                        othis.find('input[name="warningRate"]').val(obj.data.warningRate);
+                        othis.find('input[name="safetyDesc"]').val(obj.data.safetyDesc);
+                        othis.find('input[name="jyLevel"]').val(obj.data.jyLevel);
+                        othis.find('input[name="countDate"]').val(obj.data.countDate);
+                        othis.find('input[name="countMonth"]').val(obj.data.countMonth);
+                        othis.find('input[name="yearNum"]').val(obj.data.yearNum);
+                    }
+                    ,yes: function(index, layero){
+                        var submit = layero.find('iframe').contents().find("#BigdataDriverDrawInfo-form-edit");
+                        submit.trigger('click');
+                    }
+                });
+            }
+
+            //点击事件
+            var active = {
+                //批量删除
+                batchdel: function(){
+                    var checkStatus = table.checkStatus('BigdataDriverDrawInfo-list')
+                        ,checkData = checkStatus.data; //得到选中的数据
+
+                    if(checkData.length === 0){
+                        return layer.msg('请选择数据');
+                    }
+
+                    layer.confirm('确定删除吗？', function(index) {
+                        var ids = "" ;
+                        for(var i = 0;i<checkData.length;i++){
+                            if(ids==""){
+                                ids= checkData[i].id;
+                            }else {
+                                ids = ids+","+checkData[i].id;
+                            }
+                        }
+                        admin.req({
+                            url:layui.setter.basePath +'/admin/bigdataDriverDrawInfo/deleteByIds.jsn',
+                            data:{'ids':ids},
+                            method:"post",
+                            success:function (data) {
+                                table.reload('BigdataDriverDrawInfo-list',
+                                    {page:
+                                        { curr: common.deleteDulJumpPage(checkStatus) // 执行页面跳转方法
+                                        }
+                                    }
+                                );
+                                layer.msg('删除成功', {
+                                    icon: 1
+                                });
+                            },
+                        });
+                    });
+                }
+                //添加
+                ,add: function(){
+                    layer.open({
+                        type: 2
+                        ,title: '添加'
+                        ,content: 'BigdataDriverDrawInfoAdd.html'
+                        ,maxmin: true
+                        ,area: ['550px', '550px']
+                        ,btn: ['确定', '取消']
+                        ,yes: function(index, layero){
+                            //点击确认触发 iframe 内容中的按钮提交
+                            var submit = layero.find('iframe').contents().find("#BigdataDriverDrawInfo-form-submit");
+                            submit.click();
+                        }
+                    });
+                }
+            }
+            //绑定点击事件
+            $('.layui-btn.layuiadmin-btn-comm').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+
+        });
+
+</script>
+</body>
+</html>
+

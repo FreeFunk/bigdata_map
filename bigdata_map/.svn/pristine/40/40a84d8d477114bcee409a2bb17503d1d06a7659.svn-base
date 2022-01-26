@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataFenxiTeamMonthMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataFenxiTeamMonth" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="UPDATE_TIME" property="updateTime"/>
+			<result column="PROVINCE_ID" property="provinceId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_ID" property="cityId"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="XIANQU_ID" property="xianquId"/>
+			<result column="XIANQU_NAME" property="xianquName"/>
+			<result column="TEAM_ID" property="teamId"/>
+			<result column="TEAM_NAME" property="teamName"/>
+			<result column="TEAM_TYPE" property="teamType"/>
+			<result column="TRANSIT_TYPE" property="transitType"/>
+			<result column="COUNT_CAR_NUM" property="countCarNum"/>
+			<result column="RUN_MILEAGE" property="runMileage"/>
+			<result column="RUN_TIME_LENGTH" property="runTimeLength"/>
+			<result column="RUN_TIME_LENGTH_TEXT" property="runTimeLengthText"/>
+			<result column="RUN_TIME_LENGTH_HOUR" property="runTimeLengthHour"/>
+			<result column="ALARM_NUM" property="alarmNum"/>
+			<result column="ALARM_RATE" property="alarmRate"/>
+			<result column="SAFE_SCORE" property="safeScore"/>
+			<result column="AVERAGE_SPEED" property="averageSpeed"/>
+			<result column="AVERAGE_RUN_MILEAGE" property="averageRunMileage"/>
+			<result column="AVERAGE_RUN_TIME_LENGTH" property="averageRunTimeLength"/>
+			<result column="AVERAGE_ALARM_NUM" property="averageAlarmNum"/>
+			<result column="RUN_MILEAGE_TOP_THREE" property="runMileageTopThree"/>
+			<result column="ALARM_NUM_TOP_THREE" property="alarmNumTopThree"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataFenxiTeamMonthView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, UPDATE_TIME, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, XIANQU_ID, XIANQU_NAME, TEAM_ID, TEAM_NAME, TEAM_TYPE, TRANSIT_TYPE, COUNT_CAR_NUM, RUN_MILEAGE, RUN_TIME_LENGTH, RUN_TIME_LENGTH_TEXT, RUN_TIME_LENGTH_HOUR, ALARM_NUM, ALARM_RATE, SAFE_SCORE, AVERAGE_SPEED, AVERAGE_RUN_MILEAGE, AVERAGE_RUN_TIME_LENGTH, AVERAGE_ALARM_NUM, RUN_MILEAGE_TOP_THREE, ALARM_NUM_TOP_THREE, COUNT_DATE, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.updateTime != null'>
+					AND  UPDATE_TIME = #{queryObj.updateTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countCarNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countCarNum)'>
+					AND  COUNT_CAR_NUM = #{queryObj.countCarNum}
+				</if>
+				<if test='queryObj != null and  queryObj.runTimeLength != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.runTimeLength)'>
+					AND  RUN_TIME_LENGTH = #{queryObj.runTimeLength}
+				</if>
+				<if test='queryObj != null and  queryObj.alarmNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.alarmNum)'>
+					AND  ALARM_NUM = #{queryObj.alarmNum}
+				</if>
+				<if test='queryObj != null and  queryObj.xianquId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.xianquId)'>
+					AND  XIANQU_ID = #{queryObj.xianquId}
+				</if>
+				<if test='queryObj != null and  queryObj.teamName != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.teamName)'>
+					AND  TEAM_NAME like concat('%',#{queryObj.teamName},'%')
+				</if>
+				<if test='queryObj != null and  queryObj.teamType != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.teamType)'>
+					AND  TEAM_TYPE = #{queryObj.teamType}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiTeamMonthQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fenxi_team_month 
+  		<include refid="where"/>
+	  	ORDER BY TEAM_NAME DESC
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiTeamMonthQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fenxi_team_month 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectByMonthAnQuanQianShi" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_team_month
+		<where>
+			<if test='carType != ""'>
+				AND TEAM_TYPE = #{carType}
+			</if>
+			<if test='xianQuId == "130300"'>
+				AND CITY_ID = #{xianQuId}
+			</if>
+			<if test='xianQuId != "130300"'>
+				AND XIANQU_ID = #{xianQuId}
+			</if>
+			and COUNT_MONTH=#{timeCount} order by SAFE_SCORE desc limit 3
+		</where>
+	</select>
+
+	<select id="selectByMonthAnQuanHouShi" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_team_month
+		<where>
+			<if test='carType != ""'>
+				AND TEAM_TYPE = #{carType}
+			</if>
+			<if test='xianQuId == "130300"'>
+				AND CITY_ID = #{xianQuId}
+			</if>
+			<if test='xianQuId != "130300"'>
+				AND XIANQU_ID = #{xianQuId}
+			</if>
+			and COUNT_MONTH=#{timeCount} order by SAFE_SCORE asc limit 3
+		</where>
+	</select>
+
+
+	<select id="selectByMonthBaiGongLiQianShi" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_team_month
+		<where>
+			<if test='carType != ""'>
+				AND TEAM_TYPE = #{carType}
+			</if>
+			<if test='xianQuId == "130300"'>
+				AND CITY_ID = #{xianQuId}
+			</if>
+			<if test='xianQuId != "130300"'>
+				AND XIANQU_ID = #{xianQuId}
+			</if>
+			and COUNT_MONTH=#{timeCount} order by ALARM_RATE asc limit 3
+		</where>
+	</select>
+
+
+	<select id="selectByMonthBaiGongLiHouShi" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_team_month
+		<where>
+			<if test='carType != ""'>
+				AND TEAM_TYPE = #{carType}
+			</if>
+			<if test='xianQuId == "130300"'>
+				AND CITY_ID = #{xianQuId}
+			</if>
+			<if test='xianQuId != "130300"'>
+				AND XIANQU_ID = #{xianQuId}
+			</if>
+			and COUNT_MONTH=#{timeCount} order by ALARM_RATE asc limit 3
+		</where>
+	</select>
+
+	<select id="selectById" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiTeamMonthQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_team_month
+		where ID=#{queryObj.id}
+		and COUNT_MONTH = #{queryObj.countMonth}
+		and YEAR_NUM = #{queryObj.yearNum}
+	</select>
+
+	<select id="selectByFenqu" parameterType="map" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_team_month
+		WHERE TEAM_ID = #{teamId}
+		and COUNT_MONTH=#{countMonth} and YEAR_NUM = #{yearNum}
+	</select>
+
+	<select id="updateByfenPian" parameterType="com.edgedo.bigdata.entity.BigdataFenxiTeamMonth">
+		update bigdata_fenxi_team_month
+		<set>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime},
+			</if>
+			<if test="provinceId != null and provinceId != ''">
+				PROVINCE_ID = #{provinceId},
+			</if>
+			<if test="provinceName != null and provinceName != ''">
+				PROVINCE_NAME = #{provinceName},
+			</if>
+			<if test="cityId != null and cityId != ''">
+				CITY_ID = #{cityId},
+			</if>
+			<if test="cityName != null and cityName != ''">
+				CITY_NAME = #{cityName},
+			</if>
+			<if test="xianquId != null and xianquId != ''">
+				XIANQU_ID = #{xianquId},
+			</if>
+			<if test="xianquName != null and xianquName != ''">
+				XIANQU_NAME = #{xianquName},
+			</if>
+			<if test="teamId != null and teamId != ''">
+				TEAM_ID = #{teamId},
+			</if>
+			<if test="teamName != null and teamName != ''">
+				TEAM_NAME = #{teamName},
+			</if>
+			<if test="teamType != null and teamType != ''">
+				TEAM_TYPE = #{teamType},
+			</if>
+			<if test="transitType != null and transitType != ''">
+				TRANSIT_TYPE = #{transitType},
+			</if>
+			<if test="countCarNum != null">
+				COUNT_CAR_NUM = #{countCarNum},
+			</if>
+			<if test="runMileage != null">
+				RUN_MILEAGE = #{runMileage},
+			</if>
+			<if test="runTimeLength != null">
+				RUN_TIME_LENGTH = #{runTimeLength},
+			</if>
+			<if test="runTimeLengthText != null">
+				RUN_TIME_LENGTH_TEXT = #{runTimeLengthText},
+			</if>
+			<if test="runTimeLengthHour != null">
+				RUN_TIME_LENGTH_HOUR = #{runTimeLengthHour},
+			</if>
+			<if test="alarmNum != null ">
+				ALARM_NUM = #{alarmNum},
+			</if>
+			<if test="alarmRate != null ">
+				ALARM_RATE = #{alarmRate},
+			</if>
+			<if test="safeScore != null ">
+				SAFE_SCORE = #{safeScore},
+			</if>
+			<if test="averageSpeed != null">
+				AVERAGE_SPEED = #{averageSpeed},
+			</if>
+			<if test="averageRunMileage != null">
+				AVERAGE_RUN_MILEAGE = #{averageRunMileage},
+			</if>
+			<if test="averageRunTimeLength != null">
+				AVERAGE_RUN_TIME_LENGTH = #{averageRunTimeLength},
+			</if>
+			<if test="averageAlarmNum != null">
+				AVERAGE_ALARM_NUM = #{averageAlarmNum},
+			</if>
+			<if test="runMileageTopThree != null">
+				RUN_MILEAGE_TOP_THREE = #{runMileageTopThree},
+			</if>
+			<if test="alarmNumTopThree != null ">
+				ALARM_NUM_TOP_THREE = #{alarmNumTopThree},
+			</if>
+			<!--<if test="countDate != null">-->
+				<!--COUNT_DATE = #{countDate},-->
+			<!--</if>-->
+			<if test="countMonth != null">
+				COUNT_MONTH = #{countMonth},
+			</if>
+			<if test="yearNum != null">
+				YEAR_NUM = #{yearNum}
+			</if>
+		</set>
+		where id=#{id} and COUNT_MONTH=#{countMonth} and YEAR_NUM = #{yearNum}
+	</select>
+  
+</mapper>

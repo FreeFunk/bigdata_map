@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataCarDayOftenrunRouteMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataCarDayOftenrunRoute" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+			<result column="CAR_REAL_ID" property="carRealId"/>
+			<result column="OWNER_TEAM_ID" property="ownerTeamId"/>
+			<result column="OWNER_TEAM_NAME" property="ownerTeamName"/>
+			<result column="START_PROVINCE_ID" property="startProvinceId"/>
+			<result column="START_PROVINCE_NAME" property="startProvinceName"/>
+			<result column="END_PROVINCE_ID" property="endProvinceId"/>
+			<result column="END_PROVINCE_NAME" property="endProvinceName"/>
+			<result column="START_CITY_ID" property="startCityId"/>
+			<result column="START_CITY_NAME" property="startCityName"/>
+			<result column="END_CITY_ID" property="endCityId"/>
+			<result column="END_CITY_NAME" property="endCityName"/>
+			<result column="START_TIME" property="startTime"/>
+			<result column="END_TIME" property="endTime"/>
+			<result column="RUN_ROUTE" property="runRoute"/>
+			<result column="SUM_MILEAGE" property="sumMileage"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_TIME" property="countTime"/>
+			<result column="IS_TRANS_PROVINCIAL" property="isTransProvincial"/>
+			<result column="RUN_LINE_NUM" property="runLineNum"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataCarDayOftenrunRouteView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CAR_PLATE_NUM, CAR_FRAME_NUM, CAR_PLATE_COLOR, CAR_REAL_ID, OWNER_TEAM_ID, OWNER_TEAM_NAME,
+	 START_PROVINCE_ID, START_PROVINCE_NAME, END_PROVINCE_ID, END_PROVINCE_NAME, START_CITY_ID, START_CITY_NAME,
+	 END_CITY_ID, END_CITY_NAME, START_TIME, END_TIME, RUN_ROUTE, SUM_MILEAGE, CAR_TYPE, COUNT_TIME,
+	  IS_TRANS_PROVINCIAL, RUN_LINE_NUM,COUNT_DATE,COUNT_MONTH
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.startTime != null'>
+					AND  START_TIME = #{queryObj.startTime}
+				</if>
+				<if test='queryObj != null and  queryObj.endTime != null'>
+					AND  END_TIME = #{queryObj.endTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+				<if test='queryObj != null and  queryObj.runLineNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.runLineNum)'>
+					AND  RUN_LINE_NUM = #{queryObj.runLineNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataCarDayOftenrunRouteQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_car_day_oftenrun_route 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataCarDayOftenrunRouteQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_car_day_oftenrun_route 
+  		<include refid="where"/>
+  </select>
+
+	<!--  统计月份的单车的汇总 -->
+	<select id="selectGroupSumOfMonth" parameterType="map" resultMap="BaseResultMap">
+		select
+		CAR_PLATE_NUM, CAR_FRAME_NUM, CAR_PLATE_COLOR, CAR_REAL_ID, OWNER_TEAM_ID, OWNER_TEAM_NAME,
+		START_PROVINCE_ID, START_PROVINCE_NAME, END_PROVINCE_ID, END_PROVINCE_NAME,
+		 START_CITY_ID, START_CITY_NAME, END_CITY_ID, END_CITY_NAME,
+		 RUN_ROUTE,  CAR_TYPE,  sum(RUN_LINE_NUM) RUN_LINE_NUM
+		from bigdata_car_day_oftenrun_route
+		where CAR_REAL_ID=#{carRealId} and COUNT_MONTH=#{countMonth}
+		group by RUN_ROUTE
+	</select>
+
+	<!--  根据主键的统计时间查询 -->
+	<select id="loadByIdAndDate" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_car_day_oftenrun_route
+		where id=#{id} and COUNT_MONTH=#{countMonth}
+	</select>
+
+  
+  
+</mapper>

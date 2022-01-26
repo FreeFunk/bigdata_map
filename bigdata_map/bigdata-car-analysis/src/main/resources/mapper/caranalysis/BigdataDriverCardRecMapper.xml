@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataDriverCardRecMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataDriverCardRec" >
+			<id column="ID" property="id"/>
+			<result column="B_ID" property="bid"/>
+			<result column="COMP_ID" property="compId"/>
+			<result column="COMP_NAME" property="compName"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+			<result column="DRIVER_NAME" property="driverName"/>
+			<result column="COMPANY" property="company"/>
+			<result column="LICENCE_NUM" property="licenceNum"/>
+			<result column="REC_TYPE" property="recType"/>
+			<result column="CARD_TIME" property="cardTime"/>
+			<result column="SYS_RECEIVE_TIME" property="sysReceiveTime"/>
+			<result column="QUALIFIED_FLAG" property="qualifiedFlag"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataDriverCardRecView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, B_ID, COMP_ID, COMP_NAME, CREATE_TIME, CAR_PLATE_NUM, CAR_PLATE_COLOR, DRIVER_NAME, COMPANY,
+	  LICENCE_NUM, REC_TYPE, CARD_TIME, SYS_RECEIVE_TIME,QUALIFIED_FLAG,COUNT_DATE,COUNT_MONTH
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.cardTime != null'>
+					AND  CARD_TIME = #{queryObj.cardTime}
+				</if>
+				<if test='queryObj != null and  queryObj.sysReceiveTime != null'>
+					AND  SYS_RECEIVE_TIME = #{queryObj.sysReceiveTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataDriverCardRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_driver_card_rec 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataDriverCardRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_driver_card_rec 
+  		<include refid="where"/>
+  </select>
+
+	<!--   根据公司和业务id统计  -->
+	<select id="countByCompIdAndBid" parameterType="map" resultType="int">
+		select count(1) from bigdata_driver_card_rec where COMP_ID=#{compId} and B_ID=#{bid} and COUNT_DATE=#{countDate} and COUNT_MONTH=#{countMonth}
+	</select>
+
+	<select id="countDriverCardUpNum" parameterType="map" resultType="int">
+		select count(1) from bigdata_driver_card_rec
+		where CAR_PLATE_NUM =#{carPlate} and COUNT_MONTH=#{countMonth} and REC_TYPE = #{type}
+	</select>
+
+
+	<!-- 根据车牌号和车牌颜色 获得司机卡插卡记录 -->
+	<select id="selectDriverCarRecOfChakaOfCar" parameterType="map" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_driver_card_rec
+		where COUNT_MONTH=#{countMonth} and COUNT_DATE=#{countDate}
+		and CAR_PLATE_NUM =#{carPlateNum} and CAR_PLATE_COLOR=#{carPlateColour}
+		and REC_TYPE='1'  order by CARD_TIME asc
+	</select>
+
+	<!-- 根据车牌号和车牌颜色 获得司机卡插卡记录 -->
+	<select id="selectLastDriverCarRecOfChakaOfCar" parameterType="map" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_driver_card_rec
+		where COUNT_MONTH=#{countMonth} and COUNT_DATE=#{countDate}
+		and CAR_PLATE_NUM =#{carPlateNum} and CAR_PLATE_COLOR=#{carPlateColour}
+		and REC_TYPE='1'  order by CARD_TIME desc limit 1
+	</select>
+
+	<select id="countSumNumByCompId" parameterType="map" resultType="int">
+		select count(1) from bigdata_driver_card_rec
+		where COUNT_MONTH=#{countMonth} and COUNT_DATE=#{countDate} and COMP_ID =#{compId}
+	</select>
+
+
+
+  
+</mapper>

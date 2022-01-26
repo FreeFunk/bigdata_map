@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+        #l-map{height:100%;width:78%;float:left;border-right:2px solid #bcbcbc;}
+        #r-result{height:100%;width:20%;float:left;}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=y0M3smRm6FRmGRYH2VT0mXLC6M4mhgPt"></script>
+    <title>添加多个标注点</title>
+
+</head>
+<body>
+<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    /*map.setMapStyle({
+        styleJson:[
+            {
+                "featureType": "background",
+                "elementType": "all",
+                "stylers": {
+                    "color": "#022a4cff"
+                }
+            }
+        ]
+    });*/
+    //启用滚轮放大缩小，默认禁用
+    map.enableScrollWheelZoom(true);
+    map.addControl(new BMap.NavigationControl());
+    var point = new BMap.Point(119.606548,39.954105);
+    map.centerAndZoom(point,10);
+    // 编写自定义函数,创建标注
+    function addMarker(point){
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+        pointsArr.push(marker);
+    }
+
+    var pointsArr =[];
+    function translateCallback(a){
+
+        var pointarr =a.points;
+        for(var i=0;i<pointarr.length;i++){
+            var point = pointarr[i];
+            addMarker(point);
+
+        }
+//        map.centerAndZoom(point, 15);
+
+    }
+
+
+    function translateCallback1(a){
+        var pointarr =a.points;
+        var point = pointarr[0];
+        map.centerAndZoom(point, 16);
+//        map.clearOverlays();
+        for(var i=0;i<pointsArr.length;i++){
+            var marker = pointsArr[i];
+            map.removeOverlay(marker);
+        }
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+        marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+        pointsArr=[marker];
+    }
+
+
+    function updateMapPoint(name,longitude, latitude) {
+        var x = longitude;
+        var y = latitude;
+        var ggPoint = new BMap.Point(x,y);
+        var convertor = new BMap.Convertor();
+        var pointArr = [];
+        pointArr.push(ggPoint);
+        convertor.translate(pointArr, 1, 5, translateCallback1)
+    }
+    var convertor = new BMap.Convertor();
+
+    function updateMapPointArr(points) {
+        for(var j=0;j<=(1 + points.length/10);j++){
+            var pointArr = [];
+            var i=j*10
+            for(;(i<(j+1)*10&& i<points.length);i++){
+                var x = points[i].longitude;
+                var y = points[i].latitude;
+                var ggPoint = new BMap.Point(x,y);
+                pointArr.push(ggPoint);
+            }
+            convertor.translate(pointArr, 1, 5, translateCallback);
+        }
+    }
+
+
+
+</script>

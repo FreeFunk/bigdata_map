@@ -1,0 +1,115 @@
+.monthSelect{
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+.font-title{
+    margin-left: 50%;
+    font-weight: bold;
+    color:black
+}
+.font-title-date{
+    margin-right: 7%;
+    color:black;
+    float:right;
+    font-weight: bold;
+}
+.font-title-icon{
+    color:black;
+    position: absolute;
+    font-size: 22px;
+}
+.p-shadow{
+    box-shadow: 1px 1px 1px 1px #888888;
+}
+p{
+    text-align:center;
+}
+.cardBackColor{
+    background-color: #e4e2e2;
+    height: 84px;
+}
+.cityDetailTable{
+    margin-top:4.5%;
+}
+.cityDetail-card{
+    height: 250px;
+}
+.cityDetail-card-xianqu{
+    height: 250px;
+    overflow:scroll;
+    overflow-x: hidden
+}
+.p-payDetail{
+    padding-left: 5%;
+    text-align: left;
+    box-shadow: 1px 1px 1px 1px #888888;
+    font-weight: bold;
+}
+.dateIcon{
+    margin-left:20px;
+    float:left;
+    position: relative;
+}
+.cardBackColor-xianquYunGuan{
+    background-color: ghostwhite;
+}
+
+.xianquLittleCard-num{
+    font-weight: bold;
+    color: #797979;
+    font-family: 微软雅黑;
+    font-size: x-large
+}
+.xianquLittleCard-lTitleDesc{
+    font-weight: bold;
+    color: #333333;
+    float:left;
+    margin-top: 4%;
+}
+.xianquLittleCard-icon{
+    font-size: 25px;
+    color: #9999CC;
+    margin-right: 17px;
+    float:right
+}
+.xianquLittleCard-clickDetail{
+    text-align: center;
+    background-color: #66ACCC;
+    color: white;
+    font-weight: bold;
+    margin:20px 20px 10px 20px;
+    padding: 3px auto;
+}
+
+.xianquLittleCard-topDiv{
+    margin-left:2%;
+    margin-top: 2%;
+}
+.xianquLittleCard-1{
+    background-color: white;
+    box-shadow: 1px 1px 1px 1px #888888;
+    width: 20%;
+    float:left;
+    margin-left:3%;
+    height: 139px;
+    border-radius: 2px
+}
+.xianquLittleCard-shangDiv{
+    margin-top:4%;
+    margin-left: 5%
+}
+.xianquLittleCard-xiaDiv{
+    margin-top:26%;
+    margin-left: 5%;
+    clear: both;
+}
+.xianquLittleCard-lTitleUnit-font{
+    font-weight: bold;
+    color: #333333;
+    margin-left: 57%;
+}
+.xianquLittleCard-lTitleUnit-div{
+    float: right;
+    margin-right: 15%;
+    margin-top: -12%;
+}

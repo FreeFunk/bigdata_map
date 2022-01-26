@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.PeccancyRecMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.PeccancyRec" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="EMP_NAME" property="empName"/>
+			<result column="EMP_ID_CARD" property="empIdCard"/>
+			<result column="EMP_CODE" property="empCode"/>
+			<result column="OWNER_TEAM_ID" property="ownerTeamId"/>
+			<result column="OWNER_TEAM_NAME" property="ownerTeamName"/>
+			<result column="PECCANCY_TIME" property="peccancyTime"/>
+			<result column="PECCANCY_TYPE" property="peccancyType"/>
+			<result column="DETAIL_INFO" property="detailInfo"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.PeccancyRecView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CAR_PLATE_NUM, CAR_FRAME_NUM, EMP_NAME, EMP_ID_CARD, EMP_CODE, OWNER_TEAM_ID, OWNER_TEAM_NAME, PECCANCY_TIME, PECCANCY_TYPE, DETAIL_INFO
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.peccancyTime != null'>
+					AND  PECCANCY_TIME = #{queryObj.peccancyTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.PeccancyRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from peccancy_rec 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.PeccancyRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from peccancy_rec 
+  		<include refid="where"/>
+  </select>
+
+	<select id="listpagePeccancyRec" parameterType="com.edgedo.bigdata.queryvo.PeccancyRecQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from peccancy_rec
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+			<if test="queryObj != null and  queryObj.empName != null and queryObj.empName != ''">
+				AND  EMP_NAME LIKE concat('%',#{queryObj.empName},'%')
+			</if>
+			<if test="queryObj != null and  queryObj.empIdCard != null and queryObj.empIdCard != ''">
+				AND  EMP_ID_CARD LIKE concat('%',#{queryObj.empIdCard},'%')
+			</if>
+			<if test="queryObj != null and  queryObj.empCode != null and queryObj.empCode != ''">
+				AND  EMP_CODE LIKE concat('%',#{queryObj.empCode},'%')
+			</if>
+			<if test="queryObj != null and  queryObj.ownerTeamName != null and queryObj.ownerTeamName != ''">
+				AND  OWNER_TEAM_NAME LIKE concat('%',#{queryObj.ownerTeamName},'%')
+			</if>
+		</trim>
+	</select>
+
+	<select id="listPagePRByCarInfo" parameterType="com.edgedo.bigdata.queryvo.PeccancyRecQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from peccancy_rec
+		<trim prefix="where (" suffix=")" prefixOverrides="AND | OR">
+			<if test="queryObj != null and queryObj.carPlateNum != null">
+				and CAR_PLATE_NUM LIKE concat('%',#{queryObj.carPlateNum},'%')
+			</if>
+			<if test="queryObj != null and queryObj.carFrameNum != null">
+				and CAR_FRAME_NUM = #{queryObj.carFrameNum}
+			</if>
+		</trim>
+	</select>
+
+
+  
+  
+</mapper>

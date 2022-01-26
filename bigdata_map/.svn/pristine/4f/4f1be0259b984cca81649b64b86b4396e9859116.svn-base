@@ -1,0 +1,502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>秦皇岛市智慧交通北斗大数据分析平台</title>
+    <!--<link href="css/animate.min.css" rel="stylesheet" type="text/css">-->
+    <!--<link href="css/layout.css" rel="stylesheet" type="text/css" />-->
+    <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <!--<link href="font/iconfont.css" rel="stylesheet" type="text/css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="css/datedropper.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">-->
+    <script src="js/tool.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <!--<script type="text/javascript" src="js/laydate/laydate.js"></script>-->
+</head>
+
+<body style="height: 100%;overflow-y: scroll;">
+
+<div class="main">
+    <div style="width: 50%;height: auto;float: left">
+        <table border="1">
+            <tr>
+                <td>安全等级:<p id="safetyLevel"></p></td>
+            </tr>
+            <tr>
+                <td>画像:<img style="width: 100%;height: 300px;" src="" id="portrait_img"/><p id="portrait" style="display: none"></p></td>
+            </tr>
+            <tr>
+                <td>年龄:<p id="age"></p></td>
+            </tr>
+            <tr>
+                <td>身份证号:<p id="numberCode"></p></td>
+            </tr>
+            <tr>
+                <td>入职日期:<p id="startWorkTime"></p></td>
+            </tr>
+            <tr>
+                <td>企业:<p id="teamName"></p></td>
+            </tr>
+            <tr>
+                <td>性别:<p id="sex"></p></td>
+            </tr>
+            <tr>
+                <td>籍贯:<p id="oldAddress"></p></td>
+            </tr>
+            <tr>
+                <td>联系电话:<p id="phoneNum"></p></td>
+            </tr>
+            <tr>
+                <td>资格证号:<p id="driverCode"></p></td>
+            </tr>
+            <tr>
+                <td>驾驶证类型:<p id="driverType"></p></td>
+            </tr>
+            <tr>
+                <td>驾驶证号:<p id="driverCarCode"></p></td>
+            </tr>
+            <tr>
+                <td>准驾车型:<p id="driverCarType"></p></td>
+            </tr>
+        </table>
+        <br>
+        <table border="1">
+            <tr>
+                <td>车牌号</td>
+                <td>时间</td>
+                <td>所属企业</td>
+            </tr>
+            <tr>
+                <td id="carNum"></td>
+                <td id="changeTime"></td>
+                <td id="changeTeamName"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="width: 50%;height: auto;float: right;">
+        <table border="1">
+            <tr>
+                <td>行驶里程</td>
+                <td>全年行驶里程:<p id="liChengYear"></p></td>
+                <td>国道:<p id="guoDao"></p></td>
+                <td>高速:<p id="gaoSu"></p></td>
+                <td id="liChengPingFen"></td>
+            </tr>
+            <tr>
+                <td>行驶时长</td>
+                <td>全年驾驶时长:<p id="jiaShiYear"></p></td>
+                <td>危险时段驾驶时长:<p id="weiXianTiem"></p></td>
+                <td>白天:<p id="day"></p></td>
+                <td>夜晚:<p id="night"></p></td>
+                <td id="timePingFen"></td>
+            </tr>
+            <tr>
+                <td>行驶速度</td>
+                <td>全年最高速度:<p id="speedYear"></p></td>
+                <td>全年平均时速:<p id="speedPingJunYear"></p></td>
+                <td id="speedPingFen"></td>
+            </tr>
+            <tr>
+                <td>常去城市</td>
+                <td>高频次停靠点:<p id="afterCity"></p></td>
+                <td id="afterCityPingFen"></td>
+            </tr>
+            <tr>
+                <td>经营分析</td>
+                <td>本地从业情况:<p id="benDiWork"></p></td>
+                <td>驾驶行为分析:<p id="jiaShiFenxi"></p></td>
+                <td>安全生产情况:<p id="safetyWorkFenxi"></p></td>
+                <td id="jiYingPingFen"></td>
+            </tr>
+            <tr>
+                <td>危险驾驶</td>
+                <td>超速:<p id="onSpeed"></p></td>
+                <td>严重超速:<p id="onSpeedYanZhong"></p></td>
+                <td>疲劳:<p id="piLao"></p></td>
+                <td>严重疲劳:<p id="piLaoYanZhong"></p></td>
+                <td id="weiXianJiaShiPingFen"></td>
+            </tr>
+            <tr>
+                <td>安全生产</td>
+                <td>安全培训记录:<p id="safetyJiLu"></p></td>
+                <td>是否实名认证:<p id="isShiMingRenZheng"></p></td>
+                <!--<td>驾驶证:<p id="jiaShiZheng"></p></td>-->
+                <td id="safetyPingFen"></td>
+            </tr>
+            <!--<tr>-->
+                <!--<td>诚信考核</td>-->
+                <!--<td>诚信考核记录:<p id="chengXinKaoHe"></p></td>-->
+                <!--<td id="chengXinKaoHePingFen"></td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>健康档案</td>-->
+                <!--<td>健康档案记录:<p id="jianKangJilu"></p></td>-->
+                <!--<td id="jianKangJiluPingFen"></td>-->
+            <!--</tr>-->
+        </table>
+
+    </div>
+
+</div>
+
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript">
+
+    selectAnQuanPingFen();
+    function selectAnQuanPingFen() {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataDriverDrawInfo/selectCarUserInfo.jsn",
+            data: {'driverId':'732d628776374678a16704cace348ae3'},
+            dataType: "json",
+            // beforeSend: function (XMLHttpRequest) {
+            //     XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            // },
+            success: function(data){//D:\work\hangling\bigdata_map\bigdata-drawing\src\main\resources\static\views\darwing\DriverPortraitList.html
+                debugger
+                var bigdataDriverDrawInfoView = data.data.bigdataDriverDrawInfoView;
+                var list = data.data.list;
+                //安全等级 safetyLevel
+                if(typeof (bigdataDriverDrawInfoView.safeLevel)=='undefined' || bigdataDriverDrawInfoView.safeLevel==''){
+                    document.getElementById("safetyLevel").innerText =  "无";
+                }else {
+                    document.getElementById("safetyLevel").innerText = bigdataDriverDrawInfoView.safeLevel;
+                }
+                //画像 portrait
+                if(typeof (bigdataDriverDrawInfoView.driverPhotoUrl)=='undefined' || bigdataDriverDrawInfoView.driverPhotoUrl==''){
+                    document.getElementById("portrait_img").style.display='none';
+                    document.getElementById("portrait").style.display='';
+                    document.getElementById("portrait").innerText =  "无";
+                }else {
+                    $("#portrait_img").attr("src",bigdataDriverDrawInfoView.driverPhotoUrl);
+                }
+
+                // 年龄 age
+                if(typeof (bigdataDriverDrawInfoView.driverAge)=='undefined' || bigdataDriverDrawInfoView.driverAge==''){
+                    document.getElementById("age").innerText =  "无";
+                }else {
+                    document.getElementById("age").innerText = bigdataDriverDrawInfoView.driverAge;
+                }
+
+                // 身份证号 numberCode
+                if(typeof (bigdataDriverDrawInfoView.driverIdCard)=='undefined' || bigdataDriverDrawInfoView.driverIdCard==''){
+                    document.getElementById("numberCode").innerText =  "无";
+                }else {
+                    document.getElementById("numberCode").innerText = bigdataDriverDrawInfoView.driverIdCard;
+                }
+
+                // 入职日期 startWorkTime
+                if(typeof (bigdataDriverDrawInfoView.driverEntryDay)=='undefined' || bigdataDriverDrawInfoView.driverEntryDay==''){
+                    document.getElementById("startWorkTime").innerText =  "无";
+                }else {
+                    document.getElementById("startWorkTime").innerText = bigdataDriverDrawInfoView.driverEntryDay;
+                }
+
+                // 企业 teamName
+                if(typeof (bigdataDriverDrawInfoView.teamName)=='undefined' || bigdataDriverDrawInfoView.teamName==''){
+                    document.getElementById("teamName").innerText =  "无";
+                }else {
+                    document.getElementById("teamName").innerText = bigdataDriverDrawInfoView.teamName;
+                }
+
+                // 性别 sex
+                if(typeof (bigdataDriverDrawInfoView.driverSex)=='undefined' || bigdataDriverDrawInfoView.driverSex==''){
+                    document.getElementById("sex").innerText =  "无";
+                }else {
+                    document.getElementById("sex").innerText = bigdataDriverDrawInfoView.driverSex;
+                }
+
+                // 籍贯 oldAddress
+                document.getElementById("oldAddress").innerText=bigdataDriverDrawInfoView.provinceName+"-"+bigdataDriverDrawInfoView.cityName+"-"+bigdataDriverDrawInfoView.xianquName;
+
+                // 联系电话 phoneNum
+                if(typeof (bigdataDriverDrawInfoView.driverPhone)=='undefined' || bigdataDriverDrawInfoView.driverPhone==''){
+                    document.getElementById("phoneNum").innerText =  "无";
+                }else {
+                    document.getElementById("phoneNum").innerText = bigdataDriverDrawInfoView.driverPhone;
+                }
+
+                // 资格证号 driverCode
+                if(typeof (bigdataDriverDrawInfoView.driverCode)=='undefined' || bigdataDriverDrawInfoView.driverCode==''){
+                    document.getElementById("driverCode").innerText =  "无";
+                }else {
+                    document.getElementById("driverCode").innerText = bigdataDriverDrawInfoView.driverCode;
+                }
+
+                // 驾驶证类型 driverType
+                if(typeof (bigdataDriverDrawInfoView.driverLicenceType)=='undefined' || bigdataDriverDrawInfoView.driverLicenceType==''){
+                    document.getElementById("driverType").innerText =  "无";
+                }else {
+                    document.getElementById("driverType").innerText = bigdataDriverDrawInfoView.driverLicenceType;
+                }
+
+                // 驾驶证号 driverCarCode
+                if(typeof (bigdataDriverDrawInfoView.driverLicenceNum)=='undefined' || bigdataDriverDrawInfoView.driverLicenceNum==''){
+                    document.getElementById("driverCarCode").innerText =  "无";
+                }else {
+                    document.getElementById("driverCarCode").innerText = bigdataDriverDrawInfoView.driverLicenceNum;
+                }
+
+                // 准驾车型 driverCarType
+                if(typeof (bigdataDriverDrawInfoView.driverCarType)=='undefined' || bigdataDriverDrawInfoView.driverCarType==''){
+                    document.getElementById("driverCarType").innerText =  "无";
+                }else {
+                    document.getElementById("driverCarType").innerText = bigdataDriverDrawInfoView.driverCarType;
+                }
+
+
+                //全年行驶里程 liChengYear
+                if(typeof (bigdataDriverDrawInfoView.yearRunMileage)=='undefined' || bigdataDriverDrawInfoView.yearRunMileage==''){
+                    document.getElementById("liChengYear").innerText =  "无";
+                }else {
+                    document.getElementById("liChengYear").innerText = bigdataDriverDrawInfoView.yearRunMileage+"万公里";
+                }
+
+                // 国道 guoDao
+                if(typeof (bigdataDriverDrawInfoView.nationalRoadMileage)=='undefined' || bigdataDriverDrawInfoView.nationalRoadMileage==''){
+                    document.getElementById("guoDao").innerText =  "无";
+                }else {
+                    document.getElementById("guoDao").innerText = bigdataDriverDrawInfoView.nationalRoadMileage+"万公里";
+                }
+
+                // 高速 gaoSu
+                if(typeof (bigdataDriverDrawInfoView.highSpeedMileage)=='undefined' || bigdataDriverDrawInfoView.highSpeedMileage==''){
+                    document.getElementById("gaoSu").innerText =  "无";
+                }else {
+                    document.getElementById("gaoSu").innerText = bigdataDriverDrawInfoView.highSpeedMileage+"万公里";
+                }
+
+                // 行驶里程评分 liChengPingFen
+                if(typeof (bigdataDriverDrawInfoView.runMileageLevel)=='undefined' || bigdataDriverDrawInfoView.runMileageLevel==''){
+                    document.getElementById("liChengPingFen").innerText =  "无";
+                }else {
+                    document.getElementById("liChengPingFen").innerText = bigdataDriverDrawInfoView.runMileageLevel;
+                }
+
+                // 全年驾驶时长 jiaShiYear
+                if(typeof (bigdataDriverDrawInfoView.yearRunTimeLength)=='undefined' || bigdataDriverDrawInfoView.yearRunTimeLength==''){
+                    document.getElementById("jiaShiYear").innerText =  "无";
+                }else {
+                    document.getElementById("jiaShiYear").innerText = bigdataDriverDrawInfoView.yearRunTimeLength+"小时";
+                }
+
+                // 危险时段驾驶时长 weiXianTiem
+                if(typeof (bigdataDriverDrawInfoView.dangerRunTimeLength)=='undefined' || bigdataDriverDrawInfoView.dangerRunTimeLength==''){
+                    document.getElementById("weiXianTiem").innerText =  "无";
+                }else {
+                    document.getElementById("weiXianTiem").innerText = bigdataDriverDrawInfoView.dangerRunTimeLength+"小时";
+                }
+
+                // 白天 day
+                if(typeof (bigdataDriverDrawInfoView.dayRunTimeLength)=='undefined' || bigdataDriverDrawInfoView.dayRunTimeLength==''){
+                    document.getElementById("day").innerText =  "无";
+                }else {
+                    document.getElementById("day").innerText = bigdataDriverDrawInfoView.dayRunTimeLength+"小时";
+                }
+
+                // 夜晚 night
+                if(typeof (bigdataDriverDrawInfoView.nightRunTimeLength)=='undefined' || bigdataDriverDrawInfoView.nightRunTimeLength==''){
+                    document.getElementById("night").innerText =  "无";
+                }else {
+                    document.getElementById("night").innerText = bigdataDriverDrawInfoView.nightRunTimeLength+"小时";
+                }
+
+                // 行驶时长评分 timePingFen
+                if(typeof (bigdataDriverDrawInfoView.runTimeLengthLevel)=='undefined' || bigdataDriverDrawInfoView.runTimeLengthLevel==''){
+                    document.getElementById("timePingFen").innerText =  "无";
+                }else {
+                    document.getElementById("timePingFen").innerText = bigdataDriverDrawInfoView.runTimeLengthLevel;
+                }
+
+                // 全年最高速度 speedYear
+                if(typeof (bigdataDriverDrawInfoView.highestSpeed)=='undefined' || bigdataDriverDrawInfoView.highestSpeed==''){
+                    document.getElementById("speedYear").innerText =  "无";
+                }else {
+                    document.getElementById("speedYear").innerText = bigdataDriverDrawInfoView.highestSpeed+"千米/小时";
+                }
+
+                // 全年平均时速 speedPingJunYear
+                if(typeof (bigdataDriverDrawInfoView.averageSpeed)=='undefined' || bigdataDriverDrawInfoView.averageSpeed==''){
+                    document.getElementById("speedPingJunYear").innerText =  "无";
+                }else {
+                    document.getElementById("speedPingJunYear").innerText = bigdataDriverDrawInfoView.averageSpeed+"千米/小时";
+                }
+
+                // 行驶速度评分 speedPingFen
+                if(typeof (bigdataDriverDrawInfoView.runSpeedLevel)=='undefined' || bigdataDriverDrawInfoView.runSpeedLevel==''){
+                    document.getElementById("speedPingFen").innerText =  "无";
+                }else {
+                    document.getElementById("speedPingFen").innerText = bigdataDriverDrawInfoView.runSpeedLevel;
+                }
+
+                // 高频次停靠点 afterCity
+                if(typeof (bigdataDriverDrawInfoView.stopCity)=='undefined' || bigdataDriverDrawInfoView.stopCity==''){
+                    document.getElementById("afterCity").innerText =  "无";
+                }else {
+                    var arr = bigdataDriverDrawInfoView.stopCity.split(",");
+                    document.getElementById("afterCity").innerText = "1"+arr[0]+" "+"2"+arr[1]+" "+"3"+arr[2];
+                }
+
+                // 常去城市评分 afterCityPingFen
+                if(typeof (bigdataDriverDrawInfoView.stopCityLevel)=='undefined' || bigdataDriverDrawInfoView.stopCityLevel==''){
+                    document.getElementById("afterCityPingFen").innerText =  "无";
+                }else {
+                    document.getElementById("afterCityPingFen").innerText = bigdataDriverDrawInfoView.stopCityLevel;
+                }
+
+                // 本地从业情况 benDiWork
+                if(typeof (bigdataDriverDrawInfoView.empDesc)=='undefined' || bigdataDriverDrawInfoView.empDesc==''){
+                    document.getElementById("benDiWork").innerText =  "无";
+                }else {
+                    document.getElementById("benDiWork").innerText = bigdataDriverDrawInfoView.empDesc;
+                }
+
+                // 驾驶行为分析 jiaShiFenxi
+                if(typeof (bigdataDriverDrawInfoView.warningRate)=='undefined' || bigdataDriverDrawInfoView.warningRate==''){
+                    document.getElementById("jiaShiFenxi").innerText =  "无";
+                }else {
+                    document.getElementById("jiaShiFenxi").innerText = "百公里报警系数"+bigdataDriverDrawInfoView.warningRate;
+                }
+
+                // 安全生产情况 safetyWorkFenxi
+                if(typeof (bigdataDriverDrawInfoView.safetyDesc)=='undefined' || bigdataDriverDrawInfoView.safetyDesc==''){
+                    document.getElementById("safetyWorkFenxi").innerText =  "无";
+                }else {
+                    document.getElementById("safetyWorkFenxi").innerText = bigdataDriverDrawInfoView.safetyDesc;
+                }
+
+                // 经营分析评分 jiYingPingFen
+                if(typeof (bigdataDriverDrawInfoView.jyLevel)=='undefined' || bigdataDriverDrawInfoView.jyLevel==''){
+                    document.getElementById("jiYingPingFen").innerText =  "无";
+                }else {
+                    document.getElementById("jiYingPingFen").innerText = bigdataDriverDrawInfoView.jyLevel;
+                }
+
+                // 超速 onSpeed
+                if(typeof (bigdataDriverDrawInfoView.overspeedNum)=='undefined' || bigdataDriverDrawInfoView.overspeedNum==''){
+                    document.getElementById("onSpeed").innerText =  "无";
+                }else {
+                    document.getElementById("onSpeed").innerText = bigdataDriverDrawInfoView.overspeedNum+"次";
+                }
+
+                // 严重超速 onSpeedYanZhong
+                if(typeof (bigdataDriverDrawInfoView.seriousOverspeedNum)=='undefined' || bigdataDriverDrawInfoView.seriousOverspeedNum==''){
+                    document.getElementById("onSpeedYanZhong").innerText =  "无";
+                }else {
+                    document.getElementById("onSpeedYanZhong").innerText = bigdataDriverDrawInfoView.seriousOverspeedNum+"次";
+                }
+
+                // 疲劳 piLao
+                if(typeof (bigdataDriverDrawInfoView.tiredNum)=='undefined' || bigdataDriverDrawInfoView.tiredNum==''){
+                    document.getElementById("piLao").innerText =  "无";
+                }else {
+                    document.getElementById("piLao").innerText = bigdataDriverDrawInfoView.tiredNum+"次";
+                }
+
+                // 严重疲劳 piLaoYanZhong
+                if(typeof (bigdataDriverDrawInfoView.seriousTiredNum)=='undefined' || bigdataDriverDrawInfoView.seriousTiredNum==''){
+                    document.getElementById("piLaoYanZhong").innerText =  "无";
+                }else {
+                    document.getElementById("piLaoYanZhong").innerText = bigdataDriverDrawInfoView.seriousTiredNum+"次";
+                }
+
+                // 危险驾驶评分 weiXianJiaShiPingFen
+                if(typeof (bigdataDriverDrawInfoView.dangerRunLevel)=='undefined' || bigdataDriverDrawInfoView.dangerRunLevel==''){
+                    document.getElementById("weiXianJiaShiPingFen").innerText =  "无";
+                }else {
+                    document.getElementById("weiXianJiaShiPingFen").innerText = bigdataDriverDrawInfoView.dangerRunLevel;
+                }
+
+                // 安全培训记录 safetyJiLu
+                if(typeof (bigdataDriverDrawInfoView.safetrainNum)=='undefined' || bigdataDriverDrawInfoView.safetrainNum==''){
+                    document.getElementById("safetyJiLu").innerText =  "无";
+                }else {
+                    document.getElementById("safetyJiLu").innerText = bigdataDriverDrawInfoView.safetrainNum+"次";
+                }
+
+                // 是否实名认证 isShiMingRenZheng
+                if(typeof (bigdataDriverDrawInfoView.isRealState)=='undefined' || bigdataDriverDrawInfoView.isRealState==''){
+                    document.getElementById("isShiMingRenZheng").innerText =  "无";
+                }else {
+                    if(bigdataDriverDrawInfoView.isRealState=='1'){
+                        document.getElementById("isShiMingRenZheng").innerText = "是";
+                    }else {
+                        document.getElementById("isShiMingRenZheng").innerText = "否";
+                    }
+                }
+
+                // 驾驶证 jiaShiZheng
+                // if(typeof (bigdataDriverDrawInfoView.yearRunMileage)=='undefined' || bigdataDriverDrawInfoView.yearRunMileage==''){
+                //     document.getElementById("jiaShiZheng").innerText =  "无";
+                // }else {
+                //     document.getElementById("jiaShiZheng").innerText = bigdataDriverDrawInfoView.yearRunMileage+"万公里";
+                // }
+
+                // 安全生评分 safetyPingFen
+                if(typeof (bigdataDriverDrawInfoView.safetrainLevel)=='undefined' || bigdataDriverDrawInfoView.safetrainLevel==''){
+                    document.getElementById("safetyPingFen").innerText =  "无";
+                }else {
+                    document.getElementById("safetyPingFen").innerText = bigdataDriverDrawInfoView.safetrainLevel;
+                }
+
+                // 诚信考核记录 chengXinKaoHe
+                // if(typeof (bigdataDriverDrawInfoView.yearRunMileage)=='undefined' || bigdataDriverDrawInfoView.yearRunMileage==''){
+                //     document.getElementById("chengXinKaoHe").innerText =  "无";
+                // }else {
+                //     document.getElementById("chengXinKaoHe").innerText = bigdataDriverDrawInfoView.yearRunMileage+"万公里";
+                // }
+                //
+                // // 诚信考核评分 chengXinKaoHePingFen
+                // if(typeof (bigdataDriverDrawInfoView.yearRunMileage)=='undefined' || bigdataDriverDrawInfoView.yearRunMileage==''){
+                //     document.getElementById("chengXinKaoHePingFen").innerText =  "无";
+                // }else {
+                //     document.getElementById("chengXinKaoHePingFen").innerText = bigdataDriverDrawInfoView.yearRunMileage+"万公里";
+                // }
+
+                // 健康档案记录 jianKangJilu
+                // if(typeof (bigdataDriverDrawInfoView.healthRec)=='undefined' || bigdataDriverDrawInfoView.healthRec==''){
+                //     document.getElementById("jianKangJilu").innerText =  "无";
+                // }else {
+                //     document.getElementById("jianKangJilu").innerText = bigdataDriverDrawInfoView.healthRec+"次";
+                // }
+                //
+                // // 健康档案 jianKangJiluPingFen
+                // if(typeof (bigdataDriverDrawInfoView.healthLevel)=='undefined' || bigdataDriverDrawInfoView.healthLevel==''){
+                //     document.getElementById("jianKangJiluPingFen").innerText =  "无";
+                // }else {
+                //     document.getElementById("jianKangJiluPingFen").innerText = bigdataDriverDrawInfoView.healthLevel;
+                // }
+
+                for(var i = 0;i<list.length;i++){
+                    // 车牌号 carNum 时间  changeTime 所属企业 changeTeamName
+                    if(typeof (list[i].carPlateNum)=='undefined' || list[i].carPlateNum==''){
+                        document.getElementById("carNum").innerText =  "无";
+                    }else {
+                        document.getElementById("carNum").innerText = list[i].carPlateNum;
+                    }
+
+                    if(typeof (list[i].createTime)=='undefined' || list[i].createTime==''){
+                        document.getElementById("changeTime").innerText =  "无";
+                    }else {
+                        document.getElementById("changeTime").innerText = list[i].createTime;
+                    }
+
+                    if(typeof (list[i].teamName)=='undefined' || list[i].teamName==''){
+                        document.getElementById("changeTeamName").innerText =  "无";
+                    }else {
+                        document.getElementById("changeTeamName").innerText = list[i].teamName;
+                    }
+                }
+
+
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

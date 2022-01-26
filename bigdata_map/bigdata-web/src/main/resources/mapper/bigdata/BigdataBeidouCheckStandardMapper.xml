@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataBeidouCheckStandardMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataBeidouCheckStandard" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="STANDARD_NAME" property="standardName"/>
+			<result column="STANDARD_DIRECTION" property="standardDirection"/>
+			<result column="SCORE_LINE" property="scoreLine"/>
+			<result column="UNSCORE_LINE" property="unscoreLine"/>
+			<result column="SCORE_NUM" property="scoreNum"/>
+			<result column="STANDARD_DESC" property="standardDesc"/>
+			<result column="STANDARD_STATE" property="standardState"/>
+			<result column="DEAL_CLASS_NAME" property="dealClassName"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataBeidouCheckStandardView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, STANDARD_NAME, STANDARD_DIRECTION, SCORE_LINE, UNSCORE_LINE, SCORE_NUM, STANDARD_DESC, STANDARD_STATE, DEAL_CLASS_NAME
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouCheckStandardQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_check_standard 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouCheckStandardQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_check_standard 
+  		<include refid="where"/>
+  </select>
+  
+  
+</mapper>

@@ -1,0 +1,1998 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="css/layer-animate.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/tool.js"></script>
+</head>
+
+<body>
+
+<style type="text/css">
+ .laywindow{
+     background-color: #07304c;
+ }
+</style>
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+                
+                   
+                <!--<input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " />-->
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+    <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">营运车辆</div>
+             <a href="javaScript:history.back(-1);" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+    
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+<div class="main">
+      <div class="ind">
+                           
+           
+        <div style="width:64%; float: left">
+          
+           <div style="width:43%; float: left">
+                       <div class="mk" >
+                               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                               <div class="tit0">
+                                     <span class="tit0_l"></span>
+                                     <span class="tit0_m">车辆信息</span>
+                                     <span class="tit0_r"></span>
+                               </div>
+                           <div class="con0 clearfix">
+                  <div class="clxx0">
+                      <input type="hidden" id="id" />
+                     <ul>
+                        <li>
+                           <div class="clxx0_m">车牌号:</div>
+                           <div id="carPlateNum" class="clxx0_r"></div>
+                        </li>
+                         <li>
+                           <div class="clxx0_m">车牌颜色:</div>
+                           <div id="carPlateColor" class="clxx0_r"></div>
+                        </li>
+                         <li>
+                           <div class="clxx0_m">许可证号:</div>
+                           <div id="jyCertNumber" class="clxx0_r"></div>
+                        </li>
+                         <li>
+                             <div class="clxx0_m">所属企业:</div>
+                             <div id="ownerTeamName" class="clxx0_r"></div>
+                         </li>
+                         <li>
+                           <div class="clxx0_m">业户名称:</div>
+                           <div id="contactPerson" class="clxx0_r"></div>
+                        </li>
+                         <li>
+                           <div class="clxx0_m">车辆类型:</div>
+                           <div id="carFunType" class="clxx0_r"></div>
+                        </li>
+                        <li>
+                           <div class="clxx0_m">行驶状态:</div>
+                           <div id="runState" class="clxx0_r">暂无信息</div>
+                        </li>
+                        <li>
+                           <div class="clxx0_m">所属县区:</div>
+                           <div id="locationInfo" class="clxx0_r">暂无信息</div>
+                        </li>
+                        <li style="display: none">
+                           <div class="clxx0_m">车架号:</div>
+                           <div id="carFrameNum" class="clxx0_r"></div>
+                        </li>
+                         <li>
+                             <div class="clxx0_m">年审截止时间:</div>
+                             <div id="nianshenDate" class="clxx0_r"></div>
+                         </li>
+                        <li>
+                           <div class="clxx0_m">道路运输证号:</div>
+                           <div id="transitLicenceCode" class="clxx0_r">暂无信息</div>
+                        </li>
+                        <li>
+                           <div class="clxx0_m">联系电话:</div>
+                           <div id="contactPhone" class="clxx0_r"></div>
+                        </li>
+                        <li>
+                           <div class="clxx0_m">北斗运营商:</div>
+                           <div id="beidouOraComp" class="clxx0_r">暂无信息</div>
+                        </li>
+                        <li>
+                           <div class="clxx0_m">车辆品牌:</div>
+                           <div id="carBrandsName" class="clxx0_r">&nbsp;</div>
+                        </li>
+                         <li>
+                           <div class="clxx0_m">地理位置:</div>
+                           <div class="clxx0_r"><a href="javaScript:void(0);" onclick="goTolocaltion()">查看位置</a></div>
+                        </li>
+                        
+                     </ul>
+                  </div>
+               </div>
+                        </div> 
+               
+               
+               <div class="blank10"></div>
+               
+                <div class="mk" >
+                               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                               <div class="tit0">
+                                     <span class="tit0_l"></span>
+                                     <span class="tit0_m">关联人员</span>
+                                     <span class="tit0_r"></span>
+                               </div>
+                    <div class="blank10"></div>
+                   <div class="con0 clearfix" style="height:150px; overflow-y: scroll">
+                       <table id="empList" width="100%" class="grid03">
+                          <tr>
+                            <th style="width:30%">姓名</th>
+                            <th style="width:40%">时间</th>
+                            <th style="width:30%">身份</th>
+                          </tr>
+                       </table>
+                   </div>
+                    <div class="blank10"></div>
+               </div>
+               
+               
+           </div>
+            
+            
+            <div style="width:55%; float: right">
+                       <div class="mk" style="height: 400px">
+                               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                               <div class="tit0" >
+                                     <span class="tit0_l" style="margin-left: 200px;"></span>
+                                     <span class="tit0_m">危险驾驶信息</span>
+                                     <span class="tit0_r"></span>
+                                   <input type="text" class="input_rl " id="searchDate" style="width:150px; height: 48px; margin-left: 45px; ">
+                               </div>
+                               <div class="blank10"></div>
+                                   <div class="con0 clearfix" style="height: 285px;overflow-y: scroll">
+                                        <table id="peccancyList" width="100%" class="grid03">
+                                          <!--<tr>
+                                            &lt;!&ndash;<th style="width:15%">司机</th>&ndash;&gt;
+                                            <th style="width:25%">违章时间</th>
+                                            <th style="width:15%">司机姓名</th>
+                                            <th style="width:20%">违章类型</th>
+                                            <th style="width:20%">处理结果</th>
+                                            &lt;!&ndash;<th style="width:20%">详情</th>&ndash;&gt;
+                                          </tr>-->
+                                       </table>
+                                   </div>
+                                <div class="blank10"></div>
+                        </div> 
+                
+                       <div class="blank10"></div>
+                
+                        <div class="mk" >
+                               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                               <div class="blank20"></div>
+                                   <div class="con0 clearfix" style="position:relative">
+                                        <span id="carPNum" class="cph00"></span>
+                                        <img id="carPhoto" src="" style="width: 100%; height: 340px">
+                                   </div>
+                                <div class="blank20"></div>
+                        </div>
+           </div> 
+            
+            
+            <div class="blank10"></div>
+            
+            
+             <div class="mk" >
+                               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                               <div class="tit0">
+                                     <span class="tit0_l"></span>
+                                     <span class="tit0_m">技术档案</span>
+                                     <span class="tit0_r"></span>
+                               </div>
+                               
+                               
+                                <div class="con0 clearfix" style="height:150px">
+                                 
+                                    <div class="jsda">
+                                        <ul>
+                                            <li><div class="p20"><a herf="###" id="test1">维修保养记录</a></div></li>
+                                            <li><div class="p20"><a herf="###" id="test2">维修保养计划</a></div></li>
+                                            <li><div class="p20"><a herf="###" id="test3">车辆变更记录</a></div></li>
+                                            <li><div class="p20"><a herf="###" id="test4">车牌变更记录</a></div></li>
+                                            <li><div class="p20"><a herf="###" id="test5">等级评定记录</a></div></li>
+                                            <li><div class="p20"><a herf="###" id="test6">车辆部件变更记录</a></div></li>
+                                            <li><div class="p20"><a herf="###" id="test7">机损事故记录</a></div></li>
+                                            <li><div class="p20"><a herf="###" id="test8">车主变更记录</a></div></li>
+                                        </ul>
+                                    </div>
+                 
+                                </div>
+                 
+            </div>
+            
+          
+        </div>
+          
+          
+          
+          
+          
+          
+          <div style="width:35%; float: right">
+                           <div class=" mk"  style="position: relative">
+                              <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                               <div class="tit0">
+                                     <span class="tit0_l"></span>
+                                     <span class="tit0_m">里程分析</span>
+                                     <span class="tit0_r"></span>
+                               </div>
+                                     <div class="time0 clearfix" style=" position: absolute; right:5px; top: 5px;">
+                                            <div class="btn-group year_group ">
+                                                <button data-toggle="dropdown" class="dropdown-toggle" type="button" style="padding: 5px 10px !important;">
+                                                    <span id="year">本周</span><i class="caret"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                  <li><a href="javaScript:void(0);" onclick="searchMonth('WEEK','mileage')">本周</a></li>
+                                                  <li><a href="javaScript:void(0);" onclick="searchMonth('MONTH','mileage')">本月</a></li>
+                                                  <li><a href="javaScript:void(0);" onclick="searchMonth('PRE_MONTH','mileage')">上月</a></li>
+                                                </ul>
+                                            </div>
+                                          </div>
+                                <div class="blank10"></div>
+                                <Div class="con0 clearfix">
+                                   <div style=" width:100%;height:220px" id="aa1"></div>   
+                                </Div>
+                               <div class="blank10"></div>
+                         </div>
+              
+              <div class="blank10"></div>
+              
+                        <div class=" mk" style="position: relative">
+                               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                               <div class="tit0">
+                                     <span class="tit0_l"></span>
+                                     <span class="tit0_m">速度分析</span>
+                                     <span class="tit0_r"></span>
+                               </div>
+                               <div class="time0 clearfix" style=" position: absolute; right:5px; top: 5px;">
+                                            <div class="btn-group year_group ">
+                                                <button data-toggle="dropdown" class="dropdown-toggle" type="button" style="padding: 5px 10px !important;">
+                                                    <span id="year">本周</span><i class="caret"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                  <li><a href="javaScript:void(0);" onclick="searchMonth('WEEK','speed')">本周</a></li>
+                                                  <li><a href="javaScript:void(0);" onclick="searchMonth('MONTH','speed')">本月</a></li>
+                                                  <li><a href="javaScript:void(0);" onclick="searchMonth('PRE_MONTH','speed')">上月</a></li>
+                                                </ul>
+                                            </div>
+                                          </div>
+                                <div class="blank10"></div>
+                                <Div class="con0 clearfix">
+                                   <div style=" width:100%;height:220px" id="aa2"></div>   
+                                </Div>
+                               <div class="blank10"></div>
+                         </div>
+           
+           
+               <div class="blank10"></div>
+              
+              
+              <div class=" mk" style="height:350px" >
+                               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                               <div class="tit0">
+                                     <span class="tit0_l"></span>
+                                     <span class="tit0_m">常跑路线</span>
+                                     <span class="tit0_r"></span>
+                               </div>
+
+                                <div class="blank10"></div>
+                                <Div class="con0 clearfix">
+                                      <div class="tablebox1" style="overflow-y: scroll">
+                        <table id="tableId1" border="0" cellspacing="0" cellpadding="0"  >
+                            <thead>
+                                <tr>
+                                    <th style="width: 15%">排名</th>
+                                    <th style="width: 70%">路线</th>
+                                   <!-- <th style="width: 25%">总里程</th>-->
+                                    <th style="width: 15%">次数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                      </div>
+                </Div>
+
+              <!--<Div id="con1" style="display: none">
+                  <table id="recordAndPlan" width="100%" class="grid03" style="width: 96%;margin-left: 2%;">
+
+                  </table>
+              </Div>-->
+
+              <div id="con1" class="mk" style="display: none">
+                  <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                  <div class="tit0">
+                      <span class="tit0_l"></span>
+                      <span class="tit0_m" id="title"></span>
+                      <span class="tit0_r"></span>
+                  </div>
+                  <div class="blank10"></div>
+                  <div class="con0 clearfix" style="height:630px; overflow-y: scroll">
+                      <table id="recordAndPlan" width="100%" class="grid03">
+                      </table>
+                  </div>
+              </div>
+
+               <div class="blank10"></div>
+              </div>
+      </div> 
+</div>
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/tool.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+    
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+    <script src="layer/layer.js"></script>
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+
+
+$(function(){
+    var queryArgs = getQueryParam();
+    var param = "cityId=130300";
+    var paramObj = "queryObj.cityId=130300";
+    var carPlateNum = decodeURI(queryArgs['queryObj.carPlateNum']);
+    if(carPlateNum != "undefined" && carPlateNum != ""){
+        param += "&carPlateNum="+carPlateNum;
+        paramObj += "&queryObj.carPlateNum="+carPlateNum;
+    }
+    var companyLavel = decodeURI(queryArgs['companyLavel']);
+    if(companyLavel != "undefined" && companyLavel != ""){
+        param += "&companyLavel="+companyLavel;
+        paramObj += "&companyLavel="+companyLavel;
+    }
+    var ownerTeamName = decodeURI(queryArgs['queryObj.ownerTeamName']);
+    if(ownerTeamName != "undefined" && ownerTeamName != ""){
+        param += "&ownerTeamName="+ownerTeamName;
+        paramObj += "&queryObj.ownerTeamName="+ownerTeamName;
+    }
+    var contactPerson = decodeURI(queryArgs['queryObj.contactPerson']);
+    if(contactPerson != "undefined" && contactPerson != ""){
+        param += "&contactPerson="+contactPerson;
+        paramObj += "&queryObj.contactPerson="+contactPerson;
+    }
+    var carFrameNum = decodeURI(queryArgs['queryObj.carFrameNum']);
+    if(carFrameNum != "undefined" && carFrameNum != ""){
+        param += "&carFrameNum="+carFrameNum;
+        paramObj += "&queryObj.carFrameNum="+carFrameNum;
+    }
+    var contactPhone = decodeURI(queryArgs['queryObj.contactPhone']);
+    if(contactPhone != "undefined" && contactPhone != ""){
+        param += "&contactPhone="+contactPhone;
+        paramObj += "&queryObj.contactPhone="+contactPerson;
+    }
+    var carRecFileCode = decodeURI(queryArgs['queryObj.carRecFileCode']);
+    if(carRecFileCode != "undefined" && carRecFileCode != ""){
+        param += "&carRecFileCode="+carRecFileCode;
+        paramObj += "&queryObj.carRecFileCode="+carRecFileCode;
+    }
+    var id = decodeURI(queryArgs['queryObj.id']);
+    if(id != "undefined" && id != ""){
+        paramObj += "&queryObj.id="+id;
+    }
+
+    //查询车辆基本信息
+    searchCarInfo(paramObj);
+    var day1 = new Date();
+    //day1.setDate(day1.getDate() - 1);
+    var searchTime = day1.format("yyyy-MM-dd");
+    laydate.render({
+        elem: '#searchDate',
+        theme: '#884898',
+        value: searchTime,
+        btns: ['confirm'],
+        done: function(value, date, endDate){
+            var yearNum = value.substring(0,4);
+            var month = value.substring(5,7);
+            var date = value.substring(8,10);
+            var countMonth = yearNum + month;
+            var countDate = yearNum + month+date;
+            var s = paramObj+"&queryObj.countMonth="+countMonth+"&queryObj.countDate="+countDate;
+            searchCarPeccancyRec(s);
+        }
+    });
+})
+
+function searchCarInfo(queryArgs){
+    $.ajax({
+        type:'POST',
+        url: basePathUrl + '/admin/carInfo/carinfoByQuery.jsn',
+        data:queryArgs,
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+        },
+        success:function(data){
+            if(data.success){
+                var car = data.list[0];
+                //保存车辆id
+                $("#id").val(car.id);
+                $("#carPlateNum").html(car.carPlateNum);
+                $("#carFrameNum").html(car.carFrameNum);
+                $("#carPlateColor").html(car.carPlateColor);
+                $("#jyCertNumber").html(car.jyCertNumber);
+                var htmlToYh  = "";
+                if(typeof (car.ownerCarTeamName)=='undefined'){
+                    htmlToYh = "暂无";
+                }else {
+                    htmlToYh = "<a href='javaScript:void(0);' onclick=gotoYunShuYH('"+car.ownerCarTeamId+"')>"+car.ownerCarTeamName+"</a>";
+                }
+                $("#ownerTeamName").html(htmlToYh);
+                $("#contactPerson").html(car.contactPerson);
+                debugger;
+                if(car.carFunType != null && car.carFunType != ''){
+                    $("#carFunType").html(getCarFunType(car.carFunType));
+                }else{
+                    $("#carFunType").html("未知");
+                }
+                $("#runState").html(car.runState);
+                $("#locationInfo").html(car.xianquName);
+                if(typeof (car.operatingStopDate)=='undefined'){
+                    $("#nianshenDate").html();
+                }else {
+                    $("#nianshenDate").html(car.operatingStopDate.substring(0,11));
+                }
+                $("#transitLicenceCode").html(car.transitLicenceNum);
+                $("#contactPhone").html(car.contactPhone);
+                $("#beidouOraComp").html(car.beidouCompName);
+                $("#carBrandsName").html(car.carBrandsName);
+                //大车牌号
+                $("#carPNum").html(car.carPlateNum);
+                $("#carPhoto").attr("src",car.carPhoto);
+
+
+                var paramObj = "";
+                var param = "cityId=130300";
+                paramObj += "queryObj.carPlateNum=" + decodeURI(car.carPlateNum);
+                param += "&carPlateNum=" + decodeURI(car.carPlateNum);
+                paramObj += "&queryObj.carFrameNum=" + car.carFrameNum;
+                param += "&carFrameNum=" + car.carFrameNum;
+
+
+                var countTime = dateFormat("yyyyMMdd",new Date());
+                var yearNum = countTime.substring(0,4);
+                var month = countTime.substring(4,6);
+                var date = countTime.substring(6,8);
+                var countMonth = yearNum + month;
+                var countDate = yearNum + month+date;
+                var queryArgs = paramObj+"&queryObj.countMonth="+countMonth+"&queryObj.countDate="+countDate;
+
+                //查询车辆的违章信息
+                searchCarPeccancyRec(queryArgs);
+                //查询车辆的关联人员
+                searchempByPlateNum(param);
+                //查询车辆的长跑路线
+                searchOftenRunRote(paramObj);
+                //里程分析
+                mileageAnalysisData(car.carPlateNum,car.carFrameNum,dateFormat("yyyy-MM-dd",new Date()),"WEEK");
+                //速度分析
+                speedAnalysisData(car.carPlateNum,car.carFrameNum,dateFormat("yyyy-MM-dd",new Date()),"WEEK");
+            }else {
+                if(data.code==1001){
+                    location.href = '../../login.html';
+                }else {
+                    debugger
+                    layer.msg('后台异常', {
+                        icon: 5
+                    });
+                }
+            }
+        }
+    })
+}
+
+function searchCarPeccancyRec(queryArgs){
+    $.ajax({
+       type:'POST',
+        //url: basePathUrl + '/admin/carInfo/listPagePeccancyRec.jsn',
+        url: basePathUrl + '/admin/bigdataAlarmRecord/selectAlarmRecordByCar.jsn',
+        data:queryArgs,
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+        },
+        success:function(data){
+           if(data.success){
+               var peccancyData = data.list;
+               var html = "<tr>\n" +
+                   "                                            <!--<th style=\"width:15%\">司机</th>-->\n" +
+                   "                                            <th style=\"width:20%\">违章时间</th>\n" +
+                   "                                            <th style=\"width:15%\">司机</th>\n" +
+                   "                                            <th style=\"width:10%\">违章类型</th>\n" +
+                   "                                            <th style=\"width:10%\">报警速度</th>\n" +
+                   "                                            <th style=\"width:10%\">限速值</th>\n" +
+                   "                                            <th style=\"width:10%\">道路类型</th>\n" +
+                   "                                            <th style=\"width:15%\">处理结果</th>\n" +
+                   "                                            <!--<th style=\"width:20%\">详情</th>-->\n" +
+                   "                                          </tr>";
+               if(peccancyData.length > 0){
+                   for(var i=0;i<peccancyData.length;i++){
+                       html += "<tr onclick='goToGps(\""+peccancyData[i].id+"\",\""+peccancyData[i].createTime+"\",\""+peccancyData[i].carPlateNum+"\",\""+peccancyData[i].carPlateColor+"\",\""+peccancyData[i].alarmType+"\")'>";
+                       //html += "<td>" + peccancyData[i].driver + "</td>";
+                       html += "<td>" + peccancyData[i].createTime.substring(5,16) + "</td>";
+                       if(typeof (peccancyData[i].empName)=='undefined'){
+                           html += "<td>暂无</td>";
+                       }else {
+                           html += "<td>" + peccancyData[i].empName + "</td>";
+                       }
+                       if(peccancyData[i].alarmType=='2'){
+                           html += "<td><span class=\"wtg\">" + getAlarmType(peccancyData[i].alarmType) + "</span></td>";
+                           html += "<td><span>" + peccancyData[i].alarmSpeed + "</span></td>";
+                           html += "<td><span>" + peccancyData[i].roadSpeedLimit + "</span></td>";
+                       }else if(peccancyData[i].alarmType=='4'){
+                           html += "<td><span style='display: inline-block;\n" +
+                               "    padding: 3px 5px;\n" +
+                               "    background: #f47826;\n" +
+                               "    border-radius: 3px;\n" +
+                               "    color: #fff;\n" +
+                               "    font-size: 15px;'>" + getAlarmType(peccancyData[i].alarmType) + "</span></td>";
+                           html += "<td><span></span></td>";
+                           html += "<td><span></span></td>";
+                       }else {
+                           html += "<td><span>" + getAlarmType(peccancyData[i].alarmType) + "</span></td>";
+                           html += "<td><span></span></td>";
+                           html += "<td><span></span></td>";
+                       }
+                       if(peccancyData[i].roadLevel==''){
+                           html += "<td><span>无</span></td>";
+                       }else {
+                           html += "<td><span>" + getRoadLevel(peccancyData[i].roadLevel) + "</span></td>";
+                       }
+                       html += "<td><span class=\"tg\">系统提醒</span></td>";
+                       //html += "<td><a href='###'>详情</a></td>";
+                       html += "</tr>";
+                   }
+               }else{
+                   html += "<tr><td colspan='8'>暂无信息</td></tr>";
+               }
+               $("#peccancyList").html(html);
+           }else {
+               if(data.code==1001){
+                   location.href = '../../login.html';
+               }else {
+                   debugger
+                   layer.msg('后台异常', {
+                       icon: 5
+                   });
+               }
+           }
+        }
+    });
+}
+
+function goToGps(id,time,carPlateNum,carPlateColor,alarmType) {
+    if(time!=null){
+        time = time.substring(0,10);
+    }
+    layer.open({
+        type: 2,
+        title:false,
+        closeBtn: 0,
+        shadeClose: true,
+        skin: 'yourclass',
+        area : ['1600px' , '800px'],
+        content:basePathUrl+'/views/bigdata/map.html?id='+id
+        +'&time='+time+'&carPlateNum='+encodeURI(carPlateNum)+'&carPlateColor='+carPlateColor
+        +'&alarmType='+alarmType
+    });
+}
+
+
+
+//道路等级
+/*41000 高速公路,42000 国道,43000 主要大街、城市快速路,51000 省道,
+44000 主要道路,45000  次要道路,52000 乡公路,53000 县乡村内部道路
+54000 县乡村内部道路,47000 普通道路,49 非导航道路*/
+function getRoadLevel(num) {
+    if(num=='41000'){
+        return "高速公路";
+    }
+    if(num=='42000'){
+        return "国道";
+    }
+    if(num=='43000'){
+        return "城市快速路";
+    }
+    if(num=='51000'){
+        return "省道";
+    }
+    if(num=='44000'){
+        return "主要道路";
+    }
+    if(num=='45000'){
+        return "次要道路";
+    }
+    if(num=='52000'){
+        return "乡公路";
+    }
+    if(num=='53000'){
+        return "县乡村道路";
+    }
+    if(num=='54000'){
+        return "县乡村道路";
+    }
+    if(num=='47000'){
+        return "普通道路";
+    }
+    if(num=='49'){
+        return "非导航道路";
+    }
+}
+
+
+function getCarFunType(num){
+    if(num=='1'){
+        return "普通客车";
+    }
+    if(num=='2'){
+        return "中级客车";
+    }
+    if(num=='3'){
+        return "高一级客车";
+    }
+    if(num=='4'){
+        return "高二级客车";
+    }
+    if(num=='5'){
+        return "高三级客车";
+    }
+    if(num=='7'){
+        return "普通货车";
+    }
+    if(num=='8'){
+        return "集装箱车";
+    }
+    if(num=='9'){
+        return "大件运输车";
+    }
+    if(num=='10'){
+        return "冷藏保温车";
+    }
+    if(num=='11'){
+        return "专用商品运输车";
+    }
+    if(num=='12'){
+        return "罐车";
+    }
+    if(num=='13'){
+        return "挂车";
+    }
+    if(num=='14'){
+        return "平板车";
+    }
+    if(num=='15'){
+        return "牵引车";
+    }
+    if(num=='16'){
+        return "其他专用车";
+    }
+    if(num=='17'){
+        return "农用车";
+    }
+    if(num=='18'){
+        return "轮式拖拉机";
+    }
+    if(num=='19'){
+        return "手扶拖拉机";
+    }
+    if(num=='20'){
+        return "履带拖拉机";
+    }
+    if(num=='21'){
+        return "特种拖拉机";
+    }
+    if(num=='22'){
+        return "其它车辆";
+    }
+    if(num=='28'){
+        return "出租车";
+    }
+    if(num=='29'){
+        return "农用三轮车";
+    }
+}
+
+
+function searchempByPlateNum(queryArgs){
+    $.ajax({
+        type:'POST',
+        url: basePathUrl + '/admin/carInfo/listPageEmp.jsn',
+        data:queryArgs,
+        dataType: "json",
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+        },
+        success:function(data){
+            if(data.success){
+                var empList = data.data;
+                var html = "";
+                if(empList.length > 0){
+                    for(var i=0;i<empList.length;i++){
+                        html += "<tr>";
+                        html += "<td><a href='javaScript:void(0);' onclick=gotoCongYeRY('"+empList[i].id+"')>"+empList[i].empName+"</a></td>";
+                        html += "<td>"+dateFormat("yyyy-MM-dd",new Date(empList[i].createTime))+"</td>";
+                        html += "<td>驾驶员</td>";
+                        html += "</tr>";
+                    }
+                }else{
+                    html += "<tr><td colspan='3'>暂无信息</td></tr>";
+                }
+                $("#empList").html($("#empList").html() + html);
+            }else {
+                if(data.code==1001){
+                    location.href = '../../login.html';
+                }else {
+                    debugger
+                    layer.msg('后台异常', {
+                        icon: 5
+                    });
+                }
+            }
+        }
+    });
+}
+
+function gotoCongYeRY(empId){
+    window.location.href = "congYeRenYuan.html?id="+empId;
+}
+
+function gotoYunShuYH(teamId){
+    window.location.href = "yunShuYeHu.html?teamId="+teamId;
+}
+
+function searchOftenRunRote(queryArgs){
+    var countType = 'month';
+    var countTime = dateFormat("yyyyMMdd",new Date());
+    var yearNum = countTime.substring(0,4);
+    var month = countTime.substring(4,6);
+    var countMonth = yearNum + month;
+    queryArgs += "&queryObj.countType=" + countType;
+    queryArgs += "&queryObj.yearNum=" + yearNum;
+    queryArgs += "&queryObj.countMonth=" + countMonth;
+    $.ajax({
+        type:'POST',
+        url:basePathUrl + '/admin/carMonthOftenrunRoute/selectOftenRunRoute.jsn',
+        data:queryArgs,
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+        },
+        success:function(data){
+            if(data.success){
+                var runRoteList = data.data;
+                var html = "";
+                if(runRoteList.length > 0){
+                    for(var i=0;i<runRoteList.length;i++){
+                        html += "<tr>";
+                        html += "<td><em class='ph40'>"+(i+1)+"</em></td>";
+                        html += "<td>"+runRoteList[i].runRoute+"</td>";
+                        /*html += "<td>"+runRoteList[i].sumMileage+"</td>";*/
+                        html += "<td>"+runRoteList[i].runNum+"</td>";
+                        html += "</tr>";
+                    }
+                }else{
+                    html += "<tr><td colspan='4'>暂无相关信息</td></tr>";
+                }
+                $("#tableId1").html($("#tableId1").html() + html);
+            }else {
+                if(data.code==1001){
+                    location.href = '../../login.html';
+                }else {
+                    debugger
+                    layer.msg('后台异常', {
+                        icon: 5
+                    });
+                }
+            }
+        }
+    });
+}
+
+//里程分析
+function mileageAnalysisData(carPlateNum,carFrameNum,countTimeEnd,searchType){
+    var param = "queryObj.carPlateNum="+carPlateNum + "&queryObj.carFrameNum=" + carFrameNum + "&queryObj.countTimeEnd=" + countTimeEnd;
+    var dateArray = new Array();
+    var dataArray = null;
+    var lineNumber = 0;
+    var circleCount = 7;
+    var dateCur = new Date();
+    //获取时间数组
+    if(searchType == "MONTH"){
+        dateCur = new Date();
+        circleCount = new Date().getDate();
+    }
+    if(searchType == "PRE_MONTH"){
+        circleCount = new Date(countTimeEnd).getDate();
+        dateCur = new Date(countTimeEnd);
+    }
+    for(var i=0;i<circleCount;i++){
+        var preDate = new Date(dateCur.getTime() - 24*60*60*1000*i);//获取前一天
+        var dateStr = (preDate.getMonth()+1) +"月"+preDate.getDate()+"日";
+        dateArray[circleCount-1-i] = dateStr;
+    }
+    param += "&searchCount="+circleCount;
+
+    $.ajax({
+        type:'POST',
+        url: basePathUrl + '/admin/bigdataTimeCarDayRec/searchMileageByCarInfo.jsn',
+        data:param,
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+        },
+        success:function(data){
+            if(data.success){
+                dataArray = data.data;
+                lineNumber = data.data[data.data.length-1];
+                dataArray.splice(data.data.length-1,1);
+                //里程分析
+                mileageAnalysis(dateArray,dataArray,lineNumber);
+            }else {
+                if(data.code==1001){
+                    location.href = '../../login.html';
+                }else {
+                    debugger
+                    layer.msg('后台异常', {
+                        icon: 5
+                    });
+                }
+            }
+        }
+    });
+}
+
+Date.prototype.format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "h+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+// 基于准备好的dom，初始化echarts实例 （里程分析）
+function mileageAnalysis(dateArray,dataArray,lineNumber){
+    var myChart = echarts.init(document.getElementById('aa1'));
+    // 指定图表的配置项和数据
+    option = {
+        color: ['#3398DB'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '5%',
+            bottom: '3%',
+            top:'13%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data : dateArray,
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                name : '公里',
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                },
+                /*min: 0,
+                max: 1000,*/
+                splitLine: {
+                    show: true,
+                    lineStyle:{
+                        color: ['#237d88'],
+                        width: 1,
+                        type: 'solid'
+                    }
+
+                },
+
+            }
+        ],
+
+        series : [
+            {
+                name:'里程数',
+                type:'bar',
+                barWidth: '60%',
+                markLine : {
+                    itemStyle : {
+                        normal: {
+                            borderWidth:1,
+                            lineStyle: {
+                                type: 'symbol',
+                                color:'#ff0000',
+                                width:1
+                            }}} ,
+                    data : [
+                        { name: '标线1起点', xAxis: 0, yAxis: lineNumber, symbol: 'circle'},
+                        { name: '标线1终点', xAxis: '3月16日', yAxis: lineNumber, symbol: 'circle' },
+                    ]
+                },
+                itemStyle: {
+                    normal: {
+                        color: "#E3B25A",
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }},
+
+                        lineStyle: {
+                            color: "#E3B25A"
+                        }}
+                },
+                data:dataArray
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+}
+
+//速度分析
+function speedAnalysisData(carPlateNum,carFrameNum,countTimeEnd,searchType){
+    var paramObj = "queryObj.carPlateNum="+carPlateNum+"&queryObj.carFrameNum="+carFrameNum+"&queryObj.countTimeEnd="+countTimeEnd;
+    var dateArray = new Array();
+    var dataArray = null;
+    var lineNumber = 0;
+    var circleCount = 7;
+    var dateCur = new Date();
+    //获取时间数组
+    if(searchType == "MONTH"){
+        dateCur = new Date();
+        circleCount = new Date().getDate();
+    }
+    if(searchType == "PRE_MONTH"){
+        circleCount = new Date(countTimeEnd).getDate();
+        dateCur = new Date(countTimeEnd);
+    }
+    for(var i=0;i<circleCount;i++){
+        var preDate = new Date(dateCur.getTime() - 24*60*60*1000*i);//获取前一天
+        var dateStr = (preDate.getMonth()+1) +"月"+preDate.getDate()+"日";
+        dateArray[circleCount-1-i] = dateStr;
+    }
+    paramObj += "&searchCount="+circleCount;
+
+    $.ajax({
+        type:'POST',
+        url: basePathUrl + '/admin/bigdataTimeCarDayRec/searchSpeedByCarInfo.jsn',
+        data:paramObj,
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+        },
+        success:function(data){
+            if(data.success){
+                dataArray = data.data;
+                lineNumber = data.data[data.data.length-1];
+                dataArray.splice(data.data.length-1,1);
+                speedAnalysis(dateArray,dataArray,lineNumber);
+            }else {
+                if(data.code==1001){
+                    location.href = '../../login.html';
+                }else {
+                    debugger
+                    layer.msg('后台异常', {
+                        icon: 5
+                    });
+                }
+            }
+        }
+    });
+}
+
+function speedAnalysis(dateArray,dataArray,lineNumber){
+    // 基于准备好的dom，初始化echarts实例 (速度分析)
+    var myChart = echarts.init(document.getElementById('aa2'));
+    // 指定图表的配置项和数据
+    option = {
+        color: ['#3398DB'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '5%',
+            bottom: '3%',
+            top:'13%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data : dateArray,
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                name : '公里/小时',
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                },
+                /*min: 0,
+                max: 120,*/
+                splitLine: {
+                    show: true,
+                    lineStyle:{
+                        color: ['#237d88'],
+                        width: 1,
+                        type: 'solid'
+                    }
+
+                },
+
+            }
+        ],
+
+        series : [
+            {
+                name:'平均速度',
+                type:'bar',
+                barWidth: '60%',
+                markLine : {
+                    itemStyle : {
+                        normal: {
+                            borderWidth:1,
+                            lineStyle: {
+                                type: 'symbol',
+                                color:'#ff0000',
+                                width:1
+                            }}} ,
+                    data : [
+                        { name: '标线1起点', xAxis: 0, yAxis: lineNumber, symbol: 'circle'},
+                        { name: '标线1终点', xAxis: '3月16日', yAxis: lineNumber, symbol: 'circle' },
+                    ]
+                },
+                itemStyle: {
+                    normal: {
+                        color: "#3EC6CB",
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }},
+
+                        lineStyle: {
+                            color: "#3EC6CB"
+                        }}
+                },
+                data:dataArray
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+}
+
+function searchMonth(searchType,checkType){
+    var carPlateNum = $("#carPlateNum").html();
+    var carFrameNum = $("#carFrameNum").html();
+    var countTimeEnd = dateFormat("yyyy-MM-dd",new Date());
+    if(searchType == "MONTH"){
+        var date = new Date();
+        var d = new Date(date.getFullYear(),(date.getMonth()+1),0);
+        var day = d.getDate();
+        var countTimeEnd = dateFormat("yyyy-MM-dd",new Date());
+        var searchType = "MONTH";
+        if(checkType == "mileage"){
+            //里程分析
+            mileageAnalysisData(carPlateNum,carFrameNum,countTimeEnd,searchType);
+        }
+        if(checkType == "speed"){
+            //速度分析
+            speedAnalysisData(carPlateNum,carFrameNum,countTimeEnd,searchType);
+        }
+    }
+    if(searchType == "PRE_MONTH"){
+        var searchType = "PRE_MONTH";
+        var countTimeEnd = dateFormat("yyyy-MM-dd",new Date());
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var day = 0;
+        if(month == 0){
+            year--;
+            month = 12;
+            var lastDate = new Date(year,month,0);
+            countTimeEnd = dateFormat("yyyy-MM-dd",lastDate);
+        }else{
+            month--;
+            var lastDate = new Date(year,(month+1),0);
+            countTimeEnd = dateFormat("yyyy-MM-dd",lastDate);
+        }
+        if(checkType == "mileage"){
+            //里程分析
+            mileageAnalysisData(carPlateNum,carFrameNum,countTimeEnd,searchType);
+        }
+        if(checkType == "speed"){
+            //速度分析
+            speedAnalysisData(carPlateNum,carFrameNum,countTimeEnd,searchType);
+        }
+    }
+    if(searchType == "WEEK"){
+        var searchType = "WEEK";
+        if(checkType == "mileage"){
+            //里程分析
+            mileageAnalysisData(carPlateNum,carFrameNum,countTimeEnd,searchType);
+        }
+        if(checkType == "speed"){
+            //速度分析
+            speedAnalysisData(carPlateNum,carFrameNum,countTimeEnd,searchType);
+        }
+    }
+}
+
+function getAlarmType(alarmType){
+    if(alarmType == "1"){
+        return "线路";
+    }
+    if(alarmType == "2"){
+        return "超速";
+    }
+    if(alarmType == "3"){
+        return "紧急";
+    }
+    if(alarmType == "4"){
+        return "疲劳";
+    }
+}
+</script>
+    
+    
+    
+<script type="text/javascript">
+$(document).ready(function(){
+	// 下拉选择框
+	$('.dropdown-menu li').click(function(){
+	  var txt=$(this).text();
+	  $(this).parent().prev().find('span').eq(0).text(txt);
+	})
+
+	changeY();
+	$('.dropdown-menu li').click(function(){
+		var name=$('a',this).text();
+		$(this).parents('.btn-group').find('.dropdown-toggle span').text(name);
+		changeY();
+	})
+
+	function changeY(){
+		var year=$('#year').text().replace(/[^0-9]/ig,"")
+		var month=$('#month').text().replace(/[^0-9]/ig,"")
+		var days=totalDays(year, month);
+		var dayArr=[];
+		for(var i=1;i<=days;i++)
+		{
+			dayArr.push(i+'号');
+		}
+		var last=parseInt(dayArr[dayArr.length-1]);
+		$('.demo0').children().remove();
+		var div='<input type="hidden" value="" class="single-slider none">';
+		$('.demo0').html(div)
+		// 
+		$('.single-slider').jRange({
+		    from:1,
+		    to:last,
+		    step: 1,
+		    scale: dayArr,
+		    format: '%s',
+		    width:850,
+		    showLabels: true,
+		    snap: true
+		});
+	}
+
+	//一个月的总天数
+	function totalDays(years,months){
+		var d = new Date(years, months, 0);
+		return d.getDate();
+	}
+})
+</script>
+
+<script src="layer/layer.js"></script>
+<script>
+// 参数1 tableID,参数2 div高度，参数3 速度，参数4 tbody中tr几条以上滚动
+tableScroll('tableId', 610, 30, 10)
+tableScroll1('tableId1', 260, 30, 10)
+var MyMarhq;
+var MyMarhq1;
+
+function tableScroll(tableid, hei, speed, len) {
+    clearTimeout(MyMarhq);
+    $('#' + tableid).parent().find('.tableid_').remove()
+    $('#' + tableid).parent().prepend(
+        '<table class="tableid_"><thead>' + $('#' + tableid + ' thead').html() + '</thead></table>'
+    ).css({
+        'position': 'relative',
+        'overflow': 'hidden',
+        'height': hei + 'px'
+    })
+//    $(".tableid_").find('th').each(function(i) {
+//        $(this).css('width', $('#' + tableid).find('th:eq(' + i + ')').width());
+//    });
+    $(".tableid_").css({
+        'position': 'absolute',
+        'top': 0,
+        'left': 0,
+        'z-index': 9
+    })
+    $('#' + tableid).css({
+        'position': 'absolute',
+        'top': 0,
+        'left': 0,
+        'z-index': 1
+    })
+
+    if ($('#' + tableid).find('tbody tr').length > len) {
+        $('#' + tableid).find('tbody').html($('#' + tableid).find('tbody').html() + $('#' + tableid).find('tbody').html());
+        $(".tableid_").css('top', 0);
+        $('#' + tableid).css('top', 0);
+        var tblTop = 0;
+        var outerHeight = $('#' + tableid).find('tbody').find("tr").outerHeight();
+
+        function Marqueehq() {
+            if (tblTop <= -outerHeight * $('#' + tableid).find('tbody').find("tr").length) {
+                tblTop = 0;
+            } else {
+                tblTop -= 1;
+            }
+            $('#' + tableid).css('margin-top', tblTop + 'px');
+            clearTimeout(MyMarhq);
+            MyMarhq = setTimeout(function() {
+                Marqueehq()
+            }, speed);
+        }
+
+        MyMarhq = setTimeout(Marqueehq, speed);
+        $('#' + tableid).find('tbody').hover(function() {
+            clearTimeout(MyMarhq);
+        }, function() {
+            clearTimeout(MyMarhq);
+            if ($('#' + tableid).find('tbody tr').length > len) {
+                MyMarhq = setTimeout(Marqueehq, speed);
+            }
+        })
+    }
+
+}
+
+function tableScroll1(tableid, hei, speed, len) {
+    clearTimeout(MyMarhq1);
+    $('#' + tableid).parent().find('.tableid_').remove()
+    $('#' + tableid).parent().prepend(
+        '<table class="tableid_"><thead>' + $('#' + tableid + ' thead').html() + '</thead></table>'
+    ).css({
+        'position': 'relative',
+        'overflow': 'hidden',
+        'height': hei + 'px'
+    })
+//    $(".tableid_").find('th').each(function(i) {
+//        $(this).css('width', $('#' + tableid).find('th:eq(' + i + ')').width());
+//    });
+    $(".tableid_").css({
+        'position': 'absolute',
+        'top': 0,
+        'left': 0,
+        'z-index': 9
+    })
+    $('#' + tableid).css({
+        'position': 'absolute',
+        'top': 0,
+        'left': 0,
+        'z-index': 1
+    })
+
+    if ($('#' + tableid).find('tbody tr').length > len) {
+        $('#' + tableid).find('tbody').html($('#' + tableid).find('tbody').html() + $('#' + tableid).find('tbody').html());
+        $(".tableid_").css('top', 0);
+        $('#' + tableid).css('top', 0);
+        var tblTop = 0;
+        var outerHeight = $('#' + tableid).find('tbody').find("tr").outerHeight();
+
+        function Marqueehq() {
+            if (tblTop <= -outerHeight * $('#' + tableid).find('tbody').find("tr").length) {
+                tblTop = 0;
+            } else {
+                tblTop -= 1;
+            }
+            $('#' + tableid).css('margin-top', tblTop + 'px');
+            clearTimeout(MyMarhq1);
+            MyMarhq1 = setTimeout(function() {
+                Marqueehq()
+            }, speed);
+        }
+
+        MyMarhq1 = setTimeout(Marqueehq, speed);
+        $('#' + tableid).find('tbody').hover(function() {
+            clearTimeout(MyMarhq1);
+        }, function() {
+            clearTimeout(MyMarhq1);
+            if ($('#' + tableid).find('tbody tr').length > len) {
+                MyMarhq1 = setTimeout(Marqueehq, speed);
+            }
+
+        })
+    }
+
+}
+</script>
+
+    <script>
+        //维修保养记录
+        $('#test1').on('click', function(){
+            var teamId = $("#id").val();
+            $.ajax({
+                type:'POST',
+                url: basePathUrl + "/admin/carInfo/selectWXBYJL.jsn",
+                data:{'queryObj.id':teamId},
+                dataType:'json',
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success:function(data){
+                    if(data.success){
+                        $("#title").html("维修保养记录");
+                        $("#recordAndPlan").html("");
+                        var html = "";
+                        html += "<thead><tr><td>车牌号</td><td>所属车队名</td><td>登记人员姓名</td><td>VIN车架号</td><td>累计行驶里程</td><td>合格证编号</td><td>维修单位</td><td>维修日期</td></tr></thead>";
+                        if(data.success){
+                            if(data.data.length > 0){
+                                html += "<tbody>";
+                                for(var i=0;i<data.data.length;i++){
+                                    html += "<tr>";
+                                    html += "<td>"+data.data[i].carPlateNum+"</td>";
+                                    html += "<td>"+data.data[i].ownerCarTeamName+"</td>";
+                                    html += "<td>"+data.data[i].inputUserName+"</td>";
+                                    html += "<td>"+data.data[i].carFrameNum+"</td>";
+                                    html += "<td>"+data.data[i].mileageAddup+"</td>";
+                                    html += "<td>"+data.data[i].hegeCode+"</td>";
+                                    html += "<td>"+data.data[i].maitainComp+"</td>";
+                                    html += "<td>"+dateFormat("yyyy-MM-dd",new Date(data.data[i].maintainDate.time))+"</td>";
+                                    html += "</tr>";
+                                }
+                            }else{
+                                html += "<tr><td colspan='8'>暂无相关信息</td></tr>";
+                            }
+                        }else{
+                            html += "<tr><td colspan='8'>暂无相关信息</td></tr>";
+                        }
+                        html += "</tbody>";
+                        $("#recordAndPlan").html(html);
+                    }else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+                }
+            });
+
+            layer.open({
+                type: 1,
+                title:false,
+                closeBtn: 0,
+                shadeClose: true,
+                skin: 'laywindow',
+                area : ['1200px' , '700px'],
+                content:$('#con1')
+            });
+        });
+        //维修保养计划
+        $('#test2').on('click', function(){
+            var teamId = $("#id").val();
+            $.ajax({
+                type:'POST',
+                url: basePathUrl + "/admin/carInfo/selectWXBYJH.jsn",
+                data:{'queryObj.id':teamId},
+                dataType:'json',
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success:function(data){
+                    if(data.success){
+                        $("#title").html("维修保养计划");
+                        $("#recordAndPlan").html("");
+                        var html = "";
+                        if(data.success){
+                            if(data.data.length > 0) {
+                                html += "\n" +
+                                    "    <tbody style='background-color: #0F4B79;'><tr>\n" +
+                                    "      <th>  所属车队名: </th>\n" +
+                                    "      <td> " + data.data[0].ownerCarTeamName +" </td>" +
+                                    "      <th>  车牌号: </th>\n" +
+                                    "      <td >" + data.data[0].carPlateNum + "</td>\n" +
+                                    "    </tr>\n" +
+                                    "    <tr>\n" +
+                                    "      <th >  登记人员姓名: </th>\n" +
+                                    "      <td >    " + data.data[0].inputUserName + " </td>\n" +
+                                    "      <th>  车辆类型: </th>\n" +
+                                    "      <td >" + data.data[0].carFunType + "</td>\n" +
+                                    "    </tr>\n" +
+                                    "    <tr>\n" +
+                                    "      <th scope=\"row\" width=\"15%\">  司机联系电话: </th>\n" +
+                                    "      <td width=\"69%\" colspan=\"3\">"+data.data[0].driverPhoneNum + " </td>\n" +
+                                    "    </tr>\n" +
+                                    "        <tr>\n" +
+                                    "            <th scope=\"row\" width=\"15%\">  计划描述: </th>\n" +
+                                    "            <td width=\"69%\" colspan=\"3\"><div style=\"widht:100%;font-family:微软雅黑;font-size: 18px;width: 80%;margin: 0 auto;\">\n" +
+                                    "                为加强道路运输车辆技术管理，保持车辆技术状况良好，保障运输安全，发挥车辆效能，<br>\n" +
+                                    "                根据《道路运输车辆技术管理规定》、《汽车维护、检测、诊断技术规范》（GB/T18344-2001）<br>\n" +
+                                    "                和车辆维修手册、使用说明书等，结合自有车辆类别，车辆运行状况，全年预计运行天数和预计行驶里程，<br>\n" +
+                                    "                以及道路条件，使用年限等因素，特自行确定本车辆二级维护周期:</div>\n" +
+                                    "            </td>\n" +
+                                    "        </tr>\n" +
+                                    "        <tr>\n" +
+                                    "            <th scope=\"row\" width=\"15%\">  维护保养时间周期(年): </th>\n" +
+                                    "            <td width=\"69%\">\n" +data.data[0].yearEve+
+                                    "            </td>\n" +
+                                    "            <th scope=\"row\" width=\"15%\">  维护保养时间周期(次数): </th>\n" +
+                                    "            <td width=\"69%\">\n" +data.data[0].countEve+
+                                    "            </td>\n" +
+                                    "        </tr>\n" +
+                                    "        <tr>\n" +
+                                    "\n" +
+                                    "            <th scope=\"row\" width=\"15%\">  维护保养里程周期: </th>\n" +
+                                    "            <td width=\"69%\">\n" +data.data[0].maintainMileageZhouqi+
+                                    "            </td>\n" +
+                                    "            <th scope=\"row\" width=\"15%\"> </th>\n" +
+                                    "            <td width=\"69%\">\n" +
+                                    "            </td>\n" +
+                                    "        </tr>\n" +
+                                    "  </tbody>";
+                            }else {
+                                html += "<p style='color: #83C1E8;\n" +
+                                    "    font-size: 18px;text-align: center'>暂无信息</p>"
+                            }
+                        }
+                        $("#recordAndPlan").html(html);
+                    }else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+                }
+            });
+
+            layer.open({
+                type: 1,
+                title:false,
+                closeBtn: 0,
+                shadeClose: true,
+                skin: 'laywindow',
+                area : ['1200px' , '600px'],
+                content:$('#con1')
+            });
+        });
+
+        //等级评定记录
+        $('#test5').on('click', function(){
+            var teamId = $("#id").val();
+            $.ajax({
+                type:'POST',
+                url: basePathUrl + "/admin/carInfo/selectDJPDJL.jsn",
+                data:{'queryObj.id':teamId},
+                dataType:'json',
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success:function(data){
+                    if(data.success){
+                        $("#title").html("等级评定记录");
+                        $("#recordAndPlan").html("");
+                        var html = "";
+                        html += "<thead><tr><td>车牌号</td><td>所属车队名</td><td>检测/评定单位</td><td>记录编号</td><td>等级人员姓名</td><td>检测/评定级别</td><td>检测有效期</td><td>检测评定日期</td><td>VIN车架号</td></tr></thead>";
+                        if(data.success){
+                            debugger;
+                            if(data.data.length > 0){
+                                html += "<tbody>";
+                                for(var i=0;i<data.data.length;i++){
+                                    html += "<tr>";
+                                    html += "<td>"+data.data[i].carPlateNum+"</td>";
+                                    html += "<td>"+data.data[i].ownerCarTeamName+"</td>";
+                                    html += "<td>"+data.data[i].testComp+"</td>";
+                                    html += "<td>"+data.data[i].recordCode+"</td>";
+                                    html += "<td>"+data.data[i].inputUserName+"</td>";
+                                    html += "<td>"+data.data[i].testResultLevel+"</td>";
+                                    html += "<td>"+dateFormat("yyyy-MM-dd",new Date(data.data[i].functionDate.time))+"</td>";
+                                    html += "<td>"+dateFormat("yyyy-MM-dd",new Date(data.data[i].testDate.time))+"</td>";
+                                    html += "<td>"+data.data[i].carFrameNum+"</td>";
+                                    html += "</tr>";
+                                }
+                            }else{
+                                html += "<tr><td colspan='9'>暂无相关信息</td></tr>";
+                            }
+                        }else{
+                            html += "<tr><td colspan='9'>暂无相关信息</td></tr>";
+                        }
+                        html += "</tbody>";
+                        $("#recordAndPlan").html(html);
+                    }else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+                }
+            });
+
+            layer.open({
+                type: 1,
+                title:false,
+                closeBtn: 0,
+                shadeClose: true,
+                skin: 'laywindow',
+                area : ['1200px' , '700px'],
+                content:$('#con1')
+            });
+        });
+
+        //查询车辆变更记录
+        $('#test3').on('click', function(){
+            var teamId = $("#id").val();
+            $.ajax({
+                type:'POST',
+                url: basePathUrl + "/admin/carInfo/selectCLBGJL.jsn",
+                data:{'queryObj.id':teamId},
+                dataType:'json',
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success:function(data){
+                    if(data.success){
+                        $("#title").html("车辆变更记录");
+                        $("#recordAndPlan").html("");
+                        var html = "";
+                        html += "<thead><tr><td>车牌号</td><td>所属车队名</td><td>登记人员姓名</td><td>状态类型</td><td>变更日期</td></tr></thead>";
+                        if(data.success){
+                            if(data.data.length > 0){
+                                html += "<tbody>";
+                                for(var i=0;i<data.data.length;i++){
+                                    html += "<tr>";
+                                    html += "<td>"+data.data[i].carPlateNum+"</td>";
+                                    html += "<td>"+data.data[i].ownerCarTeamName+"</td>";
+                                    html += "<td>"+data.data[i].inputUserName+"</td>";
+                                    html += "<td>"+data.data[i].changeType+"</td>";
+                                    html += "<td>"+dateFormat("yyyy-MM-dd",data.data[i].changeDate)+"</td>";
+                                    html += "</tr>";
+                                }
+                            }else{
+                                html += "<tr><td colspan='5'>暂无相关信息</td></tr>";
+                            }
+                        }else{
+                            html += "<tr><td colspan='5'>暂无相关信息</td></tr>";
+                        }
+                        html += "</tbody>";
+                        $("#recordAndPlan").html(html);
+                    }else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+
+                }
+            });
+
+            layer.open({
+                type: 1,
+                title:false,
+                closeBtn: 0,
+                shadeClose: true,
+                skin: 'laywindow',
+                area : ['1200px' , '700px'],
+                content:$('#con1')
+            });
+        });
+
+        //车牌变更记录
+        $('#test4').on('click', function(){
+            var teamId = $("#id").val();
+            $.ajax({
+                type:'POST',
+                url: basePathUrl + "/admin/carInfo/selectCPBGJL.jsn",
+                data:{'queryObj.id':teamId},
+                dataType:'json',
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success:function(data){
+                    if(data.success){
+                        $("#title").html("车牌变更记录");
+                        $("#recordAndPlan").html("");
+                        var html = "";
+                        html += "<thead><tr><td>车牌号</td><td>所属车队名</td><td>登记人员姓名</td><td>变更日期</td><td>变更车牌号</td></tr></thead>";
+                        if(data.success){
+                            if(data.data.length > 0){
+                                html += "<tbody>";
+                                for(var i=0;i<data.data.length;i++){
+                                    html += "<tr>";
+                                    html += "<td>"+data.data[i].carPlateNum+"</td>";
+                                    html += "<td>"+data.data[i].ownerCarTeamName+"</td>";
+                                    html += "<td>"+data.data[i].inputUserName+"</td>";
+                                    html += "<td>"+dateFormat("yyyy-MM-dd",data.data[i].changeDate)+"</td>";
+                                    html += "<td>"+data.data[i].carPlateNumChange+"</td>";
+                                    html += "</tr>";
+                                }
+                            }else{
+                                html += "<tr><td colspan='5'>暂无相关信息</td></tr>";
+                            }
+                        }else{
+                            html += "<tr><td colspan='5'>暂无相关信息</td></tr>";
+                        }
+                        html += "</tbody>";
+                        $("#recordAndPlan").html(html);
+                    }else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+
+                }
+            });
+
+            layer.open({
+                type: 1,
+                title:false,
+                closeBtn: 0,
+                shadeClose: true,
+                skin: 'laywindow',
+                area : ['1200px' , '700px'],
+                content:$('#con1')
+            });
+        });
+
+        //车辆部件变更记录
+        $('#test6').on('click', function(){
+
+            var teamId = $("#id").val();
+            $.ajax({
+                type:'POST',
+                url: basePathUrl + "/admin/carInfo/selectCLBJBGJL.jsn",
+                data:{'queryObj.id':teamId},
+                dataType:'json',
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success:function(data){
+                    if(data.success){
+                        $("#title").html("车辆部件变更记录");
+                        $("#recordAndPlan").html("");
+                        var html = "";
+                        html += "<thead><tr><td>车牌号</td><td>所属车队名</td><td>登记人员姓名</td><td>更换日期</td><td>部件名称</td><td>型号规格</td><td>生产厂商名称</td><td>部件编号</td><td>维修单位</td></tr></thead>";
+                        if(data.success){
+                            if(data.data.length > 0){
+                                html += "<tbody>";
+                                for(var i=0;i<data.data.length;i++){
+                                    html += "<tr>";
+                                    html += "<td>"+data.data[i].carPlateNum+"</td>";
+                                    html += "<td>"+data.data[i].ownerCarTeamName+"</td>";
+                                    html += "<td>"+data.data[i].inputUserName+"</td>";
+                                    html += "<td>"+dateFormat("yyyy-MM-dd",data.data[i].changeDate)+"</td>";
+                                    html += "<td>"+data.data[i].partName+"</td>";
+                                    html += "<td>"+data.data[i].typeCode+"</td>";
+                                    html += "<td>"+data.data[i].productorName+"</td>";
+                                    html += "<td>"+data.data[i].partCode+"</td>";
+                                    html += "<td>"+data.data[i].workComp+"</td>";
+                                    html += "</tr>";
+                                }
+                            }else{
+                                html += "<tr><td colspan='9'>暂无相关信息</td></tr>";
+                            }
+                        }else{
+                            html += "<tr><td colspan='9'>暂无相关信息</td></tr>";
+                        }
+                        html += "</tbody>";
+                        $("#recordAndPlan").html(html);
+                    }else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+
+                }
+            });
+
+            layer.open({
+                type: 1,
+                title:false,
+                closeBtn: 0,
+                shadeClose: true,
+                skin: 'laywindow',
+                area : ['1200px' , '700px'],
+                content:$('#con1')
+            });
+        });
+
+        //机损事故记录
+        $('#test7').on('click', function(){
+
+            var teamId = $("#id").val();
+            $.ajax({
+                type:'POST',
+                url: basePathUrl + "/admin/carInfo/selectJSSGJL.jsn",
+                data:{'queryObj.id':teamId},
+                dataType:'json',
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success:function(data){
+                    if(data.success){
+                        $("#title").html("机损事故记录");
+                        $("#recordAndPlan").html("");
+                        var html = "";
+                        html += "<thead><tr><td>车牌号</td><td>所属车队名</td><td>登记人员姓名</td><td>事故日期</td><td>事故地点</td><td>事故性质</td><td>损失金额</td></tr></thead>";
+                        if(data.success){
+                            if(data.data.length > 0){
+                                html += "<tbody>";
+                                for(var i=0;i<data.data.length;i++){
+                                    html += "<tr>";
+                                    html += "<td>"+data.data[i].carPlateNum+"</td>";
+                                    html += "<td>"+data.data[i].ownerCarTeamName+"</td>";
+                                    html += "<td>"+data.data[i].inputUserName+"</td>";
+                                    html += "<td>"+dateFormat("yyyy-MM-dd",data.data[i].accidentDate)+"</td>";
+                                    html += "<td>"+data.data[i].accidentPlace+"</td>";
+                                    html += "<td>"+data.data[i].accidentType+"</td>";
+                                    html += "<td>"+data.data[i].accidentLoseMoney+"</td>";
+                                    html += "</tr>";
+                                }
+                            }else{
+                                html += "<tr><td colspan='7'>暂无相关信息</td></tr>";
+                            }
+                        }else{
+                            html += "<tr><td colspan='7'>暂无相关信息</td></tr>";
+                        }
+                        html += "</tbody>";
+                        $("#recordAndPlan").html(html);
+                    }else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+
+                }
+            });
+
+            layer.open({
+                type: 1,
+                title:false,
+                closeBtn: 0,
+                shadeClose: true,
+                skin: 'laywindow',
+                area : ['1200px' , '700px'],
+                content:$('#con1')
+            });
+        });
+
+        //车主变更记录
+        $('#test8').on('click', function(){
+            var teamId = $("#id").val();
+            $.ajax({
+                type:'POST',
+                url: basePathUrl + "/admin/carInfo/selectCZBGJL.jsn",
+                data:{'queryObj.id':teamId},
+                dataType:'json',
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success:function(data){
+                    if(data.success){
+                        $("#title").html("车主变更记录");
+                        $("#recordAndPlan").html("");
+                        var html = "";
+                        html += "<thead><tr><td>车牌号</td><td>所属车队名</td><td>登记人员姓名</td><td>变更日期</td><td>车主名</td><td>电话</td><td>运输证号</td></tr></thead>";
+                        if(data.success){
+                            if(data.data.length > 0){
+                                html += "<tbody>";
+                                for(var i=0;i<data.data.length;i++){
+                                    html += "<tr>";
+                                    html += "<td>"+data.data[i].carPlateNum+"</td>";
+                                    html += "<td>"+data.data[i].ownerCarTeamName+"</td>";
+                                    html += "<td>"+data.data[i].inputUserName+"</td>";
+                                    html += "<td>"+dateFormat("yyyy-MM-dd",data.data[i].changeDate)+"</td>";
+                                    html += "<td>"+data.data[i].ownerName+"</td>";
+                                    html += "<td>"+data.data[i].ownerPhone+"</td>";
+                                    html += "<td>"+data.data[i].yunshuLicence+"</td>";
+                                    html += "</tr>";
+                                }
+                            }else{
+                                html += "<tr><td colspan='7'>暂无相关信息</td></tr>";
+                            }
+                        }else{
+                            html += "<tr><td colspan='7'>暂无相关信息</td></tr>";
+                        }
+                        html += "</tbody>";
+                        $("#recordAndPlan").html(html);
+                    }else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+
+                }
+            });
+
+            layer.open({
+                type: 1,
+                title:false,
+                closeBtn: 0,
+                shadeClose: true,
+                skin: 'laywindow',
+                area : ['1200px' , '700px'],
+                content:$('#con1')
+            });
+        });
+
+
+    function goShouYe() {
+        window.location.href = "shouye.html";
+    }
+
+    function goTolocaltion() {
+
+        var carPlateNum = $("#carPlateNum").html();
+
+        if(carPlateNum==null || carPlateNum=='' || carPlateNum.replace(/(^s*)|(s*$)/g, "").length ==0){
+            alert("车牌号不能为空！");
+            return false;
+        }
+        layer.open({
+            type: 2,
+            title:false,
+            closeBtn: 0,
+            shadeClose: true,
+            skin: 'yourclass',
+            area : ['1600px' , '800px'],
+            content:basePathUrl+'/views/bigdata/carlocaltionmap.html?carPlateNum='
+            +encodeURI(carPlateNum)+'&carPlateColor=2'
+        });
+    }
+    </script>
+</body>
+</html>

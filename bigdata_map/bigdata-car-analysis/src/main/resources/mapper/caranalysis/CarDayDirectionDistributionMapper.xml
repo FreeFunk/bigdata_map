@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.CarDayDirectionDistributionMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.CarDayDirectionDistribution" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="PROVINCE_ID" property="provinceId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_ID" property="cityId"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="CAR_NUM" property="carNum"/>
+			<result column="COUNT_TIME" property="countTime"/>
+			<result column="AREA_COUNT_TYPE" property="areaCountType"></result>
+			<result column="YEAR_QUARTER" property="yearQuarter"></result>
+			<result column="COUNT_DATE" property="countDate"></result>
+			<result column="COUNT_MONTH" property="countMonth"></result>
+			<result column="YEAR_NUM" property="yearNum"></result>
+
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.CarDayDirectionDistributionView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, CAR_TYPE, CAR_NUM, COUNT_TIME,
+	 AREA_COUNT_TYPE,YEAR_QUARTER,COUNT_DATE,COUNT_MONTH,YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.carNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.carNum)'>
+					AND  CAR_NUM = #{queryObj.carNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.CarDayDirectionDistributionQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from car_day_direction_distribution 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.CarDayDirectionDistributionQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from car_day_direction_distribution 
+  		<include refid="where"/>
+  </select>
+
+	<select id="getDataForCarDirection" parameterType="com.edgedo.bigdata.queryvo.CarDayDirectionDistributionQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from car_day_direction_distribution
+		WHERE CAR_TYPE = #{queryObj.carType}
+		AND date_format(COUNT_TIME,'%Y%m%d') = date_format(#{queryObj.countTime},'%Y%m%d')
+		order by CAR_NUM DESC limit 5
+	</select>
+
+
+	<select id="countOtherCarNum" parameterType="com.edgedo.bigdata.queryvo.CarDayDirectionDistributionQuery" resultType="java.lang.Integer">
+		select sum(CAR_NUM) from car_day_direction_distribution
+		WHERE CAR_TYPE = #{queryObj.carType}
+		AND date_format(COUNT_TIME,'%Y%m%d') = date_format(#{queryObj.countTime},'%Y%m%d')
+		order by CAR_NUM DESC limit 5,999999999
+	</select>
+
+
+	<!--  统计月份的去向分布 省级 -->
+	<select id="listQuxiangGroupSumOfMonthProvince" parameterType="map" resultMap="BaseResultViewMap">
+		select PROVINCE_ID,PROVINCE_NAME, CAR_TYPE, sum(CAR_NUM) CAR_NUM
+		from car_day_direction_distribution where AREA_COUNT_TYPE='province'
+		and COUNT_MONTH=#{countMonth} and  YEAR_NUM=#{yearNum}
+		group by PROVINCE_ID,PROVINCE_NAME,CAR_TYPE
+	</select>
+
+	<!--  统计月份的去向分布 市级 -->
+	<select id="listQuxiangGroupSumOfMonthCity" parameterType="map" resultMap="BaseResultViewMap">
+		select PROVINCE_ID,PROVINCE_NAME,CITY_ID,CITY_NAME,CAR_TYPE, sum(CAR_NUM) CAR_NUM
+		from car_day_direction_distribution where AREA_COUNT_TYPE='city'
+		and COUNT_MONTH=#{countMonth} and  YEAR_NUM=#{yearNum}
+		group by PROVINCE_ID,PROVINCE_NAME,CITY_ID,CITY_NAME,CAR_TYPE
+	</select>
+
+    <!--  根据主键和分片字段查询 -->
+	<select id="loadByIdAndDate" parameterType="com.edgedo.bigdata.queryvo.CarDayDirectionDistributionQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from car_day_direction_distribution
+		where ID=#{id} and YEAR_NUM=#{yearNum}
+	</select>
+
+  
+  
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.SysSiteMsgMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.SysSiteMsg" >
+			<id column="ID" property="id"/>
+			<result column="USER_ID" property="userId"/>
+			<result column="MSG_TYPE" property="msgType"/>
+			<result column="TITLE" property="title"/>
+			<result column="CONTENT" property="content"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="IS_READ" property="isRead"/>
+			<result column="READ_TIME" property="readTime"/>
+			<result column="SEND_USER_ID" property="sendUserId"/>
+			<result column="SEN_USER_NAME" property="senUserName"/>
+			<result column="DATE_STATE" property="dateState"/>
+			<result column="OWNER_MSG" property="ownerMsg"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_CODE" property="userCode"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.SysSiteMsgView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, USER_ID, MSG_TYPE, TITLE, CONTENT, CREATE_TIME, IS_READ, READ_TIME, SEND_USER_ID, SEN_USER_NAME, DATE_STATE, OWNER_MSG,USER_NAME,USER_CODE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.readTime != null'>
+					AND  READ_TIME = #{queryObj.readTime}
+				</if>
+		<if test='queryObj != null and  queryObj.userId != null'>
+			AND  USER_ID = #{queryObj.userId}
+		</if>
+		<if test='queryObj != null and  queryObj.isRead != null'>
+			AND  IS_READ = #{queryObj.isRead}
+		</if>
+		<if test='queryObj != null and  queryObj.ownerMsg != null'>
+			AND  OWNER_MSG = #{queryObj.ownerMsg}
+		</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.SysSiteMsgQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_site_msg 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.SysSiteMsgQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_site_msg 
+  		<include refid="where"/>
+  </select>
+  
+  
+</mapper>

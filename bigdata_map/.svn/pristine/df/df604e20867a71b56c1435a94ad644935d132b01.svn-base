@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataSafetyWarningMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataSafetyWarning" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="EMP_NAME" property="empName"/>
+			<result column="EMP_ID_CARD" property="empIdCard"/>
+			<result column="EMP_CODE" property="empCode"/>
+			<result column="OWNER_TEAM_ID" property="ownerTeamId"/>
+			<result column="OWNER_TEAM_NAME" property="ownerTeamName"/>
+			<result column="WARNING_TYPE" property="warningType"/>
+			<result column="WARNING_LEVEL" property="warningLevel"/>
+			<result column="WARNING_INFO" property="warningInfo"/>
+			<result column="UPLOAD_TIME" property="uploadTime"/>
+			<result column="DETAIL_INFO" property="detailInfo"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataSafetyWarningView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CAR_PLATE_NUM, CAR_FRAME_NUM, CAR_TYPE, EMP_NAME, EMP_ID_CARD, EMP_CODE, OWNER_TEAM_ID,
+	 OWNER_TEAM_NAME, WARNING_TYPE, WARNING_LEVEL, WARNING_INFO, UPLOAD_TIME, DETAIL_INFO,COUNT_DATE,COUNT_MONTH
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<!--<if test='queryObj != null and  queryObj.uploadTime != null'>
+					AND  date_format(UPLOAD_TIME,'%Y%m%d')  = date_format(#{queryObj.uploadTime},'%Y%m%d')
+				</if>-->
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataSafetyWarningQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_safety_warning 
+  		<include refid="where"/> order by UPLOAD_TIME DESC
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataSafetyWarningQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_safety_warning 
+  		<include refid="where"/>
+  </select>
+
+
+	<select id="safetyWarningCount" parameterType="com.edgedo.bigdata.queryvo.BigdataSafetyWarningQuery" resultType="int">
+		select count(1) from  bigdata_safety_warning
+		WHERE
+		<if test='queryObj != null and  queryObj.countDate != null'>
+			  COUNT_DATE = #{queryObj.countDate}
+		</if>
+		<if test='queryObj != null and  queryObj.countMonth != null'>
+			AND  COUNT_MONTH = #{queryObj.countMonth}
+		</if>
+		<!--<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="queryObj.uploadTime !=null ">
+				AND DATE_FORMAT(UPLOAD_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.uploadTime},'%Y-%m-%d')
+			</if>
+		</trim>-->
+	</select>
+
+  
+</mapper>

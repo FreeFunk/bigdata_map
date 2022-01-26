@@ -1,0 +1,4 @@
+<#assign className = table.className>
+<#assign classNameLower = className?uncap_first>
+//配置好菜单后删除文件
+views/${basepackage_dir}/${className}List.html

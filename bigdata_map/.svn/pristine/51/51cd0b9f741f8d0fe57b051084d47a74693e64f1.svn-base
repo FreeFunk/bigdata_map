@@ -1,0 +1,421 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="css/layer-animate.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    <script src="js/tool.js"></script>
+
+</head>
+
+<body>
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+                
+                   
+                <!--<input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " />-->
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+    <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">运输业户</div>
+             <a href="shouye.html" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+<div class="main">
+      <div class="ind">
+          <div class="blank40"></div>          
+          <div class="mk " style="width:20%; height:900px; float:left">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+               <div class="blank20"></div>
+               <div class="tit">
+                     <span class="tit_l"></span>
+                     <span class="tit_m">高级检索</span>
+                     <span class="tit_r"></span>
+               </div>
+              <form id="teamSearchForm" action="" method="post" onkeypress="return event.keyCode != 13;">
+               <div class="con0 clearfix">
+                    <input type="hidden" name="cityId" value="130300"/>
+                    <div class="mingcheng0">企业名称</div>
+                    <div>
+                        <input id="teamName" class="input" name="teamName" type="text" />
+                    </div>
+                    <div class="blank10"></div>
+                    <div class="mingcheng0">企业类型</div>
+                    <div class="mingcheng0">
+                        <select id="teamType" name="companyLavel" class="input001">
+                            <option class="lsd" value ="">请选择</option>
+                            <option class="lsd" value ="TEAM_KY">客运</option>
+                            <option class="lsd" value="TEAM_DXWJYS">联合服务车队</option>
+                            <option class="lsd" value="TEAM_GTGSH">个体工商户</option>
+                            <option class="lsd" value ="TEAM_DXWJ">大型物件运输</option>
+                            <option class="lsd" value="TEAM_WLYS">物流运输</option>
+                            <option class="lsd" value="TEAM_BJGS">搬家公司</option>
+                            <option class="lsd" value ="TEAM_HWZYYS">货物专用运输</option>
+                            <option class="lsd" value="TEAM_TZYS">特种运输</option>
+                            <option class="lsd" value="TEAM_PTHW">普通货运</option>
+                            <option class="lsd" value="TEAM_WXHWYS">危险货物运输</option>
+                            </select>
+                    </div>
+                    <div class="blank10"></div>
+                    <div class="mingcheng0">区域</div>
+                    <div class="mingcheng0">
+                        <select id="xianquId" name="xianquId" class="input001" style="height: 50px;">
+                            <option class="lsd" value ="">请选择</option>
+                            <option class="lsd" value ="130302">海港区</option>
+                            <option class="lsd" value="130303">山海关区</option>
+                            <option class="lsd" value="130304">北戴河区</option>
+                            <option class="lsd" value ="130306">抚宁区</option>
+                            <option class="lsd" value="130321">青龙县</option>
+                            <option class="lsd" value="130322">昌黎县</option>
+                            <option class="lsd" value="130324">卢龙县</option>
+                            <option class="lsd" value="130371">开发区</option>
+                        </select>
+                    </div>
+                    
+                    <div class="blank20"></div>
+                    <div class="center">
+                      <a href="javaScript:void(0);" class="clss" onclick="searchTeamInfo()"><i class="iconfont icon-sousuo5 " style="font-size:20px"></i>&nbsp;搜索</a>
+                    </div>
+               </div>
+              </form>
+           </div> 
+          
+          
+          
+          <div class="mk " style="width:79%; height:900px; float:right">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>
+               <div class="blank20"></div>
+               <div class="con0 clearfix">
+                   <div  style="height:850px; overflow-y: auto">
+                              <table id="teamList" width="100%" class="grid06">
+                                  <tr>
+                                    <th style="width:20%">车队名</th>
+                                    <th style="width:10%">车队类型</th>
+                                    <th style="width:10%">业户类型</th>
+                                    <th style="width:20%">所属区域</th>
+                                    <th style="width:10%">汽车总数</th>
+                                    <th style="width:10%">安全生产隐患</th>
+                                    <!--<th style="width:10%">联系电话</th>
+                                    <th style="width:10%">是否认证显示</th>-->
+                                  </tr>
+                              </table>
+                        <div class="blank20"></div>
+                       
+                       
+                             <div id="pageList" class="green-black">
+                                    <!--<a class="disabled">&lt; Prev</a>
+                                    <a class="current">1</a>
+                                    <a href="#?page=2">2</a>
+                                    <a href="#?page=3">3</a>
+                                    <a href="#?page=4">4</a>
+                                    <a href="#?page=5">5</a>
+                                    <a href="#?page=6">6</a>
+                                    <a href="#?page=7">7</a><em class="white">......</em>
+                                    <a href="#?page=199">199</a>
+                                    <a href="#?page=200">200</a>
+                                    <a href="#?page=2">Next &gt;</a>-->
+                            </div>
+                    </div>
+                </div>
+          </div>
+         
+           
+     </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/tool.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+$(function(){
+
+    var queryArgs = getQueryParam();
+
+    var param = "cityId=130300";
+    var teamName = decodeURI(queryArgs.teamName);
+    if(teamName != "undefined"){
+        param += "&teamName="+teamName;
+        $("#teamName").val(decodeURI(queryArgs.teamName));
+    }
+    var companyLavel = decodeURI(queryArgs.companyLavel);
+    if(companyLavel != "undefined"){
+        param += "&companyLavel="+companyLavel;
+        $("#teamType").val(decodeURI(queryArgs.companyLavel));
+    }
+    var xianquId = decodeURI(queryArgs.xianquId);
+    if(xianquId != "undefined"){
+        param += "&xianquId="+xianquId;
+        $("#xianquId").val(decodeURI(queryArgs.xianquId));
+    }
+    var page = decodeURI(queryArgs.page);
+    if(page != "undefined"){
+        param += "&page="+page+"&limit=13";
+    }
+    showTeamList(param);
+})
+
+    function showTeamList(queryArgs){
+        $.ajax({
+            type:'POST',
+            url: basePathUrl + '/admin/carTeam/searchTransitTeamInfoByQuery.jsn',
+            data:queryArgs,
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    var html = "";
+                    if(data.list.length > 0){
+                        debugger
+                        for(var i=0;i<data.list.length;i++){
+                            html += "<tr style='cursor: pointer' onclick=gotoDetailPage('"+data.list[i].id+"')>";
+                            html += "<td>"+data.list[i].teamName+"</td>";
+                            html += "<td>"+data.list[i].teamType+"</td>";
+                            html += "<td>"+checkTeamType(data.list[i].companyLevel)+"</td>";
+                            html += "<td>"+data.list[i].provinceName+">"+data.list[i].cityName+">"+data.list[i].xianquName+"</td>";
+                            html += "<td>"+data.list[i].carCount+"</td>";
+                            if(typeof (data.list[i].undoTask)=='undefined'){
+                                html += "<td>0</td>";
+                            }else {
+                                html += "<td>"+data.list[i].undoTask+"</td>";
+                            }
+                            /*html += "<td>"+data.list[i].teamAdminPhone+"</td>";
+                            if(data.list[i].checkRenzhengFlag == 1){
+                                html += "<td>是</td>";
+                            }else{
+                                html += "<td>否</td>";
+                            }*/
+                            html += "</tr>";
+                        }
+                        setPageInfo(data.totalPage,data.start,data.limit,data.totalCount);
+                    }else{
+                        html += "暂无信息";
+                    }
+                    $("#teamList").html($("#teamList").html() + html);
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        })
+    }
+
+    function searchTeamInfo(){
+        var param = $("#teamSearchForm").serialize();
+
+        $.ajax({
+            type:'POST',
+            url: basePathUrl + '/admin/carTeam/countTransitTeamInfoByQuery.jsn',
+            data:param,
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    if(data.data > 0){
+                        if(data.data > 1){
+                            window.location.href = "yunShuYeHuChaXun.html?"+param;
+                        }else{
+                            window.location.href = "yunShuYeHu.html?"+param;
+                        }
+                    }else{
+                        alert("暂无信息");
+                    }
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        })
+    }
+
+    function setPageInfo(totalPage,start,limit,totalCount){
+        var page = 0;
+        if(limit != 0){
+            page = start/limit;
+        }
+        var pageHtml = "";
+        var showPageCount = page + 5;
+        pageHtml += "<a href='javaScript:void(0);' onclick=sendRequest('prev',"+(page+1)+","+totalPage+")>&lt;上一页</a>";
+        if(page>0){
+            pageHtml += "<a href='javaScript:void(0);' onclick=sendRequest('',"+(1)+","+totalPage+")>首页</a>";
+        }
+        for(var i=page;i<totalPage;i++){
+            if(i < showPageCount){
+                if(i == page){
+                    pageHtml += "<a href='javaScript:void(0);' style='background-color: #E07C24;border: none' onclick=sendRequest('',"+(i+1)+","+totalPage+")>"+(i+1)+"</a>";
+                }else{
+                    pageHtml += "<a href='javaScript:void(0);' onclick=sendRequest('',"+(i+1)+","+totalPage+")>"+(i+1)+"</a>";
+                }
+            }else{
+                if(i == showPageCount){
+                    pageHtml += "<em class='white'>......</em>";
+                    pageHtml += "<a href='javaScript:void(0);' onclick=sendRequest('',"+totalPage+","+totalPage+")>"+totalPage+"</a>";
+                }
+            }
+        }
+        pageHtml += "<a href='javaScript:void(0);' onclick=sendRequest('next',"+(page+1)+","+totalPage+")>下一页 &gt;</a>";
+        pageHtml += "<a href='javaScript:void(0);'>总数："+totalCount+"</a>";
+        $("#pageList").html(pageHtml);
+    }
+
+function sendRequest(pageFlag,page,totalPage){
+    if(pageFlag == "next"){
+        page++;
+    }else{
+        if(pageFlag == "prev"){
+            page--;
+        }
+    }
+
+    if(page > 0 && page <= totalPage){
+        var url = document.URL;
+        var checkUrl = url.split("?");
+        if(checkUrl.length>1){
+            var urlArr = url.split("&page");
+            var sendUrl = urlArr[0] + "&page="+page
+            window.location.href = sendUrl;
+        }else{
+            var urlArr = url.split("?page");
+            var sendUrl = urlArr[0] + "?page="+page
+            window.location.href = sendUrl;
+        }
+    }
+}
+
+function gotoDetailPage(id){
+    window.location.href = "yunShuYeHu.html?teamId="+id;
+}
+
+function checkTeamType(companyLavel){
+    var teamType = "";
+    if(companyLavel != '' && companyLavel != null){
+        if(companyLavel == "TEAM_KY"){
+            teamType = "客运";
+        }
+        if(companyLavel == "TEAM_DXWJYS"){
+            teamType = "联合服务车队";
+        }
+        if(companyLavel == "TEAM_GTGSH"){
+            teamType = "个体工商户";
+        }
+        if(companyLavel == "TEAM_DXWJ"){
+            teamType = "大型物件运输";
+        }
+        if(companyLavel == "TEAM_WLYS"){
+            teamType = "物流运输";
+        }
+        if(companyLavel == "TEAM_BJGS"){
+            teamType = "搬家公司";
+        }
+        if(companyLavel == "TEAM_HWZYYS"){
+            teamType = "货物专用运输";
+        }
+        if(companyLavel == "TEAM_TZYS"){
+            teamType = "特种运输";
+        }
+        if(companyLavel == "TEAM_PTHW"){
+            teamType = "普通货运";
+        }
+        if(companyLavel == "TEAM_WXHWYS"){
+            teamType = "危险货物运输";
+        }
+    }
+    return teamType;
+}
+function goShouYe() {
+    window.location.href = "shouye.html";
+}
+</script>
+    
+  
+</body>
+</html>

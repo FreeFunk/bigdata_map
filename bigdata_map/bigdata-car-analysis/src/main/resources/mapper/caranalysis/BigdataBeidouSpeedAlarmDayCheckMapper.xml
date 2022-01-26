@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataBeidouSpeedAlarmDayCheckMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataBeidouSpeedAlarmDayCheck" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="UPDATE_TIME" property="updateTime"/>
+			<result column="OWNER_MONTH_COMP_CHECK_ID" property="ownerMonthCompCheckId"/>
+			<result column="COMP_ID" property="compId"/>
+			<result column="COMP_NAME" property="compName"/>
+			<result column="CAR_NUM" property="carNum"/>
+			<result column="SPEED_ALARM_NUM" property="speedAlarmNum"/>
+			<result column="JUGE_BASE_NUM" property="jugeBaseNum"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="SPEED_ALARM_QUALIFIED" property="speedAlarmQualified"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataBeidouSpeedAlarmDayCheckView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, UPDATE_TIME, OWNER_MONTH_COMP_CHECK_ID, COMP_ID, COMP_NAME, CAR_NUM, SPEED_ALARM_NUM, JUGE_BASE_NUM, COUNT_MONTH, YEAR_NUM, COUNT_DATE, SPEED_ALARM_QUALIFIED
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.updateTime != null'>
+					AND  UPDATE_TIME = #{queryObj.updateTime}
+				</if>
+				<if test='queryObj != null and  queryObj.carNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.carNum)'>
+					AND  CAR_NUM = #{queryObj.carNum}
+				</if>
+				<if test='queryObj != null and  queryObj.speedAlarmNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.speedAlarmNum)'>
+					AND  SPEED_ALARM_NUM = #{queryObj.speedAlarmNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.yearNum)'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countDate)'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouSpeedAlarmDayCheckQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_speed_alarm_day_check 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouSpeedAlarmDayCheckQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_speed_alarm_day_check 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectByVo" parameterType="com.edgedo.bigdata.entity.BigdataBeidouSpeedAlarmDayCheck" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_beidou_speed_alarm_day_check
+		WHERE  COUNT_DATE = #{countDate} and COUNT_MONTH = #{countMonth} and COMP_ID = #{compId} limit 1
+	</select>
+
+	<update id="updateNew" parameterType="com.edgedo.bigdata.entity.BigdataBeidouCompMonthCheck" >
+		UPDATE bigdata_beidou_speed_alarm_day_check
+		<set>
+			<if test='compId != null'>
+				COMP_ID = #{compId},
+			</if>
+			<if test='compName != null'>
+				COMP_NAME = #{compName},
+			</if>
+			<if test='carNum != null'>
+				CAR_NUM = #{carNum},
+			</if>
+			<if test='speedAlarmNum != null'>
+				SPEED_ALARM_NUM = #{speedAlarmNum},
+			</if>
+			<if test='jugeBaseNum != null'>
+				JUGE_BASE_NUM = #{jugeBaseNum},
+			</if>
+			<if test='countDate != null'>
+				COUNT_DATE = #{countDate},
+			</if>
+			<if test='countMonth != null'>
+				COUNT_MONTH = #{countMonth},
+			</if>
+			<if test='yearNum != null'>
+				YEAR_NUM = #{yearNum},
+			</if>
+			<if test='updateTime != null'>
+				UPDATE_TIME = #{updateTime},
+			</if>
+		</set>
+		where  COUNT_MONTH = #{countMonth} and COMP_ID = #{compId} and COUNT_DATE = #{countDate}
+	</update>
+
+	<select id="countSpeedAlarm" parameterType="map" resultType="int">
+		select count(1) from bigdata_beidou_speed_alarm_day_check
+		 WHERE COUNT_MONTH = #{countMonth} and COMP_ID = #{compId}
+		 <if test="speedAlarmQualified !=null and speedAlarmQualified!=''">
+			 and SPEED_ALARM_QUALIFIED = #{speedAlarmQualified}
+		 </if>
+	</select>
+  
+</mapper>

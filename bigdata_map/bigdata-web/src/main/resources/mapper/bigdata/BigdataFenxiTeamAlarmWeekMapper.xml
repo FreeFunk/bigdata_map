@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataFenxiTeamAlarmWeekMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataFenxiTeamAlarmWeek" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="UPDATE_TIME" property="updateTime"/>
+			<result column="OWNER_TEAM_DAY_ID" property="ownerTeamDayId"/>
+			<result column="ALARM_TYPE" property="alarmType"/>
+			<result column="ALARM_TYPE_DESC" property="alarmTypeDesc"/>
+			<result column="ALARM_NUM" property="alarmNum"/>
+			<result column="ALARM_RATE" property="alarmRate"/>
+			<result column="ALARM_NUM_TOP_THREE" property="alarmNumTopThree"/>
+			<result column="COUNT_WEEK" property="countWeek"/>
+			<result column="START_COUNT_DATE" property="startCountDate"/>
+			<result column="END_COUNT_DATE" property="endCountDate"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataFenxiTeamAlarmWeekView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, UPDATE_TIME, OWNER_TEAM_DAY_ID, ALARM_TYPE, ALARM_TYPE_DESC, ALARM_NUM, ALARM_RATE, ALARM_NUM_TOP_THREE, COUNT_WEEK, START_COUNT_DATE, END_COUNT_DATE, COUNT_DATE, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.updateTime != null'>
+					AND  UPDATE_TIME = #{queryObj.updateTime}
+				</if>
+				<if test='queryObj != null and  queryObj.alarmNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.alarmNum)'>
+					AND  ALARM_NUM = #{queryObj.alarmNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countWeek != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countWeek)'>
+					AND  COUNT_WEEK = #{queryObj.countWeek}
+				</if>
+				<if test='queryObj != null and  queryObj.startCountDate != null'>
+					AND  START_COUNT_DATE = #{queryObj.startCountDate}
+				</if>
+				<if test='queryObj != null and  queryObj.endCountDate != null'>
+					AND  END_COUNT_DATE = #{queryObj.endCountDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countDate)'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.yearNum)'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiTeamAlarmWeekQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fenxi_team_alarm_week 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiTeamAlarmWeekQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fenxi_team_alarm_week 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectTopSixByOwnerTeamDayId" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiTeamAlarmWeekQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_team_alarm_week
+		where OWNER_TEAM_DAY_ID = #{queryObj.ownerTeamDayId}
+		and YEAR_NUM = #{queryObj.yearNum} and COUNT_MONTH = #{queryObj.countMonth} and COUNT_WEEK = #{queryObj.countWeek}
+		ORDER BY ALARM_NUM DESC
+		limit 6
+	</select>
+  
+  
+</mapper>

@@ -1,0 +1,187 @@
+package com.edgedo.timetask.alarm;
+
+import com.alibaba.fastjson.JSON;
+import com.edgedo.bigdata.entity.AlarmInfo;
+import com.edgedo.bigdata.entity.BigdataSafetyWarning;
+import com.edgedo.bigdata.entity.CarInfo;
+import com.edgedo.bigdata.queryvo.BigdataBeidouCompView;
+import com.edgedo.bigdata.service.BigdataBeidouCompService;
+import com.edgedo.bigdata.service.BigdataSafetyWarningService;
+import com.edgedo.bigdata.service.CarInfoService;
+import com.edgedo.common.util.RedisUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * @ClassName GetAlarmFromRedis
+ * @Description 从redis中获取报警信息
+ * @Author 床前明月光
+ * @Date 2019/10/24 14:41
+ **/
+@Component
+public class GetAlarmFromRedis {
+
+    @Autowired
+    RedisUtil redisUtil;
+    @Autowired
+    BigdataSafetyWarningService bigdataSafetyWarningService;
+    @Autowired
+    BigdataBeidouCompService bigdataBeidouCompService;
+    @Autowired
+    CarInfoService carInfoService;
+
+    SimpleDateFormat sdfDateInt = new SimpleDateFormat("yyyyMMdd");
+
+    String key = "alarmList";
+
+    @Scheduled(cron = "0/30 * * * * ?")
+    public void getAlarm(){
+        for (int i=0;i<50;i++){
+            Object obj = redisUtil.rightPop(key);
+            try {
+                if(obj!=null){
+                    String jsonStr= JSON.toJSONString(obj);
+                    AlarmInfo alarmInfo = JSON.parseObject(jsonStr, AlarmInfo.class);//json字符串转对象
+                    String servIp = alarmInfo.getSERV_IP();
+                    BigdataBeidouCompView bigdataBeidouCompView = bigdataBeidouCompService.selectByIp809Addr(servIp);
+                    if(bigdataBeidouCompView!=null){
+                        BigdataSafetyWarning bigdataSafetyWarning = new BigdataSafetyWarning();
+                        bigdataSafetyWarning.setCreateTime(new Date());
+                        String compId = bigdataBeidouCompView.getId();
+                        bigdataSafetyWarning.setCompId(compId);
+                        bigdataSafetyWarning.setCompName(bigdataBeidouCompView.getCompName());
+                        bigdataSafetyWarning.setBid(alarmInfo.getALARM_ID());
+                        bigdataSafetyWarning.setLon(alarmInfo.getLONGITUDE());
+                        bigdataSafetyWarning.setLat(alarmInfo.getLATITUDE());
+                        String speed = alarmInfo.getSPEED().substring(2,4);
+                        long dec_num = Long.parseLong(speed, 16);
+                        bigdataSafetyWarning.setSpeed(new BigDecimal(dec_num));
+                        bigdataSafetyWarning.setStarttime(alarmInfo.getWARN_TIME());
+                        //查询车辆信息
+                        CarInfo carInfo = carInfoService.loadById(alarmInfo.getCAR_CODE()+"_"+alarmInfo.getCAR_COLOR());
+                        if(carInfo!=null) {
+                            bigdataSafetyWarning.setCarPlateNum(carInfo.getCarPlateNum());
+                            bigdataSafetyWarning.setCarFrameNum(carInfo.getCarFrameNum());
+                            bigdataSafetyWarning.setCarPlateColor(carInfo.getCarPlateColour());
+                            bigdataSafetyWarning.setCarPlateColorText(carInfo.getCarPlateColorText());
+                            bigdataSafetyWarning.setCarType(carInfo.getCarType());
+                            bigdataSafetyWarning.setEmpCode(carInfo.getEmpCode());
+                            bigdataSafetyWarning.setEmpIdCard(carInfo.getEmpCode());
+                            bigdataSafetyWarning.setEmpName(carInfo.getEmpPhone());
+                            bigdataSafetyWarning.setEmpId(carInfo.getEmpId());
+                            bigdataSafetyWarning.setOwnerTeamId(carInfo.getOwnerTeamId());
+                            bigdataSafetyWarning.setOwnerTeamName(carInfo.getOwnerTeamName());
+                            bigdataSafetyWarning.setProvinceId(carInfo.getProvinceId());
+                            bigdataSafetyWarning.setProvinceName(carInfo.getProvinceName());
+                            bigdataSafetyWarning.setCityId(carInfo.getCityId());
+                            bigdataSafetyWarning.setCityName(carInfo.getCityName());
+                            bigdataSafetyWarning.setXianquId(carInfo.getXianquId());
+                            bigdataSafetyWarning.setXianquName(carInfo.getXianquName());
+
+                            bigdataSafetyWarning.setUploadTime(alarmInfo.getRECV_TIME());
+                            bigdataSafetyWarning.setAlarmState("开始");
+                            bigdataSafetyWarning.setHandleState("未处理");
+                            bigdataSafetyWarning.setWarningInfo("");
+                            String markStatus = alarmInfo.getMARK_STATUS();
+                            if (markStatus.equals("0X01") || markStatus.equals("0X00")) {
+                                bigdataSafetyWarning.setStarttime(alarmInfo.getWARN_TIME());
+                            } else if (markStatus.equals("0X02")) {
+                                bigdataSafetyWarning.setEndtime(alarmInfo.getWARN_TIME());
+                            }
+                            String dateIntStr = sdfDateInt.format(alarmInfo.getWARN_TIME());
+                            int dateInt = new Integer(dateIntStr);
+                            int countMonth = dateInt / 100;
+                            bigdataSafetyWarning.setCountDate(dateInt);
+                            bigdataSafetyWarning.setCountMonth(countMonth);
+                            //获取报警等级
+                            String alarmGrade = alarmInfo.getALARM_GRADE();
+                            bigdataSafetyWarning.setWarningLevel(getWarningLevel(alarmGrade));
+                            //获取报警类型
+                            Integer warnType = alarmInfo.getWARN_TYPE();
+                            String eventType = alarmInfo.getEVENT_TYPE();
+                            if (warnType == 100) {
+                                String eventType1 = getEventType1(eventType);
+                                if(eventType1.equals("")){
+                                    continue;
+                                }
+                                bigdataSafetyWarning.setWarningType(eventType1);
+                            } else if (warnType == 101) {
+                                String eventType2 = getEventType2(eventType);
+                                if(eventType2.equals("")){
+                                    continue;
+                                }
+                                bigdataSafetyWarning.setWarningType(getEventType2(eventType));
+                            }
+                            String id = compId + "_" + bigdataSafetyWarning.getBid();
+                            bigdataSafetyWarning.setId(id);
+                            int count = bigdataSafetyWarningService.countById(bigdataSafetyWarning);
+                            if (count > 0) {
+                                bigdataSafetyWarning.setUpdateTime(new Date());
+                                bigdataSafetyWarningService.updateByPkSelectiveAndFenPian(bigdataSafetyWarning);
+                            } else {
+                                bigdataSafetyWarningService.insertNew(bigdataSafetyWarning);
+                            }
+                        }
+                    }
+                }
+            }catch (Exception e){
+                redisUtil.leftPush(key,obj);
+            }
+        }
+    }
+
+    //返回报警等级
+    public String getWarningLevel(String alarmGrade){
+        if(alarmGrade.equals("0X01")){
+            return "1";
+        }
+        if(alarmGrade.equals("0X02")){
+            return "2";
+        }
+        return "";
+    }
+    //高级驾驶辅助系统报警
+    public String getEventType1(String eventType){
+        if(eventType.equals("0X01")){
+            return "前向碰撞预警";
+        }
+        if(eventType.equals("0X02")){
+            return "车辆偏离预警";
+        }
+        if(eventType.equals("0X03")){
+            return "车距过近预警";
+        }
+        if(eventType.equals("0X04")){
+            return "行人碰撞报警";
+        }
+        if(eventType.equals("0X06")){
+            return "限速标志识别";
+        }
+        return "";
+    }
+    //驾驶人状态监测系统报警
+    public String getEventType2(String eventType){
+        if(eventType.equals("0X01")){
+            return "疲劳驾驶报警";
+        }
+        if(eventType.equals("0X02")){
+            return "接打电话报警";
+        }
+        if(eventType.equals("0X03")){
+            return "抽烟报警";
+        }
+        if(eventType.equals("0X04")){
+            return "注意力分散报警";
+        }
+        if(eventType.equals("0X05")){
+            return "异常报警";
+        }
+        return "";
+    }
+
+}

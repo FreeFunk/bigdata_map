@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="BigdataFatigueAnalysisSumCount-form" id="BigdataFatigueAnalysisSumCount-form" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">超速总里程</label>
+            <div class="layui-input-block">
+                <input type="text" name="sumFatigueMileage" lay-verify="required|number" placeholder="请输入超速总里程" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">超速总时长</label>
+            <div class="layui-input-block">
+                <input type="text" name="sumFatigueTime" lay-verify="required|number" placeholder="请输入超速总时长" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">超速总次数</label>
+            <div class="layui-input-block">
+                <input type="text" name="sumFatigueNum" lay-verify="required|number" placeholder="请输入超速总次数" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">严重超速总里程</label>
+            <div class="layui-input-block">
+                <input type="text" name="sumSeriousFatigueMileage" lay-verify="required|number" placeholder="请输入严重超速总里程" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">严重超速总时长</label>
+            <div class="layui-input-block">
+                <input type="text" name="sumSeriousFatigueTime" lay-verify="required|number" placeholder="请输入严重超速总时长" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">严重超速总次数</label>
+            <div class="layui-input-block">
+                <input type="text" name="sumSeriousFatigueNum" lay-verify="required|number" placeholder="请输入严重超速总次数" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">危险时段超速总里程</label>
+            <div class="layui-input-block">
+                <input type="text" name="sumNightFatigueMileage" lay-verify="required|number" placeholder="请输入危险时段超速总里程" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">危险时段超速总时长</label>
+            <div class="layui-input-block">
+                <input type="text" name="sumNightFatigueTime" lay-verify="required|number" placeholder="请输入危险时段超速总时长" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">危险时段超速总次数</label>
+            <div class="layui-input-block">
+                <input type="text" name="sumNightFatigueNum" lay-verify="required|number" placeholder="请输入危险时段超速总次数" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车辆类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="carType" lay-verify="required" placeholder="请输入车辆类型" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">统计类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="countType" lay-verify="required" placeholder="请输入统计类型" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">统计时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="countTime" id="countTime" lay-verify="required" placeholder="请输入统计时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">统计月份</label>
+            <div class="layui-input-block">
+                <input type="text" name="countMonth" lay-verify="required|number" placeholder="请输入统计月份" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">统计年分</label>
+            <div class="layui-input-block">
+                <input type="text" name="countYear" lay-verify="required|number" placeholder="请输入统计年分" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+   <!-- <div class="layui-form-item">
+        <label class="layui-form-label">省名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="name" lay-verify="required" placeholder="请输入省名" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">区域</label>
+        <div class="layui-input-inline">
+            <input type="text" name="area" lay-verify="required" placeholder="请输入区域" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="orderNumber" lay-verify="required" placeholder="请输入区域" autocomplete="off" class="layui-input">
+        </div>
+    </div>-->
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="BigdataFatigueAnalysisSumCount-form-submit" id="BigdataFatigueAnalysisSumCount-form-submit" value="确认添加">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'form','laydate'], function(){
+            var $ = layui.$
+                ,laydate = layui.laydate
+                ,admin  = layui.admin
+                ,form = layui.form;
+
+            //监听提交
+            form.on('submit(BigdataFatigueAnalysisSumCount-form-submit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //提交 Ajax 成功后，关闭当前弹层并重载表格
+                admin.req({
+                    url:layui.setter.basePath +'/admin/bigdataFatigueAnalysisSumCount/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('BigdataFatigueAnalysisSumCount-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('添加成功', {
+                            icon: 1
+                        });
+                    },
+                });
+
+            });
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#countTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

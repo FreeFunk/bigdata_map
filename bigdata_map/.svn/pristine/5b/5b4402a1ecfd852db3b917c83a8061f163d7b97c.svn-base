@@ -1,0 +1,434 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>秦皇岛市智慧交通北斗大数据分析平台</title>
+    <link href="css/animate.min.css" rel="stylesheet" type="text/css">
+    <link href="css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="dialog/index_files/flavr0.css">
+
+    <link rel="stylesheet" type="text/css" href="css/datedropper.css">
+    <link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery.SuperSlide.2.1.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script src="js/layer/layer.js"></script>
+
+    <script src="js/tool.js"></script>
+</head>
+
+<body>
+
+
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time"style="margin-left: 33%;">
+
+
+            <!-- <input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " />-->
+            <!--<input type="text" class="input_rl " id="searchDate" style="width:150px; height: 48px; margin-right: 10px; ">-->
+            <span id=localtime></span>
+            <script type="text/javascript">
+                function showLocale(objD){
+                    var str,colorhead,colorfoot;
+                    var yy = objD.getYear();
+                    if(yy<1900) yy = yy+1900;
+                    var MM = objD.getMonth()+1;
+                    if(MM<10) MM = '0' + MM;
+                    var dd = objD.getDate();
+                    if(dd<10) dd = '0' + dd;
+                    var hh = objD.getHours();
+                    if(hh<10) hh = '0' + hh;
+                    var mm = objD.getMinutes();
+                    if(mm<10) mm = '0' + mm;
+                    var ss = objD.getSeconds();
+                    if(ss<10) ss = '0' + ss;
+                    var ww = objD.getDay();
+                    if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+                    if  (ww==0)  ww="星期日";
+                    if  (ww==1)  ww="星期一";
+                    if  (ww==2)  ww="星期二";
+                    if  (ww==3)  ww="星期三";
+                    if  (ww==4)  ww="星期四";
+                    if  (ww==5)  ww="星期五";
+                    if  (ww==6)  ww="星期六";
+                    colorfoot="</font>"
+                    str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+                    return(str);
+                }
+
+                function tick(){
+                    var today;
+                    today = new Date();
+                    document.getElementById("localtime").innerHTML = showLocale(today);
+                    window.setTimeout("tick()", 1000);
+                }
+
+                tick();
+            </script>
+        </div>
+    </div>
+    <div class="top_l">
+
+        <div class="bt">
+            <div class="bt_name left">超速分析</div>
+            <a href="shouye.html" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+<div class="main">
+    <div class="ind mt100" style="position:relative">
+
+        <div class="www360buy" style="margin:0 auto">
+            <div class="bd">
+                <ul class="lh">
+                    <div class="mk left" style="width:48%; height:650px;margin-right:1.2%">
+                        <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                        <div class="tit">
+                            <span class="tit_l"></span>
+                            <span class="tit_m">疲劳驾驶分析</span>
+                            <span class="tit_r"></span>
+                        </div>
+                        <div class="con clearfix">
+
+                            <div>
+                                <div class="xs left" style="width:100%; margin-right:2%">
+                                    <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                    <h4>报警次数</h4>
+                                    <h3 id="guoDaoNum">6282205<em>次</em></h3>
+                                </div>
+
+                                <!--<div class="xs right" style="width:32%">
+                                   <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                   <h4>超速里程</h4>
+                                   <h3 id="guoDaoMilage">0<em>Km</em></h3>
+                                </div>  -->
+                            </div>
+                            <div class="blank40"></div>
+                            <div style=" width:100%;height:370px" id="aa1"></div>
+
+                        </div>
+                    </div>
+
+                    <div class="mk left" style="width:48%; height:650px; margin-left:2%">
+                        <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                        <div class="tit">
+                            <span class="tit_l"></span>
+                            <span class="tit_m">疲劳驾驶车辆分析</span>
+                            <span class="tit_r"></span>
+                        </div>
+                        <div class="con clearfix">
+                            <div>
+                                <div class="xs left" style="width:100%; margin-right:2%">
+                                    <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                    <h4>报警车辆数</h4>
+                                    <h3 id="guoDaoSeriousNum">11847‬<em>辆</em></h3>
+                                </div>
+                            </div>
+                            <div class="blank40"></div>
+                            <div style=" width:100%;height:370px" id="aa2"></div>
+
+
+                        </div>
+                    </div>
+                </ul>
+            </div>
+            <script type="text/javascript">jQuery(".www360buy").slide({trigger:"click",effect:"left"});</script>
+        </div>
+
+    </div>
+</div>
+
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+    $("#pickdate").dateDropper({
+        animate: false,
+        format: 'Y-m-d',
+        maxYear: '2020'
+    });
+
+</script>
+
+<script type="text/javascript" src="dialog/index_files/bootstrap.min.js"></script>
+<script type="text/javascript" src="dialog/index_files/jquery.browser.js"></script>
+<script type="text/javascript" src="dialog/index_files/livedemo.js"></script>
+<script type="text/javascript" src="dialog/index_files/flavr.min.js"></script>
+
+<script type="text/javascript">
+    // //初始化数据
+    $(document).ready(function(){
+        //疲劳驾驶分析
+        piLaoAlarmEcharts();
+        //疲劳驾驶车辆分析
+        piLaoJiaShiAlarmEcharts();
+    });
+
+
+    function piLaoAlarmEcharts() {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart1 = echarts.init(document.getElementById('aa1'));
+        // 指定图表的配置项和数据
+        option = {
+            color: ['#3398DB'],
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                },
+                formatter: function (params) {
+                    var tar = params[1];
+                    if(tar.name=='六月'){
+                        return tar.name +  ' : ' + tar.value;
+                    }else {
+                        return tar.name + '<br/>' + '环比下降' + ' : ' +  tar.value;
+                    }
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ["六月","七月","八月","九月","十月","十一月"],
+                    axisTick: {
+                        alignWithLabel: true
+                    },
+                    axisLine:{
+                        lineStyle:{
+                            color:'#21EDE8',
+                            width:1,//这里是为了突出显示加上的
+                        }
+                    }
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value',
+                    axisLine:{
+                        lineStyle:{
+                            color:'#21EDE8',
+                            width:1,//这里是为了突出显示加上的
+                        }
+                    },
+                    /*   min: 0,
+                       max: 2500,*/
+                    splitLine: {
+                        show: true,
+                        lineStyle:{
+                            color: ['#237d88'],
+                            width: 1,
+                            type: 'solid'
+                        }
+
+                    },
+                }
+            ],
+            legend: {
+                data:['报警次数'],
+                /*orient: 'vertical',*/
+                top: '0%',
+                right: '0%',
+                icon: "circle",
+                textStyle: {
+                    color: "#fff",
+                    fontSize: 14,
+
+                },
+            },
+            series : [
+                {
+                    name:'报警次数',
+                    type:'bar',
+                    stack:'报警1',
+                    barWidth: '60%',
+                    markLine : {
+                        itemStyle : {
+                            normal: {
+                                borderWidth:1,
+                                lineStyle: {
+                                    type: 'symbol',
+                                    color:'#ff0000',
+                                    width:1
+                                }}} ,
+                        // data : [
+                        //     { name: '标线1起点', xAxis: 0, yAxis: [], symbol: 'circle'},
+                        //     //{ name: '标线1终点', xAxis: data.data.dateList[data.data.dateList.length-1], yAxis: data.data.nationalOverspeedNumLine, symbol: 'circle' },
+                        // ]
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: "#E3B25A",
+                            label: {
+                                show: true, //开启显示
+                                position: 'top', //在上方显示
+                                textStyle: { //数值样式
+                                    color: '#fff',
+                                    fontSize: 16
+                                }},
+
+                            lineStyle: {
+                                color: "#E3B25A"
+                            }}
+                    },
+                    data:[1100393,1073280,1040339,1028895,1026837,1012461]
+                },
+                {
+                    name: '环比下降',
+                    type: 'bar',
+                    stack:'报警1',
+                    data:['无记录','2.4%', '3.1%', '1.1%','0.2%','1.4%']
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart1.setOption(option);
+    }
+
+    function piLaoJiaShiAlarmEcharts() {
+        var myChart2 = echarts.init(document.getElementById('aa2'));
+        // 指定图表的配置项和数据
+        option = {
+            color: ['#3398DB'],
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                },
+                formatter: function (params) {
+                    var tar = params[1];
+                    if(tar.name=='六月'){
+                        return tar.name +  ' : ' + tar.value;
+                    }else {
+                        return tar.name + '<br/>' + '环比下降' + ' : ' +  tar.value;
+                    }
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ["六月","七月","八月","九月","十月","十一月"],
+                    axisTick: {
+                        alignWithLabel: true
+                    },
+                    axisLine:{
+                        lineStyle:{
+                            color:'#21EDE8',
+                            width:1,//这里是为了突出显示加上的
+                        }
+                    }
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value',
+                    axisLine:{
+                        lineStyle:{
+                            color:'#21EDE8',
+                            width:1,//这里是为了突出显示加上的
+                        }
+                    },
+                    /*min: 0,
+                    max: 25,*/
+                    splitLine: {
+                        show: true,
+                        lineStyle:{
+                            color: ['#237d88'],
+                            width: 1,
+                            type: 'solid'
+                        }
+
+                    },
+                }
+            ],
+            legend: {
+                data:['报警车辆数'],
+                /*orient: 'vertical',*/
+                top: '0%',
+                right: '0%',
+                icon: "circle",
+                textStyle: {
+                    color: "#fff",
+                    fontSize: 14,
+
+                },
+            },
+            series : [
+                {
+                    name:'报警车辆数',
+                    stack:'报警1',
+                    type:'bar',
+                    barWidth: '60%',
+                    markLine : {
+                        itemStyle : {
+                            normal: {
+                                borderWidth:1,
+                                lineStyle: {
+                                    type: 'symbol',
+                                    color:'#ff0000',
+                                    width:1
+                                }}} ,
+                        // data : [
+                        //     { name: '标线1起点', xAxis: 0, yAxis: data.data.nationalSeriousOverspeedNumLine, symbol: 'circle'},
+                        //     //{ name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                        // ]
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: "#E3B25A",
+                            label: {
+                                show: true, //开启显示
+                                position: 'top', //在上方显示
+                                textStyle: { //数值样式
+                                    color: '#fff',
+                                    fontSize: 16
+                                }},
+
+                            lineStyle: {
+                                color: "#E3B25A"
+                            }}
+                    },
+                    data:[2597,2412,2255,2205,2198,2160]
+                },
+                {
+                    name: '环比下降',
+                    stack:'报警1',
+                    type: 'bar',
+                    data:['无记录','6.6%', '7%', '2.2%', '0.3%', '1.7%']
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart2.setOption(option);
+    }
+
+
+
+    function goShouYe() {
+        window.location.href = "shouye.html";
+    }
+</script>
+</body>
+</html>

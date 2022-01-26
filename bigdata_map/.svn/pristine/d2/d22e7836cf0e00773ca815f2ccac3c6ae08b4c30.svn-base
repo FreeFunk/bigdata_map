@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<!-- 数据库用户名密码 -->
+	<entry key="jdbc.username">bigdata</entry>
+	<entry key="jdbc.password">bigdata123@</entry>
+	<entry key="jdbc.url">jdbc:mysql://rm-3xe058i39755z6k61do.mysql.rds.aliyuncs.com:3306/bigdata?useUnicode=true&amp;characterEncoding=UTF-8</entry>
+	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
+</properties>

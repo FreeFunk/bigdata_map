@@ -1,0 +1,37 @@
+########################备注信息###########################
+######### 根据com.edgedo下面包结构书写下面内容  ###########
+#永不执行的表达式 '-'
+timetask:
+  #########analysis包
+  analysis:
+    BigDataAnalysisOperative:
+      enable: true
+      cron:
+        #同步车辆的位置信息
+        synCarLocationInfo: 0 0/7 * * * ?
+        #只更新GPS表
+        synCarLocationInfoGps: 0 0/7 * * * ?
+        #将系统内的数据清零
+        initCarGpsInfo: '-'
+        #查询不在今天定位的车辆信息初始化数据
+        initCarGpsInfoNew: '-'
+        #分析上线率运营率等信息
+        fenxiOpertiveInfo: '-'
+  #########driver包
+  driver:
+    BigdataAnalysisDriverTimeJob:
+      enable: true
+      cron:
+        #车辆和司机每日的分段划分一个车某天是哪些司机开过
+        fenxiCarDriverDayPartition: 1 0 1 * * ?
+        #车辆和司机每日的分段划分一个车某天是哪些司机开过
+        saveDayPartitionAndSumDriverDayRun: 0 50 * * * ?
+        #每天 3点多统计当月
+        sumDriverCurMonthAndYearCount: '-'
+  #########transmit包
+  transmit:
+    BigdataTransmitPlatLoadJob:
+      enable: true
+      cron:
+        #加载数据转发权限的配置
+        loadTransmitPlat: 0 0/10 * * * ?

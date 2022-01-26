@@ -1,0 +1,1225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/echarts.min.js"></script>
+    <script src="layer/layer.js"></script>
+    <script src="js/tool.js"></script>
+</head>
+<style type="text/css">
+    .laywindow{
+        background-color: #07304c;
+    }
+</style>
+<body>
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+                
+                   
+                <!--<input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " /> -->
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+    <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">运输业户</div>
+             <a href="javaScript:history.back(-1);" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+
+
+<div class="main">
+      <div class="ind">
+                 
+          <div style="float: left; width:10%">
+                <div id="fa_wrap">
+                      
+                           
+                        <div class="fa_box mk" style="height:950px; position: relative">
+                            
+                      <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                          <div class="blank20"></div>
+                         <div class="clxx_z">所有车辆</div>
+                        
+                        <div style="text-align: center">
+                            <input id="searchCarPlateNum" class="input" name="" type="text" style=" width: 150px" />
+                        </div>
+                        <div class="yf0">
+                            <dl id="carList" class=" clearfix" style="height: 850px;overflow-y: scroll">
+                            </dl>
+                        </div>
+                            
+                             <div class="nav_show_control" style="position: absolute;bottom:15px; left: 70px;">
+                                 <a href="javascript:;" title="打开" class="a_con guan"></a>
+                             </div>
+                            
+                        </div>
+
+
+
+
+                      <div id="nav" class="nav_show" style="z-index:9">
+                          <div class="fa_box mk001" style="height: 950px">
+                            
+                      <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                          <div class="blank20"></div>
+                         
+                        
+                      
+                        <div class="yf01">
+                            <dl id="carListOpen" class=" clearfix nav_show_control" style="height: 900px;overflow-y: scroll">
+                            </dl>
+                        </div>
+                            
+                             
+                        </div>
+                        </div> 
+                     <script>
+                   var $nav_control = $('#nav');
+                    $('#fa_wrap .nav_show_control a').click(function(){
+                      if(parseInt($nav_control.css('left'))==-760){
+                       $nav_control.animate({left:220}, {duration:500, queue:false});
+                          $("A.a_con").removeClass('guan').addClass('kai');
+                      }else{
+                       $nav_control.animate({left:-760}, {duration:500, queue:false});
+                      $("A.a_con").removeClass('kai').addClass('guan');
+                      }
+                     });
+                    $('#nav').animate({left:-760}, {duration:1500, queue:false,easing:"easeOutQuad"});
+                    $("A.a_con").removeClass('guan').addClass('kai');
+
+                </script>  
+               
+                </div>
+          </div>
+    
+          
+          <Div style="float: left; margin-left: 1%; width:39%;">
+          
+               <div class="fa_box mk" style="height:950px">
+                            
+                        <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                           <div class="tit0">
+                                 <span class="tit0_l"></span>
+                                 <span class="tit0_m">业户信息</span>
+                                 <span class="tit0_r"></span>
+                           </div> 
+                   
+                          <div class="con0 clearfix">
+                              
+                            <Div style="overflow-y: auto; height:870px">
+                                <table width="100%" class="grid00">
+                              <tbody id="teamInfo">
+                                <tr>
+                                  <td id="area" style="text-align: left" colspan="4"></td>
+                                </tr>
+                                <tr>
+                                  <td style="width: 25%; text-align: right">车队名：</td>
+                                  <td style="width: 25%; text-align: left"><span id="teamName"></span></td>
+                                  <td  style="width: 25%; text-align: right">经营许可证号：</td>
+                                    <td style="width: 25%; text-align: left"><span id="jyCertNumber"></span></td>
+                                </tr>
+                               <tr>
+                                  <td style="text-align: right">业户分类：</td>
+                                   <td style="text-align: left"><span id="companyLevel"></span></td>
+                                  <td style="text-align: right">许可证有效时间截止：</td>
+                                   <td style="text-align: left"><span id="licenceValidDate"></span></td>
+                                </tr>
+                                <tr>
+                                  <td style="text-align: right">经济类型：</td>
+                                    <td style="text-align: left"><span id="economicType"></span></td>
+                                  <td style="text-align: right">营业执照号：</td>
+                                    <td style="text-align: left"><span id="businessCertCode"></span></td>
+                                </tr>
+                                <tr>
+                                  <td style="text-align: right">法人代表：</td>
+                                    <td style="text-align: left"><span id="legalRepresentName"></span></td>
+                                  <td style="text-align: right">经营负责人：</td>
+                                    <td style="text-align: left"><span id="jyManName"></span></td>
+                                </tr>
+                                <tr>
+                                  <td style="text-align: right">法人代表身份证号：</td>
+                                    <td style="text-align: left"><span id="legalRepresentLicenceType"></span></td>
+                                  <td style="text-align: right">经营负责人电话：</td>
+                                    <td style="text-align: left"><span id="jyChargeManPhone"></span></td>
+                                </tr>
+                                <tr>
+                                  <td style="text-align: right">车队类型：</td>
+                                    <td style="text-align: left"><span id="teamType"></span></td>
+                                  <td style="text-align: right">联系人：</td>
+                                    <td style="text-align: left"><span id="teamAdminName"></span></td>
+                                </tr>
+                                <tr>
+                                  <td style="text-align: right">业户地址：</td>
+                                    <td style="text-align: left"><span id="teamAddress"></span></td>
+                                  <td style="text-align: right">联系电话：</td>
+                                    <td style="text-align: left"><span id="teamAdminPhone"></span></td>
+                                </tr>
+                                <tr>
+                                  <td style="text-align: right">是否认证显示：</td>
+                                    <td style="text-align: left"><span id="checkRenzhengFlag"></span></td>
+                                  <td style="text-align: right">是否校验手机号：</td>
+                                    <td style="text-align: left"><span id="checkPhoneFlag"></span></td>
+                                </tr>
+                                <tr>
+                                  <td style="text-align: right">车头总数：</td>
+                                    <td style="text-align: left"><span id="carAmount"></span></td>
+                                  <td style="text-align: right">挂车总数：</td>
+                                    <td style="text-align: left"><span id="gcAmount"></span></td>
+                                </tr>
+                               <tr>
+                                  <td style="text-align: right">管理人员：</td>
+                                   <td style="text-align: left"><span id="administrator"></span></td>
+                                  <td style="text-align: right">车辆总吨数：</td>
+                                   <td style="text-align: left"><span id="carSumTon">吨</span></td>
+                                </tr>
+                                <tr>
+                                  <td style="text-align: right">邮政编码：</td>
+                                    <td style="text-align: left"><span id="postCode"></span></td>
+                                  <td style="text-align: right">电子邮箱：</td>
+                                    <td style="text-align: left"><span id="teamEmail"></span></td>
+                                </tr>
+                                <tr>
+                                  <td style="text-align: right">车队描述：</td>
+                                  <td colspan="3" style="text-align: left"><span id="remark"></span></td>
+                                </tr>
+                               <tr>
+                                  <td style="text-align: right">经营许可证图片：</td>
+                                  <td style="text-align: left"><img id="jyCertImageSrc" style="width: 150px;" src=""></td>
+                                  <td style="text-align: right">营业执照图片：</td>
+                                  <td style="text-align: left"><img id="businessCertImageSrc" style="width: 150px;" src=""></td>
+                                </tr>
+                               <tr>
+                                  <td style="text-align: right">负责人委托书图片：</td>
+                                  <td style="text-align: left"><img id="jyManNameBookImageSrc" style="width: 150px;" src=""></td>
+                                  <td style="text-align: right">公章图片：</td>
+                                  <td style="text-align: left"><img id="qrCodeImageSrc" style="width: 150px;" src=""></td>
+                                </tr>
+                                <tr>
+                                  <td style="text-align: right">法人代表身份证图片：</td>
+                                  <td style="text-align: left">
+                                      <img id="businessCertImage" style="width: 150px;" src="">
+                                  </td>
+                                  <td style="text-align: right"></td>
+                                  <td style="text-align: left"></td>
+                                </tr>
+                                <!--<tr>
+                                  <td style="text-align: right">场地位置图：</td>
+                                  <td colspan="3" style="text-align: left"><img style="width: 100%;" src="images/timg - 副本.jpg"></td>
+                                  
+                                </tr>-->
+                              </tbody>
+                            </table>
+                          </Div>
+                          </div>
+
+                        
+                        </div>
+          
+          </Div>
+          
+          
+          
+          <Div style="float: left; margin-left: 1%; width: 38%;">
+          
+          
+                 <div class="fa_box mk" style="height:465px">
+                            
+                        <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                           <div class="tit0">
+                                 <span class="tit0_l"></span>
+                                 <span class="tit0_m">安全生产隐患</span>
+                                 <span class="tit0_r"></span>
+                           </div>    
+                            <div class="blank20"></div>
+                      <div class="con0 clearfix">
+                              <div style="overflow-y: auto; height: 360px">
+                              <table id="undoTaskList" width="100%" class="grid03">
+                               </table>
+                                  </div>
+                     </div>
+                        
+                        </div>
+              
+              <div class="blank20"></div>
+              
+               <div class="fa_box mk" style="height:235px">
+                            
+                        <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                           <div class="tit0">
+                                 <span class="tit0_l"></span>
+                                 <span class="tit0_m">整改记录</span>
+                                 <span class="tit0_r"></span>
+                           </div>    
+                           
+                           <div class="blank20"></div>
+                   
+                          <div class="con0 clearfix">
+                              <div id="zhengGaiList" style="overflow-y: auto; height: 130px">
+                              <table id="teamZgxxList" width="100%" class="grid03" >
+                                  <tr>
+                                    <th style="width:10%">序号</th>
+                                    <th style="width:30%">下发时间</th>
+                                    <th style="width:30%">下发部门</th>
+                                    <th style="width:30%">查看详情</th>
+                                  </tr>
+                               </table>
+                              </div>
+                              <!-- 整改记录详细内容 -->
+                              <!--<div id="zhengGaiDetail" style="overflow-y: auto;height: 130px;">-->
+
+                            <!--  </div>-->
+                          </div>
+              </div>
+              <div class="blank20"></div>
+
+              <div class="fa_box mk" style="height:210px">
+
+                  <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                  <div class="tit0">
+                      <span class="tit0_l"></span>
+                      <span class="tit0_m">质量信誉考核</span>
+                      <span class="tit0_r"></span>
+                  </div>
+
+                  <div class="blank20"></div>
+
+                  <div class="con0 clearfix">
+                      <div style="overflow-y: auto; height: 360px">
+                          <table  width="100%" class="grid03">
+                              <tr>
+                                  <th style="width:10%">序号</th>
+                                  <th style="width:30%">考核时间</th>
+                                  <th style="width:30%">考核记录</th>
+                                  <th style="width:30%">备注</th>
+                              </tr>
+                          </table>
+                      </div>
+                      <!-- 整改记录详细内容
+                      <div id="zhengGaiDetail" style="overflow-y: auto;height: 360px;">
+                          <table id="zhenGaiDtail" width="100%" class="grid03">
+
+                          </table>
+                      </div>-->
+                  </div>
+              </div>
+          
+          </Div>
+          
+          
+          
+          <div style="float: right; width:10%">
+                <div id="fa_wrap01">
+                      
+                           
+                        <div class="fa_box01 mk" style="height:950px; position: relative">
+                            
+                      <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                          <div class="blank20"></div>
+                         <div class="clxx_z">所有人员</div>
+                        
+                        <div style="text-align: center">
+                            <input id="searchEmpName" class="input" name="" type="text" style=" width: 150px" />
+                        </div>
+                        <div class="yf0">
+                            <dl id="empList" class="clearfix" style="height: 850px;overflow-y: scroll">
+                            </dl>
+                        </div>
+                            
+                             <div class="nav_show_control01" style="position: absolute;bottom:15px; left: 70px;">
+                                 <a href="javascript:;" title="打开" class="a_con01 guan01"></a>
+                             </div>
+                            
+                        </div>
+
+
+
+
+                      <div id="nav01" class="nav_show01" style="z-index:9">
+                          <div class="fa_box01 mk001" style="height: 950px">
+                            
+                      <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                          <div class="blank20"></div>
+                         
+                        
+                      
+                        <div class="yf01">
+                            <dl id="empListOpen" class=" clearfix nav_show_control01" style="height: 900px;overflow-y: scroll">
+                            </dl>
+                        </div>
+                            
+                             
+                        </div>
+                        </div> 
+                 <script>
+                   var $nav_control01 = $('#nav01');
+                    $('#fa_wrap01 .nav_show_control01 a').click(function(){
+                      if(parseInt($nav_control01.css('right'))==-760){
+                       $nav_control01.animate({right:220}, {duration:500, queue:false});
+                          $("A.a_con01").removeClass('guan01').addClass('kai01');
+                      }else{
+                       $nav_control01.animate({right:-760}, {duration:500, queue:false});
+                      $("A.a_con01").removeClass('kai01').addClass('guan01');
+                      }
+                     });
+                    $('#nav01').animate({right:-760}, {duration:1500, queue:false,easing:"easeOutQuad"});
+                    $("A.a_con01").removeClass('guan01').addClass('kai01');
+
+                </script>
+                    <div id="zhenGaiDtail1" class="zhenGaiDtail1" style="display: none">
+                        <div class="mk" >
+                            <table id="zhenGaiDtail" width="100%" class="grid03">
+
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+          </div>
+      </div>
+</div>
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/tool.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+    
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+$(function(){
+    var queryArgs = getQueryParam();
+    var param = "cityId=130300";
+    var teamName = decodeURI(queryArgs.teamName);
+    var teamId = decodeURI(queryArgs.teamId);
+    if(teamId != "undefined" && teamId != null && teamId != ''){
+        param += "&teamId=" + teamId;
+    }
+    if(teamName != "undefined" && teamName != null && teamName != ''){
+        param += "&teamName=" + teamName;
+    }
+    var companlavel = decodeURI(queryArgs.companlavel);
+    if(companlavel != "undefined" && companlavel != null && companlavel != ''){
+        param += "&companlavel=" + companlavel;
+    }
+    var xianquId = decodeURI(queryArgs.xianquId);
+    if(xianquId != "undefined" && xianquId != null && xianquId != ''){
+        param += "&xianquId=" + xianquId;
+    }
+
+    //查询企业相关信息
+    searchCarTeamInfo(param);
+})
+
+    function searchCarTeamInfo(param){
+        $.ajax({
+            type:'POST',
+            url: basePathUrl + '/admin/carTeam/searchTransitTeamInfoByQuery.jsn',
+            data:param,
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                debugger;
+                if(data.success){
+                    var teamInfo = data.list[0];
+                    $("#area").html("所属区域："+teamInfo.provinceName+">"+teamInfo.cityName+">"+teamInfo.xianquName);
+                    $("#teamName").html(teamInfo.teamName);
+                    $("#jyCertNumber").html(teamInfo.jyCertNumber);
+                    $("#companyLevel").html(checkTeamType(teamInfo.companyLevel));
+                    $("#licenseValidDate").html(dateFormat("yyyy-MM-dd",new Date(teamInfo.licenseValidDate)));
+                    $("#economicType").html(teamInfo.economicType);
+                    $("#businessCertCode").html(teamInfo.businessCertCode);
+                    $("#legalRepresentName").html(teamInfo.legalRepresentName);
+                    $("#jyManName").html(teamInfo.jyManName);
+                    $("#legalRepresentLicenceType").html(teamInfo.legalRepresentLicenceType);
+                    $("#jyChargeManPhone").html(teamInfo.jyChargeManPhone);
+                    $("#teamType").html(teamInfo.teamType);
+                    $("#teamAdminName").html(teamInfo.teamAdminName);
+                    $("#teamAddress").html(teamInfo.teamAddress);
+                    $("#teamAdminPhone").html(teamInfo.teamAdminPhone);
+                    if(teamInfo.checkRenzhengFlag == 1){
+                        $("#checkRenzhengFlag").html("是");
+                    }else{
+                        $("#checkRenzhengFlag").html("否");
+                    }
+                    $("#checkPhoneFlag").html(teamInfo.checkPhoneFlag);
+                    $("#carAmount").html(teamInfo.carAmount);
+                    $("#gcAmount").html(teamInfo.gcAmount);
+                    $("#administrator").html(teamInfo.administrator);
+                    if(teamInfo.carSumTon != null && teamInfo.carSumTon != ''){
+                        $("#carSumTon").html(teamInfo.carSumTon+"吨");
+                    }else{
+                        $("#carSumTon").html(teamInfo.carSumTon);
+                    }
+                    $("#postCode").html(teamInfo.postCode);
+                    $("#teamEmail").html(teamInfo.teamEmail);
+                    $("#remark").html(teamInfo.remark);
+                    $("#jyCertImageSrc").attr("src",teamInfo.jyCertImageSrc);
+                    $("#businessCertImageSrc").attr("src",teamInfo.businessCertImageSrc);
+                    $("#jyManNameBookImageSrc").attr("src",teamInfo.jyManNameBookImageSrc);
+                    $("#qrCodeImageSrc").attr("src",teamInfo.qrCodeImageSrc);
+                    $("#businessCertImage").attr("src",teamInfo.businessCertImage);
+
+                    selectTeamZhiDuList(teamInfo.id,teamInfo.companyLevel);
+
+                    if(teamInfo.companyLevel == "TEAM_WXHWYS"){
+                        var html = "";
+                        if(teamInfo.biaozhunLavel != null){
+                            html +="<tr><td>标准化等级：</td><td>"+teamInfo.biaozhunLavel+"</td>";
+                        }else{
+                            html +="<tr><td>标准化等级：</td><td></td>";
+                        }
+                        if(teamInfo.zhengshuEndDate != null){
+                            html += "<td>证书有效期至：</td><td>"+teamInfo.zhengshuEndDate+"</td></tr>";
+                        }else{
+                            html += "<td>证书有效期至：</td><td></td></tr>";
+                        }
+                        if(teamInfo.biaozhunPhoto != null){
+                            html +="<tr><td>标准化证书图片：</td><td><img  style='width: 150px;' src='"+teamInfo.biaozhunPhoto+"'></td>";
+                        }else{
+                            html +="<tr><td>标准化证书图片：</td><td></td>";
+                        }
+                        if(teamInfo.cdghPhoto != null){
+                            html += "<td>场地规划图片：</td><td><img  style='width: 150px;' src='"+teamInfo.cdghPhoto+"'></td></tr>";
+                        }else{
+                            html += "<td>场地规划图片：</td><td></td></tr>";
+                        }
+                        if(teamInfo.xfsPhoto != null){
+                            html +="<tr><td>消防沙图片：</td><td><img  style='width: 150px;' src='"+teamInfo.xfsPhoto+"'></td>";
+                        }else{
+                            html +="<tr><td>消防沙图片：</td><td></td>";
+                        }
+                        if(teamInfo.xfqiuPhoto != null){
+                            html += "<td>消防锹图片：</td><td><img  style='width: 150px;' src='"+teamInfo.xfqiuPhoto+"'></td></tr>";
+                        }else{
+                            html += "<td>消防锹图片：</td><td></td></tr>";
+                        }
+                        if(teamInfo.mhqPhoto != null){
+                            html +="<tr><td>灭火器图片：</td><td><img  style='width: 150px;' src='"+teamInfo.mhqPhoto+"'></td>";
+                        }else{
+                            html +="<tr><td>灭火器图片：</td><td></td>";
+                        }
+                        if(teamInfo.changdiPhoto != null){
+                            html += "<td>场地图片：</td><td><img  style='width: 150px;' src='"+teamInfo.changdiPhoto+"'></td></tr>";
+                        }else{
+                            html += "<td>场地图片：</td><td></td></tr>";
+                        }
+                    }
+
+                    $("#teamInfo").html($("#teamInfo").html() + html);
+
+                    var param = "cityId=130300";
+                    var paramObj = "queryObj.cityId=130300";
+                    param += "&ownerCarTeamId="+teamInfo.id;
+                    paramObj += "&queryObj.ownerTeamId="+teamInfo.id;
+                    //查询企业下的车辆信息
+                    searchCarInfoByCarTeam(paramObj);
+                    //查询企业下的从业人员信息
+                    searchEmpInfoByCarTeam(param);
+                    //查询车队的整改信息
+                    searchRectificationRec(teamInfo.id);
+                    //查询车队下面的未完成的任务
+                    searchUndoTask(teamInfo.id);
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+function checkTeamType(companyLavel){
+    var teamType = "";
+    if(companyLavel != '' && companyLavel != null){
+        if(companyLavel == "TEAM_KY"){
+            teamType = "客运";
+        }
+        if(companyLavel == "TEAM_DXWJYS"){
+            teamType = "联合服务车队";
+        }
+        if(companyLavel == "TEAM_GTGSH"){
+            teamType = "个体工商户";
+        }
+        if(companyLavel == "TEAM_DXWJ"){
+            teamType = "大型物件运输";
+        }
+        if(companyLavel == "TEAM_WLYS"){
+            teamType = "物流运输";
+        }
+        if(companyLavel == "TEAM_BJGS"){
+            teamType = "搬家公司";
+        }
+        if(companyLavel == "TEAM_HWZYYS"){
+            teamType = "货物专用运输";
+        }
+        if(companyLavel == "TEAM_TZYS"){
+            teamType = "特种运输";
+        }
+        if(companyLavel == "TEAM_PTHW"){
+            teamType = "普通货运";
+        }
+        if(companyLavel == "TEAM_WXHWYS"){
+            teamType = "危险货物运输";
+        }
+    }
+    return teamType;
+}
+
+    function searchCarInfoByCarTeam(queryArgs){
+        $.ajax({
+            type:'POST',
+            url:basePathUrl + '/admin/carInfo/selectCarInfoByCarTeam.jsn',
+            data:queryArgs,
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    var carList = data.data;
+                    var html = "";
+                    if(carList.length > 0){
+                        for(var i=0;i<carList.length;i++){
+                            html += "<dd carPlateNum='"+carList[i].carPlateNum+"'><a href='javaScript:void(0);' onclick=goToCarInfo('"+carList[i].carPlateNum+"','"+carList[i].carFrameNum+"')>"+carList[i].carPlateNum+"</a></dd>";
+                        }
+                    }else{
+                        html += "<dd>没有车辆信息</dd>";
+                    }
+                    $("#carList").html($("#carList").html() + html);
+                    $("#carListOpen").html($("#carListOpen").html() + html);
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('未查到相关信息', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+
+        debugger;
+        function searchCarPlateNum(){
+            var searchCarPlateNum = $("#searchCarPlateNum").val();
+            if(searchCarPlateNum == ""){
+                $("dl dd").show();
+            }else{
+                $("dl dd").each(function(){
+                    var carPlateNum = $(this).attr("carPlateNum");
+                    if(typeof(carPlateNum) != "undefined"){
+                        if(carPlateNum.indexOf(searchCarPlateNum) != -1){
+                            $(this).show();
+                        }else{
+                            $(this).hide();
+                        }
+                    }
+                });
+            }
+        }
+
+        $("#searchCarPlateNum").bind("input propertychange",function(){
+            searchCarPlateNum();
+        })
+    }
+
+    function searchEmpInfoByCarTeam(queryArgs){
+        $.ajax({
+            type:'POST',
+            url:basePathUrl + '/admin/carTeam/selectEmpListByCarTeam.jsn',
+            data:queryArgs,
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    debugger;
+                    var html = "";
+                    if(data.data.length > 0){
+                        for(var i=0;i<data.data.length;i++){
+                            html += "<dd empName='"+data.data[i].empName+"'><a href='javaScript:void(0);' onclick=goToEmpInfo('"+data.data[i].empIdCard+"','"+data.data[i].licenceCode+"')>"+data.data[i].empName+"</a></dd>";
+                        }
+                    }else{
+                        html += "<dd>暂无相关信息</dd>";
+                    }
+                    $("#empList").html($("#empList").html() + html);
+                    $("#empListOpen").html($("#empListOpen").html() + html);
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('暂无相关信息', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+
+        function searchEmpName(){
+            debugger;
+            var searchEmpName = $("#searchEmpName").val();
+            if(searchEmpName == ""){
+                $("dl dd").show();
+            }else{
+                $("dl dd").each(function(){
+                    var empName = $(this).attr("empName");
+                    if(typeof(empName) != "undefined"){
+                        if(empName.indexOf(searchEmpName) != -1){
+                            $(this).show();
+                        }else{
+                            $(this).hide();
+                        }
+                    }
+                });
+            }
+        }
+
+        $("#searchEmpName").bind("input propertychange",function(){
+            searchEmpName();
+        })
+    }
+
+    function searchRectificationRec(teamId){
+        var param = "cityId=130300";
+        param += "&teamId="+teamId;
+        $.ajax({
+            type:'POST',
+            url:basePathUrl + '/admin/carTeam/selectRectificationRec.jsn',
+            data:param,
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                debugger;
+                if(data.success){
+                    var html = "";
+                    if(data.data.length > 0){
+                        for(var i=0;i<data.data.length;i++){
+                            debugger;
+                            html += "<tr>";
+                            html += "<td>"+(i+1)+"</td>";
+                            html += "<td>"+dateFormat("yyyy-MM-dd",new Date(data.data[i].sendDate))+"</td>";
+                            html += "<td>运管站</td>";
+                            html += "<td><a href='javaScript:void(0)' onclick=searchZhenGaiDetailInfo('"+data.data[i].id+"')>查看详情</a></td>";
+                            html += "</tr>";
+                        }
+                    }else{
+                        html += "<tr><td colspan='4'>暂无相关信息</td></tr>";
+                    }
+                    $("#teamZgxxList").html($("#teamZgxxList").html() + html);
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('暂无相关信息', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function searchUndoTask(ownerTeamId){
+        var param = "teamId=" + ownerTeamId;
+
+        searchZhiDuUndoTask(param);
+        //查询车辆信息
+        searchUnuploadPhotoCarList(param);
+        //查询台账
+        selectUnqualifiedLedgerList(param);
+        //文件接收
+        searchCheckFileUndoTask(param);
+        //安全教育
+        //selectUnUploadEduCarList(param);
+    }
+
+    //查询企业的未完成制度任务
+    function searchZhiDuUndoTask(param){
+        $.ajax({
+            type:'POST',
+            url:basePathUrl + '/admin/carTeam/selectZhiDuList.jsn',
+            data:param,
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    var html = "<tr><th colspan='4'>业户信息</th></tr>";
+                    if(data.data.length > 0){
+                        for(var i=0;i<data.data.length;i=i+2){
+                            html += "<tr>";
+                            html += "<td>"+data.data[i]+"(未上传)</td>";
+                            if((i+1)<data.data.length){
+                                html += "<td>"+data.data[i+1]+"(未上传)</td>";
+                            }
+                            html += "</tr>";
+                        }
+                    }else{
+                        html += "<tr><td colspan='4'>暂无</td></tr>";
+                    }
+                    $("#undoTaskList").html($("#undoTaskList").html() + html);
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    //查询企业的未回复文件任务
+    function searchCheckFileUndoTask(param){
+        $.ajax({
+            type:'POST',
+            url:basePathUrl + '/admin/carTeam/selectCheckFileList.jsn',
+            data:param,
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    var html = "<tr><th colspan='4'>文件接收</th></tr>";
+                    if(data.data.length > 0){
+                        if(data.data[0]['file'] > 0){
+                            html += "<tr>";
+                            html += "<td colspan='4'>行业文件有文件未确认</td>";
+                            html += "</tr>";
+                        }
+                        if(data.data[0]['teamFile'] > 0){
+                            html += "<tr>";
+                            html += "<td colspan='4'>安全巡查接收有文件未确认</td>";
+                            html += "</tr>";
+                        }
+                    }else{
+                        html += "<tr><td colspan='4'>暂无</td></tr>";
+                    }
+                    $("#undoTaskList").html($("#undoTaskList").html() + html);
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    //查询企业中未上传图片的车辆
+    function searchUnuploadPhotoCarList(param){
+        $.ajax({
+            type:'POST',
+            url:basePathUrl + '/admin/carTeam/selectUnUploadPhotoCarList.jsn',
+            data:param,
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    var html = "<tr><th colspan='4'>车辆信息</th></tr>";
+                    if(data.data.length > 0){
+                        for(var i=0;i<data.data.length;i++){
+                            html += "<tr>";
+                            html += "<td colspan='4'><span>车辆基本信息（未填写）<br>"
+                            if(data.data[0]['carInfo'] != ''){
+                                html += data.data[0]['carInfo'];
+                                html += "</span></td>";
+                            }else{
+                                html += "暂无</span></td>";
+                            }
+                            html += "</tr>";
+                            html += "<tr>";
+                            html += "<td colspan='4'><span>车辆照片（未上传）<br>"
+                            if(data.data[0]['carPhoto'] != ''){
+                                html += data.data[0]['carPhoto'];
+                                html += "</span></td>";
+                            }else{
+                                html += "暂无</span></td>";
+                            }
+                            html += "</tr>";
+                            html += "<tr>";
+                            html += "<td colspan='4'><span>车辆情况（未认证）<br>"
+                            if(data.data[0]['carRenZheng'] != ''){
+                                html += data.data[0]['carRenZheng'];
+                                html += "</span></td>";
+                            }else{
+                                html += "暂无</span></td>";
+                            }
+                            html += "</tr>";
+                        }
+                        $("#undoTaskList").html($("#undoTaskList").html() + html);
+                    }
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    //查询企业中未上传的台账
+    function selectUnqualifiedLedgerList(param){
+        $.ajax({
+            type:'POST',
+            url:basePathUrl + '/admin/carTeam/selectUnqualifiedLedgerList.jsn',
+            data:param,
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    var html = "<tr><th colspan='4'>台账管理</th></tr>";
+                    if(data.data.length > 0){
+                        for(var i=0;i<data.data.length;i=i+2){
+                            html += "<tr>";
+                            html += "<td>"+data.data[i]+"</td>";
+                            if((i+1)<data.data.length){
+                                html += "<td>"+data.data[i+1]+"</td>";
+                            }
+                            html += "</tr>";
+                        }
+                    }else{
+                        html += "<tr><td colspan='4'>暂无</td></tr>";
+                    }
+                    $("#undoTaskList").html($("#undoTaskList").html() + html);
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    //查询企业中安全教育车辆（问题方法）
+    function selectUnUploadEduCarList(param){
+        $.ajax({
+            type:'POST',
+            url:basePathUrl + '/admin/carTeam/selectUnUploadEduCarList.jsn',
+            data:param,
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    var html = "<tr><th colspan='4'>安全教育</th></tr>";
+                    if(data.data[0] != ''){
+                        html += "<tr>";
+                        html += "<td colspan='4'>"+data.data[0]+"</td>";
+                        html += "</tr>";
+                    }else{
+                        html += "<td colspan='4'>暂无</td>";
+                    }
+                    $("#undoTaskList").html($("#undoTaskList").html() + html);
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function searchZhenGaiDetailInfo(id){
+        var param = "id="+id+"&cityId=130300";
+        $.ajax({
+            type:'POST',
+            url:basePathUrl + '/admin/carTeam/selectRectificationRecDetail.jsn',
+            data:param,
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    var html = "";
+                    if(data.data != null){
+                        html += "<tr><td colspan='5'>交通运输企业安全生产巡查检查记录</td></tr>";
+                        html += "<tr><td colspan='5' style='text-align: left'>"+data.data.checkCode+"</td></tr>";
+                        html += "<tr><td colspan='2'>检查时间</td><td>" + dateFormat("yyyy-MM-dd",new Date(data.data.checkTime2)) + "</td><td>单位名称</td><td>" + data.data.companyName + "</td></tr>";
+                        html += "<tr><td colspan='2'>检查人员</td><td>" + data.data.checkManName + "</td><td>单位地址</td><td>" + data.data.companyAddress + "</td></tr>";
+                        html += "<tr><td colspan='2'>检查内容</td><td colspan='5'>" + data.data.checkContent + "</td></tr>";
+                        html += "<tr><td colspan='2'>检查情况出现问题</td><td colspan='5'>" + data.data.checkCaseQuestion + "</td></tr>";
+                        html += "<tr><td rowspan='4'>整改意见</td><td rowspan='2'>现场整改</td><td colspan='2' rowspan='2'>"+data.data.curChange+"</td><td>被检查单位负责人："+data.data.curChangeChargedManName+"</td></tr>";
+                        if(data.data.curChangeChargedDate != null && data.data.curChangeChargedDate != ''){
+                            html += "<tr><td>时间："+dateFormat("yyyy-MM-dd",new Date(data.data.curChangeChargedDate))+"</td></tr>";
+                        }else{
+                            html += "<tr><td>时间：</td></tr>";
+                        }
+                        html += "<tr><td rowspan='2'>限期整改</td><td colspan='2' rowspan='2'>"+data.data.limitChange+"</td><td>被检查单位负责人："+data.data.limitChangeChargedPerson+"</td></tr>";
+                        if(data.data.limitChangeDate != null && data.data.limitChangeDate != ''){
+                            html += "<tr><td>时间："+dateFormat('yyyy-MM-dd',new Date(data.data.limitChangeDate))+"</td></tr>";
+                        }else{
+                            html += "<tr><td>时间：</td></tr>";
+                        }
+                        html += "<tr><td colspan='2' rowspan='2'>复查情况</td><td colspan='2' rowspan='2'>"+data.data.reviewCaseQuestion+"</td><td>复检人员签字："+data.data.reviewCaseManName+"</td></tr>";
+                        if(data.data.reviewCaseDate != null && data.data.reviewCaseDate != ''){
+                            html += "<tr><td>时间："+dateFormat("yyyy-MM-dd",new Date(data.data.reviewCaseDate))+"</td></tr>";
+                        }else{
+                            html += "<tr><td>时间：</td></tr>";
+                        }
+                        html += "<tr><td colspan='3'>被检查单位负责人："+data.data.checkedChargeManName+"</td><td colspan='2'>检查负责人/人员签字："+data.data.checkChargeManName+"</td></tr>";
+                        if(data.data.checkedChargeDate != null && data.data.checkedChargeDate != ''){
+                            html += "<tr><td colspan='3'>时间："+dateFormat("yyyy-MM-dd",new Date(data.data.checkedChargeDate))+"</td>";
+                        }else{
+                            html += "<tr><td colspan='3'>时间：</td>";
+                        }
+                        if(data.data.checkChargeDate != null && data.data.checkChargeDate != ''){
+                            html += "<td colspan='2'>时间："+dateFormat("yyyy-MM-dd",new Date(data.data.checkChargeDate))+"</td></tr>";
+                        }else{
+                            html += "<td colspan='2'>时间：</td></tr>";
+                        }
+                        html += "<tr><td colspan='5'>（公章）</td></tr>";
+                        html += "<tr><td colspan='5'>注:本表一式两联,第一联存根,第二联递交被检查单位作为整改依据</td></tr>";
+                        /*html += "<tr><td colspan='5' style='text-align: right'><a href='javaScript:void(0)' onclick='hiddenZhenGaiList()' style='font-size: 16px;'>返回</a></td></tr>";*/
+                    }else{
+
+                    }
+                    $("#zhenGaiDtail").html(html);
+                    layer.open({
+                        type: 1,
+                        title:false,
+                        closeBtn: 0,
+                        shadeClose: true,
+                        skin: 'laywindow',
+                        area : ['1200px' , '700px'],
+                        content:$('#zhenGaiDtail1'),
+                        end:function(){
+                            $("#zhenGaiDtail1").hide();
+                        }
+                        });
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function hiddenZhenGaiList(){
+        $("#zhenGaiDtail").hide();
+        $("#zhengGaiList").show();
+    }
+
+    function goToCarInfo(carPlateNum,carFrameNum){
+        window.location.href = "yingYunCheLiang.html?queryObj.carPlateNum="+carPlateNum+"&queryObj.carFrameNum="+carFrameNum;
+    }
+
+    function goToEmpInfo(empIdCard,licenceCode){
+        window.location.href = "congYeRenYuan.html?empIdCard="+empIdCard+"&empCode="+licenceCode;
+    }
+
+    function selectTeamZhiDuList(teamId,teamType){
+        var param = "teamId="+teamId+"&companyLavel="+teamType;
+        $.ajax({
+            type:"POST",
+            url:basePathUrl + "/admin/carTeam/selectTeamZhiDuList.jsn",
+            data:param,
+            dataType:"json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+
+                if(data.success){
+                    var html = "";
+                    if(teamType != "TEAM_WXHWYS"){
+                        var zhiduList = data.data[0]['GLZD'];
+                        if(zhiduList.length > 0){
+                            for(var i=0;i<zhiduList.length;i=i+2){
+                                html += "<tr>";
+                                html += "<td style='text-align: right'>"+zhiduList[i].zhiduName+"</td>";
+                                html += "<td style='text-align: left'><img style='width:150px' src='"+zhiduList[i].zhiduPhoto+"'/></td>";
+                                if((i+1) < zhiduList.length){
+                                    html += "<td style='text-align: right'>"+zhiduList[i+1].zhiduName+"</td>";
+                                    html += "<td style='text-align: left'><img style='width:150px' src='"+zhiduList[i+1].zhiduPhoto+"'/></td>";
+                                    html += "</tr>";
+                                }else{
+                                    html += "<td></td><td></td></tr>";
+                                }
+                            }
+                        }
+                    }
+                    if(teamType == "TEAM_WXHWYS"){
+                        var zhiduList = data.data[0]['AQSCGLZD'];
+                        html += "<tr><td colspan='4'>安全生产管理制度</td></tr>";
+                        if(zhiduList.length > 0){
+                            for(var i=0;i<zhiduList.length;i=i+2){
+                                html += "<tr>";
+                                html += "<td style='text-align: right'>"+zhiduList[i].zhiduName+"</td>";
+                                html += "<td style='text-align: left'><img style='width:150px' src='"+zhiduList[i].zhiduPhoto+"'/></td>";
+                                if((i+1) < zhiduList.length){
+                                    html += "<td style='text-align: right'>"+zhiduList[i+1].zhiduName+"</td>";
+                                    html += "<td style='text-align: left'><img style='width:150px' src='"+zhiduList[i+1].zhiduPhoto+"'/></td>";
+                                    html += "</tr>";
+                                }else{
+                                    html += "<td></td><td></td></tr>";
+                                }
+                            }
+                        }
+                        zhiduList = data.data[0]['AQSCZRZ'];
+                        html += "<tr><td colspan='4'>安全生产责任制</td></tr>";
+                        if(zhiduList.length > 0){
+                            for(var i=0;i<zhiduList.length;i=i+2){
+                                html += "<tr>";
+                                html += "<td style='text-align: right'>"+zhiduList[i].zhiduName+"</td>";
+                                html += "<td style='text-align: left'><img style='width:150px' src='"+zhiduList[i].zhiduPhoto+"'/></td>";
+                                if((i+1) < zhiduList.length){
+                                    html += "<td style='text-align: right'>"+zhiduList[i+1].zhiduName+"</td>";
+                                    html += "<td style='text-align: left'><img style='width:150px' src='"+zhiduList[i+1].zhiduPhoto+"'/></td>";
+                                    html += "</tr>";
+                                }else{
+                                    html += "<td></td><td></td></tr>";
+                                }
+                            }
+                        }
+                        zhiduList = data.data[0]['AQGLZD'];
+                        html += "<tr><td colspan='4'>安全管理制度</td></tr>";
+                        if(zhiduList.length > 0){
+                            for(var i=0;i<zhiduList.length;i=i+2){
+                                html += "<tr>";
+                                html += "<td style='text-align: right'>"+zhiduList[i].zhiduName+"</td>";
+                                html += "<td style='text-align: left'><img style='width:150px' src='"+zhiduList[i].zhiduPhoto+"'/></td>";
+                                if((i+1) < zhiduList.length){
+                                    html += "<td style='text-align: right'>"+zhiduList[i+1].zhiduName+"</td>";
+                                    html += "<td style='text-align: left'><img style='width:150px' src='"+zhiduList[i+1].zhiduPhoto+"'/></td>";
+                                    html += "</tr>";
+                                }else{
+                                    html += "<td></td><td></td></tr>";
+                                }
+                            }
+                        }
+
+                    }
+                    $("#teamInfo").html($("#teamInfo").html() + html);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        })
+    }
+function goShouYe() {
+    window.location.href = "shouye.html";
+}
+</script>
+
+
+
+
+
+</body>
+</html>

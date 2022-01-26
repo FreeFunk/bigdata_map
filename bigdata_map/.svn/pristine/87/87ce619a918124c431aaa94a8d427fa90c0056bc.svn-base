@@ -1,0 +1,21 @@
+package com.edgedo.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
+
+import java.util.concurrent.Executors;
+
+/**
+ * @ClassName ScheduleConfig
+ * @Description 定时任务多线程进行
+ * @Author 床前明月光
+ * @Date 2019/10/26 9:44
+ **/
+@Configuration
+public class ScheduleConfig implements SchedulingConfigurer {
+    @Override
+    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+        taskRegistrar.setScheduler(Executors.newScheduledThreadPool(10));
+    }
+}

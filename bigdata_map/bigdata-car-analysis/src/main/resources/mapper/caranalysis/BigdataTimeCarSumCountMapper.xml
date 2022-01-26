@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataTimeCarSumCountMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataTimeCarSumCount" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="COUNT_TYPE" property="countType"/>
+			<result column="COUNT_TIME" property="countTime"/>
+			<result column="FIRST_DANGER_TIME_NUM" property="firstDangerTimeNum"/>
+			<result column="SECOND_DANGER_TIME_NUM" property="secondDangerTimeNum"/>
+			<result column="THIRD_DANGER_TIME_NUM" property="thirdDangerTimeNum"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="COUNT_YEAR" property="countYear"/>
+			<result column="LAST_UP_TIME" property="lastUpTime"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataTimeCarSumCountView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, COUNT_TYPE, COUNT_TIME, FIRST_DANGER_TIME_NUM, SECOND_DANGER_TIME_NUM, THIRD_DANGER_TIME_NUM, CAR_TYPE, COUNT_MONTH, COUNT_YEAR, LAST_UP_TIME
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+				<if test='queryObj != null and  queryObj.firstDangerTimeNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.firstDangerTimeNum)'>
+					AND  FIRST_DANGER_TIME_NUM = #{queryObj.firstDangerTimeNum}
+				</if>
+				<if test='queryObj != null and  queryObj.secondDangerTimeNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.secondDangerTimeNum)'>
+					AND  SECOND_DANGER_TIME_NUM = #{queryObj.secondDangerTimeNum}
+				</if>
+				<if test='queryObj != null and  queryObj.thirdDangerTimeNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.thirdDangerTimeNum)'>
+					AND  THIRD_DANGER_TIME_NUM = #{queryObj.thirdDangerTimeNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.countYear != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countYear)'>
+					AND  COUNT_YEAR = #{queryObj.countYear}
+				</if>
+				<if test='queryObj != null and  queryObj.lastUpTime != null'>
+					AND  LAST_UP_TIME = #{queryObj.lastUpTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataTimeCarSumCountQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_time_car_sum_count 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataTimeCarSumCountQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_time_car_sum_count 
+  		<include refid="where"/>
+  </select>
+
+	<!--  分组统计某年的数据 -->
+	<select id="selectSumGroupCarInfoYear" parameterType="int" resultMap="BaseResultMap">
+		select
+			sum(FIRST_DANGER_TIME_NUM) FIRST_DANGER_TIME_NUM,
+			sum(SECOND_DANGER_TIME_NUM) SECOND_DANGER_TIME_NUM,
+			sum(THIRD_DANGER_TIME_NUM) THIRD_DANGER_TIME_NUM,
+			CAR_TYPE
+		from bigdata_time_car_sum_count
+		where COUNT_TYPE='month' and COUNT_YEAR=#{year}
+		group by CAR_TYPE
+	</select>
+  
+  
+</mapper>

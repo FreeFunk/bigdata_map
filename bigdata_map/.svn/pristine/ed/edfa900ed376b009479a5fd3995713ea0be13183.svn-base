@@ -1,0 +1,541 @@
+package com.edgedo.timetask;
+
+import com.edgedo.bigdata.entity.*;
+import com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery;
+import com.edgedo.bigdata.queryvo.BigdataAlarmRecordView;
+import com.edgedo.bigdata.queryvo.BigdataOverspeedAnalysisSumCountView;
+import com.edgedo.bigdata.service.*;
+import com.edgedo.common.util.BaiDuMapApiUtil;
+import com.edgedo.common.util.MapPointInfo;
+import com.edgedo.util.DateUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+/**
+ * 超速分析
+ */
+/*@Component*/
+public class BigdataAnalysisOverspeed {
+
+    @Autowired
+    BigdataOverspeedAnalysisService bigdataOverspeedAnalysisService;
+    @Autowired
+    BigdataAlarmRecordService bigdataAlarmRecordService;
+    @Autowired
+    BaiDuMapApiUtil baiDuMapApiUtil;
+    @Autowired
+    BigdataOverspeedAnalysisSumCountService analysisSumCountService;
+    @Value("${localcityname}")
+    String localcityname ;
+    @Autowired
+    BigdataDangerRoadClsMonthService bigdataDangerRoadClsMonthService;
+    @Autowired
+    BigdataDangerRoadAnalysisService bigdataDangerRoadAnalysisService;
+
+    SimpleDateFormat sdfDateInt = new SimpleDateFormat("yyyyMMdd");
+
+    @Scheduled(cron = "0 0/5 * * * ?")
+    public void execute(){
+        /*String startDateStr = "2019-05-09";
+        Date startDate = DateUtil.getDateByString(startDateStr,"yyyy-MM-dd");
+        int daysBetween  = DateUtil.getDaysBetween(startDate,new Date());
+        for(int i = 0;i<=daysBetween;i++){
+            countByDate(startDate);
+            startDate =DateUtil.getNextDayDate(startDate);
+        }*/
+        //countByDate(DateUtil.getLastDayDate(new Date()));
+        countByDate(new Date());
+    }
+
+    /**
+     * 超速汇总统计
+     */
+    @Scheduled(cron = "0 52 * * * ?")
+    public void overSpeedSumCount(){
+        Date cur = new Date();
+        String dateIntStr = sdfDateInt.format(cur);
+        String monthIntStr = dateIntStr.substring(0,6);
+        //总的车辆类型汇总
+        BigdataOverspeedAnalysisSumCountView overspeedSumCountMonthAll = new BigdataOverspeedAnalysisSumCountView();
+        overspeedSumCountMonthAll.initData("month", "总",new Integer(monthIntStr),cur);
+        //危货的车辆类型汇总
+        BigdataOverspeedAnalysisSumCountView overspeedSumCountMonthWeihuo = new BigdataOverspeedAnalysisSumCountView();
+        overspeedSumCountMonthWeihuo.initData("month", "危货",new Integer(monthIntStr),cur);
+        //普货车辆类型汇总
+        BigdataOverspeedAnalysisSumCountView overspeedSumCountMonthPuhuo = new BigdataOverspeedAnalysisSumCountView();
+        overspeedSumCountMonthPuhuo.initData("month", "普货",new Integer(monthIntStr),cur);
+        //客运车辆类型汇总
+        BigdataOverspeedAnalysisSumCountView overspeedSumCountMonthKeyun = new BigdataOverspeedAnalysisSumCountView();
+        overspeedSumCountMonthKeyun.initData("month", "客运",new Integer(monthIntStr),cur);
+        int monthInt = new Integer(monthIntStr);
+        //根据车辆类型分组汇总
+        List<BigdataOverspeedAnalysis> groupList = bigdataOverspeedAnalysisService.selectSumGroupByCarTypeMonth(monthInt);
+        for(BigdataOverspeedAnalysis monthAnalysis : groupList ){
+            BigdataOverspeedAnalysisSumCountView temSum = null;
+            String carType = monthAnalysis.getCarType();
+            if(carType.equals("普货")){
+                temSum = overspeedSumCountMonthPuhuo;
+            }else if(carType.equals("危货")){
+                temSum = overspeedSumCountMonthWeihuo;
+            }else if(carType.equals("客运")){
+                temSum = overspeedSumCountMonthKeyun;
+            }else if(carType.equals("总")){
+                temSum = overspeedSumCountMonthAll;
+            }
+            if(monthAnalysis.getSumSeriousOverspeedTime()!=null)
+            temSum.setSumSeriousOverspeedTime(monthAnalysis.getSumSeriousOverspeedTime());
+            if(monthAnalysis.getSumSeriousOverspeedNum()!=null)
+            temSum.setSumSeriousOverspeedNum(monthAnalysis.getSumSeriousOverspeedNum());
+            if(monthAnalysis.getSumSeriousOverspeedMileage()!=null)
+            temSum.setSumSeriousOverspeedMileage(monthAnalysis.getSumSeriousOverspeedMileage());
+            if(monthAnalysis.getSumOverspeedTime()!=null)
+            temSum.setSumOverspeedTime(monthAnalysis.getSumOverspeedTime());
+            if(monthAnalysis.getSumOverspeedNum()!=null)
+            temSum.setSumOverspeedNum(monthAnalysis.getSumOverspeedNum());
+            if(monthAnalysis.getSumOverspeedMileage()!=null)
+            temSum.setSumOverspeedMileage(monthAnalysis.getSumOverspeedMileage());
+            if(monthAnalysis.getSumNightOverspeedTime()!=null)
+            temSum.setSumNightOverspeedTime(monthAnalysis.getSumNightOverspeedTime());
+            if(monthAnalysis.getSumNightOverspeedNum()!=null)
+            temSum.setSumNightOverspeedNum(monthAnalysis.getSumNightOverspeedNum());
+            if(monthAnalysis.getSumNightOverspeedMileage()!=null)
+            temSum.setSumNightOverspeedMileage(monthAnalysis.getSumNightOverspeedMileage());
+            //有就更新
+            //没有就新增
+            analysisSumCountService.addOrUpdate(temSum);
+        }
+
+        //总的车辆类型汇总
+        BigdataOverspeedAnalysisSumCountView overspeedSumCountYearAll = new BigdataOverspeedAnalysisSumCountView();
+        overspeedSumCountYearAll.initData("year", "总",new Integer(monthIntStr),cur);
+        //危货的车辆类型汇总
+        BigdataOverspeedAnalysisSumCountView overspeedSumCountYearWeihuo = new BigdataOverspeedAnalysisSumCountView();
+        overspeedSumCountYearWeihuo.initData("year", "危货",new Integer(monthIntStr),cur);
+        //普货车辆类型汇总
+        BigdataOverspeedAnalysisSumCountView overspeedSumCountYearPuhuo = new BigdataOverspeedAnalysisSumCountView();
+        overspeedSumCountYearPuhuo.initData("year", "普货",new Integer(monthIntStr),cur);
+        //客运车辆类型汇总
+        BigdataOverspeedAnalysisSumCountView overspeedSumCountYearKeyun = new BigdataOverspeedAnalysisSumCountView();
+        overspeedSumCountYearKeyun.initData("year", "客运",new Integer(monthIntStr),cur);
+
+        List<BigdataOverspeedAnalysisSumCount > yearGroupList = analysisSumCountService.selectSumGroupByCarTypeYear(monthInt/100);
+        for(BigdataOverspeedAnalysisSumCount yearAnalysis : yearGroupList ){
+            BigdataOverspeedAnalysisSumCountView temSum = null;
+            String carType = yearAnalysis.getCarType();
+            if(carType.equals("普货")){
+                temSum = overspeedSumCountYearPuhuo;
+            }else if(carType.equals("危货")){
+                temSum = overspeedSumCountYearWeihuo;
+            }else if(carType.equals("客运")){
+                temSum = overspeedSumCountYearKeyun;
+            }else if(carType.equals("总")){
+                temSum = overspeedSumCountYearAll;
+            }
+            if(yearAnalysis.getSumSeriousOverspeedTime()!=null)
+                temSum.setSumSeriousOverspeedTime(yearAnalysis.getSumSeriousOverspeedTime());
+            if(yearAnalysis.getSumSeriousOverspeedNum()!=null)
+                temSum.setSumSeriousOverspeedNum(yearAnalysis.getSumSeriousOverspeedNum());
+            if(yearAnalysis.getSumSeriousOverspeedMileage()!=null)
+                temSum.setSumSeriousOverspeedMileage(yearAnalysis.getSumSeriousOverspeedMileage());
+            if(yearAnalysis.getSumOverspeedTime()!=null)
+                temSum.setSumOverspeedTime(yearAnalysis.getSumOverspeedTime());
+            if(yearAnalysis.getSumOverspeedNum()!=null)
+                temSum.setSumOverspeedNum(yearAnalysis.getSumOverspeedNum());
+            if(yearAnalysis.getSumOverspeedMileage()!=null)
+                temSum.setSumOverspeedMileage(yearAnalysis.getSumOverspeedMileage());
+            if(yearAnalysis.getSumNightOverspeedTime()!=null)
+                temSum.setSumNightOverspeedTime(yearAnalysis.getSumNightOverspeedTime());
+            if(yearAnalysis.getSumNightOverspeedNum()!=null)
+                temSum.setSumNightOverspeedNum(yearAnalysis.getSumNightOverspeedNum());
+            if(yearAnalysis.getSumNightOverspeedMileage()!=null)
+                temSum.setSumNightOverspeedMileage(yearAnalysis.getSumNightOverspeedMileage());
+            //有就更新
+            //没有就新增
+            analysisSumCountService.addOrUpdate(temSum);
+        }
+
+    }
+
+    public void countByDate(Date date){
+
+        try{
+            //总
+            analysisOverspeed(date,"总");
+            analysisSeriousOverspeed(date,"总");
+            analysisDangerTimeOverspeed(date,"总");
+            //客运
+            analysisOverspeed(date,"客运");
+            analysisSeriousOverspeed(date,"客运");
+            analysisDangerTimeOverspeed(date,"客运");
+            //普货
+            analysisOverspeed(date,"普货");
+            analysisSeriousOverspeed(date,"普货");
+            analysisDangerTimeOverspeed(date,"普货");
+            //危货
+            analysisOverspeed(date,"危货");
+            analysisSeriousOverspeed(date,"危货");
+            analysisDangerTimeOverspeed(date,"危货");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    //超速分析
+    public void analysisOverspeed(Date date,String carType){
+
+        BigdataAlarmRecordQuery bigdataAlarmRecordQuery = new BigdataAlarmRecordQuery();
+        bigdataAlarmRecordQuery.getQueryObj().setAlarmCls("1");
+        bigdataAlarmRecordQuery.getQueryObj().setAlarmType("2");
+        //bigdataAlarmRecordQuery.getQueryObj().setAlarmTime(date);
+        String dateIntStr = sdfDateInt.format(date);
+        Integer dateInt = new Integer(dateIntStr);
+        bigdataAlarmRecordQuery.getQueryObj().setCountDate(dateInt);
+        bigdataAlarmRecordQuery.getQueryObj().setCountMonth(dateInt/100);
+
+
+        if(carType!=null && !carType.equals("总")){
+            bigdataAlarmRecordQuery.getQueryObj().setCarType(carType);
+        }
+       /* //统计超速总次数
+        int countNum = bigdataAlarmRecordService.countByQuery(bigdataAlarmRecordQuery);*/
+        //统计超速的车辆数
+        int countCarNum = bigdataAlarmRecordService.countCarNumByQuery(bigdataAlarmRecordQuery);
+        //统计总的超速时长
+        int countTime = bigdataAlarmRecordService.sumByQuery(bigdataAlarmRecordQuery);
+       /* 41000 高速公路,42000 国道,43000 主要大街、城市快速路,51000 省道,
+                44000 主要道路,45000  次要道路,52000 乡公路,53000 县乡村内部道路
+        54000 县乡村内部道路,47000 普通道路,49 非导航道路*/
+        bigdataAlarmRecordQuery.getQueryObj().setRoadLevel("42000");
+        //国道超速次数
+        int nationalNum = bigdataAlarmRecordService.countCarNumByQuery(bigdataAlarmRecordQuery);
+        //国道超速时长
+        int nationalTime = bigdataAlarmRecordService.sumByQuery(bigdataAlarmRecordQuery);
+
+        bigdataAlarmRecordQuery.getQueryObj().setRoadLevel("41000");
+        //高速超速次数
+        int highSpeedNum = bigdataAlarmRecordService.countCarNumByQuery(bigdataAlarmRecordQuery);
+        //高速超速时长
+        int highSpeedTime = bigdataAlarmRecordService.sumByQuery(bigdataAlarmRecordQuery);
+
+        //统计其他道路的超速次数
+        int otherNum =countCarNum-nationalNum-highSpeedNum;
+        //统计其他道路的超速时长
+        int otherTime = countTime-nationalTime-highSpeedTime;
+
+        BigdataOverspeedAnalysis bigdataOverspeedAnalysis = new BigdataOverspeedAnalysis();
+        bigdataOverspeedAnalysis.setCountTime(date);
+        bigdataOverspeedAnalysis.setCarType(carType);
+        //超速次数
+        bigdataOverspeedAnalysis.setNationalOverspeedNum(nationalNum);
+        bigdataOverspeedAnalysis.setHighOverspeedNum(highSpeedNum);
+        bigdataOverspeedAnalysis.setOtherOverspeedNum(otherNum);
+        bigdataOverspeedAnalysis.setSumOverspeedNum(countCarNum);
+        //超速时长转为小时
+        DecimalFormat df = new DecimalFormat("#.00");
+        double t1 = Double.valueOf(df.format((double)nationalTime/(double)3600));
+        double t2 =Double.valueOf(df.format( (double)highSpeedTime/(double)3600));
+        double t3 =Double.valueOf(df.format( (double)otherTime/(double)3600));
+        double t4 =Double.valueOf(df.format( (double)countTime/(double)3600));
+        bigdataOverspeedAnalysis.setNationalOverspeedTime(new BigDecimal(String.valueOf(t1)));
+        bigdataOverspeedAnalysis.setHighOverspeedTime(new BigDecimal(String.valueOf(t2)));
+        bigdataOverspeedAnalysis.setOtherOverspeedTime(new BigDecimal(String.valueOf(t3)));
+        bigdataOverspeedAnalysis.setSumOverspeedTime(new BigDecimal(String.valueOf(t4)));
+        //超速占比
+        if(countCarNum!=0){
+            //高速占比
+            double f1 = Double.valueOf(df.format((double)nationalNum/(double)countCarNum));
+            //国道占比
+            double f2 =Double.valueOf(df.format( (double)highSpeedNum/(double)countCarNum));
+            //其他道路占比
+            double f3 = 1.00-f1-f2;
+            bigdataOverspeedAnalysis.setNationalOverspeedRate(new BigDecimal(String.valueOf(f1)));
+            bigdataOverspeedAnalysis.setHighOverspeedRate(new BigDecimal(String.valueOf(f2)));
+            bigdataOverspeedAnalysis.setOtherOverspeedRate(new BigDecimal(String.valueOf(f3)));
+        }else {
+            bigdataOverspeedAnalysis.setNationalOverspeedRate(new BigDecimal(0));
+            bigdataOverspeedAnalysis.setHighOverspeedRate(new BigDecimal(0));
+            bigdataOverspeedAnalysis.setOtherOverspeedRate(new BigDecimal(0));
+        }
+        bigdataOverspeedAnalysisService.addOrUpdate(bigdataOverspeedAnalysis);
+    }
+    //严重超速
+    public void analysisSeriousOverspeed(Date date,String carType){
+
+        BigdataAlarmRecordQuery bigdataAlarmRecordQuery = new BigdataAlarmRecordQuery();
+        bigdataAlarmRecordQuery.getQueryObj().setAlarmCls("1");
+        bigdataAlarmRecordQuery.getQueryObj().setAlarmType("2");
+        //bigdataAlarmRecordQuery.getQueryObj().setAlarmTime(date);
+        String dateIntStr = sdfDateInt.format(date);
+        Integer dateInt = new Integer(dateIntStr);
+        bigdataAlarmRecordQuery.getQueryObj().setCountDate(dateInt);
+        bigdataAlarmRecordQuery.getQueryObj().setCountMonth(dateInt/100);
+        if(carType!=null && !carType.equals("总")){
+            bigdataAlarmRecordQuery.getQueryObj().setCarType(carType);
+        }
+       /* //统计超速总次数
+        int countNum = bigdataAlarmRecordService.countByQuery(bigdataAlarmRecordQuery);*/
+        //统计超速的车辆数
+        int countCarNum = bigdataAlarmRecordService.countCarNumByQuery(bigdataAlarmRecordQuery);
+        bigdataAlarmRecordQuery.getQueryObj().setSeriousFlag("1");
+        //统计严重超速总次数
+        int countSeriousNum = bigdataAlarmRecordService.countCarNumByQuery(bigdataAlarmRecordQuery);
+        //统计严重超速时长
+        int countSeriousTime = bigdataAlarmRecordService.sumByQuery(bigdataAlarmRecordQuery);
+       /* 41000 高速公路,42000 国道,43000 主要大街、城市快速路,51000 省道,
+                44000 主要道路,45000  次要道路,52000 乡公路,53000 县乡村内部道路
+        54000 县乡村内部道路,47000 普通道路,49 非导航道路*/
+        bigdataAlarmRecordQuery.getQueryObj().setRoadLevel("42000");
+        //国道严重超速次数
+        int nationalSeriousNum = bigdataAlarmRecordService.countCarNumByQuery(bigdataAlarmRecordQuery);
+        //国道严重超速时长
+        int nationalSeriousTime = bigdataAlarmRecordService.sumByQuery(bigdataAlarmRecordQuery);
+
+        bigdataAlarmRecordQuery.getQueryObj().setRoadLevel("41000");
+        //高速严重超速次数
+        int highSpeedSeriousNum = bigdataAlarmRecordService.countCarNumByQuery(bigdataAlarmRecordQuery);
+        //高速严重超速时长
+        int highSpeedSeriousTime = bigdataAlarmRecordService.sumByQuery(bigdataAlarmRecordQuery);
+
+        //统计其他道路的严重超速次数
+        int otherSeriousNum =countSeriousNum-nationalSeriousNum-highSpeedSeriousNum;
+        //统计其他道路的严重超速时长
+        int otherSeriousTime = countSeriousTime-nationalSeriousTime-highSpeedSeriousTime;
+
+        BigdataOverspeedAnalysis bigdataOverspeedAnalysis = new BigdataOverspeedAnalysis();
+        bigdataOverspeedAnalysis.setCountTime(date);
+        bigdataOverspeedAnalysis.setCarType(carType);
+        //严重超速次数
+        bigdataOverspeedAnalysis.setNationalSeriousOverspeedNum(nationalSeriousNum);
+        bigdataOverspeedAnalysis.setHighSeriousOverspeedNum(highSpeedSeriousNum);
+        bigdataOverspeedAnalysis.setOtherSeriousOverspeedNum(otherSeriousNum);
+        bigdataOverspeedAnalysis.setSumSeriousOverspeedNum(countSeriousNum);
+        //严重超速时长转为小时
+        DecimalFormat df = new DecimalFormat("#.00");
+        double t1 = Double.valueOf(df.format((double)nationalSeriousTime/(double)3600));
+        double t2 =Double.valueOf(df.format( (double)highSpeedSeriousTime/(double)3600));
+        double t3 =Double.valueOf(df.format( (double)otherSeriousTime/(double)3600));
+        double t4 =Double.valueOf(df.format( (double)countSeriousTime/(double)3600));
+        bigdataOverspeedAnalysis.setNationalSeriousOverspeedTime(new BigDecimal(String.valueOf(t1)));
+        bigdataOverspeedAnalysis.setHighSeriousOverspeedTime(new BigDecimal(String.valueOf(t2)));
+        bigdataOverspeedAnalysis.setOtherSeriousOverspeedTime(new BigDecimal(String.valueOf(t3)));
+        bigdataOverspeedAnalysis.setSumSeriousOverspeedTime(new BigDecimal(String.valueOf(t4)));
+        //严重超速占比
+        if(countCarNum!=0){
+            //严重占比
+            double f1 = Double.valueOf(df.format((double)countSeriousNum/(double)countCarNum));
+            bigdataOverspeedAnalysis.setSeriousOverspeedRate(new BigDecimal(String.valueOf(f1)));
+        }else {
+            bigdataOverspeedAnalysis.setSeriousOverspeedRate(new BigDecimal(0));
+        }
+        bigdataOverspeedAnalysisService.addOrUpdate(bigdataOverspeedAnalysis);
+    }
+    //危险时段超速分析
+    public void analysisDangerTimeOverspeed(Date date,String carType){
+
+        BigdataAlarmRecordQuery bigdataAlarmRecordQuery = new BigdataAlarmRecordQuery();
+        bigdataAlarmRecordQuery.getQueryObj().setAlarmCls("1");
+        bigdataAlarmRecordQuery.getQueryObj().setAlarmType("2");
+        //bigdataAlarmRecordQuery.getQueryObj().setAlarmTime(date);
+        String dateIntStr = sdfDateInt.format(date);
+        Integer dateInt = new Integer(dateIntStr);
+        bigdataAlarmRecordQuery.getQueryObj().setCountDate(dateInt);
+        bigdataAlarmRecordQuery.getQueryObj().setCountMonth(dateInt/100);
+        if(carType!=null && !carType.equals("总")){
+            bigdataAlarmRecordQuery.getQueryObj().setCarType(carType);
+        }
+        /*//统计超速总次数
+        int countNum = bigdataAlarmRecordService.countByQuery(bigdataAlarmRecordQuery);*/
+        //统计超速的车辆数
+        int countCarNum = bigdataAlarmRecordService.countCarNumByQuery(bigdataAlarmRecordQuery);
+        bigdataAlarmRecordQuery.getQueryObj().setDangerTimeFlag("1");
+        //统计危险时段超速总次数
+        int countDangerTimeNum = bigdataAlarmRecordService.countCarNumByQuery(bigdataAlarmRecordQuery);
+        //统计危险时段超速时长
+        int countDangerTimeTime = bigdataAlarmRecordService.sumByQuery(bigdataAlarmRecordQuery);
+       /* 41000 高速公路,42000 国道,43000 主要大街、城市快速路,51000 省道,
+                44000 主要道路,45000  次要道路,52000 乡公路,53000 县乡村内部道路
+        54000 县乡村内部道路,47000 普通道路,49 非导航道路*/
+        bigdataAlarmRecordQuery.getQueryObj().setRoadLevel("42000");
+        //国道危险时段超速次数
+        int nationalDangerTimeNum = bigdataAlarmRecordService.countCarNumByQuery(bigdataAlarmRecordQuery);
+        //国道危险时段超速时长
+        int nationalDangerTimeTime = bigdataAlarmRecordService.sumByQuery(bigdataAlarmRecordQuery);
+
+        bigdataAlarmRecordQuery.getQueryObj().setRoadLevel("41000");
+        //高速危险时段超速次数
+        int highSpeedDangerTimeNum = bigdataAlarmRecordService.countCarNumByQuery(bigdataAlarmRecordQuery);
+        //高速危险时段超速时长
+        int highSpeedDangerTimeTime = bigdataAlarmRecordService.sumByQuery(bigdataAlarmRecordQuery);
+
+        //统计其他道路的危险时段超速次数
+        int otherDangerTimeNum =countDangerTimeNum-nationalDangerTimeNum-highSpeedDangerTimeNum;
+        //统计其他道路的危险时段超速时长
+        int otherDangerTimeTime = countDangerTimeTime-nationalDangerTimeTime-highSpeedDangerTimeTime;
+
+        BigdataOverspeedAnalysis bigdataOverspeedAnalysis = new BigdataOverspeedAnalysis();
+        bigdataOverspeedAnalysis.setCountTime(date);
+        bigdataOverspeedAnalysis.setCarType(carType);
+        //危险时段超速次数
+        bigdataOverspeedAnalysis.setNationalNightOverspeedNum(nationalDangerTimeNum);
+        bigdataOverspeedAnalysis.setHighNightOverspeedNum(highSpeedDangerTimeNum);
+        bigdataOverspeedAnalysis.setOtherNightOverspeedNum(otherDangerTimeNum);
+        bigdataOverspeedAnalysis.setSumNightOverspeedNum(countDangerTimeNum);
+        //危险时段超速时长转为小时
+        DecimalFormat df = new DecimalFormat("#.00");
+        double t1 = Double.valueOf(df.format((double)nationalDangerTimeTime/(double)3600));
+        double t2 =Double.valueOf(df.format( (double)highSpeedDangerTimeTime/(double)3600));
+        double t3 =Double.valueOf(df.format( (double)otherDangerTimeTime/(double)3600));
+        double t4 =Double.valueOf(df.format( (double)countDangerTimeTime/(double)3600));
+        bigdataOverspeedAnalysis.setNationalNightOverspeedTime(new BigDecimal(String.valueOf(t1)));
+        bigdataOverspeedAnalysis.setHighNightOverspeedTime(new BigDecimal(String.valueOf(t2)));
+        bigdataOverspeedAnalysis.setOtherNightOverspeedTime(new BigDecimal(String.valueOf(t3)));
+        bigdataOverspeedAnalysis.setSumNightOverspeedTime(new BigDecimal(String.valueOf(t4)));
+        bigdataOverspeedAnalysisService.addOrUpdate(bigdataOverspeedAnalysis);
+    }
+
+
+    @Scheduled(cron = "0 0/2 * * * ?")
+    public void synAlarLocation(){
+        try {
+            Date cur = new Date();
+            String countDateStr = sdfDateInt.format(cur);
+            Integer countDate = new Integer(countDateStr);
+            Integer countMonth = countDate/100;
+            //超速报警的位置同步
+            //查出500条调用500条
+            List<BigdataAlarmRecord> listAlarm = bigdataAlarmRecordService.listUnLocationAlarm(500,countMonth,countDate);
+            for (BigdataAlarmRecord alarmRec : listAlarm) {
+                //查询百度api
+                BigDecimal lng = alarmRec.getLongitude();
+                BigDecimal lat = alarmRec.getLatitude();
+                String address = baiDuMapApiUtil.roadSearch(lat+"",lng+"");
+                if(address!=null && address.length()>0){
+                    BigdataAlarmRecord param = new BigdataAlarmRecord();
+                    param.setId(alarmRec.getId());
+                    param.setLocationInfoDesc(address);
+
+                    //河北省唐山市滦县183乡道.离安各庄工商分局(东南)约932米
+                    String simpleAddress = address.replaceAll(".离",".");
+                    String regText = "约\\d+米";
+                    simpleAddress.replaceAll(regText,"");
+                    if(simpleAddress.lastIndexOf("(")>0){
+                        simpleAddress = simpleAddress.substring(0,simpleAddress.lastIndexOf("("))+"附近";
+                    }else {
+                        simpleAddress = simpleAddress + "附近";
+                    }
+                    param.setLocationInfoSimple(simpleAddress);
+                    param.setIsReadLocation("1");
+                    param.setCountMonth(alarmRec.getCountMonth());
+                    if(address.indexOf(localcityname)>=0){
+                        param.setIsLocalplace("1");
+                    }else{
+                        param.setIsLocalplace("0");
+                    }
+                    if(address.indexOf("高速")>=0){
+                        param.setIsHighWay("1");
+                    }else{
+                        param.setIsHighWay("0");
+                    }
+                    bigdataAlarmRecordService.updateByFenPian(param);
+                }
+
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //挨个的对百度api查询位置信息
+
+    }
+
+   /* public static void main(String[] args) {
+        String regText = "约\\d+米";
+
+        String str = "河北省唐山市滦县183乡道.离安各庄工商分局(东南)约932米";
+        System.out.println(str.replaceAll(regText,""));
+        String simpleAddress = str.replaceAll(".离",".");
+        simpleAddress = simpleAddress.substring(0,simpleAddress.indexOf("("))+"附近";
+        System.out.println(simpleAddress);
+    }*/
+
+   //根据超速的信息统计危险
+   @Scheduled(cron = "0 0/49 * * * ?")
+    public void countDangerRoad(){
+        Calendar cal = Calendar.getInstance();
+        String dateIntMaxStr = sdfDateInt.format(cal.getTime());
+        cal.set(Calendar.DAY_OF_MONTH,1);
+        String dateIntMinStr = sdfDateInt.format(cal.getTime());
+        Integer dateIntMax = new Integer(dateIntMaxStr);
+        Integer dateIntMin = new Integer(dateIntMinStr);
+        int countMonth = dateIntMin/100;
+        try{
+            Map<String,BigdataDangerRoadClsMonth> dangerRoadMap = new HashMap<String,BigdataDangerRoadClsMonth>();
+            for(int i=dateIntMin;i<=dateIntMax;i++){
+                //月度汇总危险路段
+                List<BigdataDangerRoadClsMonth> listGroup
+                        = bigdataAlarmRecordService.selectGroupCountOfDangerRoad(countMonth,i);
+                for(BigdataDangerRoadClsMonth roadCount :  listGroup){
+                    String roadName = roadCount.getDangerRoadClsName();
+                    BigdataDangerRoadClsMonth mapRoad = dangerRoadMap.get(roadName);
+                    if(mapRoad!=null){
+                        int num = mapRoad.getDangerRoadPassNum()+roadCount.getDangerRoadPassNum();
+                        mapRoad.setDangerRoadPassNum(num);
+                    }else{
+                        dangerRoadMap.put(roadName , roadCount);
+                    }
+                }
+            }
+            Collection<BigdataDangerRoadClsMonth> cls = dangerRoadMap.values();
+            Iterator<BigdataDangerRoadClsMonth> it = cls.iterator();
+            while(it.hasNext()){
+                BigdataDangerRoadClsMonth month = it.next();
+                String dangerRoadName = month.getDangerRoadClsName();
+                String id = countMonth +"-" + dangerRoadName;
+                BigdataDangerRoadClsMonth dbRoad = bigdataDangerRoadClsMonthService.loadById(id);
+                if(dbRoad==null){
+                    month.setId(id);
+                    month.setCountMonth(countMonth);
+                    month.setYearNum(countMonth/100);
+                    month.setCreateTime(new Date());
+                    bigdataDangerRoadClsMonthService.insert(month);
+                }else{
+                    dbRoad.setDangerRoadPassNum(month.getDangerRoadPassNum());
+                    bigdataDangerRoadClsMonthService.update(dbRoad);
+                }
+
+            }
+            //根据月度汇总总的危险路段数
+            List<BigdataDangerRoadClsMonth> dangerList = bigdataDangerRoadClsMonthService.selectGroupByDangerRoadName();
+            for(BigdataDangerRoadClsMonth count : dangerList){
+                String id = count.getDangerRoadClsName();
+                BigdataDangerRoadAnalysis dbAnalysis = bigdataDangerRoadAnalysisService.loadById(id);
+                if(dbAnalysis==null){
+                    dbAnalysis = new BigdataDangerRoadAnalysis();
+                    dbAnalysis.setId(id);
+                    dbAnalysis.setDangerRoadNum(count.getDangerRoadPassNum());
+                    dbAnalysis.setCountTime(new Date());
+                    dbAnalysis.setCreateTime(new Date());
+                    dbAnalysis.setDangerRoadCls(count.getDangerRoadClsName());
+                    dbAnalysis.setOwnerDangerRoadName(count.getDangerRoadClsName());
+                    dbAnalysis.setLatitude(count.getLatitude());
+                    dbAnalysis.setLongitude(count.getLongitude());
+                    bigdataDangerRoadAnalysisService.insert(dbAnalysis);
+                }else{
+                    dbAnalysis.setDangerRoadNum(count.getDangerRoadPassNum());
+                    bigdataDangerRoadAnalysisService.update(dbAnalysis);
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+}

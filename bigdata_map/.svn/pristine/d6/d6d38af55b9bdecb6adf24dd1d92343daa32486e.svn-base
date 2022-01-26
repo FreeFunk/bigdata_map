@@ -1,0 +1,975 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>秦皇岛市智慧交通北斗大数据分析平台</title>
+    <link href="css/animate.min.css" rel="stylesheet" type="text/css">
+    <link href="css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/datedropper.css">
+    <link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    <script src="js/tool.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <style type="text/css">
+
+
+        .tab0 .nav-tabs0{
+            padding-left: 15px;
+            border-bottom: 4px solid #026C9C;
+        }
+        .tab0 .nav-tabs0 li a{
+            color: #fff;
+            padding: 8px 40px;
+            margin-right: 10px;
+            background: #026C9C;
+            text-shadow: 1px 1px 2px #000;
+            border: none;
+            float: left;
+            border-radius: 0;
+            opacity: 0.5;
+            position: relative;
+            transition: all 0.3s ease 0s;
+        }
+        .tab0 .nav-tabs0 li a:hover{
+            background: #026C9C;
+            opacity: 0.8;
+        }
+        .tab0 .nav-tabs0 li.active a{
+            opacity: 1;
+        }
+        .tab0 .nav-tabs0 li.active a,
+        .tab0 .nav-tabs0 li.active a:hover,
+        .tab0 .nav-tabs0 li.active a:focus{
+            color: #fff;
+            background: #026C9C;
+            border: none;
+            border-radius: 0;
+        }
+        .tab0 .nav-tabs0 li a:before,
+        .tab0 .nav-tabs0 li a:after{
+            content: "";
+            border-top: 42px solid transparent;
+            position: absolute;
+            top: -2px;
+        }
+        .tab0 .nav-tabs0 li a:before{
+            border-right: 15px solid #026C9C;
+            left: -15px;
+        }
+        .tab0 .nav-tabs0 li a:after{
+            border-left: 15px solid #026C9C;
+            right: -15px;
+        }
+        .tab0 .nav-tabs0 li a i,
+        .tab0 .nav-tabs0 li.active a i{
+            display: inline-block;
+            padding-right: 5px;
+            font-size: 17px;
+            text-shadow: none;
+        }
+        .tab0 .nav-tabs0 li a span{
+            display: inline-block;
+            font-size: 17px;
+            letter-spacing: -3px;
+
+            transition: all 0.3s ease 0s;
+        }
+        .tab0 .nav-tabs0 li a:hover span,
+        .tab0 .nav-tabs0 li.active a span{
+            letter-spacing: 5px;
+            opacity: 1;
+            transition: all 0.3s ease 0s;
+        }
+        .tab0 .tab-content0{
+            padding: 30px;
+            background: #fff;
+            font-size: 16px;
+            color: #6c6c6c;
+            line-height: 25px;
+        }
+        .tab0 .tab-content0 h3{
+            font-size: 24px;
+            margin-top: 0;
+        }
+        @media only screen and (max-width: 479px){
+            .tab0 .nav-tabs0 li{
+                width: 100%;
+                margin-bottom: 5px;
+                text-align: center;
+            }
+            .tab0 .nav-tabs0 li a span{
+                letter-spacing: 1px;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+
+            <input type="text" class="input_rl " id="searchDate" style="width:150px; height: 48px; margin-right: 10px; ">
+            <!--<input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " /> -->
+            <span id=localtime></span>
+            <script type="text/javascript">
+                function showLocale(objD){
+                    var str,colorhead,colorfoot;
+                    var yy = objD.getYear();
+                    if(yy<1900) yy = yy+1900;
+                    var MM = objD.getMonth()+1;
+                    if(MM<10) MM = '0' + MM;
+                    var dd = objD.getDate();
+                    if(dd<10) dd = '0' + dd;
+                    var hh = objD.getHours();
+                    if(hh<10) hh = '0' + hh;
+                    var mm = objD.getMinutes();
+                    if(mm<10) mm = '0' + mm;
+                    var ss = objD.getSeconds();
+                    if(ss<10) ss = '0' + ss;
+                    var ww = objD.getDay();
+                    if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+                    if  (ww==0)  ww="星期日";
+                    if  (ww==1)  ww="星期一";
+                    if  (ww==2)  ww="星期二";
+                    if  (ww==3)  ww="星期三";
+                    if  (ww==4)  ww="星期四";
+                    if  (ww==5)  ww="星期五";
+                    if  (ww==6)  ww="星期六";
+                    colorfoot="</font>"
+                    str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+                    return(str);
+                }
+
+                function tick(){
+                    var today;
+                    today = new Date();
+                    document.getElementById("localtime").innerHTML = showLocale(today);
+                    window.setTimeout("tick()", 1000);
+                }
+
+                tick();
+            </script>
+        </div>
+    </div>
+    <div class="top_l">
+
+        <div class="bt">
+            <div class="bt_name left">报警数据分析</div>
+            <a href="shouye.html" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+<div class="main">
+    <div class="ind mt60">
+        <Div style="position: relative">
+            <div style="float: left;width:40%; margin:auto">
+
+                <div>
+                    <div class="mingcheng0" style="display: inline-block;padding-right: 10px;">车辆类型</div>
+                    <select id="companyLavel" name="companyLavel" class="input00" style="width: 20%;height: 50px;margin-right: 40px;">
+                        <option class="lsd" value ="">请选择</option>
+                        <option class="lsd" value ="TEAM_WXHWYS">危货</option>
+                        <option class="lsd" value="TEAM_KY">客运</option>
+                        <option class="lsd" value="TEAM_PTHW">普货</option>
+                    </select>
+                    <div class="mingcheng0" style="display: inline-block;padding-right: 10px;">县区</div>
+                    <select id="xianquId" name="queryObj.xianquId" class="input00" style="width: 20%;height: 50px;">
+                        <option class="lsd" value ="">请选择</option>
+                        <option class="lsd" value ="130302">海港区</option>
+                        <option class="lsd" value="130303">山海关区</option>
+                        <option class="lsd" value="130304">北戴河区</option>
+                        <option class="lsd" value="130306">抚宁区</option>
+                        <option class="lsd" value="130321">青龙县</option>
+                        <option class="lsd" value="130322">昌黎县</option>
+                        <option class="lsd" value="130324">卢龙县</option>
+                        <option class="lsd" value="130371">开发区</option>
+                    </select>
+
+                </div>
+            </div>
+            <div style="float: right;width:40%; margin:auto">
+                <div style="overflow: hidden; height: 60px;">
+
+                    <div class="tab0 clearfix" role="tabpanel">
+                        <ul class="nav0 nav-tabs0 clearfix" role="tablist" style="padding-left: 395px;border: none;">
+                            <li role="presentation" class="active"><a href="#Section02"id="KY" aria-controls="profile" role="tab" data-toggle="tab"><span>过去一天</span></a></li>
+                            <li role="presentation"><a href="#Section03" id="HY" aria-controls="messages" role="tab" data-toggle="tab"></i><span>过去一周</span></a></li>
+                            <li role="presentation"><a href="#Section04" id="WH" aria-controls="messages" role="tab" data-toggle="tab"></i><span>过去一月</span></a></li>
+                            <input type="hidden" name="carType" id="carType" value=""/>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </Div>
+
+        <div class="blank40"></div>
+
+        <div style="display: block;    padding-left: 235px;">
+            <div class="dh0">
+                <ul>
+                    <li style="padding-top: 10px;font-weight: bold;text-align: center;color: white;font-size: 20px;width: 244px;height: 104px;background-image: linear-gradient(160deg, #43B7D8 20%,#0BA89D 80%);"class="cd-popup-trigger1"> 报警车辆数</li>
+                    <li style="margin-left: 125px;padding-top: 10px;font-weight: bold;text-align: center;color: white;font-size: 20px;width: 244px;height: 104px;background-image: linear-gradient(160deg, #D29277 20%,#ff8b00 80%);" class="cd-popup-trigger1">报警企业数</li>
+                    <li style="margin-left: 125px;padding-top: 10px;font-weight: bold;text-align: center;color: white;font-size: 20px;width: 244px;height: 104px;background-image: linear-gradient(160deg, #FA6472 20%,#DF4D5A 80%);" class="cd-popup-trigger2">行驶里程数(千米)</li>
+                    <li style="margin-left: 125px;padding-top: 10px;font-weight: bold;text-align: center;color: white;font-size: 20px;width: 244px;height: 104px;background-image: linear-gradient(160deg, #FA6472 20%,#DF4D5A 80%);" class="cd-popup-trigger2">常规报警/处理数量</li>
+                    <li style="margin-left: 125px;padding-top: 10px;font-weight: bold;text-align: center;color: white;font-size: 20px;width: 244px;height: 104px;background-image: linear-gradient(160deg, #FA6472 20%,#DF4D5A 80%);" class="cd-popup-trigger2">主动安全报警/处理数量</li>
+                </ul>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+    $("#pickdate").dateDropper({
+        animate: false,
+        format: 'Y-m-d',
+        maxYear: '2020'
+    });
+
+</script>
+<script>
+    // 参数1 tableID,参数2 div高度，参数3 速度，参数4 tbody中tr几条以上滚动
+    /*tableScroll('tableId', 610, 30, 10)
+    tableScroll1('tableId1', 610, 30, 10)*/
+    var MyMarhq;
+    var MyMarhq1;
+
+    function setCarType() {
+        //获取参数
+        var queryArgs = getQueryParam();
+        var carType = decodeURI(queryArgs.carType);
+        //判断是否携带车辆类型查询
+        if(carType==""){
+            $("#companyLavel").val("");
+        }else if (carType=="危货") {
+            $("#companyLavel").val("TEAM_WXHWYS");
+        }else if (carType=="客运") {
+            $("#companyLavel").val("TEAM_KY");
+        }else if (carType=="普货") {
+            $("#companyLavel").val("TEAM_PTHW");
+        }
+    }
+    setCarType();
+
+    function tableScroll(tableid, hei, speed, len) {
+        clearTimeout(MyMarhq);
+        $('#' + tableid).parent().find('.tableid_').remove()
+        $('#' + tableid).parent().prepend(
+            '<table class="tableid_"><thead>' + $('#' + tableid + ' thead').html() + '</thead></table>'
+        ).css({
+            'position': 'relative',
+            'overflow': 'hidden',
+            'height': hei + 'px'
+        })
+//    $(".tableid_").find('th').each(function(i) {
+//        $(this).css('width', $('#' + tableid).find('th:eq(' + i + ')').width());
+//    });
+        $(".tableid_").css({
+            'position': 'absolute',
+            'top': 0,
+            'left': 0,
+            'z-index': 9
+        })
+        $('#' + tableid).css({
+            'position': 'absolute',
+            'top': 0,
+            'left': 0,
+            'z-index': 1
+        })
+
+        if ($('#' + tableid).find('tbody tr').length > len) {
+            $('#' + tableid).find('tbody').html($('#' + tableid).find('tbody').html() + $('#' + tableid).find('tbody').html());
+            $(".tableid_").css('top', 0);
+            $('#' + tableid).css('top', 0);
+            var tblTop = 0;
+            var outerHeight = $('#' + tableid).find('tbody').find("tr").outerHeight();
+
+            function Marqueehq() {
+                if (tblTop <= -outerHeight * $('#' + tableid).find('tbody').find("tr").length) {
+                    tblTop = 0;
+                } else {
+                    tblTop -= 1;
+                }
+                $('#' + tableid).css('margin-top', tblTop + 'px');
+                clearTimeout(MyMarhq);
+                MyMarhq = setTimeout(function() {
+                    Marqueehq()
+                }, speed);
+            }
+
+            MyMarhq = setTimeout(Marqueehq, speed);
+            $('#' + tableid).find('tbody').hover(function() {
+                clearTimeout(MyMarhq);
+            }, function() {
+                clearTimeout(MyMarhq);
+                if ($('#' + tableid).find('tbody tr').length > len) {
+                    MyMarhq = setTimeout(Marqueehq, speed);
+                }
+            })
+        }
+
+    }
+
+    function tableScroll1(tableid, hei, speed, len) {
+        clearTimeout(MyMarhq1);
+        $('#' + tableid).parent().find('.tableid_').remove()
+        $('#' + tableid).parent().prepend(
+            '<table class="tableid_"><thead>' + $('#' + tableid + ' thead').html() + '</thead></table>'
+        ).css({
+            'position': 'relative',
+            'overflow': 'hidden',
+            'height': hei + 'px'
+        })
+//    $(".tableid_").find('th').each(function(i) {
+//        $(this).css('width', $('#' + tableid).find('th:eq(' + i + ')').width());
+//    });
+        $(".tableid_").css({
+            'position': 'absolute',
+            'top': 0,
+            'left': 0,
+            'z-index': 9
+        })
+        $('#' + tableid).css({
+            'position': 'absolute',
+            'top': 0,
+            'left': 0,
+            'z-index': 1
+        })
+
+        if ($('#' + tableid).find('tbody tr').length > len) {
+            $('#' + tableid).find('tbody').html($('#' + tableid).find('tbody').html() + $('#' + tableid).find('tbody').html());
+            $(".tableid_").css('top', 0);
+            $('#' + tableid).css('top', 0);
+            var tblTop = 0;
+            var outerHeight = $('#' + tableid).find('tbody').find("tr").outerHeight();
+
+            function Marqueehq() {
+                if (tblTop <= -outerHeight * $('#' + tableid).find('tbody').find("tr").length) {
+                    tblTop = 0;
+                } else {
+                    tblTop -= 1;
+                }
+                $('#' + tableid).css('margin-top', tblTop + 'px');
+                clearTimeout(MyMarhq1);
+                MyMarhq1 = setTimeout(function() {
+                    Marqueehq()
+                }, speed);
+            }
+
+            MyMarhq1 = setTimeout(Marqueehq, speed);
+            $('#' + tableid).find('tbody').hover(function() {
+                clearTimeout(MyMarhq1);
+            }, function() {
+                clearTimeout(MyMarhq1);
+                if ($('#' + tableid).find('tbody tr').length > len) {
+                    MyMarhq1 = setTimeout(Marqueehq, speed);
+                }
+
+            })
+        }
+
+    }
+</script>
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('aa1'));
+    // 指定图表的配置项和数据
+    option = {
+
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+
+        legend: {
+            data:['平均转弯速度','左转弯速度','右转弯速度'],
+            orient: 'vertical',
+            top: '0%',
+            right: '0%',
+            icon: "circle",
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+
+                data : ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+                axisLabel : {interval:0},
+                axisLine:{
+                    lineStyle:{
+                        color:'#2b8a95',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                type: 'value',
+                min: 0,
+                max: 150,
+                splitLine:{      //去掉背景水平网格线
+                    show:false
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#2b8a95',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        series : [
+            {
+                name:'平均转弯速度',
+                type:'line',
+                stack: '平均转弯速度',
+                itemStyle: {
+                    normal: {
+                        color: "#006AD4",
+                        lineStyle: {
+                            color: "#006AD4"
+                        }}
+                },
+
+
+                data:[68, 100, 90, 124, 119, 95, 89,79, 115, 88, 84, 90]
+            },
+            {
+                name:'左转弯速度',
+                type:'line',
+                stack: '左转弯速度',
+                itemStyle: {
+                    normal: {
+                        color: "#F3891B",
+                        lineStyle: {
+                            color: "#F3891B"
+                        }}
+                },
+
+                data:[120,116, 78, 140, 123, 99,84, 93, 125, 111, 93, 136]
+            },
+            {
+                name:'右转弯速度',
+                type:'line',
+                stack: '右转弯速度',
+                itemStyle: {
+                    normal: {
+                        color: "#009895",
+                        lineStyle: {
+                            color: "#009895"
+                        }}
+                },
+
+                data:[134, 90, 123, 94,116, 87, 105, 99, 101,101, 117, 90]
+            },
+
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('aa2'));
+    // 指定图表的配置项和数据
+    option = {
+
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+
+        legend: {
+            data:['急加速','急减速'],
+            orient: 'vertical',
+            top: '0%',
+            right: '0%',
+            icon: "circle",
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+
+                data : ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+                axisLabel : {interval:0},
+                axisLine:{
+                    lineStyle:{
+                        color:'#2b8a95',
+
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                type: 'value',
+                min: 0,
+                max: 150,
+                splitLine:{      //去掉背景水平网格线
+                    show:false
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#2b8a95',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        series : [
+            {
+                name:'急加速',
+                type:'line',
+                stack: '急加速',
+                itemStyle: {
+                    normal: {
+                        color: "#009895",
+                        lineStyle: {
+                            color: "#009895"
+                        }}
+                },
+
+
+                data:[68, 100, 90, 124, 119, 95, 89,79, 115, 88, 84, 90]
+            },
+            {
+                name:'急减速',
+                type:'line',
+                stack: '急减速',
+                itemStyle: {
+                    normal: {
+                        color: "#F3891B",
+                        lineStyle: {
+                            color: "#F3891B"
+                        }}
+                },
+
+                data:[120,116, 78, 140, 123, 99,84, 93, 125, 111, 93, 136]
+            },
+
+
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('aa3'));
+    // 指定图表的配置项和数据
+    option = {
+
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+
+        legend: {
+            data:['高速平均速度','平均速度'],
+            orient: 'vertical',
+            top: '0%',
+            right: '0%',
+            icon: "circle",
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+
+                data : ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+                axisLabel : {interval:0},
+                axisLine:{
+                    lineStyle:{
+                        color:'#2b8a95',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                type: 'value',
+                min: 0,
+                max: 150,
+                splitLine:{      //去掉背景水平网格线
+                    show:false
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#2b8a95',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        series : [
+            {
+                name:'高速平均速度',
+                type:'line',
+                stack: '高速平均速度',
+                itemStyle: {
+                    normal: {
+                        color: "#009895",
+                        lineStyle: {
+                            color: "#009895"
+                        }}
+                },
+
+
+                data:[68, 100, 90, 124, 119, 95, 89,79, 115, 88, 84, 90]
+            },
+            {
+                name:'平均速度',
+                type:'line',
+                stack: '平均速度',
+                itemStyle: {
+                    normal: {
+                        color: "#F3891B",
+                        lineStyle: {
+                            color: "#F3891B"
+                        }}
+                },
+
+                data:[120,116, 78, 140, 123, 99,84, 93, 125, 111, 93, 136]
+            },
+
+
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
+<script type="text/javascript" >
+    //初始化数据
+    $(document).ready(function(){
+        //获取参数
+        var queryArgs = getQueryParam();
+        queryArgs.carType = decodeURI(queryArgs.carType);
+        initLayDate(queryArgs.searchTime);
+        //获取常跑省份
+        getOftenRunProvince(queryArgs);
+        //获取跨省率
+        getPassProvinceRate(queryArgs);
+        //常跑城市
+        getOftenRunCity(queryArgs);
+        //常跑路线
+        getOftenRunRoute(queryArgs);
+    });
+    //初始化日期
+    function initLayDate(searchTime) {
+        laydate.render({
+            elem: '#searchDate',
+            theme: '#884898',
+            value: searchTime.substring(0,7),
+            type: 'month',
+            btns: ['clear', 'confirm'],
+            done: function(value, date, endDate){
+                var queryArgs = getQueryParam();
+                queryArgs.carType = decodeURI(queryArgs.carType);
+                queryArgs.searchTime = value+"-01";
+                debugger;
+                //车辆去向分布
+                getOftenRunProvince(queryArgs);
+                getPassProvinceRate(queryArgs);
+                getOftenRunCity(queryArgs);
+                getOftenRunRoute(queryArgs);
+            }
+        });
+    }
+
+    function getOftenRunProvince(queryArgs) {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/carMonthDirectionDistribution/getOftenRunProvince.jsn",
+            data: {'queryObj.carType':queryArgs.carType,'queryObj.countTime':queryArgs.searchTime,
+                'queryObj.countType':'MONTH'},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    var html = "";
+                    if(data.data.length==0){
+                        html +="<span class=\"d1\">NO1 无</span>\n" +
+                            "                                          <span class=\"d22\">NO2 无</span>\n" +
+                            "                                          <span class=\"d33\">NO3 无</span>\n" +
+                            "                                          <span class=\"d3\">NO4 无</span>\n" +
+                            "                                          <span class=\"d2\">NO5 无</span>";
+                    }else {
+                        for(var i =0 ;i<data.data.length;i++){
+                            if(i==1){
+                                html += " <span class=\"d22\">NO"+(i+1)+" "+data.data[i].provinceName.substring(0,3)+"</span>";
+                            }else if(i==2){
+                                html += " <span class=\"d33\">NO"+(i+1)+" "+data.data[i].provinceName.substring(0,3)+"</span>";
+                            }
+                            else if(i==3){
+                                html += " <span class=\"d3\">NO"+(i+1)+" "+data.data[i].provinceName.substring(0,3)+"</span>";
+                            }else if( i== 4){
+                                html += " <span class=\"d2\">NO"+(i+1)+" "+data.data[i].provinceName.substring(0,3)+"</span>";
+                            }else {
+                                html += " <span class=\"d1\">NO"+(i+1)+" "+data.data[i].provinceName.substring(0,3)+"</span>";
+                            }
+                        }
+                    }
+                    $("#oftenRunProvince").html(html);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function getPassProvinceRate(queryArgs) {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataPassProvinceRate/getPassProvinceRate.jsn",
+            data: {'queryObj.carType':queryArgs.carType,'queryObj.countTime':queryArgs.searchTime,
+                'queryObj.countType':'MONTH'},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    var html = "";
+                    if(typeof(data.data) == 'undefined'){
+                        html = "0<em>%</em><i class=\"iconfont icon-jiantouarrow505 ls\"></i>";
+                    }else {
+                        if(data.data.passProvinceRateFlag=='1'){
+                            html = parseInt(data.data.passProvinceRate*100)+"<em>%</em><!--<i class=\"iconfont icon-jiantouarrow499 hs\"></i>-->";
+                        }else {
+                            html = parseInt(data.data.passProvinceRate*100)+"<em>%</em><!--<i class=\"iconfont icon-jiantouarrow505 ls\"></i>-->";
+                        }
+                    }
+                    $("#passProvinceRate").html(html);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function getOftenRunCity(queryArgs) {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/carMonthDirectionDistribution/getOftenRunCity.jsn",
+            data: {'queryObj.carType':queryArgs.carType,'queryObj.countTime':queryArgs.searchTime,
+                'queryObj.countType':'MONTH'},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    var html = "";
+                    if(data.data.length==0){
+                        html+="   <tr>\n" ;
+                        html+= "                    <td><em >无</em></td>\n" ;
+                        html+=   "                    <td>无</td>\n" +
+                            "                    <td>无</td>\n" +
+                            "                    </tr>"
+                    }else {
+                        for(var i = 0;i<data.data.length;i++){
+                            html+="   <tr>\n" ;
+                            if(i==0){
+                                html+= "                    <td  style=\"width: 30%\"><em class=\"ph1\">"+(i+1)+"</em></td>\n" ;
+                            }else if(i==1) {
+                                html+= "                    <td  style=\"width: 30%\"><em class=\"ph2\">"+(i+1)+"</em></td>\n" ;
+                            }else if(i==2){
+                                html+= "                    <td  style=\"width: 30%\"><em class=\"ph3\">"+(i+1)+"</em></td>\n" ;
+                            }else {
+                                html+= "                    <td  style=\"width: 30%\"><em class=\"ph4\">"+(i+1)+"</em></td>\n" ;
+                            }
+                            html+=   "                    <td style=\"width: 35%\" onclick=stopCarList('"+data.data[i].cityName+"','"+queryArgs.searchTime+"')>"+data.data[i].cityName+"</td>\n" +
+                                "                    <td style=\"width: 35%\">"+data.data[i].carNum+"次</td>\n" +
+                                "                    </tr>"
+                        }
+                    }
+                    $("#oftenRunCity").html(html);
+                    tableScroll('tableId', 610, 30, 10);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function getOftenRunRoute(queryArgs) {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/oftenrunRouteMonthCount/getOftenRunRoute.jsn",
+            data: {'queryObj.carType':queryArgs.carType,'queryObj.countTime':queryArgs.searchTime,
+                'queryObj.countType':'MONTH'},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    var html = "";
+                    if(data.data.length==0){
+                        html+="   <tr>\n" ;
+                        html+= "                    <td><em >无</em></td>\n" ;
+                        html+=   "                    <td>无</td>\n" ;
+                        html+=   "                    <td>无</td>\n" +
+                            /*  "                    <td>无</td>\n" +*/
+                            "                    </tr>"
+                    }else {
+                        for(var i = 0;i<data.data.length;i++){
+                            html+="   <tr>\n" ;
+                            if(i==0){
+                                html+= "                    <td><em class=\"ph1\">"+(i+1)+"</em></td>\n" ;
+                            }else if(i==1) {
+                                html+= "                    <td><em class=\"ph2\">"+(i+1)+"</em></td>\n" ;
+                            }else if(i==2){
+                                html+= "                    <td><em class=\"ph3\">"+(i+1)+"</em></td>\n" ;
+                            }else {
+                                html+= "                    <td><em class=\"ph4\">"+(i+1)+"</em></td>\n" ;
+                            }
+                            html+=   "                    <td onclick=runRouteCarList('"+data.data[i].runRoute+"','"+queryArgs.searchTime+"')>"+data.data[i].runRoute+"</td>\n" +
+                                /*"                    <td>"+data.data[i].sumMileage+"Km</td>\n" +*/
+                                "                    <td>"+data.data[i].runNum+"次</td>\n" +
+                                "                    </tr>"
+                        }
+                    }
+                    $("#oftenRunRoute").html(html);
+                    tableScroll1('tableId1', 610, 30, 10)
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function runRouteCarList(s,c) {
+        var queryArgs = getQueryParam();
+        window.location.href="RunRouteCarList.html?runRoute="+encodeURI(s)+"&searchTime="+c+"&carType="+queryArgs.carType+"&page=1&limit=13";
+    }
+    function stopCarList(cityName,searchTime) {
+        var queryArgs = getQueryParam();
+        window.location.href="StopCarList.html?cityName="+encodeURI(cityName)+"&searchTime="+searchTime+"&carType="+queryArgs.carType+"&page=1&limit=13";
+    }
+    function goShouYe() {
+        window.location.href = "shouye.html";
+    }
+
+</script>
+</body>
+</html>

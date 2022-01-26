@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.SysUserRoleMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.SysUserRole" >
+			<result column="USER_ID" property="userId"/>
+			<result column="ROLE_ID" property="roleId"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.SysUserRoleView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 USER_ID, ROLE_ID
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		<if test='queryObj != null and  queryObj.userId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.userId)'>
+			AND  USER_ID = #{queryObj.userId}
+		</if>
+		<if test='queryObj != null and  queryObj.roleId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.roleId)'>
+			AND  ROLE_ID = #{queryObj.roleId}
+		</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.SysUserRoleQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_user_role 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.SysUserRoleQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_user_role 
+  		<include refid="where"/>
+  </select>
+  
+  <!-- 删除用户和角色关联  -->
+	<delete id="deleteByUserAndRole" parameterType="com.edgedo.sys.queryvo.SysUserRoleView" >
+			delete from sys_user_role  where  USER_ID = #{userId} AND  ROLE_ID = #{roleId}
+	</delete>
+	<!-- 删除用户的所有角色关联  -->
+	<delete id="deleteByUserId" parameterType="com.edgedo.sys.queryvo.SysUserRoleView" >
+		delete from sys_user_role  where  USER_ID = #{userId}
+	</delete>
+
+
+
+	<!--  根据用户id和角色id获得关联关系  -->
+	<select id="selectByUserIdAndRoleId" parameterType="com.edgedo.sys.queryvo.SysUserRoleView" resultMap="BaseResultViewMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user_role  where  USER_ID = #{userId} AND  ROLE_ID = #{roleId}
+	</select>
+
+	<!--根据userId查询所对应的roleIdList-->
+	<select id="selectRoleListByUserId" parameterType="string" resultMap="BaseResultViewMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user_role  where  USER_ID = #{userId}
+	</select>
+
+
+  
+  
+</mapper>

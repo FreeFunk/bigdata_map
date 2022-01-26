@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.SysSiteMsgTongyiMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.SysSiteMsgTongyi" >
+			<id column="ID" property="id"/>
+			<result column="TITLE" property="title"/>
+			<result column="CONTENT" property="content"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="SEND_USER_ID" property="sendUserId"/>
+			<result column="SEND_USER_NAME" property="sendUserName"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.SysSiteMsgTongyiView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, TITLE, CONTENT, CREATE_TIME, SEND_USER_ID, SEND_USER_NAME
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		<if test='queryObj != null and  queryObj.title != null'>
+			AND  TITLE LIKE concat('%',#{queryObj.title},'%')
+		</if>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.SysSiteMsgTongyiQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_site_msg_tongyi 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.SysSiteMsgTongyiQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_site_msg_tongyi 
+  		<include refid="where"/>
+  </select>
+  
+  
+</mapper>

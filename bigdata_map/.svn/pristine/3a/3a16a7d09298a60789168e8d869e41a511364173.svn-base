@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.SysMonitorAlarmMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.SysMonitorAlarm" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="ALARM_TYPE" property="alarmType"/>
+			<result column="ALARM_STATE" property="alarmState"/>
+			<result column="SYSTEM_NAME" property="systemName"/>
+			<result column="SYSTEM_MODEL" property="systemModel"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.SysMonitorAlarmView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, ALARM_TYPE, ALARM_STATE, SYSTEM_NAME, SYSTEM_MODEL
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.SysMonitorAlarmQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_monitor_alarm 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.SysMonitorAlarmQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_monitor_alarm 
+  		<include refid="where"/>
+  </select>
+
+	<!--  查询几分钟内的某个类型的报警 -->
+	<select id="countByAlaramTypeOfSysRecentMinute" parameterType="map" resultType="int">
+		select count(1) from sys_monitor_alarm
+		where ALARM_TYPE=#{alarmType} and SYSTEM_NAME=#{systemName}
+		and SYSTEM_MODEL=#{systemModel}
+		and CREATE_TIME>DATE_SUB(NOW(),INTERVAL #{minute} MINUTE);
+	</select>
+
+	<!--  查询所有没有发送通知的报警 -->
+	<select id="selectAllNotSendMsgAlarm" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from sys_monitor_alarm
+		where ALARM_STATE='0'
+	</select>
+  
+  
+</mapper>

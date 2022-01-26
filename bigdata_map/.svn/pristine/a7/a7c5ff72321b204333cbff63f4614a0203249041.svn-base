@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="BigdataFenxiCarWeek-form" id="BigdataFenxiCarWeek-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id" lay-verify="required" placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">更新时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="updateTime" id="updateTime" lay-verify="required" placeholder="请输入更新时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">省ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="provinceId" lay-verify="required" placeholder="请输入省ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">省名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="provinceName" lay-verify="required" placeholder="请输入省名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">城市ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cityId" lay-verify="required" placeholder="请输入城市ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">城市名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cityName" lay-verify="required" placeholder="请输入城市名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">县区ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="xianquId" lay-verify="required" placeholder="请输入县区ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">县区名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="xianquName" lay-verify="required" placeholder="请输入县区名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车牌号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateNum" lay-verify="required" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车牌颜色</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateColor" lay-verify="required" placeholder="请输入车牌颜色" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车架号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carFrameNum" lay-verify="required" placeholder="请输入车架号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车辆类型</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carType" lay-verify="required" placeholder="请输入车辆类型" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">运输类型</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="transitType" lay-verify="required" placeholder="请输入运输类型" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">所属企业ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ownerTeamId" lay-verify="required" placeholder="请输入所属企业ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">所属企业名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ownerTeamName" lay-verify="required" placeholder="请输入所属企业名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">行驶里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="runMileage" lay-verify="required" placeholder="请输入行驶里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">行驶时长（秒）</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="runTimeLength" lay-verify="required" placeholder="请输入行驶时长（秒）" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">行驶时长文本</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="runTimeLengthText" lay-verify="required" placeholder="请输入行驶时长文本" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">行驶时长(小时）</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="runTimeLengthHour" lay-verify="required" placeholder="请输入行驶时长(小时）" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">报警数量</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="alarmNum" lay-verify="required" placeholder="请输入报警数量" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">报警数量/百公里</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="alarmRate" lay-verify="required" placeholder="请输入报警数量/百公里" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">安全评分</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="safeScore" lay-verify="required" placeholder="请输入安全评分" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车辆排名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carRanking" lay-verify="required" placeholder="请输入车辆排名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">第几周</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="countWeek" lay-verify="required" placeholder="请输入第几周" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">开始日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="startCountDate" id="startCountDate" lay-verify="required" placeholder="请输入开始日期" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">结束日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="endCountDate" id="endCountDate" lay-verify="required" placeholder="请输入结束日期" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">统计日期</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="countDate" lay-verify="required" placeholder="请输入统计日期" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">统计月份</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="countMonth" lay-verify="required" placeholder="请输入统计月份" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">统计年份</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="yearNum" lay-verify="required" placeholder="请输入统计年份" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="BigdataFenxiCarWeek-form-edit" id="BigdataFenxiCarWeek-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(BigdataFenxiCarWeek-form-edit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'/admin/bigdataFenxiCarWeek/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('BigdataFenxiCarWeek-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#updateTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#startCountDate', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#endCountDate', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

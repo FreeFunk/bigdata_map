@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/tdp-codegen/pom.xml" />
+        <option value="$PROJECT_DIR$/bigdata-car-alarm-job/pom.xml" />
+        <option value="$PROJECT_DIR$/bigdata-car-analysis/pom.xml" />
+        <option value="$PROJECT_DIR$/bigdata-car-analysis-alarm-job/pom.xml" />
+        <option value="$PROJECT_DIR$/bigdata-car-analysis-check-job/pom.xml" />
+        <option value="$PROJECT_DIR$/bigdata-car-analysis-gps-job/pom.xml" />
+        <option value="$PROJECT_DIR$/bigdata-car-analysis-oper-job/pom.xml" />
+        <option value="$PROJECT_DIR$/bigdata-car-trail-job/pom.xml" />
+        <option value="$PROJECT_DIR$/bigdata-constant/pom.xml" />
+        <option value="$PROJECT_DIR$/bigdata-drawing/pom.xml" />
+        <option value="$PROJECT_DIR$/bigdata-gps-809-client/pom.xml" />
+        <option value="$PROJECT_DIR$/bigdata-web/pom.xml" />
+        <option value="$PROJECT_DIR$/report-data-analyse-servivce/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/classes" />
+  </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="trunkUrl" value="svn://140.143.246.143/hangling/bigdata_map" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

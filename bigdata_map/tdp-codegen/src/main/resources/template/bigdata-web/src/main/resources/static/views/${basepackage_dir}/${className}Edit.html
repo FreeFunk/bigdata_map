@@ -1,0 +1,104 @@
+<#assign className = table.className>
+    <#assign classNameLower = className?uncap_first>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="${className}-form" id="${className}-form" style="padding: 20px 30px 0 0;">
+    <#list table.columns as column>
+        <#if column.columnNameFirstLower=='id' ||  column.columnNameFirstLower=='createTime' || column.columnNameFirstLower=='createUserId'|| column.columnNameFirstLower=='createUserName'|| column.columnNameFirstLower=='dataState'>
+            <#if column.columnNameFirstLower=='id'>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">${column.columnAlias}</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="${column.columnNameFirstLower}" id="${column.columnNameFirstLower}" lay-verify="required" placeholder="请输入${column.columnAlias}" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </#if>
+            <#else>
+        <#if column.isDateTimeColumn>
+            <div class="layui-form-item">
+                <label class="layui-form-label">${column.columnAlias}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="${column.columnNameFirstLower}" id="${column.columnNameFirstLower}" lay-verify="required" placeholder="请输入${column.columnAlias}" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <#elseif column.isDateTimeColumn>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">${column.columnAlias}</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="${column.columnNameFirstLower}" lay-verify="required|number" placeholder="请输入${column.columnAlias}" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <#else>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">${column.columnAlias}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="${column.columnNameFirstLower}" lay-verify="required" placeholder="请输入${column.columnAlias}" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+        </#if>
+        </#if>
+    </#list>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="${className}-form-edit" id="${className}-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+    <#assign className = table.className>
+        <#assign classNameLower = className?uncap_first>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(${className}-form-edit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'${urlprefix}/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('${className}-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+        <#list table.columns as column>
+            <#if column.isDateTimeColumn>
+            laydate.render({
+                elem: '#${column.columnNameFirstLower}', //指定元素
+                type:'datetime'
+            });
+        </#if>
+            </#list>
+        })
+</script>
+</body>
+</html>

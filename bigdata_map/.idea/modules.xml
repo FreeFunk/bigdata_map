@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/bigdata-car-alarm-job/bigdata-car-alarm-job.iml" filepath="$PROJECT_DIR$/bigdata-car-alarm-job/bigdata-car-alarm-job.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bigdata-car-analysis/bigdata-car-analysis.iml" filepath="$PROJECT_DIR$/bigdata-car-analysis/bigdata-car-analysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bigdata-car-analysis-alarm-job/bigdata-car-analysis-alarm-job.iml" filepath="$PROJECT_DIR$/bigdata-car-analysis-alarm-job/bigdata-car-analysis-alarm-job.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bigdata-car-analysis-check-job/bigdata-car-analysis-check-job.iml" filepath="$PROJECT_DIR$/bigdata-car-analysis-check-job/bigdata-car-analysis-check-job.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bigdata-car-analysis-gps-job/bigdata-car-analysis-gps-job.iml" filepath="$PROJECT_DIR$/bigdata-car-analysis-gps-job/bigdata-car-analysis-gps-job.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bigdata-car-analysis-oper-job/bigdata-car-analysis-oper-job.iml" filepath="$PROJECT_DIR$/bigdata-car-analysis-oper-job/bigdata-car-analysis-oper-job.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bigdata-car-trail-job/bigdata-car-trail-job.iml" filepath="$PROJECT_DIR$/bigdata-car-trail-job/bigdata-car-trail-job.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bigdata-constant/bigdata-constant.iml" filepath="$PROJECT_DIR$/bigdata-constant/bigdata-constant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bigdata-drawing/bigdata-drawing.iml" filepath="$PROJECT_DIR$/bigdata-drawing/bigdata-drawing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bigdata-gps-809-client/bigdata-gps-809-client.iml" filepath="$PROJECT_DIR$/bigdata-gps-809-client/bigdata-gps-809-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bigdata-web/bigdata-web.iml" filepath="$PROJECT_DIR$/bigdata-web/bigdata-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/project.iml" filepath="$PROJECT_DIR$/project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/report-data-analyse-servivce/report-data-analyse-servivce.iml" filepath="$PROJECT_DIR$/report-data-analyse-servivce/report-data-analyse-servivce.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tdp-codegen/tdp-codegen.iml" filepath="$PROJECT_DIR$/tdp-codegen/tdp-codegen.iml" />
+    </modules>
+  </component>
+</project>

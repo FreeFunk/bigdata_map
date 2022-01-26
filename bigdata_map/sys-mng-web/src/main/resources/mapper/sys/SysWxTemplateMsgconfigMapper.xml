@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.SysWxTemplateMsgconfigMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.SysWxTemplateMsgconfig" >
+			<id column="ID" property="id"/>
+			<result column="WX_TEMPLATE_ID" property="wxTemplateId"/>
+			<result column="DATA_KEY" property="dataKey"/>
+			<result column="DATA_DESC" property="dataDesc"/>
+			<result column="URL" property="url"/>
+			<result column="TEMPLATE_REMARK" property="templateRemark"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.SysWxTemplateMsgconfigView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, WX_TEMPLATE_ID, DATA_KEY, DATA_DESC, URL, TEMPLATE_REMARK
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		<if test='queryObj != null and  queryObj.id != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.id)'>
+			AND  ID = #{queryObj.id}
+		</if>
+		<if test='queryObj != null and  queryObj.wxTemplateId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.wxTemplateId)'>
+			AND WX_TEMPLATE_ID LIKE concat('%',#{queryObj.wxTemplateId},'%')
+		</if>
+		<if test='queryObj != null and  queryObj.dataKey != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.dataKey)'>
+			AND DATA_KEY LIKE concat('%',#{queryObj.dataKey},'%')
+		</if>
+		<if test='queryObj != null and  queryObj.dataDesc != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.dataDesc)'>
+			AND DATA_DESC LIKE concat('%',#{queryObj.dataDesc},'%')
+		</if>
+		<if test='queryObj != null and  queryObj.url != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.url)'>
+			AND URL LIKE concat('%',#{queryObj.url},'%')
+		</if>
+		<if test='queryObj != null and  queryObj.templateRemark != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.templateRemark)'>
+			AND TEMPLATE_REMARK LIKE concat('%',#{queryObj.templateRemark},'%')
+		</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.SysWxTemplateMsgconfigQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_wx_template_msgconfig 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.SysWxTemplateMsgconfigQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_wx_template_msgconfig 
+  		<include refid="where"/>
+  </select>
+  
+  
+</mapper>

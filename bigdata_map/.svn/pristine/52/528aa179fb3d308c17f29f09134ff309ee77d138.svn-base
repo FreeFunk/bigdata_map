@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.EmployeeMapper" >
+
+
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.Employee" >
+        <id column="ID" property="id"></id>
+        <result column="EMP_NAME" property="empName"></result>
+        <result column="EMP_PHONE" property="empPhone"></result>
+        <result column="LICENCE_CODE" property="empCode"></result>
+        <result column="PLATE_NUM" property="plateNum"></result>
+        <result column="CAR_PLATE_NUM" property="carPlateNum"></result>
+    </resultMap>
+
+
+
+
+
+
+
+</mapper>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataCarStopRecordMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataCarStopRecord" >
+			<id column="ID" property="id"/>
+			<result column="CAR_REAL_ID" property="carRealId"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="BEGIN_TIME" property="beginTime"/>
+			<result column="END_TIME" property="endTime"/>
+			<result column="STOP_MINITE_NUM" property="stopMiniteNum"/>
+			<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+			<result column="MAP_COUNTRY" property="mapCountry"/>
+			<result column="MAP_PROVINCE" property="mapProvince"/>
+			<result column="MAP_PROVINCE_ID" property="mapProvinceId"/>
+			<result column="MAP_CITY" property="mapCity"/>
+			<result column="MAP_CITY_ID" property="mapCityId"/>
+			<result column="MAP_XIANQU" property="mapXianqu"/>
+			<result column="MAP_XIANQU_ID" property="mapXianquId"/>
+			<result column="MAP_DETAIL" property="mapDetail"/>
+			<result column="POINT_LAT" property="pointLat"/>
+			<result column="POINT_LONG" property="pointLong"/>
+			<result column="ALTITUDE" property="altitude"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_DATE" property="countDate"></result>
+			<result column="COUNT_MONTH" property="countMonth"></result>
+			<result column="YEAR_NUM" property="yearNum"></result>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataCarStopRecordView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CAR_REAL_ID, CAR_PLATE_NUM, BEGIN_TIME, END_TIME, STOP_MINITE_NUM, CAR_PLATE_COLOR, MAP_COUNTRY,
+	 MAP_COUNTRY, MAP_PROVINCE,MAP_PROVINCE_ID, MAP_CITY,MAP_CITY_ID, MAP_XIANQU,MAP_XIANQU_ID,
+	  MAP_DETAIL, POINT_LAT, POINT_LONG, ALTITUDE,CAR_TYPE,COUNT_DATE,COUNT_MONTH,YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.endTime != null'>
+					AND  END_TIME = #{queryObj.endTime}
+				</if>
+				<if test='queryObj != null and  queryObj.stopMiniteNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.stopMiniteNum)'>
+					AND  STOP_MINITE_NUM = #{queryObj.stopMiniteNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataCarStopRecordQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_car_stop_record 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataCarStopRecordQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_car_stop_record 
+  		<include refid="where"/>
+  </select>
+
+	<!-- 查询停留超过一定时间并且没有进行poi定位的 -->
+  <select id="listUnPoiStopRec" parameterType="int" resultMap="BaseResultMap">
+	  select <include refid="Base_Column_List"/> from bigdata_car_stop_record
+	  where STOP_MINITE_NUM>#{minMinuteNum} and (MAP_PROVINCE_ID is  null or MAP_PROVINCE_ID='')
+  </select>
+
+	<!-- 省份的分组去向统计 -->
+	<select id="selectProvinceQuXiangGroup" parameterType="map" resultType="com.edgedo.bigdata.queryvo.CarQuXiangGroupCount">
+		select count(1) count,a.MAP_PROVINCE mapProvince from (
+		 	select MAP_PROVINCE,CAR_REAL_ID from bigdata_car_stop_record where MAP_PROVINCE is not null and MAP_PROVINCE!=''
+		 	<if test="carType!=null">
+				and CAR_TYPE=#{carType}
+			</if>
+			<if test="countDate!=null">
+				and COUNT_DATE=#{countDate}
+			</if>
+			<if test="countMonth!=null">
+				and COUNT_MONTH=#{countMonth}
+			</if>
+			<if test="yearNum!=null">
+				and YEAR_NUM=#{yearNum}
+			</if>
+		 	group by MAP_PROVINCE,CAR_REAL_ID
+		) a group by a.MAP_PROVINCE
+	</select>
+
+	<!--  根据省份去重 -->
+	<select id="selectProvinceQuXiangGroupOfCar" parameterType="map" resultMap="BaseResultMap" >
+		select MAP_PROVINCE,CAR_REAL_ID from bigdata_car_stop_record
+		where MAP_PROVINCE is not null and MAP_PROVINCE!=''
+		<if test="carType!=null">
+			and CAR_TYPE=#{carType}
+		</if>
+		<if test="countDate!=null">
+			and COUNT_DATE=#{countDate}
+		</if>
+		<if test="countMonth!=null">
+			and COUNT_MONTH=#{countMonth}
+		</if>
+		<if test="yearNum!=null">
+			and YEAR_NUM=#{yearNum}
+		</if>
+		group by MAP_PROVINCE,CAR_REAL_ID
+	</select>
+
+	<!-- 省份的分组去向统计 -->
+	<select id="selectCityQuXiangGroup" parameterType="map" resultType="com.edgedo.bigdata.queryvo.CarQuXiangGroupCount">
+		select count(1) count,a.MAP_PROVINCE mapProvince,a.MAP_CITY mapCity from (
+		select MAP_PROVINCE,MAP_CITY,CAR_REAL_ID from bigdata_car_stop_record
+		where MAP_PROVINCE is not null and MAP_PROVINCE!='' and MAP_CITY is not null and MAP_CITY!=''
+		<if test="carType!=null">
+			and CAR_TYPE=#{carType}
+		</if>
+		<if test="countDate!=null">
+			and COUNT_DATE=#{countDate}
+		</if>
+		<if test="countMonth!=null">
+			and COUNT_MONTH=#{countMonth}
+		</if>
+		<if test="yearNum!=null">
+			and YEAR_NUM=#{yearNum}
+		</if>
+		group by MAP_PROVINCE,MAP_CITY,CAR_REAL_ID
+		) a group by a.MAP_PROVINCE,a.MAP_CITY
+	</select>
+
+	<!--  根据车辆和城市去重 -->
+	<select id="selectCityQuXiangGroupOfCar" parameterType="map" resultMap="BaseResultMap">
+		select MAP_PROVINCE,MAP_CITY,CAR_REAL_ID from bigdata_car_stop_record
+		where MAP_PROVINCE is not null and MAP_PROVINCE!=''
+		and MAP_CITY is not null and MAP_CITY!=''
+		<if test="carType!=null">
+			and CAR_TYPE=#{carType}
+		</if>
+		<if test="countDate!=null">
+			and COUNT_DATE=#{countDate}
+		</if>
+		<if test="countMonth!=null">
+			and COUNT_MONTH=#{countMonth}
+		</if>
+		<if test="yearNum!=null">
+			and YEAR_NUM=#{yearNum}
+		</if>
+		group by MAP_PROVINCE,MAP_CITY,CAR_REAL_ID
+	</select>
+
+	<!--  根据车辆和城市去重 -->
+	<select id="selectCityQuXiangGroupOfCarNew" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>  from bigdata_car_stop_record
+		where MAP_PROVINCE is not null and MAP_PROVINCE!=''
+		and MAP_CITY is not null and MAP_CITY!=''
+		<if test="carType!=null">
+			and CAR_TYPE=#{carType}
+		</if>
+		<if test="countDate!=null">
+			and COUNT_DATE=#{countDate}
+		</if>
+		<if test="countMonth!=null">
+			and COUNT_MONTH=#{countMonth}
+		</if>
+		<if test="yearNum!=null">
+			and YEAR_NUM=#{yearNum}
+		</if>
+		group by MAP_PROVINCE,MAP_CITY,CAR_REAL_ID
+	</select>
+
+
+	<!--  查询几天内某个车的停车记录 增加分片分区之后的排序  -->
+	<select id="listCarStopRecOfCar" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_car_stop_record
+		where CAR_REAL_ID=#{carRealId}
+		and  COUNT_DATE>=#{countDateMin} and COUNT_DATE &lt;=#{countDateMax}
+		and (COUNT_MONTH=#{countMonthMin} or COUNT_MONTH=#{countMonthMax})
+		order by END_TIME asc
+	</select>
+
+	<!--  根据主键和分片字段查询 -->
+	<select id="loadByIdAndDate" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_car_stop_record
+		where ID=#{id} and	COUNT_MONTH=#{countMonth}
+	</select>
+
+	<update id="updateByFenPian" parameterType="com.edgedo.bigdata.entity.BigdataCarStopRecord">
+		update bigdata_car_stop_record
+		<set>
+			<if test="carRealId!=null">
+				 CAR_REAL_ID=#{carRealId},
+			</if>
+			<if test="carPlateNum!=null">
+				 CAR_PLATE_NUM=#{carPlateNum},
+			</if>
+			<if test="beginTime!=null">
+				 BEGIN_TIME=#{beginTime},
+			</if>
+			<if test="endTime!=null">
+				 END_TIME=#{endTime},
+			</if>
+			<if test="stopMiniteNum!=null">
+				 STOP_MINITE_NUM=#{stopMiniteNum},
+			</if>
+			<if test="carPlateColor!=null">
+				 CAR_PLATE_COLOR=#{carPlateColor},
+			</if>
+			<if test="mapCountry!=null">
+				 MAP_COUNTRY=#{mapCountry},
+			</if>
+			<if test="mapProvince!=null">
+				 MAP_PROVINCE=#{mapProvince},
+			</if>
+			<if test="mapProvinceId!=null">
+				 MAP_PROVINCE_ID=#{mapProvinceId},
+			</if>
+			<if test="mapCity!=null">
+				 MAP_CITY=#{mapCity},
+			</if>
+			<if test="mapCityId!=null">
+				 MAP_CITY_ID=#{mapCityId},
+			</if>
+			<if test="mapXianqu!=null">
+				 MAP_XIANQU=#{mapXianqu},
+			</if>
+			<if test="mapXianquId!=null">
+				 MAP_XIANQU_ID=#{mapXianquId},
+			</if>
+			<if test="mapDetail!=null">
+				 MAP_DETAIL=#{mapDetail},
+			</if>
+			<if test="pointLat!=null">
+				 POINT_LAT=#{pointLat},
+			</if>
+			<if test="pointLong!=null">
+				 POINT_LONG=#{pointLong},
+			</if>
+			<if test="altitude!=null">
+				 ALTITUDE=#{altitude},
+			</if>
+			<if test="carType!=null">
+				 CAR_TYPE=#{carType},
+			</if>
+		</set>
+		where id=#{id} and COUNT_MONTH=#{countMonth}
+	</update>
+
+  
+</mapper>

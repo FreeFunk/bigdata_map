@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="BigdataTimeAnalysis-form" id="BigdataTimeAnalysis-form" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">清晨里程</label>
+            <div class="layui-input-block">
+                <input type="text" name="earlyMorningMileage" lay-verify="required|number" placeholder="请输入清晨里程" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">清晨时长</label>
+            <div class="layui-input-block">
+                <input type="text" name="earlyMorningTime" lay-verify="required|number" placeholder="请输入清晨时长" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">中午里程</label>
+            <div class="layui-input-block">
+                <input type="text" name="noonMileage" lay-verify="required|number" placeholder="请输入中午里程" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">中午时长</label>
+            <div class="layui-input-block">
+                <input type="text" name="noonTime" lay-verify="required|number" placeholder="请输入中午时长" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">黄昏里程</label>
+            <div class="layui-input-block">
+                <input type="text" name="duskMileage" lay-verify="required|number" placeholder="请输入黄昏里程" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">黄昏时长</label>
+            <div class="layui-input-block">
+                <input type="text" name="duskTime" lay-verify="required|number" placeholder="请输入黄昏时长" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">夜间里程</label>
+            <div class="layui-input-block">
+                <input type="text" name="nightMileage" lay-verify="required|number" placeholder="请输入夜间里程" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">夜间时长</label>
+            <div class="layui-input-block">
+                <input type="text" name="nightTime" lay-verify="required|number" placeholder="请输入夜间时长" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">凌晨里程</label>
+            <div class="layui-input-block">
+                <input type="text" name="lingchenMileage" lay-verify="required|number" placeholder="请输入凌晨里程" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">凌晨时长</label>
+            <div class="layui-input-block">
+                <input type="text" name="lingchenTime" lay-verify="required|number" placeholder="请输入凌晨时长" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">清晨里程占比</label>
+            <div class="layui-input-block">
+                <input type="text" name="earlyMorningMileageRate" lay-verify="required|number" placeholder="请输入清晨里程占比" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">清晨里程标识</label>
+            <div class="layui-input-block">
+                <input type="text" name="earlyMorningMileageFlag" lay-verify="required|number" placeholder="请输入清晨里程标识" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">清晨时长占比</label>
+            <div class="layui-input-block">
+                <input type="text" name="earlyMorningTimeRate" lay-verify="required|number" placeholder="请输入清晨时长占比" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">清晨时长标识</label>
+            <div class="layui-input-block">
+                <input type="text" name="earlyMorningTimeFlag" lay-verify="required|number" placeholder="请输入清晨时长标识" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">中午里程占比</label>
+            <div class="layui-input-block">
+                <input type="text" name="noonMileageRate" lay-verify="required|number" placeholder="请输入中午里程占比" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">中午里程标识</label>
+            <div class="layui-input-block">
+                <input type="text" name="noonMileageFlag" lay-verify="required|number" placeholder="请输入中午里程标识" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">中午时长占比</label>
+            <div class="layui-input-block">
+                <input type="text" name="noonTimeRate" lay-verify="required|number" placeholder="请输入中午时长占比" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">中午时长标识</label>
+            <div class="layui-input-block">
+                <input type="text" name="noonTimeFlag" lay-verify="required|number" placeholder="请输入中午时长标识" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">黄昏里程占比</label>
+            <div class="layui-input-block">
+                <input type="text" name="duskMileageRete" lay-verify="required|number" placeholder="请输入黄昏里程占比" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">黄昏里程标识</label>
+            <div class="layui-input-block">
+                <input type="text" name="duskMileageFlag" lay-verify="required|number" placeholder="请输入黄昏里程标识" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">黄昏时长占比</label>
+            <div class="layui-input-block">
+                <input type="text" name="duskTimeRate" lay-verify="required|number" placeholder="请输入黄昏时长占比" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">黄昏时长标识</label>
+            <div class="layui-input-block">
+                <input type="text" name="duskTimeFlag" lay-verify="required|number" placeholder="请输入黄昏时长标识" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">夜间里程占比</label>
+            <div class="layui-input-block">
+                <input type="text" name="nightMileageRate" lay-verify="required|number" placeholder="请输入夜间里程占比" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">夜间里程标识</label>
+            <div class="layui-input-block">
+                <input type="text" name="nightMileageFlag" lay-verify="required|number" placeholder="请输入夜间里程标识" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">夜间时长占比</label>
+            <div class="layui-input-block">
+                <input type="text" name="nightTimeRate" lay-verify="required|number" placeholder="请输入夜间时长占比" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">夜间时长标识</label>
+            <div class="layui-input-block">
+                <input type="text" name="nightTimeFlag" lay-verify="required|number" placeholder="请输入夜间时长标识" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">凌晨时长占比</label>
+            <div class="layui-input-block">
+                <input type="text" name="lingchenTimeRate" lay-verify="required|number" placeholder="请输入凌晨时长占比" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">凌晨时长标识</label>
+            <div class="layui-input-block">
+                <input type="text" name="lingchenTimeFlag" lay-verify="required|number" placeholder="请输入凌晨时长标识" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">凌晨里程占比</label>
+            <div class="layui-input-block">
+                <input type="text" name="lingchenMileageRate" lay-verify="required|number" placeholder="请输入凌晨里程占比" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">凌晨里程标识</label>
+            <div class="layui-input-block">
+                <input type="text" name="lingchenMileageFlag" lay-verify="required|number" placeholder="请输入凌晨里程标识" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">总里程</label>
+            <div class="layui-input-block">
+                <input type="text" name="sumMileage" lay-verify="required|number" placeholder="请输入总里程" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">总时长</label>
+            <div class="layui-input-block">
+                <input type="text" name="sumDuration" lay-verify="required|number" placeholder="请输入总时长" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车辆类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="carType" lay-verify="required" placeholder="请输入车辆类型" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">统计时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="countTime" id="countTime" lay-verify="required" placeholder="请输入统计时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">一类危险时段</label>
+            <div class="layui-input-block">
+                <input type="text" name="firstDangerTimeNum" lay-verify="required|number" placeholder="请输入一类危险时段" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">二类危险时段</label>
+            <div class="layui-input-block">
+                <input type="text" name="secondDangerTimeNum" lay-verify="required|number" placeholder="请输入二类危险时段" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">三类危险时段</label>
+            <div class="layui-input-block">
+                <input type="text" name="thirdDangerTimeNum" lay-verify="required|number" placeholder="请输入三类危险时段" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">月份</label>
+            <div class="layui-input-block">
+                <input type="text" name="countMonth" lay-verify="required|number" placeholder="请输入月份" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">统计日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="countDate" lay-verify="required|number" placeholder="请输入统计日期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">firstDangerMileage</label>
+            <div class="layui-input-block">
+                <input type="text" name="firstDangerMileage" lay-verify="required|number" placeholder="请输入firstDangerMileage" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">secondDangerMileage</label>
+            <div class="layui-input-block">
+                <input type="text" name="secondDangerMileage" lay-verify="required|number" placeholder="请输入secondDangerMileage" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">thirdDangerMileage</label>
+            <div class="layui-input-block">
+                <input type="text" name="thirdDangerMileage" lay-verify="required|number" placeholder="请输入thirdDangerMileage" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+   <!-- <div class="layui-form-item">
+        <label class="layui-form-label">省名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="name" lay-verify="required" placeholder="请输入省名" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">区域</label>
+        <div class="layui-input-inline">
+            <input type="text" name="area" lay-verify="required" placeholder="请输入区域" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="orderNumber" lay-verify="required" placeholder="请输入区域" autocomplete="off" class="layui-input">
+        </div>
+    </div>-->
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="BigdataTimeAnalysis-form-submit" id="BigdataTimeAnalysis-form-submit" value="确认添加">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'form','laydate'], function(){
+            var $ = layui.$
+                ,laydate = layui.laydate
+                ,admin  = layui.admin
+                ,form = layui.form;
+
+            //监听提交
+            form.on('submit(BigdataTimeAnalysis-form-submit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //提交 Ajax 成功后，关闭当前弹层并重载表格
+                admin.req({
+                    url:layui.setter.basePath +'/admin/bigdataTimeAnalysis/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('BigdataTimeAnalysis-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('添加成功', {
+                            icon: 1
+                        });
+                    },
+                });
+
+            });
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#countTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

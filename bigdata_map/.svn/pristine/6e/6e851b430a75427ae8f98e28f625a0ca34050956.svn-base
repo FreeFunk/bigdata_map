@@ -1,0 +1,2334 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通区块链北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="css/layer-animate.css" rel="stylesheet">
+<link href="css/tc.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    
+   	<style type="text/css">
+		
+		
+		.tab0 .nav-tabs0{
+		    padding-left: 15px;
+		    border-bottom: 4px solid #026C9C;
+		}
+		.tab0 .nav-tabs0 li a{
+		    color: #fff;
+		    padding: 8px 40px;
+		    margin-right: 10px;
+		    background: #026C9C;
+		    text-shadow: 1px 1px 2px #000;
+		    border: none;
+            float: left;
+		    border-radius: 0;
+		    opacity: 0.5;
+		    position: relative;
+		    transition: all 0.3s ease 0s;
+		}
+		.tab0 .nav-tabs0 li a:hover{
+		    background: #026C9C;
+		    opacity: 0.8;
+		}
+		.tab0 .nav-tabs0 li.active a{
+		    opacity: 1;
+		}
+		.tab0 .nav-tabs0 li.active a,
+		.tab0 .nav-tabs0 li.active a:hover,
+		.tab0 .nav-tabs0 li.active a:focus{
+		    color: #fff;
+		    background: #026C9C;
+		    border: none;
+		    border-radius: 0;
+		}
+		.tab0 .nav-tabs0 li a:before,
+		.tab0 .nav-tabs0 li a:after{
+		    content: "";
+		    border-top: 42px solid transparent;
+		    position: absolute;
+		    top: -2px;
+		}
+		.tab0 .nav-tabs0 li a:before{
+		    border-right: 15px solid #026C9C;
+		    left: -15px;
+		}
+		.tab0 .nav-tabs0 li a:after{
+		    border-left: 15px solid #026C9C;
+		    right: -15px;
+		}
+		.tab0 .nav-tabs0 li a i,
+		.tab0 .nav-tabs0 li.active a i{
+		    display: inline-block;
+		    padding-right: 5px;
+		    font-size: 17px;
+		    text-shadow: none;
+		}
+		.tab0 .nav-tabs0 li a span{
+		    display: inline-block;
+		    font-size: 17px;
+		    letter-spacing: -3px;
+		    
+		    transition: all 0.3s ease 0s;
+		}
+		.tab0 .nav-tabs0 li a:hover span,
+		.tab0 .nav-tabs0 li.active a span{
+		    letter-spacing: 5px;
+		    opacity: 1;
+		    transition: all 0.3s ease 0s;
+		}
+		.tab0 .tab-content0{
+		    padding: 30px;
+		    background: #fff;
+		    font-size: 16px;
+		    color: #6c6c6c;
+		    line-height: 25px;
+		}
+		.tab0 .tab-content0 h3{
+		    font-size: 24px;
+		    margin-top: 0;
+		}
+		@media only screen and (max-width: 479px){
+		    .tab0 .nav-tabs0 li{
+		        width: 100%;
+		        margin-bottom: 5px;
+		        text-align: center;
+		    }
+		    .tab0 .nav-tabs0 li a span{
+		        letter-spacing: 1px;
+		        opacity: 1;
+		    }
+		}
+	</style> 
+
+    <script src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.SuperSlide.2.1.js"></script>
+  
+</head> 
+<body>
+
+    
+<div class="top ">
+    <div class="top_r">
+        <div class="time">
+                
+                   
+                <input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " /> 
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+    <div class="top_l">
+    
+      <div class="tm10"> 
+          
+         <div class="mt30">  
+
+<!--
+           <A href="首页.html" class="btn0 on">全部</A>
+           <A href="首页.html" class="btn0">客</A>
+           <A href="首页.html" class="btn0">货</A>
+           <A href="首页.html" class="btn0">危</A>
+-->
+             
+
+<!--
+            <div class="tabPanel">
+                <div class="tabPanel_xx"></div>
+                <ul class="clearfix">
+                    <li class="hit">全部</li>
+                    <li class="" >客</li>
+                    <li class="">货</li>
+                    <li class="">危</li>
+                </ul>
+            </div>
+-->
+
+           
+             
+             
+             <div style="overflow: hidden; width: 500px; height: 60px;">
+             
+                        <div class="tab0 clearfix" role="tabpanel">
+	                        
+	                        <ul class="nav0 nav-tabs0 clearfix" role="tablist">
+	                            <li role="presentation" class="active"><a href="#Section01" aria-controls="home" role="tab" data-toggle="tab"><span>全部</span></a></li>
+	                            <li role="presentation"><a href="#Section02" aria-controls="profile" role="tab" data-toggle="tab"><span>客</span></a></li>
+	                            <li role="presentation"><a href="#Section03" aria-controls="messages" role="tab" data-toggle="tab"></i><span>货</span></a></li>
+                                <li role="presentation"><a href="#Section04" aria-controls="messages" role="tab" data-toggle="tab"></i><span>危</span></a></li>
+	                        </ul>
+                            
+	                    </div>
+             
+             </div>
+	                 
+		
+            
+                
+   
+        </div> 
+      
+      </div>
+    
+    </div>
+    
+    <div class="top_m "><div class="logo">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="main">
+
+   
+       <div class="screen1 clearfix">
+        
+            <div class="right mk" style="width:515px; height: 635px" >
+                   <em class="b1"></em><em class="b2"></em>
+                
+                
+                
+                
+                   <div class="tit" style="margin-bottom:0px;">
+                         <span class="tit_l"></span>
+                         <span class="tit_m"><a class="tit_link" href="#">道路运输数据查询</a></span>
+                         <span class="tit_r"></span>
+                   </div>
+                
+                   <div class="dh0">
+                       <ul>
+                           <li><a style="background-image: linear-gradient(160deg, #43B7D8 20%,#0BA89D 80%);cursor:pointer" href="javascript:0;" class="cd-popup-trigger0"><img src="images/tb2.png" style="position:absolute;left: 55px; top:15px; width:45px;">从业人员</a></li>
+                           <li><a style="background-image: linear-gradient(160deg, #D29277 20%,#ff8b00 80%);cursor:pointer" href="javascript:0;" class="cd-popup-trigger1"><img src="images/tb1.png" style="position:absolute;left: 55px; top:15px; width:50px;">营运车辆</a></li>
+                           <li><a style="background-image: linear-gradient(160deg, #FA6472 20%,#DF4D5A 80%);cursor:pointer" href="javascript:0;" class="cd-popup-trigger2"><img src="images/tb3.png" style="position:absolute;left: 55px; top:15px; width:55px;">运输业户</a></li>
+                       </ul>
+
+                  </div>
+                  
+                  <Div class="clear"></Div>
+                
+                   <div class="tit" style="margin-bottom:0px;">
+                         <span class="tit_l"></span>
+                         <span class="tit_m"><a class="tit_link" href="#">当前数据接入统计</a></span>
+                         <span class="tit_r"></span>
+                   </div>
+                   <div class="con" style=" position: relative; margin-top: -20px">
+                        <div style=" width: 100%; height: 180px;" id="san"></div>
+                        <i style="position: absolute; left:115px; top: 110px; z-index: 99999" class="iconfont icon-jiantouarrow499 hs"></i>
+                        <i style="position: absolute; left:275px; top: 110px; z-index: 99999" class="iconfont icon-jiantouarrow499 hs"></i>
+                        <i style="position: absolute; left:435px; top: 110px; z-index: 99999" class="iconfont icon-jiantouarrow499 hs"></i>
+                   </div>
+                
+                
+                   <Div class="clear"></Div>
+                
+                   <div class="tit" style="margin-bottom:0px; margin-top: -30px">
+                         <span class="tit_l"></span>
+                         <span class="tit_m"><a class="tit_link" href="#">安全生产趋势</a></span>
+                         <span class="tit_r"></span>
+                   </div>
+                    <div class="con" style="padding-bottom: 10px;">
+                        <div style=" position: relative">
+                          <div class="jdt1" style=" position: absolute; left: 0px; top:0px;  z-index: 9999; width: 50%"></div>
+                          <Div class="jdt"></Div>
+                        </div>
+                    </div>
+                
+                
+                 <Div class="clear"></Div>
+              
+                
+                <div class="con" >
+                    <div class="w49 left">
+                         <div class="wb10">
+                           <h4>危险系数</h4>
+                           <p><span class="counter">0.5</span><i class="iconfont icon-jiantouarrow505 ls"></i></p>
+                        </div>
+                    </div>
+                    
+                    <div class="w49 right" style="position: relative">
+                         <div class="wb10">
+                           <h4 class="cd-popup-trigger3" style=" cursor:  pointer">交通数据联动</h4>
+                           <div style="position: absolute; top:40px; width: 100%; left: 0px; text-align: center"><em  class="mr10" style="color: #fff">用户在线数</em></div>
+                           <p><span class="counter">23</span></p>
+                        </div>
+                    </div>
+                </div>  
+                
+             
+                  
+                   
+               </div>
+        
+        
+        
+               <div class="left mk" style="width:515px; height: 635px" >
+                   <em class="b1"></em><em class="b2"></em>
+                   <div class="tit" style="margin-bottom:0px;">
+                         <span class="tit_l"></span>
+                         <span class="tit_m"><a class="tit_link" href="#">城市运力分析</a></span>
+                         <span class="tit_r"></span>
+                   </div>
+                   <div class="con">
+                       
+                    <div class="clearfix">
+                        <div class="wb33">
+                             <h4>总在网数<span class="counter">12000</span><em>辆</em></h4>
+                       </div>
+                    </div>       
+                    <div class="left">
+                       <div class="wb">
+                       
+                          <div style="width:55%; float:left">
+                             <h4>上线数</h4>
+                             <p><span class="counter">12000</span></p>
+                          </div>
+                          <div style="width:45%; float:right">
+                             <h4>上线率</h4>
+                             <p><span class="counter">84</span><span>%</span><i class="iconfont icon-jiantouarrow499 hs"></i></p>
+                          </div>
+                           
+                           
+                       </div>
+                       <div class="wb">
+                       
+                          <div style="width:55%; float:left">
+                             <h4>运营数</h4>
+                             <p><span class="counter">7833</span></p>
+                          </div>
+                          <div style="width:45%; float:right">
+                             <h4>运营率</h4>
+                             <p><span class="counter">76</span><span>%</span><i class="iconfont icon-jiantouarrow499 hs"></i></p>
+                          </div>
+                           
+                           
+                       </div>
+                       
+                       
+                       
+                    </div>
+                    <div class="right">
+                         <div class="wb1">
+                           <h4>当前理论运营峰值</h4>
+                           <p><span class="counter">127.64</span><em>万吨</em><i class="iconfont icon-jiantouarrow499 hs"></i></p>
+                       </div>
+                       <div class="wb1">
+                           <h4>当日总里程</h4>
+                           <p><span class="counter">200.23</span><em>万公里</em><i class="iconfont icon-jiantouarrow505 ls"></i></p>
+                       </div>
+                       <div class="wb1">
+                           <h4>当日总时长</h4>
+                           <p><span class="counter">2.376</span><em>万小时</em><i class="iconfont icon-jiantouarrow505 ls"></i></p>
+                       </div>
+                    </div>
+                </div>
+                   
+                   <div class="clear"></div>
+                   
+                   <div class="tit" style="margin-bottom:0px;">
+                         <span class="tit_l"></span>
+                         <span class="tit_m"><a class="tit_link" href="#">1日车辆去向分布</a></span>
+                         <span class="tit_r"></span>
+                   </div>
+                   
+                   <div class="con" style="position: relative">
+                       <div class="left" id="aa1" style="width:100%; height: 220px"></div>
+                       <div style=" position: absolute; top: 70px; right: 20px;">
+                          <a href="###" class="btn000">月汇总</a>
+                           <Div class="blank20"> </Div>
+                          <a href="###" class="btn000">季度汇总</a>
+                       </div>
+                       
+                       
+                       
+                       
+                   </div>
+               </div>
+            
+            <div class="k_m ">
+                 
+                <div class="mk" style=" width:100%; height:632px; margin-top:3px">
+                        <em class="b1"></em><em class="b2"></em> <em class="b3"></em><em class="b4"></em> 
+                         <a href="###"  id="test" style="position:absolute;left:20px; top:20px; z-index:9999999" title="放大地图"><img src="images/fangda.png" style="width:28px;"></a>
+                   
+                        <iframe scrolling="no" frameborder="0" width="100%" height="632" src="http://localhost:8080/map-new/"></iframe>
+                       
+                </div>
+                
+            </div>
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+  
+       </div>
+       
+       
+       
+       <div class="blank20"></div>
+       
+       
+       <div class="screen2 clearfix">
+       
+           
+       <div class="left mk  mr10" style=" width:300px; height:310px">
+               <em class="b1"></em><em class="b2"></em>
+               <div class="tit0">
+                     <span class="tit0_l"></span>
+                     <span class="tit0_m"><a href="###" class="tit_link">超速分析</a></span>
+                     <span class="tit0_r"></span>
+               </div>
+               
+             
+               
+               <div class="con0 clearfix">
+                        <div class="text-center"><span class="tsf">超速报警系数:0.4<i class="iconfont icon-jiantouarrow499 hs"></i></span></div>
+                         <div class="blank10"></div>
+                        <h3 class="progress-title">国道<em class="sz">83</em>次</h3>
+                        <div class="progress">
+                            <div class="progress-bar" style="width:18%;" id="jd01">
+                                <div class="progress-value">18%<i class="iconfont icon-jiantouarrow499 hs"></i></div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="progress-title">高速<em class="sz">332</em>次</h3>
+                        <div class="progress">
+                            <div class="progress-bar" style="width:35%;" id="jd02">
+                                <div class="progress-value ">35%<i class="iconfont icon-jiantouarrow505 ls"></i></div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="progress-title">严重超速<em class="sz">45</em>次</h3>
+                        <div class="progress">
+                            <div class="progress-bar" style="width:70%;" id="jd03">
+                                <div class="progress-value ">70%<i class="iconfont icon-jiantouarrow499 hs"></i></div>
+                            </div>
+                        </div>
+                        
+               </div>
+           </div>
+           
+       <div class="left mk  mr10" style=" width:300px; height:310px">
+               <em class="b1"></em><em class="b2"></em>
+               <div class="tit0">
+                     <span class="tit0_l"></span>
+                     <span class="tit0_m"><a href="###" class="tit_link">疲劳驾驶</a></span>
+                     <span class="tit0_r"></span>
+               </div>
+               
+             
+               
+               <div class="con0 clearfix">
+                   
+                         <div class="text-center"><span class="tsf">疲劳驾驶系数:0.5<i class="iconfont icon-jiantouarrow499 hs"></i></span></div>
+                     <div class="blank10"></div>
+                        <h3 class="progress-title">国道<em class="sz">83</em>次</h3>
+                        <div class="progress">
+                            <div class="progress-bar" style="width:18%;" id="jd04">
+                                <div class="progress-value">18%<i class="iconfont icon-jiantouarrow499 hs"></i></div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="progress-title">高速<em class="sz">332</em>次</h3>
+                        <div class="progress">
+                            <div class="progress-bar" style="width:72%;" id="jd05">
+                                <div class="progress-value ">72%<i class="iconfont icon-jiantouarrow499 hs"></i></div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="progress-title">严重疲劳驾驶<em class="sz">45</em>次</h3>
+                        <div class="progress">
+                            <div class="progress-bar" style="width:10%;" id="jd06">
+                                <div class="progress-value ">10%<i class="iconfont icon-jiantouarrow499 hs"></i></div>
+                            </div>
+                        </div>
+                        
+               </div>
+           </div>
+           
+       <Div class="left mr10" style=" width:420px;">
+        <div class="mk" style="width:100%; height:200px" >
+               <em class="b1"></em><em class="b2"></em>
+               <div class="tit0">
+                     <span class="tit0_l"></span>
+                     <span class="tit0_m"><a href="###" class="tit_link">危险时段</a></span>
+                     <span class="tit0_r"></span>
+               </div>
+               <div class="con0 clearfix">
+               <div class="text-center"><span class="tsf">危险时段经过次数系数：0.5<i class="iconfont icon-jiantouarrow499 hs"></i></span></div>
+                       <div class="blank6"></div>
+                     <div class="left w33">
+                     <span class="wxld">一类</span>
+                     <div class="scene wxld_r">
+                          <svg 
+                          version="1.1" 
+                          id="dc-spinner" 
+                          xmlns="http://www.w3.org/2000/svg" 
+                          x="0px" y="0px"
+                          width:"38"
+                          height:"38"
+                          viewBox="0 0 38 38" 
+                          preserveAspectRatio="xMinYMin meet"
+                          >
+                          <text x="14" y="24"  font-size="12px" style="letter-spacing:0.6; font-family:MyNewFont; " fill="#90e5fd">167</text>
+                          <path fill="#373a42" d="M20,35c-8.271,0-15-6.729-15-15S11.729,5,20,5s15,6.729,15,15S28.271,35,20,35z M20,5.203
+                            C11.841,5.203,5.203,11.841,5.203,20c0,8.159,6.638,14.797,14.797,14.797S34.797,28.159,34.797,20
+                            C34.797,11.841,28.159,5.203,20,5.203z">
+                          </path>
+                        
+                          <path fill="#373a42" d="M20,33.125c-7.237,0-13.125-5.888-13.125-13.125S12.763,6.875,20,6.875S33.125,12.763,33.125,20
+                            S27.237,33.125,20,33.125z M20,7.078C12.875,7.078,7.078,12.875,7.078,20c0,7.125,5.797,12.922,12.922,12.922
+                            S32.922,27.125,32.922,20C32.922,12.875,27.125,7.078,20,7.078z">
+                          </path>
+                        
+                          <path fill="#1594bb" stroke="#1594bb" stroke-width="1" stroke-miterlimit="10" d="M5.203,20
+                                    c0-8.159,6.638-14.797,14.797-14.797V5C11.729,5,5,11.729,5,20s6.729,15,15,15v-0.203C11.841,34.797,5.203,28.159,5.203,20z">
+                          <animateTransform
+                                attributeName="transform"
+                                type="rotate"
+                                from="0 20 20"
+                                to="360 20 20"
+                                calcMode="spline"
+                                keySplines="0.4, 0, 0.2, 1"
+                                keyTimes="0;1"
+                                dur="2s"
+                                repeatCount="indefinite" />      
+                           </path>
+                        
+                          <path fill="#52d0de" stroke="#52d0de" stroke-width="0.2027" stroke-miterlimit="10" d="M7.078,20
+                          c0-7.125,5.797-12.922,12.922-12.922V6.875C12.763,6.875,6.875,12.763,6.875,20S12.763,33.125,20,33.125v-0.203
+                          C12.875,32.922,7.078,27.125,7.078,20z">
+                           <animateTransform
+                              attributeName="transform"
+                              type="rotate"
+                              from="0 20 20"
+                              to="360 20 20"
+                              dur="1.8s"  
+                              repeatCount="indefinite" />
+                            </path>
+                          </svg>
+                        </div>
+                     </div> 
+                     
+                     
+                     
+                     
+                     <div class="left w33">
+                      <span class="wxld">二类</span>
+                     <div class="scene wxld_r">
+                          <svg 
+                          version="1.1" 
+                          id="dc-spinner" 
+                          xmlns="http://www.w3.org/2000/svg" 
+                          x="0px" y="0px"
+                          width:"38"
+                          height:"38"
+                          viewBox="0 0 38 38" 
+                          preserveAspectRatio="xMinYMin meet"
+                          >
+                          <text x="14" y="24"  font-size="12px" style="letter-spacing:0.6; font-family:MyNewFont; " fill="#90e5fd">133</text>
+                          <path fill="#373a42" d="M20,35c-8.271,0-15-6.729-15-15S11.729,5,20,5s15,6.729,15,15S28.271,35,20,35z M20,5.203
+                            C11.841,5.203,5.203,11.841,5.203,20c0,8.159,6.638,14.797,14.797,14.797S34.797,28.159,34.797,20
+                            C34.797,11.841,28.159,5.203,20,5.203z">
+                          </path>
+                        
+                          <path fill="#373a42" d="M20,33.125c-7.237,0-13.125-5.888-13.125-13.125S12.763,6.875,20,6.875S33.125,12.763,33.125,20
+                            S27.237,33.125,20,33.125z M20,7.078C12.875,7.078,7.078,12.875,7.078,20c0,7.125,5.797,12.922,12.922,12.922
+                            S32.922,27.125,32.922,20C32.922,12.875,27.125,7.078,20,7.078z">
+                          </path>
+                        
+                          <path fill="#50b270" stroke="#50b270" stroke-width="1" stroke-miterlimit="10" d="M5.203,20
+                                    c0-8.159,6.638-14.797,14.797-14.797V5C11.729,5,5,11.729,5,20s6.729,15,15,15v-0.203C11.841,34.797,5.203,28.159,5.203,20z">
+                          <animateTransform
+                                attributeName="transform"
+                                type="rotate"
+                                from="0 20 20"
+                                to="360 20 20"
+                                calcMode="spline"
+                                keySplines="0.4, 0, 0.2, 1"
+                                keyTimes="0;1"
+                                dur="2s"
+                                repeatCount="indefinite" />      
+                           </path>
+                        
+                          <path fill="#7fd89c" stroke="#7fd89c" stroke-width="0.2027" stroke-miterlimit="10" d="M7.078,20
+                          c0-7.125,5.797-12.922,12.922-12.922V6.875C12.763,6.875,6.875,12.763,6.875,20S12.763,33.125,20,33.125v-0.203
+                          C12.875,32.922,7.078,27.125,7.078,20z">
+                           <animateTransform
+                              attributeName="transform"
+                              type="rotate"
+                              from="0 20 20"
+                              to="360 20 20"
+                              dur="1.8s"  
+                              repeatCount="indefinite" />
+                            </path>
+                          </svg>
+                        </div>
+                     </div>
+                     
+                     
+                     
+                     <div class="right  w33">
+                      <span class="wxld">三类</span>
+                     <div class="scene wxld_r">
+                          <svg 
+                          version="1.1" 
+                          id="dc-spinner" 
+                          xmlns="http://www.w3.org/2000/svg" 
+                          x="0px" y="0px"
+                          width:"38"
+                          height:"38"
+                          viewBox="0 0 38 38" 
+                          preserveAspectRatio="xMinYMin meet"
+                          >
+                          <text x="14" y="24"  font-size="12px" style="letter-spacing:0.6; font-family:MyNewFont; " fill="#90e5fd">149</text>
+                          <path fill="#373a42" d="M20,35c-8.271,0-15-6.729-15-15S11.729,5,20,5s15,6.729,15,15S28.271,35,20,35z M20,5.203
+                            C11.841,5.203,5.203,11.841,5.203,20c0,8.159,6.638,14.797,14.797,14.797S34.797,28.159,34.797,20
+                            C34.797,11.841,28.159,5.203,20,5.203z">
+                          </path>
+                        
+                          <path fill="#373a42" d="M20,33.125c-7.237,0-13.125-5.888-13.125-13.125S12.763,6.875,20,6.875S33.125,12.763,33.125,20
+                            S27.237,33.125,20,33.125z M20,7.078C12.875,7.078,7.078,12.875,7.078,20c0,7.125,5.797,12.922,12.922,12.922
+                            S32.922,27.125,32.922,20C32.922,12.875,27.125,7.078,20,7.078z">
+                          </path>
+                        
+                          <path fill="#e0bb42" stroke="#e0bb42" stroke-width="1" stroke-miterlimit="10" d="M5.203,20
+                                    c0-8.159,6.638-14.797,14.797-14.797V5C11.729,5,5,11.729,5,20s6.729,15,15,15v-0.203C11.841,34.797,5.203,28.159,5.203,20z">
+                          <animateTransform
+                                attributeName="transform"
+                                type="rotate"
+                                from="0 20 20"
+                                to="360 20 20"
+                                calcMode="spline"
+                                keySplines="0.4, 0, 0.2, 1"
+                                keyTimes="0;1"
+                                dur="2s"
+                                repeatCount="indefinite" />      
+                           </path>
+                        
+                          <path fill="#f1dd99" stroke="#f1dd99" stroke-width="0.2027" stroke-miterlimit="10" d="M7.078,20
+                          c0-7.125,5.797-12.922,12.922-12.922V6.875C12.763,6.875,6.875,12.763,6.875,20S12.763,33.125,20,33.125v-0.203
+                          C12.875,32.922,7.078,27.125,7.078,20z">
+                           <animateTransform
+                              attributeName="transform"
+                              type="rotate"
+                              from="0 20 20"
+                              to="360 20 20"
+                              dur="1.8s"  
+                              repeatCount="indefinite" />
+                            </path>
+                          </svg>
+                        </div>
+                     </div> 
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+
+
+               </div>
+           </div>  
+         
+         
+         <div class="blank10"></div>
+         
+         
+         <div class="mk" style="width:100%; height:100px" >
+               <em class="b1"></em><em class="b2"></em>
+               <div class="tit0">
+                     <span class="tit0_l"></span>
+                     <span class="tit0_m"><a href="###" class="tit_link">危险路段</a></span>
+                     <span class="tit0_r"></span>
+               </div>
+               <div class="con0 clearfix">
+               <div class="text-center"><span class="tsf">危险路段经过次数系数：0.5<i class="iconfont icon-jiantouarrow499 hs"></i></span></div>
+ 
+               </div>
+           </div>
+         
+         
+           
+           
+       </Div>    
+           
+       <div class="right mk " style=" width:840px; height:310px">
+           <em class="b1"></em><em class="b2"></em>
+
+
+           <!--               <iframe src="tab.html" width="100%" height="280" scrolling="no" frameborder="0"></iframe>-->
+
+
+
+           <div class="tabBar" style="margin:0 auto">
+               <div class="hd">
+                   <ul>
+                       <li style="margin-bottom:16px;">
+                           分段限速报警
+                           <div style="margin-top:10px;"><em style="color: #ff0000 !important; font-size: 32px; font-family: Arial; font-weight: bold">2115</em><i class="iconfont icon-jiantouarrow499 hs"></i></div>
+                       </li>
+                       <li>
+                           主动安全预警
+                           <div style="margin-top:10px;"> <em style="color: #ff0000 !important; font-size: 32px; font-family:Arial; font-weight: bold">7215</em><i class="iconfont icon-jiantouarrow499 hs"></i></div>
+                       </li>
+
+                   </ul>
+               </div>
+               <div class="bd">
+
+                   <div class="conWrap">
+
+                       <div class="con" style="padding: 0px;">
+
+                           <div class="tablebox0" >
+                               <table border="0" cellspacing="0" cellpadding="0">
+                                   <thead>
+                                   <tr>
+                                       <th  style="width: 15%">车牌号</th>
+                                       <th  style="width: 15%">司机</th>
+                                       <th  style="width: 25%">报警时间</th>
+                                       <th  style="width: 15%">报警速度</th>
+                                       <th  style="width: 15%">道路等级</th>
+                                       <th  style="width: 15%">道路限速值</th>
+                                   </tr>
+                                   </thead>
+                               </table>
+                           </div>
+
+                           <div class="scrolltext">
+                               <div id="quotation0">
+                                   <ul>
+                                       <li >
+                                           <span  style="width: 15%">冀C79660</span>
+                                           <span  style="width: 15%">田桂萍1</span>
+                                           <span  style="width: 25%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 15%">65</span>
+                                           <span  style="width: 15%">省道</span>
+                                           <span  style="width: 15%">60</span>
+                                       </li>
+                                       <li >
+                                           <span  style="width: 15%">冀C79660</span>
+                                           <span  style="width: 15%">田桂萍2</span>
+                                           <span  style="width: 25%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 15%">65</span>
+                                           <span  style="width: 15%">省道</span>
+                                           <span  style="width: 15%">60</span>
+                                       </li>
+                                       <li >
+                                           <span  style="width: 15%">冀C79660</span>
+                                           <span  style="width: 15%">田桂萍3</span>
+                                           <span  style="width: 25%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 15%">65</span>
+                                           <span  style="width: 15%">省道</span>
+                                           <span  style="width: 15%">60</span>
+                                       </li>
+                                       <li >
+                                           <span  style="width: 15%">冀C79660</span>
+                                           <span  style="width: 15%">田桂萍4</span>
+                                           <span  style="width: 25%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 15%">65</span>
+                                           <span  style="width: 15%">省道</span>
+                                           <span  style="width: 15%">60</span>
+                                       </li>
+                                       <li >
+                                           <span  style="width: 15%">冀C79660</span>
+                                           <span  style="width: 15%">田桂萍5</span>
+                                           <span  style="width: 25%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 15%">65</span>
+                                           <span  style="width: 15%">省道</span>
+                                           <span  style="width: 15%">60</span>
+                                       </li>
+                                       <li >
+                                           <span  style="width: 15%">冀C79660</span>
+                                           <span  style="width: 15%">田桂萍6</span>
+                                           <span  style="width: 25%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 15%">65</span>
+                                           <span  style="width: 15%">省道</span>
+                                           <span  style="width: 15%">60</span>
+                                       </li>
+                                       <li >
+                                           <span  style="width: 15%">冀C79660</span>
+                                           <span  style="width: 15%">田桂萍7</span>
+                                           <span  style="width: 25%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 15%">65</span>
+                                           <span  style="width: 15%">省道</span>
+                                           <span  style="width: 15%">60</span>
+                                       </li>
+                                       <li >
+                                           <span  style="width: 15%">冀C79660</span>
+                                           <span  style="width: 15%">田桂萍8</span>
+                                           <span  style="width: 25%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 15%">65</span>
+                                           <span  style="width: 15%">省道</span>
+                                           <span  style="width: 15%">60</span>
+                                       </li>
+                                       <li >
+                                           <span  style="width: 15%">冀C79660</span>
+                                           <span  style="width: 15%">田桂萍9</span>
+                                           <span  style="width: 25%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 15%">65</span>
+                                           <span  style="width: 15%">省道</span>
+                                           <span  style="width: 15%">60</span>
+                                       </li>
+                                       <li >
+                                           <span  style="width: 15%">冀C79660</span>
+                                           <span  style="width: 15%">田桂萍10</span>
+                                           <span  style="width: 25%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 15%">65</span>
+                                           <span  style="width: 15%">省道</span>
+                                           <span  style="width: 15%">60</span>
+                                       </li>
+                                   </ul>
+                               </div>
+                           </div>
+
+
+                           <script type="text/javascript">
+                               $(function(){
+                                   var scrtime;
+                                   $("#quotation0").hover(function(){
+                                       clearInterval(scrtime);
+
+                                   },function(){
+
+                                       scrtime = setInterval(function(){
+                                           var $ul = $("#quotation0 ul");
+                                           var liHeight = $ul.find("li:last").height();
+                                           $ul.animate({marginTop : liHeight + 35 + "px"},1000,function(){
+
+                                               $ul.find("li:last").prependTo($ul)
+                                               $ul.find("li:first").hide();
+                                               $ul.css({marginTop:0});
+                                               $ul.find("li:first").fadeIn(1000);
+                                           });
+                                       },4000);
+
+                                   }).trigger("mouseleave");
+                               });
+                           </script>
+
+                       </div>
+                       <div class="con" style="padding: 0px;">
+                           <div class="tablebox0" >
+                               <table border="0" cellspacing="0" cellpadding="0">
+                                   <thead>
+                                   <tr>
+                                       <th style="width: 12%">目标</th>
+                                       <th  style="width: 12%">报警子类</th>
+                                       <th  style="width: 12%">报警级别</th>
+                                       <th  style="width: 18%">报警详细描述</th>
+                                       <th  style="width: 26%">上传时间</th>
+                                       <th  style="width: 10%">处理</th>
+                                       <th  style="width: 10%">驾驶员</th>
+                                   </tr>
+                                   </thead>
+                               </table>
+                           </div>
+                           <div class="scrolltext">
+                               <div id="quotation">
+                                   <ul>
+                                       <li id="test2">
+                                           <span  style="width: 12%">冀C79660</span>
+                                           <span  style="width: 12%">疲劳驾驶</span>
+                                           <span  style="width: 12%">三级</span>
+                                           <span  style="width: 18%">疲劳程度1</span>
+                                           <span  style="width: 26%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 10%">未处理</span>
+                                           <span  style="width: 10%">田桂萍</span>
+                                       </li>
+                                       <li>
+                                           <span  style="width: 12%">冀C79660</span>
+                                           <span  style="width: 12%">疲劳驾驶</span>
+                                           <span  style="width: 12%">三级</span>
+                                           <span  style="width: 18%">疲劳程度2</span>
+                                           <span  style="width: 26%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 10%">未处理</span>
+                                           <span  style="width: 10%">田桂萍</span>
+                                       </li>
+                                       <li>
+                                           <span  style="width: 12%">冀C79660</span>
+                                           <span  style="width: 12%">疲劳驾驶</span>
+                                           <span  style="width: 12%">三级</span>
+                                           <span  style="width: 18%">疲劳程度3</span>
+                                           <span  style="width: 26%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 10%">未处理</span>
+                                           <span  style="width: 10%">田桂萍</span>
+                                       </li>
+                                       <li>
+                                           <span  style="width: 12%">冀C79660</span>
+                                           <span  style="width: 12%">疲劳驾驶</span>
+                                           <span  style="width: 12%">三级</span>
+                                           <span  style="width: 18%">疲劳程度4</span>
+                                           <span  style="width: 26%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 10%">未处理</span>
+                                           <span  style="width: 10%">田桂萍</span>
+                                       </li>
+                                       <li>
+                                           <span  style="width: 12%">冀C79660</span>
+                                           <span  style="width: 12%">疲劳驾驶</span>
+                                           <span  style="width: 12%">三级</span>
+                                           <span  style="width: 18%">疲劳程度5</span>
+                                           <span  style="width: 26%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 10%">未处理</span>
+                                           <span  style="width: 10%">田桂萍</span>
+                                       </li>
+                                       <li>
+                                           <span  style="width: 12%">冀C79660</span>
+                                           <span  style="width: 12%">疲劳驾驶</span>
+                                           <span  style="width: 12%">三级</span>
+                                           <span  style="width: 18%">疲劳程度2</span>
+                                           <span  style="width: 26%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 10%">未处理</span>
+                                           <span  style="width: 10%">田桂萍</span>
+                                       </li>
+                                       <li>
+                                           <span  style="width: 12%">冀C79660</span>
+                                           <span  style="width: 12%">疲劳驾驶</span>
+                                           <span  style="width: 12%">三级</span>
+                                           <span  style="width: 18%">疲劳程度3</span>
+                                           <span  style="width: 26%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 10%">未处理</span>
+                                           <span  style="width: 10%">田桂萍</span>
+                                       </li>
+                                       <li>
+                                           <span  style="width: 12%">冀C79660</span>
+                                           <span  style="width: 12%">疲劳驾驶</span>
+                                           <span  style="width: 12%">三级</span>
+                                           <span  style="width: 18%">疲劳程度4</span>
+                                           <span  style="width: 26%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 10%">未处理</span>
+                                           <span  style="width: 10%">田桂萍</span>
+                                       </li>
+                                       <li>
+                                           <span  style="width: 12%">冀C79660</span>
+                                           <span  style="width: 12%">疲劳驾驶</span>
+                                           <span  style="width: 12%">三级</span>
+                                           <span  style="width: 18%">疲劳程度5</span>
+                                           <span  style="width: 26%">2019-03-13 16:23:00</span>
+                                           <span  style="width: 10%">未处理</span>
+                                           <span  style="width: 10%">田桂萍</span>
+                                       </li>
+                                   </ul>
+                               </div>
+                           </div>
+
+                           <script type="text/javascript">
+                               $(function(){
+                                   var scrtime;
+                                   $("#quotation").hover(function(){
+                                       clearInterval(scrtime);
+
+                                   },function(){
+
+                                       scrtime = setInterval(function(){
+                                           var $ul = $("#quotation ul");
+                                           var liHeight = $ul.find("li:last").height();
+                                           $ul.animate({marginTop : liHeight + 35 + "px"},1000,function(){
+
+                                               $ul.find("li:last").prependTo($ul)
+                                               $ul.find("li:first").hide();
+                                               $ul.css({marginTop:0});
+                                               $ul.find("li:first").fadeIn(1000);
+                                           });
+                                       },4000);
+
+                                   }).trigger("mouseleave");
+                               });
+                           </script>
+
+
+
+
+                       </div>
+
+
+                   </div>
+
+               </div>
+           </div>
+
+
+           <script type="text/javascript">
+               jQuery(".tabBar").slide({ mainCell:".conWrap", effect:"left", trigger:"click", pnLoop:false });
+           </script>
+
+
+
+
+       </div>
+           
+           
+           
+           
+           
+           
+<!--
+           <div class="left mk  mr10" style=" width:320px; height:300px">
+               <em class="b1"></em><em class="b2"></em>
+               <div class="tit0">
+                     <span class="tit0_l"></span>
+                     <span class="tit0_m"><a href="###" class="tit_link">1日时段分析</a></span>
+                     <span class="tit0_r"></span>
+               </div>
+               
+              <div class="con0 clearfix">
+                   
+                         <div class="text-center"><span class="tsf">危险时段驾驶路程系数:0.5<i class="iconfont icon-jiantouarrow499 hs"></i></span></div>
+                   <div class="blank10"></div>
+                    <div class="left w49"><div style="height: 180px; width: 100%" id="lc1"></div></div>
+                    <div class="right w49"><div style="height: 180px; width: 100%" id="lc2"></div></div>
+               </div>
+               
+           </div>
+-->
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+
+
+       </div>
+   
+
+</div>
+
+   <div id="con" style="display:none; background: url(images/main_bg.jpg) no-repeat center top">
+   <iframe scrolling="no" frameborder="0" width="100%" height="900px" src="http://localhost:8080/map-new/"></iframe>
+</div>
+
+
+
+<div id="con1" style="display:none">
+     <iframe scrolling="no" frameborder="0" width="100%" height="900px" src="leaflet-echarts3-master/examples/index2.html"></iframe>
+</div>
+
+
+<div id="con2" style="display:none">2222</div>
+    
+    
+    
+ <!--弹框-->
+<div class="cd-popup">
+    
+    <div class="cd-popup-container" style="position: relative">
+<!--        <div style="height:2px; width:20px; background:#4398C6; position: absolute; top:10px; right: -20px;"></div>-->
+       <div class="p20">
+           <h4><strong>从业人员检索</strong></h4>
+          
+           
+            
+               <table width="100%" class="sstable">
+                  <tbody>
+                    <tr>
+                      <td style="width: 30%"><div class="mingcheng">司机姓名</div></td>
+                      <td style="width: 70%"><input class="input00" name="" type="text" /></td>
+                    </tr>
+                    <tr>
+                      <td><div class="mingcheng">企业名称</div></td>
+                      <td><input class="input00" name="" type="text" /></td>
+                    </tr>
+                    <tr>
+                      <td><div class="mingcheng">车辆类型</div></td>
+                      <td>
+                            <select class="input00">
+                              <option class="lsd" value ="1">请选择</option>
+                              <option class="lsd" value ="2">Saab</option>
+                              <option class="lsd" value="3">Opel</option>
+                              <option class="lsd" value="4">Audi</option>
+                            </select>
+                     </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                
+               
+              
+               
+                <div class="mt30 center">
+                <a href="###" class="chaxun" onclick="window.location.href='###'">查询</a>&nbsp;&nbsp;&nbsp;<a href="###" class="gjchaxun" onclick="window.location.href='###'">高级查询</a>
+          </div>
+    </div>
+        <a href="#0" class="cd-popup-close">X</a>
+    </div>
+</div>
+
+<div class="cd-popup1">
+    <div class="cd-popup-container1" style="position: relative">
+<!--        <div style="height:2px; width:190px; background:#4398C6; position: absolute; top:10px; right: -190px;"></div>-->
+      <div class="p20">
+           <h4><strong>营业车辆检索</strong></h4>
+          
+        
+            
+               <table width="100%" class="sstable">
+                  <tbody>
+                    <tr>
+                      <td style="width: 30%"><div class="mingcheng">司机姓名</div></td>
+                      <td style="width: 70%"><input class="input00" name="" type="text" /></td>
+                    </tr>
+                    <tr>
+                      <td><div class="mingcheng">企业名称</div></td>
+                      <td><input class="input00" name="" type="text" /></td>
+                    </tr>
+                    <tr>
+                      <td><div class="mingcheng">车辆类型</div></td>
+                      <td>
+                            <select class="input00">
+                              <option class="lsd" value ="1">请选择</option>
+                              <option class="lsd" value ="2">Saab</option>
+                              <option class="lsd" value="3">Opel</option>
+                              <option class="lsd" value="4">Audi</option>
+                            </select>
+                     </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                
+               
+              
+               
+                <div class="mt30 center">
+                <a href="###" class="chaxun" onclick="window.location.href='###'">查询</a>&nbsp;&nbsp;&nbsp;<a href="###" class="gjchaxun" onclick="window.location.href='###'">高级查询</a>
+          </div>
+    </div>
+        <a href="#0" class="cd-popup-close">X</a>
+    </div>
+</div> 
+    
+    
+    
+<div class="cd-popup2">
+    <div class="cd-popup-container2" style="position: relative">
+<!--        <div style="height:2px; width:390px; background:#4398C6; position: absolute; top:10px; right: -390px;"></div>-->
+      <div class="p20">
+           <h4><strong>运输业户检索</strong></h4>
+          
+        
+            
+               <table width="100%" class="sstable">
+                  <tbody>
+                    <tr>
+                      <td style="width: 30%"><div class="mingcheng">企业名称</div></td>
+                      <td style="width: 70%"><input class="input00" name="" type="text" /></td>
+                    </tr>
+                    <tr>
+                      <td><div class="mingcheng">地区</div></td>
+                      <td><select class="input00">
+                              <option class="lsd" value ="1">请选择</option>
+                              <option class="lsd" value ="2">Saab</option>
+                              <option class="lsd" value="3">Opel</option>
+                              <option class="lsd" value="4">Audi</option>
+                            </select></td>
+                    </tr>
+                    <tr>
+                      <td><div class="mingcheng">运营类型</div></td>
+                      <td>
+                            <select class="input00">
+                              <option class="lsd" value ="1">请选择</option>
+                              <option class="lsd" value ="2">Saab</option>
+                              <option class="lsd" value="3">Opel</option>
+                              <option class="lsd" value="4">Audi</option>
+                            </select>
+                     </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                
+               
+              
+               
+                <div class="mt30 center">
+                <a href="###" class="chaxun" onclick="window.location.href='###'">查询</a>&nbsp;&nbsp;&nbsp;<a href="###" class="gjchaxun" onclick="window.location.href='###'">高级查询</a>
+          </div>
+    </div>
+        <a href="#0" class="cd-popup-close">X</a>
+    </div>
+</div> 
+    
+    
+    
+    
+   
+<div class="cd-popup3">
+    <div class="cd-popup-container3" style="position: relative">
+<!--        <div style="height:2px; width:290px; background:#4398C6; position: absolute; top:60px; right: -290px; z-index: 999"></div>-->
+      <div class="p20">
+           <h4><strong>交通数据联动</strong></h4>
+          
+        
+            
+               <table width="100%" class="sstable">
+                  <tbody>
+                    <tr>
+                      <td style="width: 30%"><div class="mingcheng">车牌号</div></td>
+                      <td style="width: 70%"><input class="input00" name="" type="text" /></td>
+                    </tr>
+                    <tr>
+                      <td style="width: 30%"><div class="mingcheng">时段</div></td>
+                      <td style="width: 70%"><input class="input00" name="" type="text" /></td>
+                    </tr>
+                   
+                  </tbody>
+                </table>
+
+                
+               
+              
+               
+                <div class="mt30 center">
+                <a href="###" id="test1" class="chaxun" onclick="window.location.href='###'">查询</a>&nbsp;&nbsp;&nbsp;
+          </div>
+    </div>
+        <a href="#0" class="cd-popup-close">X</a>
+    </div>
+</div> 
+    
+ 
+
+
+
+
+
+
+
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<!--<script type="text/javascript" src="js/jquery.min.js"></script>-->
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    
+    
+    
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+</script>
+
+
+                <script type="text/javascript">
+                        $(function(){	
+                            $('.tabPanel ul li').click(function(){
+                                $(this).addClass('hit').siblings().removeClass('hit');
+                                $('.panes>div:eq('+$(this).index()+')').show().siblings().hide();	
+                            })
+                        })
+                </script>   
+
+
+<script type="text/javascript">
+    /*弹框JS内容*/
+    jQuery(document).ready(function($){
+        //打开窗口
+        $('.cd-popup-trigger0').on('click', function(event){
+            event.preventDefault();
+            $('.cd-popup').addClass('is-visible');
+            //$(".dialog-addquxiao").hide()
+        });
+        //关闭窗口
+        $('.cd-popup').on('click', function(event){
+            if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup') ) {
+                event.preventDefault();
+                $(this).removeClass('is-visible');
+            }
+        });
+        //ESC关闭
+        $(document).keyup(function(event){
+            if(event.which=='27'){
+                $('.cd-popup').removeClass('is-visible');
+            }
+        });
+		
+		//打开窗口
+        $('.cd-popup-trigger1').on('click', function(event){
+            event.preventDefault();
+            $('.cd-popup1').addClass('is-visible1');
+            //$(".dialog-addquxiao").hide()
+        });
+        //关闭窗口
+        $('.cd-popup1').on('click', function(event){
+            if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup1') ) {
+                event.preventDefault();
+                $(this).removeClass('is-visible1');
+            }
+        });
+        //ESC关闭
+        $(document).keyup(function(event){
+            if(event.which=='27'){
+                $('.cd-popup1').removeClass('is-visible1');
+            }
+        });
+		
+		//打开窗口
+        $('.cd-popup-trigger2').on('click', function(event){
+            event.preventDefault();
+            $('.cd-popup2').addClass('is-visible2');
+            //$(".dialog-addquxiao").hide()
+        });
+        //关闭窗口
+        $('.cd-popup2').on('click', function(event){
+            if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup2') ) {
+                event.preventDefault();
+                $(this).removeClass('is-visible2');
+            }
+        });
+        //ESC关闭
+        $(document).keyup(function(event){
+            if(event.which=='27'){
+                $('.cd-popup2').removeClass('is-visible2');
+            }
+        });
+		
+		//打开窗口
+        $('.cd-popup-trigger3').on('click', function(event){
+            event.preventDefault();
+            $('.cd-popup3').addClass('is-visible3');
+            //$(".dialog-addquxiao").hide()
+        });
+        //关闭窗口
+        $('.cd-popup3').on('click', function(event){
+            if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup3') ) {
+                event.preventDefault();
+                $(this).removeClass('is-visible3');
+            }
+        });
+        //ESC关闭
+        $(document).keyup(function(event){
+            if(event.which=='27'){
+                $('.cd-popup3').removeClass('is-visible3');
+            }
+        });
+    });
+</script>
+
+
+<script src="js/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="js/jquery.countup.min.js"></script>
+<script type="text/javascript">
+		$('.counter').countUp();
+</script>
+
+
+<script src="js/radialIndicator.js"></script>
+<script>
+       
+        //radial progress 4
+        var radialObj4 = $('#indicatorContainer4').radialIndicator({
+            barColor: {
+                0: '#55B9FF',
+                25: '#FFBC29',
+                50: '#FFBC29',
+				75: '#FF3136',
+                100: '#884898'
+            },
+            percentage: true
+        }).data('radialIndicator');
+
+        //Using Instance
+        radialObj4.animate(97);
+
+       
+
+
+        
+
+    </script>
+
+
+
+
+<script src="layer/layer.js"></script>
+
+<script>
+  
+$('#test').on('click', function(){
+    parent.layer.open({
+      type: 1,
+	  title: false,
+	  closeBtn: 0,
+	  shadeClose: true,
+	  skin: 'yourclass',
+       area : ['1500px' , '900px'],
+      content:$('#con')
+    });
+  });
+ $('#test1').on('click', function(){
+    layer.open({
+      type: 1,
+	  title:false,
+	  closeBtn: 0,
+	  shadeClose: true,
+       skin: 'yourclass',
+       area : ['1500px' , '900px'],
+      content:$('#con1')
+    });
+  });
+  
+  $('#test2').on('click', function(){
+     layer.open({
+      type: 1,
+	  title:false,
+	  closeBtn: 0,
+	  shadeClose: true,
+       skin: 'yourclass',
+       area : ['900px' , '500px'],
+      content:$('#con2')
+    });
+  });
+ </script>
+
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	// 下拉选择框
+	$('.dropdown-menu li').click(function(){
+	  var txt=$(this).text();
+	  $(this).parent().prev().find('span').eq(0).text(txt);
+	})
+
+	changeY();
+	$('.dropdown-menu li').click(function(){
+		var name=$('a',this).text();
+		$(this).parents('.btn-group').find('.dropdown-toggle span').text(name);
+		changeY();
+	})
+
+	function changeY(){
+		var year=$('#year').text().replace(/[^0-9]/ig,"")
+		var month=$('#month').text().replace(/[^0-9]/ig,"")
+		var days=totalDays(year, month);
+		var dayArr=[];
+		for(var i=1;i<=days;i++)
+		{
+			dayArr.push(i+'号');
+		}
+		var last=parseInt(dayArr[dayArr.length-1]);
+		$('.demo0').children().remove();
+		var div='<input type="hidden" value="" class="single-slider none">';
+		$('.demo0').html(div)
+		// 
+		$('.single-slider').jRange({
+		    from:1,
+		    to:last,
+		    step: 1,
+		    scale: dayArr,
+		    format: '%s',
+		    width:850,
+		    showLabels: true,
+		    snap: true
+		});
+	}
+
+	//一个月的总天数
+	function totalDays(years,months){
+		var d = new Date(years, months, 0);
+		return d.getDate();
+	}
+})
+</script>
+    
+    
+
+    
+<script type="text/javascript">
+      // 基于准备好的dom，初始化echarts实例
+     var myChart = echarts.init(document.getElementById('san'));
+    // 指定图表的配置项和数据
+  option = {
+    
+    
+    
+    series: [{
+        name: '合格率',
+        type: 'pie',
+        radius: ['50%', '70%'],
+        center:['84%','50%'],
+        color:'#DA6464',
+        label: {
+            normal: {
+                position: 'center'
+            }
+        },
+        data: [{
+            value: 10,
+            name: 'a',
+            
+            label: {
+                normal: {
+                    formatter: '{d} %',
+                    textStyle: {
+                        fontSize: 18
+                    }
+                }
+            },
+           
+        }, {
+            value: 10,
+            name: 'b',
+            label: {
+                normal: {
+                    formatter: '\n合格率',
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 14
+                    }
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#aaa'
+                },
+                emphasis: {
+                    color: '#aaa'
+                }
+            },
+        }]
+    },{
+        name: '丢包率',
+        type: 'pie',
+        radius: ['50%', '70%'],
+        center:['50%','50%'],
+        color:'#E28F32',
+        label: {
+            normal: {
+                position: 'center'
+            }
+        },
+        data: [{
+            value: 38,
+            name: 'd',
+            
+            label: {
+                normal: {
+                    formatter: '{d} %',
+                    textStyle: {
+                        fontSize: 18
+                    }
+                }
+            },
+           
+        }, {
+            value: 41,
+            name: 'c',
+            label: {
+                normal: {
+                    formatter: '\n丢包率',
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 14
+                    }
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#aaa'
+                },
+                emphasis: {
+                    color: '#aaa'
+                }
+            },
+        }]
+    },{
+        name: '上传率',
+        type: 'pie',
+        radius: ['50%', '70%'],
+        center:['16%','50%'],
+        color:'#00CDCD',
+        label: {
+            normal: {
+                position: 'center'
+            }
+        },
+        data: [{
+            value: 79,
+            label: {
+                normal: {
+                    formatter: '{d} %',
+                    textStyle: {
+                        fontSize: 18
+                    }
+                }
+            },
+          
+        }, {
+            value: 59,
+            name: '上传率',
+            label: {
+                normal: {
+                    formatter: '\n上传率',
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 14
+                    }
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#aaa'
+                },
+                emphasis: {
+                    color: '#aaa'
+                }
+            },
+        }]
+    }]
+};
+          // 使用刚指定的配置项和数据显示图表。
+           myChart.setOption(option);
+</script>     
+    
+    
+    
+    
+    
+
+<script type="text/javascript">
+      // 基于准备好的dom，初始化echarts实例
+     var myChart = echarts.init(document.getElementById('lc1'));
+    // 指定图表的配置项和数据
+  option = {
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+
+    title : {
+        text: '里程占比',
+        textStyle:{
+                    color:'#0DB9F2',        //颜色
+                    fontStyle:'normal',     //风格
+                    fontWeight:'bold',    //粗细
+                    fontSize:14,     //大小
+                    align:'center'   //水平对齐
+                },
+        x:'center',
+        y: 'bottom',
+    },
+    series: [
+        {
+            name:'里程占比',
+            type:'pie',
+            
+            radius: ['40%', '80%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: true,
+                    position: 'inside',
+                    formatter: "{b}\n{d}%",//模板变量有 {a}、{b}、{c}、{d}，分别表示系列名，数据名，数据值，百分比。{d}数据会根据value值计算百分比
+
+                   textStyle : {  
+                    textBorderColor :'transparent',
+                    align : 'center',
+                    baseline : 'middle',
+                    fontFamily : '微软雅黑',
+                    fontSize : 12,
+                    fontWeight : 'normal'
+                 }
+                },
+            },
+
+            data:[
+                {value:335, name:'清晨',itemStyle:{color:'#DA6464'}},
+                {value:310, name:'中午',itemStyle:{color:'#E28F32'}},
+                {value:234, name:'黄昏',itemStyle:{color:'#66A7FA'}},
+                {value:135, name:'夜晚',itemStyle:{color:'#7EDB82'}},
+             
+            ]
+        }
+    ]
+};                
+          // 使用刚指定的配置项和数据显示图表。
+           myChart.setOption(option);
+</script> 
+    
+    
+    
+<script type="text/javascript">
+      // 基于准备好的dom，初始化echarts实例
+     var myChart = echarts.init(document.getElementById('lc2'));
+    // 指定图表的配置项和数据
+  option = {
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+
+    title : {
+        text: '时长占比',
+        textStyle:{
+                    color:'#0DB9F2',        //颜色
+                    fontStyle:'normal',     //风格
+                    fontWeight:'bold',    //粗细
+                    fontSize:14,     //大小
+                    align:'center'   //水平对齐
+                },
+        x:'center',
+        y: 'bottom',
+    },
+    series: [
+        {
+            name:'里程占比',
+            type:'pie',
+            
+            radius: ['40%', '80%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: true,
+                    position: 'inside',
+                    formatter: "{b}\n{d}%",//模板变量有 {a}、{b}、{c}、{d}，分别表示系列名，数据名，数据值，百分比。{d}数据会根据value值计算百分比
+
+                   textStyle : {  
+                    textBorderColor :'transparent',
+                    align : 'center',
+                    baseline : 'middle',
+                    fontFamily : '微软雅黑',
+                    fontSize : 12,
+                    fontWeight : 'normal'
+                 }
+                },
+            },
+
+            data:[
+                {value:335, name:'清晨',itemStyle:{color:'#DA6464'}},
+                {value:310, name:'中午',itemStyle:{color:'#E28F32'}},
+                {value:234, name:'黄昏',itemStyle:{color:'#66A7FA'}},
+                {value:135, name:'夜晚',itemStyle:{color:'#7EDB82'}},
+             
+            ]
+        }
+    ]
+};                
+          // 使用刚指定的配置项和数据显示图表。
+           myChart.setOption(option);
+</script> 
+    
+    
+
+
+<script type="text/javascript">
+      // 基于准备好的dom，初始化echarts实例
+     var myChart = echarts.init(document.getElementById('aa1'));
+    // 指定图表的配置项和数据
+  option = {
+    
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'center',
+        bottom:'bottom',
+        textStyle:{//图例文字的样式
+            color:'#fff',
+            fontSize:14
+        },
+        data: ['河北','内蒙','吉林','河南','湖北','其他']
+    },
+    series : [
+        {
+            name: '去向分布',
+            type: 'pie',
+            label: {
+                normal: {
+                    show: true,
+                    formatter: '{d}%'
+                }
+            },
+            radius : '75%',
+            center: ['35%', '40%'],
+            data:[
+                {value:1000, name:'河北',itemStyle:{color:'#DA6464'}},
+                {value:230, name:'内蒙',itemStyle:{color:'#E28F32'}},
+                {value:268, name:'吉林',itemStyle:{color:'#E5E63A'}},
+                {value:199, name:'河南',itemStyle:{color:'#66A7FA'}},
+                {value:367, name:'湖北',itemStyle:{color:'#7EDB82'}},
+                {value:890, name:'其他',itemStyle:{color:'#8470F5'}}
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.2)'
+                }
+            }
+        }
+    ]
+};                   
+          // 使用刚指定的配置项和数据显示图表。
+           myChart.setOption(option);
+</script>
+
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts图表
+    var myChart = echarts.init(document.getElementById('aa2')); 
+    
+    var option = {
+        tooltip : {
+            formatter: "{a} <br/>{b} : {c}Km/h"
+        },
+
+        series : [
+            {
+                name:'平均速度',
+                type:'gauge',	
+				radius: '85%',			
+				min:0,
+				max:100,            
+                splitNumber: 5,       // 分割段数，默认为5
+                axisLine: {            // 坐标轴线
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: [[0.2, '#52C6AF'],[0.8, '#2699BA'],[1, '#C78568']], 
+                        width: 10
+                    }
+                },
+                axisTick: {            // 坐标轴小标记
+                    splitNumber: 10,   // 每份split细分多少段
+                    length :12,        // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: 'auto'
+                    }
+                },
+                axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+				    distance:-1,
+                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        color: 'auto'
+                    }
+                },
+                splitLine: {           // 分隔线
+                    show: true,        // 默认显示，属性show控制显示与否
+                    length :15,         // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                        color: 'auto'
+                    }
+                },
+                pointer : {
+                    width : 5
+                },
+                title : {
+                    show : true,
+                    offsetCenter: [0, '100%'],       // x, y，单位px
+                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: '',
+						color:'#2deefe',
+						fontSize:17
+						
+                    }
+                },
+				
+                detail : {
+                    formatter:'{value}Km/h',
+                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        color: 'auto',
+						fontSize:16,
+                        fontWeight: 'bolder',
+						
+                    }
+                },
+                data:[{value:85, name: '平均速度'}]
+            }
+        ]
+    };
+
+    // 为echarts对象加载数据 
+    myChart.setOption(option);
+    
+   
+</script>
+
+
+
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts图表
+    var myChart = echarts.init(document.getElementById('aa3')); 
+    
+    var option = {
+        tooltip : {
+            formatter: "{a} <br/>{b} : {c}Km/h"
+        },
+
+        series : [
+            {
+                name:'转弯速度',
+                type:'gauge',
+				radius: '85%',				
+				min:0,
+				max:100,            
+                splitNumber: 5,       // 分割段数，默认为5
+                axisLine: {            // 坐标轴线
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: [[0.2, '#52C6AF'],[0.8, '#2699BA'],[1, '#C78568']], 
+                        width: 10
+                    }
+                },
+                axisTick: {            // 坐标轴小标记
+                    splitNumber: 10,   // 每份split细分多少段
+                    length :12,        // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: 'auto'
+                    }
+                },
+                axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+				    distance:-1,
+                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        color: 'auto'
+                    }
+                },
+                splitLine: {           // 分隔线
+                    show: true,        // 默认显示，属性show控制显示与否
+                    length :15,         // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                        color: 'auto'
+                    }
+                },
+                pointer : {
+                    width : 5
+                },
+                title : {
+                    show : true,
+                    offsetCenter: [0, '100%'],       // x, y，单位px
+                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: '',
+						color:'#2deefe',
+						fontSize:17
+						
+                    }
+                },
+                detail : {
+                    formatter:'{value}Km/h',
+                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        color: 'auto',
+						fontSize:16,
+                        fontWeight: 'bolder',
+						
+                    }
+                },
+                data:[{value:45, name: '转弯速度'}]
+            }
+        ]
+    };
+
+    // 为echarts对象加载数据 
+    myChart.setOption(option);
+   
+</script>
+
+
+
+
+<script type="text/javascript">
+   var e=97; 
+ var Chart4 = echarts.init(document.getElementById('aa4'));
+	option = {
+        	title:{
+			        show:true,
+			        text:e+'%',
+			        x:'center',
+		        	y:'center',
+			        textStyle: {
+	                    fontSize: '35',
+	                    color:'#05c491',
+	                    fontWeight: 'normal',
+						fontFamily:'MyNewFont'
+	                }
+		       },
+		    tooltip: {
+		        trigger: 'item',
+		        formatter: "{d}%",
+		        show:false
+		    },
+			color:['#05c491','#0c456b'],
+		    legend: {
+		        orient: 'vertical',
+		        x: 'left',
+		        show:false
+		    },
+		    series: 
+		        {
+		            name:'',
+		            type:'pie',
+		            radius: ['65%', '80%'],
+		            avoidLabelOverlap: true,
+		            hoverAnimation:false,
+		            label: {
+		                normal: {
+		                    show: false,
+		                    position: 'center'
+		                },
+		                emphasis: {
+		                    show: false
+		                }
+		            },
+		            labelLine: {
+		                normal: {
+		                    show: false
+		                }
+		            },
+		            data:[
+		                {value:e, name:''},
+		                {value:100-e, name:''}
+		            ]
+		        }
+		    
+		};
+        Chart4.setOption(option); 
+
+   
+</script>
+
+<script type="text/javascript">
+var prox;
+var proy;
+var proxc;
+var proyc;
+function show(id){
+	clearInterval(prox);
+	clearInterval(proy);
+	clearInterval(proxc);
+	clearInterval(proyc);
+	var o = document.getElementById(id);
+	o.style.display = "block";
+	o.style.width = "1px";
+	o.style.height = "1px"; 
+	prox = setInterval(function(){
+		openx(o,300)
+	},10);
+} 
+function openx(o,x){
+	var cx = parseInt(o.style.width);
+	if(cx < x){
+		o.style.width = (cx + Math.ceil((x-cx)/5)) +"px";
+	}else{
+		clearInterval(prox);
+		proy = setInterval(function(){
+			openy(o,470)
+		},10);
+	}
+}
+
+function openy(o,y){
+	var cy = parseInt(o.style.height);
+	if(cy < y){
+		o.style.height = (cy + Math.ceil((y-cy)/5)) +"px";
+	}else{
+		clearInterval(proy);   
+	}
+}
+
+function closeed(id){
+	clearInterval(prox);
+	clearInterval(proy);
+	clearInterval(proxc);
+	clearInterval(proyc);  
+	var o = document.getElementById(id);
+	if(o.style.display == "block"){
+		proyc = setInterval(function(){
+			closey(o)
+		},15);   
+	}  
+}
+
+function closey(o){
+	var cy = parseInt(o.style.height);
+	if(cy > 0){
+		o.style.height = (cy - Math.ceil(cy/1)) +"px";
+	}else{
+		clearInterval(proyc);    
+		proxc = setInterval(function(){closex(o)},15);
+	}
+}
+
+function closex(o){
+	var cx = parseInt(o.style.width);
+	if(cx > 0){
+		o.style.width = (cx - Math.ceil(cx/1)) +"px";
+	}else{
+		clearInterval(proxc);
+		o.style.display = "none";
+	}
+} 
+
+
+</script>
+
+
+
+<script>
+    setColor();
+	function setColor(){
+	  var jd01 = document.getElementById("jd01").style;
+	  var jd02 = document.getElementById("jd02").style;
+	  var jd03 = document.getElementById("jd03").style;
+	  var jd04 = document.getElementById("jd04").style;
+	  var jd05 = document.getElementById("jd05").style;
+	  var jd06 = document.getElementById("jd06").style;
+	  
+	  var jd01num = parseInt(jd01.width);
+	  var jd02num = parseInt(jd02.width);
+	  var jd03num = parseInt(jd03.width);
+	  var jd04num = parseInt(jd04.width);
+	  var jd05num = parseInt(jd05.width);
+	  var jd06num = parseInt(jd06.width);
+	  
+	  setOnece(jd01num,jd01);
+	  setOnece(jd02num,jd02);
+	  setOnece(jd03num,jd03);
+	  setOnece(jd04num,jd04);
+	  setOnece(jd05num,jd05);
+	  setOnece(jd06num,jd06);
+	  
+	}     
+	
+	function setOnece(num,object){
+        var timer;
+        var widthnum = 0;
+        timer = setInterval(function(){
+        widthnum +=1;
+        if(widthnum<=25){
+            object.background="#48CBF5";
+            object.color="#48CBF5";
+        }
+        if(widthnum>25){
+            object.background="#FFC304";
+            object.color="#FFC304";
+        }
+        if(widthnum>50){
+            object.background="#F2545B";
+            object.color="#F2545B";
+        }
+        if(widthnum>75){
+            object.background="#C127C9";
+            object.color="#C127C9";
+        }
+        if(widthnum==num){
+        clearInterval(timer);
+        }
+        },50/5);
+	}  
+</script>
+    
+   <script>
+// 参数1 tableID,参数2 div高度，参数3 速度，参数4 tbody中tr几条以上滚动
+tableScroll('tableId', 210, 30, 10)
+tableScroll1('tableId1', 210, 30, 10)
+var MyMarhq;
+var MyMarhq1;
+
+function tableScroll(tableid, hei, speed, len) {
+    clearTimeout(MyMarhq);
+    $('#' + tableid).parent().find('.tableid_').remove()
+    $('#' + tableid).parent().prepend(
+        '<table class="tableid_"><thead>' + $('#' + tableid + ' thead').html() + '</thead></table>'
+    ).css({
+        'position': 'relative',
+        'overflow': 'hidden',
+        'height': hei + 'px'
+    })
+//    $(".tableid_").find('th').each(function(i) {
+//        $(this).css('width', $('#' + tableid).find('th:eq(' + i + ')').width());
+//    });
+    $(".tableid_").css({
+        'position': 'absolute',
+        'top': 0,
+        'left': 0,
+        'z-index': 9
+    })
+    $('#' + tableid).css({
+        'position': 'absolute',
+        'top': 0,
+        'left': 0,
+        'z-index': 1
+    })
+
+    if ($('#' + tableid).find('tbody tr').length > len) {
+        $('#' + tableid).find('tbody').html($('#' + tableid).find('tbody').html() + $('#' + tableid).find('tbody').html());
+        $(".tableid_").css('top', 0);
+        $('#' + tableid).css('top', 0);
+        var tblTop = 0;
+        var outerHeight = $('#' + tableid).find('tbody').find("tr").outerHeight();
+
+        function Marqueehq() {
+            if (tblTop <= -outerHeight * $('#' + tableid).find('tbody').find("tr").length) {
+                tblTop = 0;
+            } else {
+                tblTop -= 1;
+            }
+            $('#' + tableid).css('margin-top', tblTop + 'px');
+            clearTimeout(MyMarhq);
+            MyMarhq = setTimeout(function() {
+                Marqueehq()
+            }, speed);
+        }
+
+        MyMarhq = setTimeout(Marqueehq, speed);
+        $('#' + tableid).find('tbody').hover(function() {
+            clearTimeout(MyMarhq);
+        }, function() {
+            clearTimeout(MyMarhq);
+            if ($('#' + tableid).find('tbody tr').length > len) {
+                MyMarhq = setTimeout(Marqueehq, speed);
+            }
+        })
+    }
+
+}
+
+function tableScroll1(tableid, hei, speed, len) {
+    clearTimeout(MyMarhq1);
+    $('#' + tableid).parent().find('.tableid_').remove()
+    $('#' + tableid).parent().prepend(
+        '<table class="tableid_"><thead>' + $('#' + tableid + ' thead').html() + '</thead></table>'
+    ).css({
+        'position': 'relative',
+        'overflow': 'hidden',
+        'height': hei + 'px'
+    })
+//    $(".tableid_").find('th').each(function(i) {
+//        $(this).css('width', $('#' + tableid).find('th:eq(' + i + ')').width());
+//    });
+    $(".tableid_").css({
+        'position': 'absolute',
+        'top': 0,
+        'left': 0,
+        'z-index': 9
+    })
+    $('#' + tableid).css({
+        'position': 'absolute',
+        'top': 0,
+        'left': 0,
+        'z-index': 1
+    })
+
+    if ($('#' + tableid).find('tbody tr').length > len) {
+//        $('#' + tableid).find('tbody').html($('#' + tableid).find('tbody').html() + $('#' + tableid).find('tbody').html());
+        $(".tableid_").css('top', 0);
+        $('#' + tableid).css('top', 0);
+        var tblTop = 0;
+        var outerHeight = $('#' + tableid).find('tbody').find("tr").outerHeight();
+
+        function Marqueehq() {
+            if (tblTop <= -outerHeight * $('#' + tableid).find('tbody').find("tr").length) {
+                tblTop = 0;
+            } else {
+                tblTop -= 1;
+            }
+            $('#' + tableid).css('margin-top', tblTop + 'px');
+            clearTimeout(MyMarhq1);
+            MyMarhq1 = setTimeout(function() {
+                Marqueehq()
+            }, speed);
+        }
+
+        MyMarhq1 = setTimeout(Marqueehq, speed);
+        $('#' + tableid).find('tbody').hover(function() {
+            clearTimeout(MyMarhq1);
+        }, function() {
+            clearTimeout(MyMarhq1);
+            if ($('#' + tableid).find('tbody tr').length > len) {
+                MyMarhq1 = setTimeout(Marqueehq, speed);
+            }
+
+        })
+    }
+
+}
+</script>
+ 
+
+</body>
+</html>

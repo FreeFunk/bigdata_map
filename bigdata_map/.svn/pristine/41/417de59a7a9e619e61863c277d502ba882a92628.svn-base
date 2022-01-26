@@ -1,0 +1,122 @@
+package com.edgedo.timetask;
+
+import com.alibaba.fastjson.JSONObject;
+import com.edgedo.bigdata.entity.BigdataLinshiBatch;
+import com.edgedo.bigdata.entity.CarInfo;
+import com.edgedo.bigdata.entity.TransitCarBaseinfo;
+import com.edgedo.bigdata.queryvo.CarInfoQuery;
+import com.edgedo.bigdata.queryvo.TransitCarInfoQuery;
+import com.edgedo.bigdata.service.CarInfoService;
+import com.edgedo.common.util.Guid;
+import com.edgedo.common.util.HttpRequestUtil;
+import com.edgedo.common.util.ObjectUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/*@Component*/
+public class BigdataUpdateCarInfo {
+
+    @Autowired
+    CarInfoService carInfoService;
+
+    public static final String reeportDataUrl = "http://localhost:8098";
+
+    @Scheduled(cron = "0 45 22 * * ?")
+    public void updateCarInfo(){
+        //生成批次Id
+        String batchId = Guid.guid();
+        //将数据插入到临时表中
+        carInfoService.insertBigdataLinshiBatch(batchId);
+        try {
+            while (true) {
+                //每次查询出100条数据用完后删除
+                List<BigdataLinshiBatch> bigdataLinshiBatchList = carInfoService.selecBigdataLinshiBatch(batchId);
+                if(bigdataLinshiBatchList==null || bigdataLinshiBatchList.size()==0){
+                    break;
+                }
+                //遍历数据开始同步新增或修改
+                for(BigdataLinshiBatch t:bigdataLinshiBatchList){
+                    //根据车架号查询到一辆车
+                    String reportDataUrl = reeportDataUrl+"/sys/transitCarBaseinfo/selectCarInfoByQuery.jsn";
+                    TransitCarInfoQuery transitCarInfoQuery = new TransitCarInfoQuery();
+                    transitCarInfoQuery.setCarPlateNum(t.getCarPlateNum());
+                    transitCarInfoQuery.setCarPlateColor(getColor(t.getCarPlateColor()));
+                    transitCarInfoQuery.setCityId("130300");
+                    Map<String,String> parametersMap = ObjectUtil.objectToMapString(transitCarInfoQuery,"");
+                    String responseStr = HttpRequestUtil.sendPostRequest(reportDataUrl,parametersMap);
+                    if(responseStr!=null && !responseStr.equals("")){
+                        Map map = new HashMap();
+                        map = ObjectUtil.jsonToMap(responseStr);
+                        boolean f = Boolean.parseBoolean((String) map.get("success"));
+                        //更新同步状态
+                        if(f){
+                            Object data = map.get("data");
+                            if(data!=null){
+                                TransitCarBaseinfo transitCarBaseinfo = JSONObject.parseObject((String) data,TransitCarBaseinfo.class);
+                                updateTransitCarBaseInfo(transitCarBaseinfo,t.getCarPlateNum()+"_"+t.getCarPlateColor());
+                            }
+                        }
+                    }
+                    //删除临时表的数据
+                    carInfoService.deleteTransitCarInfoById(t.getId());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateTransitCarBaseInfo(TransitCarBaseinfo t,String carInfoId){
+        CarInfo carInfo = new CarInfo();
+        carInfo.setProvinceId(t.getProvinceId());
+        carInfo.setProvinceName(t.getProvinceName());
+        carInfo.setCityId(t.getCityId());
+        carInfo.setCityName(t.getCityName());
+        carInfo.setXianquId(t.getXianquId());
+        carInfo.setXianquName(t.getXianquName());
+        carInfo.setCarFrameNum(t.getCarFrameNum());
+        carInfo.setLicenseCode(t.getJyCertNumber());
+        carInfo.setOwnerName(t.getContactPerson());
+        carInfo.setOwnerPhoneNum(t.getContactPhone());
+        carInfo.setCarTransitType(t.getYingyunType());
+        carInfo.setCarBrand(t.getCarBrandsName());
+        carInfo.setCarModel(t.getCarProductCode());
+        carInfo.setOutsizeLength(new BigDecimal(t.getOutsizeLength()));
+        carInfo.setOutsizeWidth(new BigDecimal(t.getOutsizeWidth()));
+        carInfo.setOutsizeHeight(new BigDecimal(t.getOutsizeHeight()));
+        carInfo.setOwnerTeamId(t.getOwnerCarTeamId());
+        carInfo.setOwnerTeamName(t.getOwnerCarTeamName());
+        carInfo.setId(carInfoId);
+        carInfo.setEmpId(t.getEmpId());
+        carInfo.setEmpName(t.getEmpName());
+        carInfo.setEmpCode(t.getEmpCode());
+        carInfo.setEmpPhone(t.getEmpPhone());
+        carInfoService.update(carInfo);
+    }
+
+    public String getColor(String color){
+        if(color.equals("2")){
+            return "2";
+        }else if(color.equals("1")){
+            return "3";
+        }else {
+            return "7";
+        }
+    }
+
+    public String getColor1(String color){
+        if(color.equals("2")){
+            return "2";
+        }else if(color.equals("3")){
+            return "1";
+        }else {
+            return "9";
+        }
+    }
+}

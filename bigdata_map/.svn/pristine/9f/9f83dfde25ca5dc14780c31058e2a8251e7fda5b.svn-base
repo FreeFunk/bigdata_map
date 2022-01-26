@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.CarInfoMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.CarInfo" >
+		<id column="ID" property="id"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="PROVINCE_ID" property="provinceId"/>
+		<result column="PROVINCE_NAME" property="provinceName"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="XIANQU_ID" property="xianquId"/>
+		<result column="XIANQU_NAME" property="xianquName"/>
+		<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+		<result column="CAR_PLATE_COLOUR" property="carPlateColour"/>
+		<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+		<result column="LICENSE_CODE" property="licenseCode"/>
+		<result column="OWNER_NAME" property="ownerName"/>
+		<result column="OWNER_PHONE_NUM" property="ownerPhoneNum"/>
+		<result column="CAR_TYPE" property="carType"/>
+		<result column="CAR_BRAND" property="carBrand"/>
+		<result column="CAR_MODEL" property="carModel"/>
+		<result column="OUTSIZE_LENGTH" property="outsizeLength"/>
+		<result column="OUTSIZE_WIDTH" property="outsizeWidth"/>
+		<result column="OUTSIZE_HEIGHT" property="outsizeHeight"/>
+		<result column="BEIDOU_OPERATOR" property="beidouOperator"/>
+		<result column="OWNER_TEAM_ID" property="ownerTeamId"/>
+		<result column="OWNER_TEAM_NAME" property="ownerTeamName"/>
+		<result column="RUN_STATE" property="runState"/>
+		<result column="CAR_SOURCE" property="carSource"/>
+		<result column="LONGITUDE" property="longitude"/>
+		<result column="LATITUDE" property="latitude"/>
+		<result column="CURRENT_PROVINCE_ID" property="currentProvinceId"/>
+		<result column="CURRENT_PROVINCE_NAME" property="currentProvinceName"/>
+		<result column="CURRENT_CITY_ID" property="currentCityId"/>
+		<result column="CURRENT_CITY_NAME" property="currentCityName"/>
+		<result column="CURRENT_XIANQU_ID" property="currentXianquId"/>
+		<result column="CURRENT_XIANQU_NAME" property="currentXianquName"/>
+		<result column="LOCALTION_INFO" property="localtionInfo"/>
+		<result column="DATA_STATE" property="dataState"/>
+		<result column="ONLINE_STATE" property="onlineState"/>
+		<result column="OPERAT_FLAG" property="operatFlag"/>
+		<result column="total_take_mass" property="totalTakeMass"/>
+		<result column="total_pull_mass" property="totalPullMass"/>
+		<result column="sit_people_num" property="sitPeopleNum"/>
+		<result column="MORNING_MINUTE_NUM" property="morningMinuteNum"/>
+		<result column="NOON_MINUTE_NUM" property="noonMinuteNum"/>
+		<result column="DUSK_MINUTE_NUM" property="duskMinuteNum"/>
+		<result column="LINGCHEN_MINUTE_NUM" property="lingchenMinuteNum"/>
+		<result column="MIDNIGHT_MINUTE_NUM" property="midnightMinuteNum"/>
+		<result column="MORNING_MILEAGE" property="morningMileage"/>
+		<result column="NOON_MILEAGE" property="noonMileage"/>
+		<result column="DUSK_MILEAGE" property="duskMileage"/>
+		<result column="MIDNIGHT_MILEAGE" property="midnightMileage"/>
+		<result column="LINGCHEN_MILEAGE" property="lingchenMileage"/>
+		<result column="COM_ID" property="comId"/>
+		<result column="COM_NAME" property="comName"/>
+
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.CarInfoView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, XIANQU_ID, XIANQU_NAME,
+	 CAR_PLATE_NUM, CAR_PLATE_COLOUR, CAR_FRAME_NUM, LICENSE_CODE, OWNER_NAME, OWNER_PHONE_NUM,
+	 CAR_TYPE, CAR_BRAND, CAR_MODEL, OUTSIZE_LENGTH, OUTSIZE_WIDTH, OUTSIZE_HEIGHT,
+	  BEIDOU_OPERATOR, OWNER_TEAM_ID, OWNER_TEAM_NAME, RUN_STATE, CAR_SOURCE,
+	  LONGITUDE, LATITUDE, CURRENT_PROVINCE_ID, CURRENT_PROVINCE_NAME, CURRENT_CITY_ID,
+	   CURRENT_CITY_NAME, CURRENT_XIANQU_ID, CURRENT_XIANQU_NAME, LOCALTION_INFO, DATA_STATE,
+	   ONLINE_STATE,OPERAT_FLAG,total_take_mass,total_pull_mass,sit_people_num,
+	   MORNING_MINUTE_NUM, NOON_MINUTE_NUM, DUSK_MINUTE_NUM, LINGCHEN_MINUTE_NUM, MIDNIGHT_MINUTE_NUM,
+	      MORNING_MILEAGE, NOON_MILEAGE, DUSK_MILEAGE, MIDNIGHT_MILEAGE, LINGCHEN_MILEAGE,COM_ID,COM_NAME
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test="queryObj != null and  queryObj.comId != null and queryObj.comId !=''">
+					AND  COM_ID = #{queryObj.comId}
+				</if>
+				<if test="queryObj != null and  queryObj.carPlateNum != null and queryObj.carPlateNum !=''">
+					AND  CAR_PLATE_NUM like concat('%', #{queryObj.carPlateNum},'%')
+				</if>
+				<if test="queryObj != null and  queryObj.dataState != null and queryObj.dataState !=''">
+					AND  DATA_STATE = #{queryObj.dataState}
+				</if>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test="queryObj != null and  queryObj.currentProvinceId != null and  queryObj.currentProvinceId != ''">
+					AND  CURRENT_PROVINCE_ID = #{queryObj.currentProvinceId}
+				</if>
+				<if test="queryObj != null and  queryObj.currentCityId != null and  queryObj.currentCityId != ''">
+					AND  CURRENT_CITY_ID = #{queryObj.currentCityId}
+				</if>
+				<if test="queryObj != null and  queryObj.currentXianquId != null and  queryObj.currentXianquId != ''">
+					AND  CURRENT_XIANQU_ID = #{queryObj.currentXianquId}
+				</if>
+				<if test="queryObj != null and  queryObj.onlineState != null and  queryObj.onlineState != ''">
+					AND  ONLINE_STATE = #{queryObj.onlineState}
+				</if>
+				<if test="queryObj != null and  queryObj.carType != null and  queryObj.carType != ''">
+					AND  CAR_TYPE = #{queryObj.carType}
+				</if>
+
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.CarInfoQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from car_info 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.CarInfoQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from car_info 
+  		<include refid="where"/>
+  </select>
+
+	<select id="countCarinfoByQuery" parameterType="com.edgedo.bigdata.queryvo.CarInfoQuery" resultType="int">
+		  select count(*) from car_info
+		  where DATA_STATE = '1'
+		<if test="queryObj != null and queryObj.carPlateNum != null">
+			and CAR_PLATE_NUM like concat('%',#{queryObj.carPlateNum},'%')
+		</if>
+		<if test="queryObj != null and queryObj.ownerTeamName">
+			and OWNER_TEAM_NAME like concat('%',#{queryObj.ownerTeamName},'%')
+		</if>
+		<if test="queryObj != null and queryObj.carType">
+			and CAR_TYPE = #{queryObj.carType}
+		</if>
+	</select>
+
+	<select id="carinfoByQuery" parameterType="com.edgedo.bigdata.queryvo.CarInfoQuery" resultMap="BaseResultViewMap">
+		select * from car_info
+		where DATA_STATE = '1'
+		<if test="queryObj != null and queryObj.carPlateNum != null">
+			and CAR_PLATE_NUM like concat('%',#{queryObj.carPlateNum},'%')
+		</if>
+		<if test="queryObj != null and queryObj.ownerTeamName">
+			and OWNER_TEAM_NAME like concat('%',#{queryObj.ownerTeamName},'%')
+		</if>
+		<if test="queryObj != null and queryObj.carType">
+			and CAR_TYPE = #{queryObj.carType}
+		</if>
+	</select>
+
+	<select id="searchMileageByCarInfo" parameterType="com.edgedo.bigdata.queryvo.CarInfoQuery" resultType="decimal">
+		select DAY_RUN_MILEAGE from car_mileage_speed_analysis
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND | OR">
+			<if test="queryObj != null and queryObj.carPlateNum != null">
+				AND CAR_PLATE_NUM = #{queryObj.carPlateNum}
+			</if>
+			<if test="queryObj != null and queryObj.carFrameNum != null">
+				AND CAR_FRAME_NUM = #{queryObj.carFrameNum}
+			</if>
+			<if test="queryObj != null and queryObj.countTimeStart != null">
+				AND DATE_FORMAT(COUNT_TIME,'%Y-%m-%d') BETWEEN DATE_FORMAT(#{queryObj.countTimeStart},'%Y-%m-%d') AND DATE_FORMAT(#{queryObj.countTimeEnd},'%Y-%m-%d')
+			</if>
+		</trim>
+		ORDER BY COUNT_TIME ASC
+	</select>
+
+	<select id="searchMileageOneByQuery" parameterType="com.edgedo.bigdata.queryvo.CarInfoQuery" resultType="decimal">
+		select DAY_RUN_MILEAGE from car_mileage_speed_analysis
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND | OR">
+			<if test="queryObj != null and queryObj.carPlateNum != null">
+				AND CAR_PLATE_NUM = #{queryObj.carPlateNum}
+			</if>
+			<if test="queryObj != null and queryObj.carFrameNum != null">
+				AND CAR_FRAME_NUM = #{queryObj.carFrameNum}
+			</if>
+			<if test="queryObj != null and queryObj.countTime != null">
+				AND DATE_FORMAT(COUNT_TIME,'%Y%m%d') = DATE_FORMAT(#{queryObj.countTime},'%Y%m%d')
+			</if>
+		</trim>
+		limit 1
+	</select>
+
+	<select id="searchSpeedByCarInfo" parameterType="com.edgedo.bigdata.queryvo.CarInfoQuery" resultType="decimal">
+		select AVERAGE_SPEED from car_mileage_speed_analysis
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND | OR">
+			<if test="queryObj != null and queryObj.carPlateNum != null">
+				AND CAR_PLATE_NUM = #{queryObj.carPlateNum}
+			</if>
+			<if test="queryObj != null and queryObj.carFrameNum != null">
+				AND CAR_FRAME_NUM = #{queryObj.carFrameNum}
+			</if>
+			<if test="queryObj != null and queryObj.countTimeStart != null">
+				AND DATE_FORMAT(COUNT_TIME,'%Y%m%d') BETWEEN DATE_FORMAT(#{queryObj.countTimeStart},'%Y%m%d') AND DATE_FORMAT(#{queryObj.countTimeEnd},'%Y%m%d')
+			</if>
+		</trim>
+		ORDER BY COUNT_TIME ASC
+	</select>
+
+	<select id="searchSpeedOneByQuery" parameterType="com.edgedo.bigdata.queryvo.CarInfoQuery" resultType="decimal">
+		select AVERAGE_SPEED from car_mileage_speed_analysis
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND | OR">
+			<if test="queryObj != null and queryObj.carPlateNum != null">
+				AND CAR_PLATE_NUM = #{queryObj.carPlateNum}
+			</if>
+			<if test="queryObj != null and queryObj.carFrameNum != null">
+				AND CAR_FRAME_NUM = #{queryObj.carFrameNum}
+			</if>
+			<if test="queryObj != null and queryObj.countTime != null">
+				AND DATE_FORMAT(COUNT_TIME,'%Y%m%d') = DATE_FORMAT(#{queryObj.countTime},'%Y%m%d')
+			</if>
+		</trim>
+	  	limit 1
+	</select>
+
+	<select id="selectByPlateNumFrameNum" parameterType="map" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from car_info
+		 where CAR_PLATE_NUM = #{carPlateNum,jdbcType = VARCHAR}
+		AND CAR_FRAME_NUM = #{carFrameNum,jdbcType = VARCHAR}
+		<if test="carType != null and carType != ''">
+			AND CAR_TYPE = #{carType,jdbcType = VARCHAR}
+		</if>
+		limit 1
+	</select>
+  
+</mapper>

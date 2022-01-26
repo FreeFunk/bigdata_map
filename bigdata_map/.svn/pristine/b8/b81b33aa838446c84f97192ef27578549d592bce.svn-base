@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="BigdataAlarmRecord-form" id="BigdataAlarmRecord-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id" lay-verify="required" placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">业务主键</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="bid" lay-verify="required" placeholder="请输入业务主键" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">运营商id</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="compId" lay-verify="required" placeholder="请输入运营商id" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">运营商名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="compName" lay-verify="required" placeholder="请输入运营商名称" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车牌号码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateNum" lay-verify="required" placeholder="请输入车牌号码" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车牌颜色</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateColor" lay-verify="required" placeholder="请输入车牌颜色" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车辆类型</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carType" lay-verify="required" placeholder="请输入车辆类型" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">SIM卡号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="simCode" lay-verify="required" placeholder="请输入SIM卡号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">报警类型（报警类型 1线路报警2超速报警3紧急报警4疲劳驾驶）</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="alarmType" lay-verify="required" placeholder="请输入报警类型（报警类型 1线路报警2超速报警3紧急报警4疲劳驾驶）" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">报警时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="alarmTime" id="alarmTime" lay-verify="required" placeholder="请输入报警时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">司机</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="driver" lay-verify="required" placeholder="请输入司机" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">经度</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="longitude" lay-verify="required" placeholder="请输入经度" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">纬度</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="latitude" lay-verify="required" placeholder="请输入纬度" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">报警种类(1平台 2终端)</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="alarmCls" lay-verify="required" placeholder="请输入报警种类(1平台 2终端)" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">报警速度</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="alarmSpeed" lay-verify="required" placeholder="请输入报警速度" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">道路等级</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="roadLevel" lay-verify="required" placeholder="请输入道路等级" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">道路限速值</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="roadSpeedLimit" lay-verify="required" placeholder="请输入道路限速值" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="alarmTimeInfo" lay-verify="required" placeholder="请输入时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">时长秒</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="alarmTimeSecond" lay-verify="required" placeholder="请输入时长秒" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否严重</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="seriousFlag" lay-verify="required" placeholder="请输入是否严重" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否是危险时段</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dangerTimeFlag" lay-verify="required" placeholder="请输入是否是危险时段" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">报警状态(报警状态 0未处理1系统处理2人工处理)</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="alarmState" lay-verify="required" placeholder="请输入报警状态(报警状态 0未处理1系统处理2人工处理)" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">处理类型</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dealType" lay-verify="required" placeholder="请输入处理类型" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">处理备注</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dealRemark" lay-verify="required" placeholder="请输入处理备注" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">处理时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dealTime" id="dealTime" lay-verify="required" placeholder="请输入处理时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">数据是否合格</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dataQualified" lay-verify="required" placeholder="请输入数据是否合格" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">不合格原因</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="failReason" lay-verify="required" placeholder="请输入不合格原因" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">locationInfoDesc</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="locationInfoDesc" lay-verify="required" placeholder="请输入locationInfoDesc" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">locationInfoSimple</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="locationInfoSimple" lay-verify="required" placeholder="请输入locationInfoSimple" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">countMonth</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="countMonth" lay-verify="required" placeholder="请输入countMonth" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">isReadLocation</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isReadLocation" lay-verify="required" placeholder="请输入isReadLocation" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="BigdataAlarmRecord-form-edit" id="BigdataAlarmRecord-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(BigdataAlarmRecord-form-edit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'/admin/BIGDATAALARMRECORD/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('BigdataAlarmRecord-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#alarmTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#dealTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

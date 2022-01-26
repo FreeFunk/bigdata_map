@@ -1,0 +1,70 @@
+package com.edgedo.timetask;
+
+import com.edgedo.bigdata.entity.BigdataFenxiTeamDay;
+import com.edgedo.bigdata.entity.BigdataTimeCarDayRec;
+import com.edgedo.bigdata.entity.TransitCarTeamQuery;
+import com.edgedo.bigdata.mapper.BigdataTimeCarDayRecMapper;
+import com.edgedo.common.util.HttpRequestUtil;
+import com.edgedo.common.util.ObjectUtil;
+import org.json.JSONArray;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 大数据企业分析(按天)
+ * 根据企业名和企业id  查出每一台车  计算总数
+ */
+@Component
+public class BigDataFenXiTeamDay {
+
+    @Autowired
+    private BigdataTimeCarDayRecMapper bigdataTimeCarDayRecMapper;
+
+    public static final String reeportDataUrl = "http://localhost:8098";
+
+    @Scheduled(cron = "0/2 * * * * ?")//0/2 * * * * ?
+    public void execute(){
+        TransitCarTeamQuery query = new TransitCarTeamQuery();
+        String reportDataUrl = reeportDataUrl+"/sys/carTeam/selectTeamCarInfo.jsn";
+        query.setCityId("130300");
+        Map<String,String> parameterMap = ObjectUtil.objectToMapString(query,"");
+        String responseStr = HttpRequestUtil.sendPostRequest(reportDataUrl,parameterMap);
+        org.json.JSONObject jsonObject = new org.json.JSONObject(responseStr);
+        JSONArray jsonArray = jsonObject.optJSONArray("list");
+        List<BigdataFenxiTeamDay> listTeam =
+                com.alibaba.fastjson.JSONArray.parseArray(jsonArray.toString(), BigdataFenxiTeamDay.class);
+        insertAndupdateTeam(listTeam);
+    }
+
+    //企业对应车辆信息  年月 日
+    public void insertAndupdateTeam(List<BigdataFenxiTeamDay> listTeam){
+        //1.设置年月日
+        Date dateCurr = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateStr = simpleDateFormat.format(dateCurr);
+        String[] str = dateStr.split("-");// 2019  09 08
+        Integer yearNum = new Integer(str[0]);//年
+        Integer countMonth = new Integer(str[0]+str[1]);//月
+        Integer countDay = new Integer(str[0]+str[1]+str[2]);//日
+        for(BigdataFenxiTeamDay bigdataFenxiTeamDay : listTeam){
+            //一条企业记录  对应多个车辆信息
+            //设置年月日
+            bigdataFenxiTeamDay.setYearNum(yearNum);
+            bigdataFenxiTeamDay.setCountMonth(countMonth);
+            bigdataFenxiTeamDay.setCountDate(countDay);
+            //根据企业id查询所有该企业下的所有车辆信息
+            List<BigdataTimeCarDayRec> list = bigdataTimeCarDayRecMapper.
+                    selectByTeamId(bigdataFenxiTeamDay.getId(),yearNum,countMonth,countDay);
+            int i = 1;
+        }
+    }
+
+
+
+}

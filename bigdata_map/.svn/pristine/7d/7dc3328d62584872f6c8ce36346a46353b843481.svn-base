@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataSafetyWarningFileMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataSafetyWarningFile" >
+			<id column="Id" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="OWNER_SAFETY_WARNING_ID" property="ownerSafetyWarningId"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="FILE_NAME" property="fileName"/>
+			<result column="FILE_TYPE" property="fileType"/>
+			<result column="FILE_URL" property="fileUrl"/>
+			<result column="REMARK" property="remark"/>
+		<result column="COUNT_DATE" property="countDate"/>
+		<result column="COUNT_MONTH" property="countMonth"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataSafetyWarningFileView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 Id, CREATE_TIME, OWNER_SAFETY_WARNING_ID, CAR_PLATE_NUM, CAR_FRAME_NUM, FILE_NAME, FILE_TYPE, FILE_URL, REMARK,COUNT_DATE,COUNT_MONTH
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		<if test='queryObj != null and  queryObj.ownerSafetyWarningId != null'>
+			AND  OWNER_SAFETY_WARNING_ID = #{queryObj.ownerSafetyWarningId}
+		</if>
+		<if test='queryObj != null and  queryObj.carPlateNum != null'>
+			AND  CAR_PLATE_NUM = #{queryObj.carPlateNum}
+		</if>
+		<if test='queryObj != null and  queryObj.carFrameNum != null'>
+			AND  CAR_FRAME_NUM = #{queryObj.carFrameNum}
+		</if>
+		<if test='queryObj != null and  queryObj.countDate != null'>
+			AND  COUNT_DATE = #{queryObj.countDate}
+		</if>
+		<if test='queryObj != null and  queryObj.countMonth != null'>
+			AND  COUNT_MONTH = #{queryObj.countMonth}
+		</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataSafetyWarningFileQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_safety_warning_file 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataSafetyWarningFileQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_safety_warning_file 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectByWarningInfo" parameterType="com.edgedo.bigdata.queryvo.BigdataSafetyWarningFileQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_safety_warning_file
+		<include refid="where"/>
+	</select>
+  
+  
+</mapper>

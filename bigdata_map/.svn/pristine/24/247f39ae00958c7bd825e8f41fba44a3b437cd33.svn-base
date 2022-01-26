@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/resources/template-sys/tdp-sys-entity/src/main/java/com/tdpplant/sys/entity/${className}.java=UTF-8
+encoding//src/main/resources/template-sys/tdp-sys-service/src/main/java/${basepackage_dir}/mapper/${className}Mapper.java=UTF-8
+encoding//src/main/resources/template-sys/tdp-sys-service/src/main/java/${basepackage_dir}/service/${className}Service.java=UTF-8
+encoding//src/main/resources/template-sys/tdp-sys-web/src/main/java/${basepackage_dir}/controller/${className}Controller.java=UTF-8
+encoding//src/test/java=UTF-8
+encoding//target/template/tdp-sys-service/src/main/java/${basepackage_dir}/service/${className}Service.java=UTF-8
+encoding//target/template/tdp-sys-web/src/main/java/${basepackage_dir}/controller/${className}Controller.java=UTF-8

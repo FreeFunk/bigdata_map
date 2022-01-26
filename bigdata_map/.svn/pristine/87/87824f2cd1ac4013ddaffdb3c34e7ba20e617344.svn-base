@@ -1,0 +1,3299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.SuperSlide.2.1.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/tool.js"></script>
+</head>
+
+<body style="overflow-y: scroll;height: 100%">
+
+<div class="top ">
+    <div class="top_r">
+        <div class="time">
+                
+                   
+             <!--   <input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " /> -->
+            <input type="text" class="input_rl " id="searchDate" style="width:150px; height: 48px; margin-right: 10px; ">
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+ <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">安全生产趋势</div>
+             <a href="shouye.html" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+
+
+<div class="main">
+      <div class="ind">
+      
+                  
+          <Div class="blank40"></Div>
+          
+          <div class="mk">
+                           <em class="b1"></em><em class="b2"></em>
+              
+              <div class="con clearfix">
+              
+                   
+                   <Div class="blank20"></Div>
+                  
+                  <table width="100%" class="grid04">
+                      <tbody>
+                        <tr>
+                          <th style="text-align: right">当月疲劳驾驶次数</th>
+                          <td style="text-align: left" id="fatigueRunNum">80次 - 同比降低10%</td>
+                          <th style="text-align: right">当月超速驾驶次数</th>
+                          <td style="text-align: left" id="overspeedRunNum">80次 - 同比降低10%</td>
+                        <th style="text-align: right">当月车辆上线率</th>
+                        <td style="text-align: left" id="carOnlineRate">80次 - 同比降低10%</td>
+                        <th style="text-align: right">当月车辆运营率</th>
+                        <td style="text-align: left" id="carOperateRate">80次 - 同比降低10%</td>
+                          <!--<th style="text-align: right">当月企业安全隐患</th>-->
+                          <!--<td style="text-align: left" id="teamSafetyNum">80次 - 同比降低10%</td>-->
+                        </tr>
+                        <!--<tr>-->
+                          <!--<th style="text-align: right">当月车辆上线率</th>-->
+                          <!--<td style="text-align: left" id="carOnlineRate">80次 - 同比降低10%</td>-->
+                          <!--<th style="text-align: right">当月车辆运营率</th>-->
+                          <!--<td style="text-align: left" id="carOperateRate">80次 - 同比降低10%</td>-->
+                          <!--&lt;!&ndash;<th style="text-align: right">当月从业人员新增</th>&ndash;&gt;-->
+                          <!--&lt;!&ndash;<td style="text-align: left" id="empAddNum">80次 - 同比降低10%</td>&ndash;&gt;-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                          <!--<th style="text-align: right">当月车辆新增</th>-->
+                          <!--<td style="text-align: left" id="carAddNum">80次 - 同比降低10%</td>-->
+                          <!--<th style="text-align: right">当月企业新增</th>-->
+                          <!--<td style="text-align: left" id="teamAddNum">80次 - 同比降低10%</td>-->
+                          <!--<th style="text-align: right"></th>-->
+                          <!--<td style="text-align: left"></td>-->
+                        <!--</tr>-->
+                      </tbody>
+                    </table>
+                  <Div class="blank40"></Div>
+             <!--     <div style="width: 100%; height:500px;" id="aa1"></div>-->
+              </div>
+          </div>
+          <div class="blank20"></div>
+          <div class="mk left" style="width:49.75%; margin-right:0.5%">
+              <div class="tit">
+                  <span class="tit_l"></span>
+                  <span class="tit_m">疲劳驾驶</span>
+                  <span class="tit_r"></span>
+              </div>
+              <div class="con clearfix">
+                  <div style="height:450px;" id="aa1"></div>
+              </div>
+          </div>
+
+          <div class="mk left" style="width:49.75%; ">
+              <div class="tit">
+                  <span class="tit_l"></span>
+                  <span class="tit_m">超速驾驶</span>
+                  <span class="tit_r"></span>
+              </div>
+              <div class="con clearfix">
+                  <div style="height: 450px;" id="aa2"></div>
+              </div>
+          </div>
+
+          <!--<div class="mk left" style="width:24%; margin-right:1%">-->
+              <!--<div class="tit">-->
+                  <!--<span class="tit_l"></span>-->
+                  <!--<span class="tit_m">企业安全隐患</span>-->
+                  <!--<span class="tit_r"></span>-->
+              <!--</div>-->
+              <!--<div class="con clearfix">-->
+                  <!--<div style="height: 200px;" id="aa3"></div>-->
+              <!--</div>-->
+          <!--</div>-->
+
+          <div class="mk right" style="width:49.75%;margin-top: 1%; ">
+              <div class="tit">
+                  <span class="tit_l"></span>
+                  <span class="tit_m">上线率</span>
+                  <span class="tit_r"></span>
+              </div>
+              <div class="con clearfix">
+                  <div style="height: 250px;" id="aa4"></div>
+              </div>
+          </div>
+
+
+          <!--<div class="blank20"></div>-->
+
+
+          <div class="mk left" style="width:49.75%; margin-right:0.5%;margin-top: 1%;">
+              <div class="tit">
+                  <span class="tit_l"></span>
+                  <span class="tit_m">运营率</span>
+                  <span class="tit_r"></span>
+              </div>
+              <div class="con clearfix">
+                  <div style="height:250px;" id="aa5"></div>
+              </div>
+          </div>
+
+          <!--<div class="mk left" style="width:24%; margin-right:1%">-->
+              <!--<div class="tit">-->
+                  <!--<span class="tit_l"></span>-->
+                  <!--<span class="tit_m">从业人员新增</span>-->
+                  <!--<span class="tit_r"></span>-->
+              <!--</div>-->
+              <!--<div class="con clearfix">-->
+                  <!--<div style="height: 200px;" id="aa6"></div>-->
+              <!--</div>-->
+          <!--</div>-->
+
+
+
+          <!--<div class="mk left" style="width:24%; margin-right:1%">-->
+              <!--<div class="tit">-->
+                  <!--<span class="tit_l"></span>-->
+                  <!--<span class="tit_m">车辆新增</span>-->
+                  <!--<span class="tit_r"></span>-->
+              <!--</div>-->
+              <!--<div class="con clearfix">-->
+                  <!--<div style="height: 200px;" id="aa7"></div>-->
+              <!--</div>-->
+          <!--</div>-->
+
+
+
+          <!--<div class="mk right" style="width:25%;">-->
+              <!--<div class="tit">-->
+                  <!--<span class="tit_l"></span>-->
+                  <!--<span class="tit_m">企业新增</span>-->
+                  <!--<span class="tit_r"></span>-->
+              <!--</div>-->
+              <!--<div class="con clearfix">-->
+                  <!--<div style="height: 200px;" id="aa8"></div>-->
+              <!--</div>-->
+          <!--</div>-->
+
+
+
+
+      </div> 
+</div>
+
+
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+
+<script src="js/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="js/jquery.countup.min.js"></script>
+<script type="text/javascript">
+		$('.counter').countUp();
+</script>
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+</script>
+
+<script type="text/javascript">
+    //初始化数据
+    $(document).ready(function(){
+        piLao();
+        overSpeed();
+        onLine();
+        yunYing();
+        //获取参数
+        var queryArgs = getQueryParam();
+
+        //初始化日期
+        initLayDate(queryArgs.searchTime);
+        // safetyProductionSituation(queryArgs);
+        // safetyProductionEchartsData(queryArgs);
+    });
+
+    //aa1疲劳 aa2超速 aa4上线 aa5运营
+
+    function piLao() {
+        // 基于准备好的dom，初始化echarts实例
+        myChart = echarts.init(document.getElementById('aa1'));
+        // 指定图表的配置项和数据
+        option = {
+            tooltip : {
+                trigger: 'axis',
+            },
+            legend: {
+                data:['疲劳驾驶分析','疲劳驾驶车辆分析']
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 13,
+                        fontWeight: 300
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+                data: ["六月","七月","八月","九月","十月","十一月"],
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 300
+                    }
+                },
+                max : 1200000,
+                min : 0,
+                splitNumber : 15,
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+            },
+            series: [{
+                name:'疲劳驾驶分析',
+                data: [1100393,1073280,1040339,1028895,1026837,1012461],
+                type: 'line',
+                // areaStyle: {
+                //     //rgb(40, 92, 124)
+                //     normal: {
+                //         color: '#FFC304' //改变区域颜色
+                //     }
+                // },
+                itemStyle : {
+                    normal : {
+                        color:'#FFC304', //改变折线点的颜色
+                        lineStyle:{
+                            color:'#FFC304' //改变折线颜色
+                        }
+                    }
+                }
+            },{
+                name:'疲劳驾驶车辆分析',
+                data: [2597,2412,2255,2205,2198,2160],
+                type: 'line',
+                // areaStyle: {
+                //     //rgb(40, 92, 124)
+                //     normal: {
+                //         color: '#ffffcc' //改变区域颜色
+                //     }
+                // },
+                itemStyle : {
+                    normal : {
+                        color:'#ffffcc', //改变折线点的颜色
+                        lineStyle:{
+                            color:'#ffffcc' //改变折线颜色
+                        }
+                    }
+                }
+            }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    function overSpeed() {
+        // 基于准备好的dom，初始化echarts实例
+        myChart = echarts.init(document.getElementById('aa2'));
+        // 指定图表的配置项和数据
+        option = {
+            tooltip : {
+                trigger: 'axis',
+            },
+            legend: {
+                data:['超速报警分析','分段限速报警分析','总超速报警分析']
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 13,
+                        fontWeight: 300
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+                data: ["六月","七月","八月","九月","十月","十一月"],
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 300
+                    }
+                },
+                max : 1200000,
+                min : 0,
+                splitNumber : 15,
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+            },
+            series: [{
+                name:'超速报警分析',
+                data: [737537,693520,649308,632426,621675,614215],
+                type: 'line',
+                // areaStyle: {
+                //     //rgb(40, 92, 124)
+                //     normal: {
+                //         color: '#FFC304' //改变区域颜色
+                //     }
+                // },
+                itemStyle : {
+                    normal : {
+                        color:'#FFC304', //改变折线点的颜色
+                        lineStyle:{
+                            color:'#FFC304' //改变折线颜色
+                        }
+                    }
+                }
+            },{
+                name:'分段限速报警分析',
+                data: [619313,591500,556406,541383,534886,526863],
+                type: 'line',
+                // areaStyle: {
+                //     //rgb(40, 92, 124)
+                //     normal: {
+                //         color: '#ffffcc' //改变区域颜色
+                //     }
+                // },
+                itemStyle : {
+                    normal : {
+                        color:'#ffffcc', //改变折线点的颜色
+                        lineStyle:{
+                            color:'#ffffcc' //改变折线颜色
+                        }
+                    }
+                }
+            },{
+                name:'总超速报警分析',
+                data: [3535,3454,3348,3288,3291,3245],
+                type: 'line',
+                // areaStyle: {
+                //     //rgb(40, 92, 124)
+                //     normal: {
+                //         color: '#ffffcc' //改变区域颜色
+                //     }
+                // },
+                itemStyle : {
+                    normal : {
+                        color:'#FF8247', //改变折线点的颜色
+                        lineStyle:{
+                            color:'#FF8247' //改变折线颜色
+                        }
+                    }
+                }
+            }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    function onLine() {
+        // 基于准备好的dom，初始化echarts实例
+        myChart = echarts.init(document.getElementById('aa4'));
+        // 指定图表的配置项和数据
+        option = {
+            tooltip: {
+                trigger: 'axis',
+            },
+            legend: {
+                data:['上线率']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 13,
+                        fontWeight: 300
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+                data: ["六月","七月","八月","九月","十月","十一月"],
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    show: true,
+                    interval: 'auto',
+                    formatter: '{value} %',
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 300
+                    }
+                },
+                show: true,
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+            },
+            series: [{
+                name:'上线率',
+                data: [71,68,73,70,69,72],
+                type: 'line',
+                // areaStyle: {
+                //     //rgb(40, 92, 124)
+                //     normal: {
+                //         color: '#FFC304' //改变区域颜色
+                //     }
+                // },
+                itemStyle : {
+                    normal : {
+                        color:'#FFC304', //改变折线点的颜色
+                        lineStyle:{
+                            color:'#FFC304' //改变折线颜色
+                        }
+                    }
+                }
+            }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    function yunYing() {
+        // 基于准备好的dom，初始化echarts实例
+        myChart = echarts.init(document.getElementById('aa5'));
+        // 指定图表的配置项和数据
+        option = {
+            tooltip : {
+                trigger: 'axis',
+            },
+            legend: {
+                data:['运营率']
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 13,
+                        fontWeight: 300
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+                data: ["六月","七月","八月","九月","十月","十一月"],
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    show: true,
+                    interval: 'auto',
+                    formatter: '{value} %',
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 300
+                    }
+                },
+                show: true,
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+            },
+            series: [{
+                name:'运营率',
+                data: [62,68,60,63,69,70],
+                type: 'line',
+                // areaStyle: {
+                //     //rgb(40, 92, 124)
+                //     normal: {
+                //         color: '#FFC304' //改变区域颜色
+                //     }
+                // },
+                itemStyle : {
+                    normal : {
+                        color:'#FFC304', //改变折线点的颜色
+                        lineStyle:{
+                            color:'#FFC304' //改变折线颜色
+                        }
+                    }
+                }
+            }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+
+    //初始化日期
+    function initLayDate(searchTime) {
+        laydate.render({
+            elem: '#searchDate',
+            theme: '#884898',
+            value: searchTime,
+            btns: ['confirm'],
+            done: function(value, date, endDate){
+                if(value!=""){
+                    var queryArgs = getQueryParam();
+                    queryArgs.searchTime = value;
+                    safetyProductionSituation(queryArgs);
+                    safetyProductionEchartsData(queryArgs);
+                }
+            }
+        });
+    }
+    //危险路段详情
+    function safetyProductionSituation(queryArgs) {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataSafetyProductionSituation/getSafetyProductionSituationData.jsn",
+            data: {'queryObj.countTime':queryArgs.searchTime},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    debugger;
+                    if(typeof(data.data) == "undefined"){
+
+                    }else {
+                        $("#fatigueRunNum").html(data.data.fatigueRunNum+"次");
+                        $("#overspeedRunNum").html(data.data.overspeedRunNum+"次");
+                        $("#teamSafetyNum").html(data.data.teamSafetyNum+"次");
+                        $("#carOnlineRate").html(data.data.carOnlineRate+"%");
+                        $("#carOperateRate").html(data.data.carOperateRate+"%");
+                        $("#empAddNum").html(data.data.empAddNum+"次");
+                        $("#carAddNum").html(data.data.carAddNum+"次");
+                        $("#teamAddNum").html(data.data.teamAddNum+"次");
+                       /* $("#fatigueRunNum").html(data.data.fatigueRunNum+"次"+getRate(data.data.fatigueRate)+parseInt(data.data.fatigueRate*100)+"%");
+                        $("#overspeedRunNum").html(data.data.overspeedRunNum+"次 - 同比"+getRate(data.data.overspeedRate)+parseInt(data.data.overspeedRate*100)+"%");
+                        $("#teamSafetyNum").html(data.data.teamSafetyNum+"次 - 同比"+getRate(data.data.teamSafetyRate)+parseInt(data.data.teamSafetyRate*100)+"%");
+                        $("#carOnlineRate").html(data.data.carOnlineRate+"次 - 同比"+getRate(data.data.carOnlineRateUp)+parseInt(data.data.carOnlineRateUp*100)+"%");
+                        $("#carOperateRate").html(data.data.carOperateRate+"次 - 同比"+getRate(data.data.carOperateRateUp)+parseInt(data.data.carOperateRateUp*100)+"%");
+                        $("#empAddNum").html(data.data.empAddNum+"次 - 同比"+getRate(data.data.empAddRate)+parseInt(data.data.empAddRate*100)+"%");
+                        $("#carAddNum").html(data.data.carAddNum+"次 - 同比"+getRate(data.data.carAddRate)+parseInt(data.data.carAddRate*100)+"%");
+                        $("#teamAddNum").html(data.data.teamAddNum+"次 - 同比"+getRate(data.data.teamAddRate)+parseInt(data.data.teamAddRate*100)+"%");*/
+                    }
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function getRate(s) {
+        if(s>=0){
+            return "增长";
+        }else {
+            return "降低";
+        }
+        return;
+    }
+    
+    function safetyProductionEchartsData(queryArgs) {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataSafetyProductionSituation/safetyProductionEchartsData.jsn",
+            data: {'queryObj.countTime':queryArgs.searchTime},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    var lastMonth1 = [];
+                    var lastMonth2 = [];
+                    var lastMonth3 = [];
+                    var lastMonth4 = [];
+                    var lastMonth5 = [];
+                    var lastMonth6 = [];
+                    var lastMonth7 = [];
+                    var lastMonth8 = [];
+                    lastMonth1.push(data.data.bigdataSafetyProductionSituationView.fatigueRunNum);
+                    lastMonth2.push(data.data.bigdataSafetyProductionSituationView.overspeedRunNum);
+                    lastMonth3.push(data.data.bigdataSafetyProductionSituationView.teamSafetyNum);
+                    lastMonth4.push(data.data.bigdataSafetyProductionSituationView.carOnlineRate);
+                    lastMonth5.push(data.data.bigdataSafetyProductionSituationView.carOperateRate);
+                    lastMonth6.push(data.data.bigdataSafetyProductionSituationView.empAddNum);
+                    lastMonth7.push(data.data.bigdataSafetyProductionSituationView.carAddNum);
+                    lastMonth8.push(data.data.bigdataSafetyProductionSituationView.teamAddNum);
+                    var thisMonth1 = [];
+                    var thisMonth2 = [];
+                    var thisMonth3 = [];
+                    var thisMonth4 = [];
+                    var thisMonth5 = [];
+                    var thisMonth6 = [];
+                    var thisMonth7 = [];
+                    var thisMonth8 = [];
+                    thisMonth1.push(data.data.bigdataSafetyProductionSituationViewLast.fatigueRunNum);
+                    thisMonth2.push(data.data.bigdataSafetyProductionSituationViewLast.overspeedRunNum);
+                    thisMonth3.push(data.data.bigdataSafetyProductionSituationViewLast.teamSafetyNum);
+                    thisMonth4.push(data.data.bigdataSafetyProductionSituationViewLast.carOnlineRate);
+                    thisMonth5.push(data.data.bigdataSafetyProductionSituationViewLast.carOperateRate);
+                    thisMonth6.push(data.data.bigdataSafetyProductionSituationViewLast.empAddNum);
+                    thisMonth7.push(data.data.bigdataSafetyProductionSituationViewLast.carAddNum);
+                    thisMonth8.push(data.data.bigdataSafetyProductionSituationViewLast.teamAddNum);
+                    var check1 = [];
+                    var check2 = [];
+                    var check3 = [];
+                    var check4 = [];
+                    var check5 = [];
+                    var check6 = [];
+                    var check7 = [];
+                    var check8 = [];
+                    check1.push(data.data.bigdataSafetyCheckView.fatigueRunCheck);
+                    check2.push(data.data.bigdataSafetyCheckView.overspeedRunCheck);
+                    check3.push(data.data.bigdataSafetyCheckView.teamSafetyCheck);
+                    check4.push(data.data.bigdataSafetyCheckView.carOnlineRateCheck);
+                    check5.push(data.data.bigdataSafetyCheckView.carOperateRateCheck);
+                    check6.push(data.data.bigdataSafetyCheckView.empAddCheck);
+                    check7.push(data.data.bigdataSafetyCheckView.carAddCheck);
+                    check8.push(data.data.bigdataSafetyCheckView.teamAddCheck);
+
+
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart1 = echarts.init(document.getElementById('aa1'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                crossStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        grid: {
+                            left: '12%',   //距离左边的距离
+                            right: '5%', //距离右边的距离
+                            bottom: '10%',//距离下边的距离
+                            top: '15%' //距离上边的距离
+                        },
+
+
+                        legend: {
+                            data:['上月','当月','年度考核'],
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: ['疲劳驾驶'],
+                                axisPointer: {
+                                    type: 'shadow'
+                                },
+
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '',
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                } ,
+                                min: 0,
+                                max: 1000,
+                                interval: 200,
+                                axisLabel: {
+                                    formatter: '{value} 次'
+                                }
+                            },
+
+                        ],
+                        series: [
+                            {
+                                name:'上月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#DA6464',
+                                    normal: {
+                                        color: '#DA6464',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:lastMonth1
+
+
+                            },
+                            {
+                                name:'当月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#ED9040',
+                                    normal: {
+                                        color: '#ED9040',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+
+                                },
+                                data:thisMonth1,
+
+                            },
+                            {
+                                name:'年度考核',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#00CDCD',
+                                    normal: {
+                                        color: '#00CDCD',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:check1
+                            },
+
+
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart1.setOption(option);
+
+
+                    var myChart2 = echarts.init(document.getElementById('aa2'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                crossStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        grid: {
+                            left: '12%',   //距离左边的距离
+                            right: '5%', //距离右边的距离
+                            bottom: '10%',//距离下边的距离
+                            top: '15%' //距离上边的距离
+                        },
+
+
+                        legend: {
+                            data:['上月','当月','年度考核'],
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: ['超速驾驶'],
+                                axisPointer: {
+                                    type: 'shadow'
+                                },
+
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '',
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                } ,
+                                min: 0,
+                                max: 2000,
+                                interval: 400,
+                                axisLabel: {
+                                    formatter: '{value} 次'
+                                }
+                            },
+
+                        ],
+                        series: [
+                            {
+                                name:'上月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#DA6464',
+                                    normal: {
+                                        color: '#DA6464',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:lastMonth2
+
+
+                            },
+                            {
+                                name:'当月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#ED9040',
+                                    normal: {
+                                        color: '#ED9040',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+
+                                },
+                                data:thisMonth2,
+
+                            },
+                            {
+                                name:'年度考核',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#00CDCD',
+                                    normal: {
+                                        color: '#00CDCD',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:check2
+                            },
+
+
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart2.setOption(option);
+
+                    var myChart3 = echarts.init(document.getElementById('aa3'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                crossStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        grid: {
+                            left: '12%',   //距离左边的距离
+                            right: '5%', //距离右边的距离
+                            bottom: '10%',//距离下边的距离
+                            top: '15%' //距离上边的距离
+                        },
+
+
+                        legend: {
+                            data:['上月','当月','年度考核'],
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: ['企业安全隐患'],
+                                axisPointer: {
+                                    type: 'shadow'
+                                },
+
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '',
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                } ,
+                                min: 0,
+                                max: 500,
+                                interval: 100,
+                                axisLabel: {
+                                    formatter: '{value} 次'
+                                }
+                            },
+
+                        ],
+                        series: [
+                            {
+                                name:'上月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#DA6464',
+                                    normal: {
+                                        color: '#DA6464',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:lastMonth3
+
+
+                            },
+                            {
+                                name:'当月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#ED9040',
+                                    normal: {
+                                        color: '#ED9040',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+
+                                },
+                                data:thisMonth3
+
+                            },
+                            {
+                                name:'年度考核',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#00CDCD',
+                                    normal: {
+                                        color: '#00CDCD',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:check3
+                            },
+
+
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart3.setOption(option);
+
+                    var myChart4 = echarts.init(document.getElementById('aa4'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                crossStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        grid: {
+                            left: '12%',   //距离左边的距离
+                            right: '5%', //距离右边的距离
+                            bottom: '10%',//距离下边的距离
+                            top: '15%' //距离上边的距离
+                        },
+
+
+                        legend: {
+                            data:['上月','当月','年度考核'],
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: ['上线率'],
+                                axisPointer: {
+                                    type: 'shadow'
+                                },
+
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '',
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                } ,
+                                min: 0,
+                                max: 100,
+                                interval: 20,
+                                axisLabel: {
+                                    formatter: '{value} 次'
+                                }
+                            },
+
+                        ],
+                        series: [
+                            {
+                                name:'上月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#DA6464',
+                                    normal: {
+                                        color: '#DA6464',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:lastMonth4
+
+
+                            },
+                            {
+                                name:'当月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#ED9040',
+                                    normal: {
+                                        color: '#ED9040',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+
+                                },
+                                data:thisMonth4
+
+                            },
+                            {
+                                name:'年度考核',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#00CDCD',
+                                    normal: {
+                                        color: '#00CDCD',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:check4
+                            },
+
+
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart4.setOption(option);
+
+
+                    var myChart5 = echarts.init(document.getElementById('aa5'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                crossStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        grid: {
+                            left: '12%',   //距离左边的距离
+                            right: '5%', //距离右边的距离
+                            bottom: '10%',//距离下边的距离
+                            top: '15%' //距离上边的距离
+                        },
+
+
+                        legend: {
+                            data:['上月','当月','年度考核'],
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: ['运营率'],
+                                axisPointer: {
+                                    type: 'shadow'
+                                },
+
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '',
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                } ,
+                                min: 0,
+                                max: 100,
+                                interval: 20,
+                                axisLabel: {
+                                    formatter: '{value} 次'
+                                }
+                            },
+
+                        ],
+                        series: [
+                            {
+                                name:'上月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#DA6464',
+                                    normal: {
+                                        color: '#DA6464',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:lastMonth5
+
+
+                            },
+                            {
+                                name:'当月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#ED9040',
+                                    normal: {
+                                        color: '#ED9040',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+
+                                },
+                                data:thisMonth5
+
+                            },
+                            {
+                                name:'年度考核',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#00CDCD',
+                                    normal: {
+                                        color: '#00CDCD',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:check5
+                            },
+
+
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart5.setOption(option);
+
+                    var myChart6 = echarts.init(document.getElementById('aa6'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                crossStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        grid: {
+                            left: '12%',   //距离左边的距离
+                            right: '5%', //距离右边的距离
+                            bottom: '10%',//距离下边的距离
+                            top: '15%' //距离上边的距离
+                        },
+
+
+                        legend: {
+                            data:['上月','当月','年度考核'],
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: ['从业新增人员'],
+                                axisPointer: {
+                                    type: 'shadow'
+                                },
+
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '',
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                } ,
+                                min: 0,
+                                max: 250,
+                                interval: 50,
+                                axisLabel: {
+                                    formatter: '{value} 次'
+                                }
+                            },
+
+                        ],
+                        series: [
+                            {
+                                name:'上月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#DA6464',
+                                    normal: {
+                                        color: '#DA6464',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:lastMonth6
+
+
+                            },
+                            {
+                                name:'当月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#ED9040',
+                                    normal: {
+                                        color: '#ED9040',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+
+                                },
+                                data:thisMonth6
+
+                            },
+                            {
+                                name:'年度考核',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#00CDCD',
+                                    normal: {
+                                        color: '#00CDCD',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:check6
+                            },
+
+
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart6.setOption(option);
+
+                    var myChart7 = echarts.init(document.getElementById('aa7'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                crossStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        grid: {
+                            left: '12%',   //距离左边的距离
+                            right: '5%', //距离右边的距离
+                            bottom: '10%',//距离下边的距离
+                            top: '15%' //距离上边的距离
+                        },
+
+
+                        legend: {
+                            data:['上月','当月','年度考核'],
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: ['车辆新增'],
+                                axisPointer: {
+                                    type: 'shadow'
+                                },
+
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '',
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                } ,
+                                min: 0,
+                                max: 250,
+                                interval: 50,
+                                axisLabel: {
+                                    formatter: '{value} 次'
+                                }
+                            },
+
+                        ],
+                        series: [
+                            {
+                                name:'上月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#DA6464',
+                                    normal: {
+                                        color: '#DA6464',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:lastMonth7
+
+
+                            },
+                            {
+                                name:'当月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#ED9040',
+                                    normal: {
+                                        color: '#ED9040',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+
+                                },
+                                data:thisMonth7
+
+                            },
+                            {
+                                name:'年度考核',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#00CDCD',
+                                    normal: {
+                                        color: '#00CDCD',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:check7
+                            },
+
+
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart7.setOption(option);
+
+                    var myChart8 = echarts.init(document.getElementById('aa8'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                crossStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        grid: {
+                            left: '12%',   //距离左边的距离
+                            right: '5%', //距离右边的距离
+                            bottom: '10%',//距离下边的距离
+                            top: '15%' //距离上边的距离
+                        },
+
+
+                        legend: {
+                            data:['上月','当月','年度考核'],
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: ['企业新增'],
+                                axisPointer: {
+                                    type: 'shadow'
+                                },
+
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '',
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                } ,
+                                min: 0,
+                                max: 250,
+                                interval: 50,
+                                axisLabel: {
+                                    formatter: '{value} 次'
+                                }
+                            },
+
+                        ],
+                        series: [
+                            {
+                                name:'上月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#DA6464',
+                                    normal: {
+                                        color: '#DA6464',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:lastMonth8
+
+
+                            },
+                            {
+                                name:'当月',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#ED9040',
+                                    normal: {
+                                        color: '#ED9040',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+
+                                },
+                                data:thisMonth8
+
+                            },
+                            {
+                                name:'年度考核',
+                                type:'bar',
+                                barWidth: '20%',
+                                itemStyle: {
+//                color: '#00CDCD',
+                                    normal: {
+                                        color: '#00CDCD',
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                                data:check8
+                            },
+
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart8.setOption(option);
+
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+</script>
+
+
+<!--<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('aa1'));
+    // 指定图表的配置项和数据
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        grid: {
+            left: '12%',   //距离左边的距离
+            right: '5%', //距离右边的距离
+            bottom: '10%',//距离下边的距离
+            top: '15%' //距离上边的距离
+        },
+
+
+        legend: {
+            data:['上月','当月','年度考核'],
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['疲劳驾驶'],
+                axisPointer: {
+                    type: 'shadow'
+                },
+
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '',
+                splitLine: {
+                    show: true,
+                    lineStyle:{
+                        color: ['#237d88'],
+                        width: 1,
+                        type: 'solid'
+                    }
+
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                } ,
+                min: 0,
+                max: 250,
+                interval: 50,
+                axisLabel: {
+                    formatter: '{value} 次'
+                }
+            },
+
+        ],
+        series: [
+            {
+                name:'上月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#DA6464',
+                    normal: {
+                        color: '#DA6464',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[100]
+
+
+            },
+            {
+                name:'当月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#ED9040',
+                    normal: {
+                        color: '#ED9040',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+
+                },
+                data:[123],
+
+            },
+            {
+                name:'年度考核',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#00CDCD',
+                    normal: {
+                        color: '#00CDCD',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[90]
+            },
+
+
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>-->
+
+
+
+
+
+
+<!--
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('aa2'));
+    // 指定图表的配置项和数据
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        grid: {
+            left: '12%',   //距离左边的距离
+            right: '5%', //距离右边的距离
+            bottom: '10%',//距离下边的距离
+            top: '15%' //距离上边的距离
+        },
+
+
+        legend: {
+            data:['上月','当月','年度考核'],
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['超速驾驶'],
+                axisPointer: {
+                    type: 'shadow'
+                },
+
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '',
+                splitLine: {
+                    show: true,
+                    lineStyle:{
+                        color: ['#237d88'],
+                        width: 1,
+                        type: 'solid'
+                    }
+
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                } ,
+                min: 0,
+                max: 250,
+                interval: 50,
+                axisLabel: {
+                    formatter: '{value} 次'
+                }
+            },
+
+        ],
+        series: [
+            {
+                name:'上月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#DA6464',
+                    normal: {
+                        color: '#DA6464',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[100]
+
+
+            },
+            {
+                name:'当月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#ED9040',
+                    normal: {
+                        color: '#ED9040',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+
+                },
+                data:[123],
+
+            },
+            {
+                name:'年度考核',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#00CDCD',
+                    normal: {
+                        color: '#00CDCD',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[90]
+            },
+
+
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+-->
+
+
+
+
+<!--<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('aa3'));
+    // 指定图表的配置项和数据
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        grid: {
+            left: '12%',   //距离左边的距离
+            right: '5%', //距离右边的距离
+            bottom: '10%',//距离下边的距离
+            top: '15%' //距离上边的距离
+        },
+
+
+        legend: {
+            data:['上月','当月','年度考核'],
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['企业安全隐患'],
+                axisPointer: {
+                    type: 'shadow'
+                },
+
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '',
+                splitLine: {
+                    show: true,
+                    lineStyle:{
+                        color: ['#237d88'],
+                        width: 1,
+                        type: 'solid'
+                    }
+
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                } ,
+                min: 0,
+                max: 250,
+                interval: 50,
+                axisLabel: {
+                    formatter: '{value} 次'
+                }
+            },
+
+        ],
+        series: [
+            {
+                name:'上月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#DA6464',
+                    normal: {
+                        color: '#DA6464',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[100]
+
+
+            },
+            {
+                name:'当月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#ED9040',
+                    normal: {
+                        color: '#ED9040',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+
+                },
+                data:[123],
+
+            },
+            {
+                name:'年度考核',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#00CDCD',
+                    normal: {
+                        color: '#00CDCD',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[90]
+            },
+
+
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>-->
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+   /* var myChart = echarts.init(document.getElementById('aa4'));
+    // 指定图表的配置项和数据
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        grid: {
+            left: '12%',   //距离左边的距离
+            right: '5%', //距离右边的距离
+            bottom: '10%',//距离下边的距离
+            top: '15%' //距离上边的距离
+        },
+
+
+        legend: {
+            data:['上月','当月','年度考核'],
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['上线率'],
+                axisPointer: {
+                    type: 'shadow'
+                },
+
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '',
+                splitLine: {
+                    show: true,
+                    lineStyle:{
+                        color: ['#237d88'],
+                        width: 1,
+                        type: 'solid'
+                    }
+
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                } ,
+                min: 0,
+                max: 250,
+                interval: 50,
+                axisLabel: {
+                    formatter: '{value} 次'
+                }
+            },
+
+        ],
+        series: [
+            {
+                name:'上月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#DA6464',
+                    normal: {
+                        color: '#DA6464',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[100]
+
+
+            },
+            {
+                name:'当月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#ED9040',
+                    normal: {
+                        color: '#ED9040',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+
+                },
+                data:[123],
+
+            },
+            {
+                name:'年度考核',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#00CDCD',
+                    normal: {
+                        color: '#00CDCD',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[90]
+            },
+
+
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);*/
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+   /* var myChart = echarts.init(document.getElementById('aa5'));
+    // 指定图表的配置项和数据
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        grid: {
+            left: '12%',   //距离左边的距离
+            right: '5%', //距离右边的距离
+            bottom: '10%',//距离下边的距离
+            top: '15%' //距离上边的距离
+        },
+
+
+        legend: {
+            data:['上月','当月','年度考核'],
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['运营数'],
+                axisPointer: {
+                    type: 'shadow'
+                },
+
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '',
+                splitLine: {
+                    show: true,
+                    lineStyle:{
+                        color: ['#237d88'],
+                        width: 1,
+                        type: 'solid'
+                    }
+
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                } ,
+                min: 0,
+                max: 250,
+                interval: 50,
+                axisLabel: {
+                    formatter: '{value} 次'
+                }
+            },
+
+        ],
+        series: [
+            {
+                name:'上月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#DA6464',
+                    normal: {
+                        color: '#DA6464',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[100]
+
+
+            },
+            {
+                name:'当月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#ED9040',
+                    normal: {
+                        color: '#ED9040',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+
+                },
+                data:[123],
+
+            },
+            {
+                name:'年度考核',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#00CDCD',
+                    normal: {
+                        color: '#00CDCD',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[90]
+            },
+
+
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);*/
+</script>
+
+
+
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+   /* var myChart = echarts.init(document.getElementById('aa6'));
+    // 指定图表的配置项和数据
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        grid: {
+            left: '12%',   //距离左边的距离
+            right: '5%', //距离右边的距离
+            bottom: '10%',//距离下边的距离
+            top: '15%' //距离上边的距离
+        },
+
+
+        legend: {
+            data:['上月','当月','年度考核'],
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['从业新增人员'],
+                axisPointer: {
+                    type: 'shadow'
+                },
+
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '',
+                splitLine: {
+                    show: true,
+                    lineStyle:{
+                        color: ['#237d88'],
+                        width: 1,
+                        type: 'solid'
+                    }
+
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                } ,
+                min: 0,
+                max: 250,
+                interval: 50,
+                axisLabel: {
+                    formatter: '{value} 次'
+                }
+            },
+
+        ],
+        series: [
+            {
+                name:'上月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#DA6464',
+                    normal: {
+                        color: '#DA6464',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[100]
+
+
+            },
+            {
+                name:'当月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#ED9040',
+                    normal: {
+                        color: '#ED9040',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+
+                },
+                data:[123],
+
+            },
+            {
+                name:'年度考核',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#00CDCD',
+                    normal: {
+                        color: '#00CDCD',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[90]
+            },
+
+
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);*/
+</script>
+
+
+
+
+
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    /*var myChart = echarts.init(document.getElementById('aa7'));
+    // 指定图表的配置项和数据
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        grid: {
+            left: '12%',   //距离左边的距离
+            right: '5%', //距离右边的距离
+            bottom: '10%',//距离下边的距离
+            top: '15%' //距离上边的距离
+        },
+
+
+        legend: {
+            data:['上月','当月','年度考核'],
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['车辆新增'],
+                axisPointer: {
+                    type: 'shadow'
+                },
+
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '',
+                splitLine: {
+                    show: true,
+                    lineStyle:{
+                        color: ['#237d88'],
+                        width: 1,
+                        type: 'solid'
+                    }
+
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                } ,
+                min: 0,
+                max: 250,
+                interval: 50,
+                axisLabel: {
+                    formatter: '{value} 次'
+                }
+            },
+
+        ],
+        series: [
+            {
+                name:'上月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#DA6464',
+                    normal: {
+                        color: '#DA6464',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[100]
+
+
+            },
+            {
+                name:'当月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#ED9040',
+                    normal: {
+                        color: '#ED9040',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+
+                },
+                data:[123],
+
+            },
+            {
+                name:'年度考核',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#00CDCD',
+                    normal: {
+                        color: '#00CDCD',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[90]
+            },
+
+
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);*/
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    /*var myChart = echarts.init(document.getElementById('aa8'));
+    // 指定图表的配置项和数据
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        grid: {
+            left: '12%',   //距离左边的距离
+            right: '5%', //距离右边的距离
+            bottom: '10%',//距离下边的距离
+            top: '15%' //距离上边的距离
+        },
+
+
+        legend: {
+            data:['上月','当月','年度考核'],
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['企业新增'],
+                axisPointer: {
+                    type: 'shadow'
+                },
+
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '',
+                splitLine: {
+                    show: true,
+                    lineStyle:{
+                        color: ['#237d88'],
+                        width: 1,
+                        type: 'solid'
+                    }
+
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                } ,
+                min: 0,
+                max: 250,
+                interval: 50,
+                axisLabel: {
+                    formatter: '{value} 次'
+                }
+            },
+
+        ],
+        series: [
+            {
+                name:'上月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#DA6464',
+                    normal: {
+                        color: '#DA6464',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[100]
+
+
+            },
+            {
+                name:'当月',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#ED9040',
+                    normal: {
+                        color: '#ED9040',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+
+                },
+                data:[123],
+
+            },
+            {
+                name:'年度考核',
+                type:'bar',
+                barWidth: '20%',
+                itemStyle: {
+//                color: '#00CDCD',
+                    normal: {
+                        color: '#00CDCD',
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        }
+                    }
+                },
+                data:[90]
+            },
+
+
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);*/
+    function goShouYe() {
+        window.location.href = "shouye.html";
+    }
+</script>
+
+<!--
+<script type="text/javascript">
+							// 基于准备好的dom，初始化echarts实例
+							/*var myChart = echarts.init(document.getElementById('aa1'));
+							// 指定图表的配置项和数据
+						   option = {
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+                color: '#999'
+            }
+        }
+    },
+	grid: {
+        left: '3%',   //距离左边的距离
+        right: '3%', //距离右边的距离
+        bottom: '15%',//距离下边的距离
+        top: '12%' //距离上边的距离
+        },
+
+  
+    legend: {
+        data:['上月','当月','年度考核'],
+		textStyle: {
+                        color: "#fff",
+                        fontSize: 14,
+                       
+                    },
+    },
+    xAxis: [
+        {
+            type: 'category',
+            data: ['疲劳驾驶','超速驾驶','企业安全隐患','上线率','运营数','从业人员新增','车辆新增','企业新增'],
+            axisPointer: {
+                type: 'shadow'
+            },
+			
+			axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    } 
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            name: '',
+		    splitLine: {
+					show: true,
+					lineStyle:{
+						 color: ['#237d88'],
+						 width: 1,
+						type: 'solid'
+					}
+
+			},
+			axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    } ,
+            min: 0,
+            max: 250,
+            interval: 50,
+            axisLabel: {
+                formatter: '{value} 次'
+            }
+        },
+       
+    ],
+    series: [
+        {
+            name:'上月',
+            type:'bar',
+			itemStyle: {
+//                color: '#DA6464',
+                normal: {
+                                color: '#DA6464',
+								label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#fff',
+										fontSize: 16
+									}
+								}
+							}
+            },
+            data:[100, 59, 32, 115, 57, 76.7, 135.6, 162.2]
+
+
+        },
+        {
+            name:'当月',
+            type:'bar',
+			itemStyle: {
+//                color: '#ED9040',
+                normal: {
+                                color: '#ED9040',
+								label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#fff',
+										fontSize: 16
+									}
+								}
+							}
+                
+            },
+            data:[123, 89, 114, 90, 67, 70.7, 175.6, 182.2],
+            
+        },
+		{
+            name:'年度考核',
+            type:'bar',
+			itemStyle: {
+//                color: '#00CDCD',
+                normal: {       
+                                color: '#00CDCD',
+								label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#fff',
+										fontSize: 16
+									}
+								}
+							}
+            },
+            data:[90, 158, 137, 88, 98, 76.7, 135.6, 162.2]
+        },
+        
+        
+    ]
+								}; 
+					
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);*/
+            </script>  -->
+    
+
+</body>
+</html>

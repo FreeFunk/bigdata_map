@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataAlarmRecordMapper" >
+
+
+	<resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataAlarmRecord" >
+		<id column="ID" property="id"/>
+		<result column="B_ID" property="bid"/>
+		<result column="COMP_ID" property="compId"/>
+		<result column="COMP_NAME" property="compName"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+		<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+		<result column="CAR_TYPE" property="carType"/>
+		<result column="SIM_CODE" property="simCode"/>
+		<result column="ALARM_TYPE" property="alarmType"/>
+		<result column="ALARM_TIME" property="alarmTime"/>
+		<result column="DRIVER" property="driver"/>
+		<result column="LONGITUDE" property="longitude"/>
+		<result column="LATITUDE" property="latitude"/>
+		<result column="ALARM_CLS" property="alarmCls"/>
+		<result column="ALARM_SPEED" property="alarmSpeed"/>
+		<result column="ROAD_LEVEL" property="roadLevel"/>
+		<result column="ROAD_SPEED_LIMIT" property="roadSpeedLimit"/>
+		<result column="ALARM_TIME_INFO" property="alarmTimeInfo"/>
+		<result column="ALARM_TIME_SECOND" property="alarmTimeSecond"/>
+		<result column="SERIOUS_FLAG" property="seriousFlag"/>
+		<result column="DANGER_TIME_FLAG" property="dangerTimeFlag"/>
+		<result column="ALARM_STATE" property="alarmState"/>
+		<result column="DEAL_TYPE" property="dealType"/>
+		<result column="DEAL_REMARK" property="dealRemark"/>
+		<result column="DEAL_TIME" property="dealTime"/>
+		<result column="DATA_QUALIFIED" property="dataQualified"/>
+		<result column="FAIL_REASON" property="failReason"/>
+		<result column="LOCATION_INFO_DESC" property="locationInfoDesc"/>
+		<result column="LOCATION_INFO_SIMPLE" property="locationInfoSimple"/>
+		<result column="COUNT_DATE" property="countDate"/>
+		<result column="COUNT_MONTH" property="countMonth"/>
+		<result column="IS_READ_LOCATION" property="isReadLocation"/>
+		<result column="IS_LOCALPLACE" property="isLocalplace"/>
+		<result column="IS_HIGH_WAY" property="isHighWay"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="EMP_CODE" property="empCode"/>
+		<result column="EMP_PHONE" property="empPhone"/>
+		<result column="PROVINCE_ID" property="provinceId"/>
+		<result column="PROVINCE_NAME" property="provinceName"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="XIANQU_ID" property="xianquId"/>
+		<result column="XIANQU_NAME" property="xianquName"/>
+	</resultMap>
+
+	<resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataAlarmRecordView" extends="BaseResultMap">
+
+	</resultMap>
+
+
+	<!-- ******* 新增字段请修改这里  ******  -->
+	<sql id="Base_Column_List">
+		 ID, B_ID, COMP_ID, COMP_NAME, CREATE_TIME, CAR_PLATE_NUM, CAR_PLATE_COLOR, CAR_TYPE, SIM_CODE, ALARM_TYPE,
+		 ALARM_TIME, DRIVER, LONGITUDE, LATITUDE, ALARM_CLS, ALARM_SPEED, ROAD_LEVEL, ROAD_SPEED_LIMIT,
+		  ALARM_TIME_INFO, ALARM_TIME_SECOND, SERIOUS_FLAG, DANGER_TIME_FLAG, ALARM_STATE, DEAL_TYPE, DEAL_REMARK,
+		DEAL_TIME, DATA_QUALIFIED, FAIL_REASON, LOCATION_INFO_DESC, LOCATION_INFO_SIMPLE,
+		COUNT_DATE, COUNT_MONTH, IS_READ_LOCATION,IS_LOCALPLACE,IS_HIGH_WAY,EMP_ID,EMP_NAME,EMP_CODE,EMP_PHONE,PROVINCE_ID,PROVINCE_NAME,CITY_ID,CITY_NAME,XIANQU_ID,XIANQU_NAME
+	 </sql>
+  
+	<!--  根据分片字段和主键更新  -->
+	<update id="updateByFenPian" parameterType="com.edgedo.bigdata.entity.BigdataAlarmRecord">
+		update bigdata_alarm_record
+		<set>
+			<if test='locationInfoDesc != null'>
+				LOCATION_INFO_DESC = #{locationInfoDesc},
+			</if>
+			<if test='locationInfoSimple != null'>
+				LOCATION_INFO_SIMPLE = #{locationInfoSimple},
+			</if>
+			<if test='isReadLocation != null'>
+				IS_READ_LOCATION = #{isReadLocation},
+			</if>
+			<if test='isLocalplace != null'>
+				IS_LOCALPLACE = #{isLocalplace},
+			</if>
+			<if test='isHighWay != null'>
+				IS_HIGH_WAY = #{isHighWay},
+			</if>
+		</set>
+		where id=#{id} and COUNT_MONTH=#{countMonth}
+	</update>
+
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.alarmTime != null'>
+					AND  ALARM_TIME = #{queryObj.alarmTime}
+				</if>
+				<if test='queryObj != null and  queryObj.dealTime != null'>
+					AND  DEAL_TIME = #{queryObj.dealTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.provinceId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.provinceId)'>
+					AND  PROVINCE_ID = #{queryObj.provinceId}
+				</if>
+				<if test='queryObj != null and  queryObj.cityId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.cityId)'>
+					AND  CITY_ID = #{queryObj.cityId}
+				</if>
+				<if test='queryObj != null and  queryObj.xianquId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.xianquId)'>
+					AND  XIANQU_ID = #{queryObj.xianquId}
+				</if>
+				<if test='queryObj != null and  queryObj.carType != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.carType)'>
+					AND  CAR_TYPE = #{queryObj.carType}
+				</if>
+				<if test='queryObj != null and  queryObj.alarmType != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.alarmType)'>
+					AND  ALARM_TYPE = #{queryObj.alarmType}
+				</if>
+				<if test='queryObj != null and  queryObj.alarmCls != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.alarmCls)'>
+					AND  ALARM_CLS = #{queryObj.alarmCls}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_alarm_record 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_alarm_record 
+  		<include refid="where"/>
+  </select>
+
+	<!-- 根据运营商id和业务id统计 -->
+	<select id="countByCompIdAndBid" parameterType="map" resultType="int">
+		select count(1) from bigdata_alarm_record
+		where COMP_ID=#{compId} and B_ID=#{bId}
+	</select>
+
+	<!--统计超速的次数-->
+	<select id="countByQuery" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultType="int">
+		select count(1) from bigdata_alarm_record
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+			<if test="queryObj.alarmType !=null and queryObj.alarmType !='' ">
+				AND ALARM_TYPE = #{queryObj.alarmType}
+			</if>
+			<if test="queryObj.alarmCls !=null and queryObj.alarmCls !='' ">
+				AND ALARM_CLS = #{queryObj.alarmCls}
+			</if>
+			<if test="queryObj.roadLevel !=null and queryObj.roadLevel !='' ">
+				AND ROAD_LEVEL = #{queryObj.roadLevel}
+			</if>
+			<if test="queryObj.carType !=null and queryObj.carType !='' ">
+				AND CAR_TYPE = #{queryObj.carType}
+			</if>
+            <if test="queryObj.seriousFlag !=null and queryObj.seriousFlag !='' ">
+                AND SERIOUS_FLAG = #{queryObj.seriousFlag}
+            </if>
+			<if test="queryObj.dangerTimeFlag !=null and queryObj.dangerTimeFlag !='' ">
+				AND DANGER_TIME_FLAG = #{queryObj.dangerTimeFlag}
+			</if>
+			<if test="queryObj.alarmTime !=null ">
+				AND DATE_FORMAT(ALARM_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.alarmTime},'%Y-%m-%d')
+			</if>
+			<if test="queryObj.countDate !=null ">
+				AND COUNT_DATE = #{queryObj.countDate}
+			</if>
+			<if test="queryObj.countMonth !=null ">
+				and COUNT_MONTH=#{queryObj.countMonth}
+			</if>
+		</trim>
+	</select>
+
+	<select id="countCarNumByQuery" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultType="java.lang.String">
+		select CAR_PLATE_NUM from bigdata_alarm_record
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+			<if test="queryObj.alarmType !=null and queryObj.alarmType !='' ">
+				AND ALARM_TYPE = #{queryObj.alarmType}
+			</if>
+			<if test="queryObj.alarmCls !=null and queryObj.alarmCls !='' ">
+				AND ALARM_CLS = #{queryObj.alarmCls}
+			</if>
+			<if test="queryObj.roadLevel !=null and queryObj.roadLevel !='' ">
+				AND ROAD_LEVEL = #{queryObj.roadLevel}
+			</if>
+			<if test="queryObj.carType !=null and queryObj.carType !='' ">
+				AND CAR_TYPE = #{queryObj.carType}
+			</if>
+			<if test="queryObj.seriousFlag !=null and queryObj.seriousFlag !='' ">
+				AND SERIOUS_FLAG = #{queryObj.seriousFlag}
+			</if>
+			<if test="queryObj.dangerTimeFlag !=null and queryObj.dangerTimeFlag !='' ">
+				AND DANGER_TIME_FLAG = #{queryObj.dangerTimeFlag}
+			</if>
+			<if test="queryObj.alarmTime !=null ">
+				AND DATE_FORMAT(ALARM_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.alarmTime},'%Y-%m-%d')
+			</if>
+			<if test="queryObj.countDate !=null ">
+				AND COUNT_DATE = #{queryObj.countDate}
+			</if>
+			<if test="queryObj.countMonth !=null ">
+				and COUNT_MONTH=#{queryObj.countMonth}
+			</if>
+		</trim>
+		group by CAR_PLATE_NUM
+	</select>
+
+
+
+	<select id="countByQueryNew" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultType="java.lang.Integer">
+			select count(1) from bigdata_alarm_record
+			<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+				<if test="queryObj.alarmType !=null and queryObj.alarmType !='' ">
+					AND ALARM_TYPE = #{queryObj.alarmType}
+				</if>
+				<if test="queryObj.alarmCls !=null and queryObj.alarmCls !='' ">
+					AND ALARM_CLS = #{queryObj.alarmCls}
+				</if>
+				<if test="queryObj.roadLevel !=null and queryObj.roadLevel !='' ">
+					AND ROAD_LEVEL = #{queryObj.roadLevel}
+				</if>
+				<if test="queryObj.carType !=null and queryObj.carType !='' ">
+					AND CAR_TYPE = #{queryObj.carType}
+				</if>
+				<if test="queryObj.seriousFlag !=null and queryObj.seriousFlag !='' ">
+					AND SERIOUS_FLAG = #{queryObj.seriousFlag}
+				</if>
+				<if test="queryObj.dangerTimeFlag !=null and queryObj.dangerTimeFlag !='' ">
+					AND DANGER_TIME_FLAG = #{queryObj.dangerTimeFlag}
+				</if>
+				<if test="queryObj.alarmTime !=null ">
+					AND DATE_FORMAT(ALARM_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.alarmTime},'%Y-%m-%d')
+				</if>
+				<if test="queryObj.countDate !=null ">
+					AND COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test="queryObj.countMonth !=null ">
+					and COUNT_MONTH=#{queryObj.countMonth}
+				</if>
+			</trim>
+			group by CAR_PLATE_NUM
+	</select>
+
+
+	<select id="countSeriousByQuery" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultType="int">
+		select count(1) from (
+		select count(1) from bigdata_alarm_record
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+			<if test="queryObj.alarmType !=null and queryObj.alarmType !='' ">
+				AND ALARM_TYPE = #{queryObj.alarmType}
+			</if>
+			<if test="queryObj.alarmCls !=null and queryObj.alarmCls !='' ">
+				AND ALARM_CLS = #{queryObj.alarmCls}
+			</if>
+			<if test="queryObj.roadLevel !=null and queryObj.roadLevel !='' ">
+				AND ROAD_LEVEL = #{queryObj.roadLevel}
+			</if>
+			<if test="queryObj.carType !=null and queryObj.carType !='' ">
+				AND CAR_TYPE = #{queryObj.carType}
+			</if>
+			<if test="queryObj.seriousFlag !=null and queryObj.seriousFlag !='' ">
+				AND SERIOUS_FLAG = #{queryObj.seriousFlag}
+			</if>
+			<if test="queryObj.dangerTimeFlag !=null and queryObj.dangerTimeFlag !='' ">
+				AND DANGER_TIME_FLAG = #{queryObj.dangerTimeFlag}
+			</if>
+			<if test="queryObj.alarmTime !=null ">
+				AND DATE_FORMAT(ALARM_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.alarmTime},'%Y-%m-%d')
+			</if>
+			<if test="queryObj.countDate !=null ">
+				AND COUNT_DATE = #{queryObj.countDate}
+			</if>
+			<if test="queryObj.countMonth !=null ">
+				and COUNT_MONTH=#{queryObj.countMonth}
+			</if>
+		</trim>
+		group by CAR_PLATE_NUM  having count(1) >50
+		) a
+	</select>
+
+	<select id="countSeriousByQueryNew" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultType="java.lang.Integer">
+		select count(1) from bigdata_alarm_record
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+			<if test="queryObj.alarmType !=null and queryObj.alarmType !='' ">
+				AND ALARM_TYPE = #{queryObj.alarmType}
+			</if>
+			<if test="queryObj.alarmCls !=null and queryObj.alarmCls !='' ">
+				AND ALARM_CLS = #{queryObj.alarmCls}
+			</if>
+			<if test="queryObj.roadLevel !=null and queryObj.roadLevel !='' ">
+				AND ROAD_LEVEL = #{queryObj.roadLevel}
+			</if>
+			<if test="queryObj.carType !=null and queryObj.carType !='' ">
+				AND CAR_TYPE = #{queryObj.carType}
+			</if>
+			<if test="queryObj.seriousFlag !=null and queryObj.seriousFlag !='' ">
+				AND SERIOUS_FLAG = #{queryObj.seriousFlag}
+			</if>
+			<if test="queryObj.dangerTimeFlag !=null and queryObj.dangerTimeFlag !='' ">
+				AND DANGER_TIME_FLAG = #{queryObj.dangerTimeFlag}
+			</if>
+			<if test="queryObj.alarmTime !=null ">
+				AND DATE_FORMAT(ALARM_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.alarmTime},'%Y-%m-%d')
+			</if>
+			<if test="queryObj.countDate !=null ">
+				AND COUNT_DATE = #{queryObj.countDate}
+			</if>
+			<if test="queryObj.countMonth !=null ">
+				and COUNT_MONTH=#{queryObj.countMonth}
+			</if>
+		</trim>
+		group by CAR_PLATE_NUM  having count(1) >=20
+	</select>
+	<!--统计其他道路的超速次数-->
+	<select id="countOtherRoadOverSpeedNum" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultType="int">
+		select count(1) from bigdata_alarm_record
+		where ALARM_TYPE = '2' and ALARM_CLS = '1' and ROAD_LEVEL !='41000'
+		and ROAD_LEVEL != '42000'
+		<if test="queryObj.carType !=null and queryObj.carType !='' ">
+			AND CAR_TYPE = #{queryObj.carType}
+		</if>
+		<if test="queryObj.alarmTime !=null ">
+			AND DATE_FORMAT(ALARM_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.alarmTime},'%Y-%m-%d')
+		</if>
+		<if test="queryObj.countDate !=null ">
+			AND COUNT_DATE = #{queryObj.countDate}
+		</if>
+		<if test="queryObj.countMonth !=null ">
+			and COUNT_MONTH=#{queryObj.countMonth}
+		</if>
+	</select>
+
+	<!--统计超速的时长-->
+	<select id="sumByQuery" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultType="java.lang.Integer">
+		select COALESCE(sum(ALARM_TIME_SECOND),0) from bigdata_alarm_record
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+			<if test="queryObj.alarmType !=null and queryObj.alarmType !='' ">
+				AND ALARM_TYPE = #{queryObj.alarmType}
+			</if>
+			<if test="queryObj.alarmCls !=null and queryObj.alarmCls !='' ">
+				AND ALARM_CLS = #{queryObj.alarmCls}
+			</if>
+			<if test="queryObj.roadLevel !=null and queryObj.roadLevel !='' ">
+				AND ROAD_LEVEL = #{queryObj.roadLevel}
+			</if>
+			<if test="queryObj.carType !=null and queryObj.carType !='' ">
+				AND CAR_TYPE = #{queryObj.carType}
+			</if>
+			<if test="queryObj.seriousFlag !=null and queryObj.seriousFlag !='' ">
+				AND SERIOUS_FLAG = #{queryObj.seriousFlag}
+			</if>
+			<if test="queryObj.dangerTimeFlag !=null and queryObj.dangerTimeFlag !='' ">
+				AND DANGER_TIME_FLAG = #{queryObj.dangerTimeFlag}
+			</if>
+			<if test="queryObj.alarmTime !=null ">
+				AND DATE_FORMAT(ALARM_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.alarmTime},'%Y-%m-%d')
+			</if>
+			<if test="queryObj.countDate !=null ">
+				AND COUNT_DATE = #{queryObj.countDate}
+			</if>
+			<if test="queryObj.countMonth !=null ">
+				and COUNT_MONTH=#{queryObj.countMonth}
+			</if>
+		</trim>
+	</select>
+	<select id="sumSeriousByQuery" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultType="java.lang.Integer">
+		select sum(ALARM_TIME_SECOND) from bigdata_alarm_record
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+			AND ALARM_TIME_SECOND is not null
+			<if test="queryObj.alarmType !=null and queryObj.alarmType !='' ">
+				AND ALARM_TYPE = #{queryObj.alarmType}
+			</if>
+			<if test="queryObj.alarmCls !=null and queryObj.alarmCls !='' ">
+				AND ALARM_CLS = #{queryObj.alarmCls}
+			</if>
+			<if test="queryObj.roadLevel !=null and queryObj.roadLevel !='' ">
+				AND ROAD_LEVEL = #{queryObj.roadLevel}
+			</if>
+			<if test="queryObj.carType !=null and queryObj.carType !='' ">
+				AND CAR_TYPE = #{queryObj.carType}
+			</if>
+			<if test="queryObj.seriousFlag !=null and queryObj.seriousFlag !='' ">
+				AND SERIOUS_FLAG = #{queryObj.seriousFlag}
+			</if>
+			<if test="queryObj.dangerTimeFlag !=null and queryObj.dangerTimeFlag !='' ">
+				AND DANGER_TIME_FLAG = #{queryObj.dangerTimeFlag}
+			</if>
+			<if test="queryObj.alarmTime !=null ">
+				AND DATE_FORMAT(ALARM_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.alarmTime},'%Y-%m-%d')
+			</if>
+			<if test="queryObj.countDate !=null ">
+				AND COUNT_DATE = #{queryObj.countDate}
+			</if>
+			<if test="queryObj.countMonth !=null ">
+				and COUNT_MONTH=#{queryObj.countMonth}
+			</if>
+		</trim>
+		AND
+		CAR_PLATE_NUM IN
+		(
+		${carPlateNum}
+		)
+	</select>
+
+	<resultMap id="CarListVoMap" type="com.edgedo.bigdata.entity.CarListVo" >
+		<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+		<result column="NUM" property="num"/>
+	</resultMap>
+	<select id="selectSeriousCarListByQuery" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultMap="CarListVoMap">
+		select CAR_PLATE_NUM,count(1) NUM from bigdata_alarm_record
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+			<if test="queryObj.alarmType !=null and queryObj.alarmType !='' ">
+				AND ALARM_TYPE = #{queryObj.alarmType}
+			</if>
+			<if test="queryObj.alarmCls !=null and queryObj.alarmCls !='' ">
+				AND ALARM_CLS = #{queryObj.alarmCls}
+			</if>
+			<if test="queryObj.roadLevel !=null and queryObj.roadLevel !='' ">
+				AND ROAD_LEVEL = #{queryObj.roadLevel}
+			</if>
+			<if test="queryObj.carType !=null and queryObj.carType !='' ">
+				AND CAR_TYPE = #{queryObj.carType}
+			</if>
+			<if test="queryObj.seriousFlag !=null and queryObj.seriousFlag !='' ">
+				AND SERIOUS_FLAG = #{queryObj.seriousFlag}
+			</if>
+			<if test="queryObj.dangerTimeFlag !=null and queryObj.dangerTimeFlag !='' ">
+				AND DANGER_TIME_FLAG = #{queryObj.dangerTimeFlag}
+			</if>
+			<if test="queryObj.alarmTime !=null ">
+				AND DATE_FORMAT(ALARM_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.alarmTime},'%Y-%m-%d')
+			</if>
+			<if test="queryObj.countDate !=null ">
+				AND COUNT_DATE = #{queryObj.countDate}
+			</if>
+			<if test="queryObj.countMonth !=null ">
+				and COUNT_MONTH=#{queryObj.countMonth}
+			</if>
+		</trim>
+		group by CAR_PLATE_NUM  having NUM >50
+	</select>
+	<!--<select id="sumSeriousByQuery" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultType="int">
+		select COALESCE(sum(ALARM_TIME_SECOND),0) from bigdata_alarm_record
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+			<if test="queryObj.alarmType !=null and queryObj.alarmType !='' ">
+				AND ALARM_TYPE = #{queryObj.alarmType}
+			</if>
+			<if test="queryObj.alarmCls !=null and queryObj.alarmCls !='' ">
+				AND ALARM_CLS = #{queryObj.alarmCls}
+			</if>
+			<if test="queryObj.roadLevel !=null and queryObj.roadLevel !='' ">
+				AND ROAD_LEVEL = #{queryObj.roadLevel}
+			</if>
+			<if test="queryObj.carType !=null and queryObj.carType !='' ">
+				AND CAR_TYPE = #{queryObj.carType}
+			</if>
+			<if test="queryObj.seriousFlag !=null and queryObj.seriousFlag !='' ">
+				AND SERIOUS_FLAG = #{queryObj.seriousFlag}
+			</if>
+			<if test="queryObj.dangerTimeFlag !=null and queryObj.dangerTimeFlag !='' ">
+				AND DANGER_TIME_FLAG = #{queryObj.dangerTimeFlag}
+			</if>
+			<if test="queryObj.alarmTime !=null ">
+				AND DATE_FORMAT(ALARM_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.alarmTime},'%Y-%m-%d')
+			</if>
+			<if test="queryObj.countDate !=null ">
+				AND COUNT_DATE = #{queryObj.countDate}
+			</if>
+			<if test="queryObj.countMonth !=null ">
+				and COUNT_MONTH=#{queryObj.countMonth}
+			</if>
+		</trim>
+		AND
+		CAR_PLATE_NUM IN
+		(
+		select CAR_PLATE_NUM from bigdata_alarm_record
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+			<if test="queryObj.alarmType !=null and queryObj.alarmType !='' ">
+				AND ALARM_TYPE = #{queryObj.alarmType}
+			</if>
+			<if test="queryObj.alarmCls !=null and queryObj.alarmCls !='' ">
+				AND ALARM_CLS = #{queryObj.alarmCls}
+			</if>
+			<if test="queryObj.roadLevel !=null and queryObj.roadLevel !='' ">
+				AND ROAD_LEVEL = #{queryObj.roadLevel}
+			</if>
+			<if test="queryObj.carType !=null and queryObj.carType !='' ">
+				AND CAR_TYPE = #{queryObj.carType}
+			</if>
+			<if test="queryObj.seriousFlag !=null and queryObj.seriousFlag !='' ">
+				AND SERIOUS_FLAG = #{queryObj.seriousFlag}
+			</if>
+			<if test="queryObj.dangerTimeFlag !=null and queryObj.dangerTimeFlag !='' ">
+				AND DANGER_TIME_FLAG = #{queryObj.dangerTimeFlag}
+			</if>
+			<if test="queryObj.alarmTime !=null ">
+				AND DATE_FORMAT(ALARM_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.alarmTime},'%Y-%m-%d')
+			</if>
+			<if test="queryObj.countDate !=null ">
+				AND COUNT_DATE = #{queryObj.countDate}
+			</if>
+			<if test="queryObj.countMonth !=null ">
+				and COUNT_MONTH=#{queryObj.countMonth}
+			</if>
+		</trim>
+		group by CAR_PLATE_NUM  having count(1) >50
+		)
+	</select>-->
+
+
+	<!--统计其他道路的超速时长-->
+	<select id="sumOtherRoadOverSpeedNum" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultType="int">
+		select COALESCE(sum(ALARM_TIME_SECOND),0) from bigdata_alarm_record
+		where ALARM_TYPE = '2' and ALARM_CLS = '1' and ROAD_LEVEL !='41000'
+		and ROAD_LEVEL != '42000'
+		<if test="queryObj.carType !=null and queryObj.carType !='' ">
+			AND CAR_TYPE = #{queryObj.carType}
+		</if>
+		<if test="queryObj.alarmTime !=null ">
+			AND DATE_FORMAT(ALARM_TIME,'%Y-%m-%d') = DATE_FORMAT(#{queryObj.alarmTime},'%Y-%m-%d')
+		</if>
+		<if test="queryObj.countDate !=null ">
+			AND COUNT_DATE = #{queryObj.countDate}
+		</if>
+		<if test="queryObj.countMonth !=null ">
+			and COUNT_MONTH=#{queryObj.countMonth}
+		</if>
+	</select>
+
+
+	<!--  查询几个没有位置查询的超速记录 -->
+	<select id="listUnLocationAlarm" parameterType="map" resultMap="BaseResultMap" >
+		select <include refid="Base_Column_List"/> from bigdata_alarm_record
+		where COUNT_MONTH=#{countMonth} and (IS_READ_LOCATION is null or IS_READ_LOCATION!='1') and ALARM_TYPE='2'  limit #{limit}
+	</select>
+
+	<!-- 根据联合主键查询 -->
+	<select id="loadByIdAndAlarmDate" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_alarm_record
+		where ID=#{id} and COUNT_MONTH=#{countMonth}
+	</select>
+
+	<!--  分组统计危险路段信息  -->
+	<select id="selectGroupCountOfDangerRoad" parameterType="map" resultType="com.edgedo.bigdata.entity.BigdataDangerRoadClsMonth" >
+		select
+			count(1) dangerRoadPassNum ,LOCATION_INFO_SIMPLE dangerRoadClsName ,
+			LONGITUDE longitude, LATITUDE latitude
+		from bigdata_alarm_record
+		where
+		 COUNT_MONTH=#{countMonth} and COUNT_DATE = #{countDate}
+		 and IS_READ_LOCATION='1' and IS_LOCALPLACE='1'
+		 and IS_HIGH_WAY='0' and ALARM_TYPE='2'
+		 group by LOCATION_INFO_SIMPLE
+	</select>
+
+	<!--  统计超速次数 -->
+	<select id="countDayOverSpeedOfCar" parameterType="map" resultType="int">
+		select count(1) from bigdata_alarm_record
+		where COUNT_MONTH=#{countMonth} and COUNT_DATE = #{countDate}
+			and CAR_PLATE_NUM=#{carPlateNum}  and CAR_PLATE_COLOR=#{carPlateColor}  and ALARM_TYPE='2'
+	</select>
+
+	<!-- 统计车辆疲劳次数 -->
+	<select id="countDayFatigueOfCar" parameterType="map" resultType="int" >
+		select count(1) from bigdata_alarm_record
+		where COUNT_MONTH=#{countMonth} and COUNT_DATE = #{countDate}
+			and CAR_PLATE_NUM=#{carPlateNum}  and CAR_PLATE_COLOR=#{carPlateColor}  and ALARM_TYPE='4'
+	</select>
+
+	<!--  统计车辆高速超速次数  -->
+	<select id="countDayHighWayOverSpeedOfCar" parameterType="map" resultType="int" >
+		select count(1) from bigdata_alarm_record
+		where COUNT_MONTH=#{countMonth} and COUNT_DATE = #{countDate}
+		 	and CAR_PLATE_NUM=#{carPlateNum}  and CAR_PLATE_COLOR=#{carPlateColor}
+		   and ALARM_TYPE='2' and  ROAD_LEVEL='41000'
+		   <if test="isSerious!=null">
+			   and  SERIOUS_FLAG='1'
+		   </if>
+			<if test="isSerious!=null">
+				and  DANGER_TIME_FLAG='1'
+			</if>
+	</select>
+
+	<!--  统计国道超速次数 -->
+	<select id="countDayGuodaoWayOverSpeedOfCar" parameterType="map" resultType="int" >
+		select count(1) from bigdata_alarm_record
+		where COUNT_MONTH=#{countMonth} and COUNT_DATE = #{countDate}
+		and CAR_PLATE_NUM=#{carPlateNum}  and CAR_PLATE_COLOR=#{carPlateColor}
+		and ALARM_TYPE='2' and  ROAD_LEVEL='42000'
+		<if test="isSerious!=null">
+			and  SERIOUS_FLAG='1'
+		</if>
+		<if test="isSerious!=null">
+			and  DANGER_TIME_FLAG='1'
+		</if>
+	</select>
+
+	<!--  统计严重超速次数 -->
+	<select id="countDaySeriousWayOverSpeedOfCar" parameterType="map" resultType="int" >
+		select count(1) from bigdata_alarm_record
+		where COUNT_MONTH=#{countMonth} and COUNT_DATE = #{countDate} and CAR_PLATE_NUM=#{carPlateNum}  and CAR_PLATE_COLOR=#{carPlateColor}
+		and ALARM_TYPE='2' and  SERIOUS_FLAG='1'
+	</select>
+
+	<!--  危险时段超速次数 -->
+	<select id="countDayDangerWayOverSpeedOfCar" parameterType="map" resultType="int" >
+		select count(1) from bigdata_alarm_record
+		where COUNT_MONTH=#{countMonth} and COUNT_DATE = #{countDate} and CAR_PLATE_NUM=#{carPlateNum}  and CAR_PLATE_COLOR=#{carPlateColor}
+		and ALARM_TYPE='2' and  DANGER_TIME_FLAG='1'
+	</select>
+
+	<!--  危险时段超速次数 -->
+	<select id="countDayDangerFatigueOfCar" parameterType="map" resultType="int" >
+		select count(1) from bigdata_alarm_record
+		where COUNT_MONTH=#{countMonth} and COUNT_DATE = #{countDate} and CAR_PLATE_NUM=#{carPlateNum}  and CAR_PLATE_COLOR=#{carPlateColor}
+		and ALARM_TYPE='4' and  DANGER_TIME_FLAG='1'
+	</select>
+
+	<!--  根据条件统计 -->
+	<select id="selectGroupCountByCondition" parameterType="map" resultType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordView">
+		select  count(1) groupCount,GROUP_CONCAT(DISTINCT(driver),',') driver,
+		CAR_PLATE_NUM carPlateNum,CAR_PLATE_COLOR carPlateColor  from bigdata_alarm_record
+		where COUNT_MONTH=#{countMonth} and count_date=#{countDate}
+		<if test="alarmType!=null">
+			and ALARM_TYPE=#{alarmType}
+		</if>
+		<if test="alarmCls!=null">
+			and ALARM_CLS=#{alarmCls}
+		</if>
+		<if test="roadLevel != null">
+			and ROAD_LEVEL=#{roadLevel}
+		</if>
+		<if test="seriousFlag != null">
+			and SERIOUS_FLAG=#{seriousFlag}
+		</if>
+		<if test="dangerTimeFlag != null">
+			and DANGER_TIME_FLAG=#{dangerTimeFlag}
+		</if>
+		group by CAR_PLATE_NUM,CAR_PLATE_COLOR
+	</select>
+
+
+	<select id="countByCompId" parameterType="map" resultType="int">
+		select count(1) from bigdata_alarm_record
+		WHERE  COUNT_MONTH=#{countMonth} and COMP_ID = #{compId} and COUNT_DATE = #{countDate}
+	</select>
+
+	<select id="countByCarPlateNum" parameterType="map" resultType="int">
+		select count(1) from bigdata_alarm_record
+		WHERE COUNT_MONTH=#{countMonth}
+			and  CAR_PLATE_NUM=#{carPlateNum}
+			and CAR_PLATE_COLOR=#{carPlateColor}
+			and COUNT_DATE = #{countDate}
+	</select>
+
+	<select id="countHandleNumByCarPlateNum" parameterType="map" resultType="int">
+		select count(1) from bigdata_alarm_record
+		WHERE COUNT_MONTH=#{countMonth}
+		and  CAR_PLATE_NUM=#{carPlateNum}
+		and CAR_PLATE_COLOR=#{carPlateColor}
+		and COUNT_DATE = #{countDate}
+		and (ALARM_STATE = '1' or ALARM_STATE = '2')
+	</select>
+
+	
+	<select id="countByCarType" parameterType="map" resultType="com.edgedo.bigdata.entity.AlarmVo">
+		SELECT CAR_PLATE_NUM carPlateNum ,ALARM_TYPE alarmType,count(1) alarmNum FROM bigdata_alarm_record
+		WHERE CAR_PLATE_NUM = #{carPlateNum} and CAR_PLATE_COLOR = #{carPlateColor} AND  COUNT_MONTH = #{countMonth}
+		AND DATE_FORMAT(COUNT_DATE,'%Y%m%d') >= DATE_FORMAT(#{beginDate},'%Y%m%d')
+		and DATE_FORMAT(COUNT_DATE,'%Y%m%d') &lt;= DATE_FORMAT(#{endDate},'%Y%m%d')
+		and ALARM_TYPE is not null
+		 AND( (ALARM_CLS = '1' AND ALARM_TYPE ='2') OR (ALARM_CLS = '2' AND ALARM_TYPE ='4'))
+		GROUP BY ALARM_TYPE
+	</select>
+
+	<select id="countByCarTypeMonth" parameterType="map" resultType="com.edgedo.bigdata.entity.AlarmVo">
+		SELECT CAR_PLATE_NUM carPlateNum ,ALARM_TYPE alarmType,count(1) alarmNum FROM bigdata_alarm_record
+		WHERE CAR_PLATE_NUM = #{carPlateNum} and CAR_PLATE_COLOR = #{carPlateColor} AND  COUNT_MONTH = #{countMonth}
+		and ALARM_TYPE is not null
+		AND( (ALARM_CLS = '1' AND ALARM_TYPE ='2') OR (ALARM_CLS = '2' AND ALARM_TYPE ='4'))
+		GROUP BY ALARM_TYPE
+	</select>
+
+
+
+	<select id="countByTeamTransitTypeMonth" parameterType="map" resultType="com.edgedo.bigdata.entity.AlarmVo">
+		SELECT CAR_PLATE_NUM carPlateNum ,ALARM_TYPE alarmType,count(1) alarmNum FROM bigdata_alarm_record
+		WHERE TEAM_ID = #{teamId} AND  COUNT_MONTH = #{countMonth}
+		and ALARM_TYPE is not null
+		AND( (ALARM_CLS = '1' AND ALARM_TYPE ='2') OR (ALARM_CLS = '2' AND ALARM_TYPE ='4'))
+		GROUP BY ALARM_TYPE
+	</select>
+
+	<select id="countByTeamTransitTypeTopThree" parameterType="map" resultType="com.edgedo.bigdata.entity.AlarmVo">
+		SELECT CAR_PLATE_NUM carPlateNum ,ALARM_TYPE alarmType,count(1) alarmNum
+		FROM bigdata_alarm_record
+		WHERE TEAM_ID = #{teamId}
+		AND  COUNT_MONTH = #{countMonth}
+		AND DATE_FORMAT(COUNT_DATE,'%Y%m%d') >= DATE_FORMAT(#{beginDate},'%Y%m%d')
+		AND DATE_FORMAT(COUNT_DATE,'%Y%m%d') &lt;= DATE_FORMAT(#{endDate},'%Y%m%d')
+		AND ALARM_CLS = '1' AND ALARM_TYPE ='2'
+		GROUP BY CAR_PLATE_NUM ORDER BY alarmNum DESC  limit 3
+	</select>
+
+	<select id="countByTeamTransitTypeTopThreeMonth" parameterType="map" resultType="com.edgedo.bigdata.entity.AlarmVo">
+		SELECT CAR_PLATE_NUM carPlateNum ,ALARM_TYPE alarmType,count(1) alarmNum
+		FROM bigdata_alarm_record
+		WHERE TEAM_ID = #{teamId}
+		AND  COUNT_MONTH = #{countMonth}
+		AND ALARM_CLS = '1' AND ALARM_TYPE ='2'
+		GROUP BY CAR_PLATE_NUM ORDER BY alarmNum DESC  limit 3
+	</select>
+
+
+	<select id="countByTeamTransitTypeTopThreeNew" parameterType="map" resultType="com.edgedo.bigdata.entity.AlarmVo">
+		SELECT CAR_PLATE_NUM carPlateNum ,ALARM_TYPE alarmType,count(1) alarmNum
+		FROM bigdata_alarm_record
+		WHERE TEAM_ID = #{teamId}
+		AND  COUNT_MONTH = #{countMonth}
+		AND DATE_FORMAT(COUNT_DATE,'%Y%m%d') >= DATE_FORMAT(#{beginDate},'%Y%m%d')
+		AND DATE_FORMAT(COUNT_DATE,'%Y%m%d') &lt;= DATE_FORMAT(#{endDate},'%Y%m%d')
+		AND ALARM_CLS = '2' AND ALARM_TYPE ='4'
+		GROUP BY CAR_PLATE_NUM ORDER BY alarmNum DESC  limit 3
+	</select>
+
+
+	<select id="countByTeamTransitTypeTopThreeMonthNew" parameterType="map" resultType="com.edgedo.bigdata.entity.AlarmVo">
+		SELECT CAR_PLATE_NUM carPlateNum ,ALARM_TYPE alarmType,count(1) alarmNum
+		FROM bigdata_alarm_record
+		WHERE TEAM_ID = #{teamId}
+		AND  COUNT_MONTH = #{countMonth}
+		AND ALARM_CLS = '2' AND ALARM_TYPE ='4'
+		GROUP BY CAR_PLATE_NUM ORDER BY alarmNum DESC  limit 3
+	</select>
+
+
+
+
+	<select id="countByTeamTransitType" parameterType="map" resultType="com.edgedo.bigdata.entity.AlarmVo">
+		SELECT CAR_PLATE_NUM carPlateNum ,ALARM_TYPE alarmType,count(1) alarmNum FROM bigdata_alarm_record
+		WHERE TEAM_ID = #{teamId}  AND  COUNT_MONTH = #{countMonth}
+		AND DATE_FORMAT(COUNT_DATE,'%Y%m%d') >= DATE_FORMAT(#{beginDate},'%Y%m%d')
+		and DATE_FORMAT(COUNT_DATE,'%Y%m%d') &lt;= DATE_FORMAT(#{endDate},'%Y%m%d')
+		and ALARM_TYPE is not null
+		AND( (ALARM_CLS = '1' AND ALARM_TYPE ='2') OR (ALARM_CLS = '2' AND ALARM_TYPE ='4'))
+		GROUP BY ALARM_TYPE
+	</select>
+	<select id="selectAlarm" resultType="java.lang.Integer">
+		SELECT count(1) from bigdata_alarm_record
+		WHERE
+		COUNT_DATE=#{countDay} and COUNT_MONTH=#{countMonth}
+		<if test='carType != "总"'>
+			and CAR_TYPE=#{carType}
+		</if>
+		<if test='xianQuId != ""'>
+			and XIANQU_ID=#{xianQuId}
+		</if>
+		and DATE_FORMAT(ALARM_TIME,'%h:%i') >= #{startTime}
+		and DATE_FORMAT(ALARM_TIME,'%h:%i') &lt;= #{endTime}
+	</select>
+
+	<select id="selectHandler" resultType="java.lang.Integer">
+		SELECT count(1) from bigdata_alarm_record
+		WHERE
+		COUNT_DATE=#{countDay} and COUNT_MONTH=#{countMonth}
+		<if test='carType != "总"'>
+			and CAR_TYPE=#{carType}
+		</if>
+		<if test='xianQuId != ""'>
+			and XIANQU_ID=#{xianQuId}
+		</if>
+		and DATE_FORMAT(ALARM_TIME,'%h:%i') >= #{startTime}
+		and DATE_FORMAT(ALARM_TIME,'%h:%i') &lt;= #{endTime}
+		and  (ALARM_STATE='1' OR ALARM_STATE='2')
+	</select>
+	<select id="selectCountType" resultType="map">
+		SELECT PROVINCE_ID provinceId,PROVINCE_NAME provinceName,
+			   CITY_ID cityId,CITY_NAME cityName,XIANQU_ID xianquId,XIANQU_NAME xianquName
+		from bigdata_alarm_record where COUNT_DATE=#{countDay} and COUNT_MONTH=#{countMonth} and XIANQU_ID=#{xianQuId} LIMIT 1
+	</select>
+
+	<select id="selectAlarmTypeCountByQuery" parameterType="com.edgedo.bigdata.queryvo.BigdataAlarmRecordQuery" resultType="int">
+		select count(1) from bigdata_alarm_record
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+			<if test='queryObj != null and  queryObj.countDate != null'>
+				AND  COUNT_DATE = #{queryObj.countDate}
+			</if>
+			<if test='queryObj != null and  weekDateStart != null'>
+				AND  COUNT_DATE <![CDATA[ >= ]]> #{weekDateStart}
+				AND  COUNT_DATE <![CDATA[ <= ]]> #{weekDateEnd}
+			</if>
+			<if test='queryObj != null and  queryObj.countMonth != null'>
+				AND  COUNT_MONTH = #{queryObj.countMonth}
+			</if>
+			<if test='queryObj != null and  queryObj.provinceId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.provinceId)'>
+				AND  PROVINCE_ID = #{queryObj.provinceId}
+			</if>
+			<if test='queryObj != null and  queryObj.cityId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.cityId)'>
+				AND  CITY_ID = #{queryObj.cityId}
+			</if>
+			<if test='queryObj != null and  queryObj.xianquId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.xianquId)'>
+				AND  XIANQU_ID = #{queryObj.xianquId}
+			</if>
+			<if test='queryObj != null and  queryObj.carType != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.carType)'>
+				AND  CAR_TYPE = #{queryObj.carType}
+			</if>
+			<if test='queryObj != null and  queryObj.alarmType != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.alarmType)'>
+				AND  ALARM_TYPE = #{queryObj.alarmType}
+			</if>
+			<if test='queryObj != null and  queryObj.alarmCls != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.alarmCls)'>
+				AND  ALARM_CLS = #{queryObj.alarmCls}
+			</if>
+		</trim>
+	</select>
+
+
+  
+</mapper>

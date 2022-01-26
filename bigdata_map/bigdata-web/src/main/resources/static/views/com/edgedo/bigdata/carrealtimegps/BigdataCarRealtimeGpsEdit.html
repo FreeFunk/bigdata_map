@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="BigdataCarRealtimeGps-form" id="BigdataCarRealtimeGps-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id" lay-verify="required" placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车牌号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateNum" lay-verify="required" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车架号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carFrameNum" lay-verify="required" placeholder="请输入车架号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">上次定位时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="lastPositionTime" id="lastPositionTime" lay-verify="required" placeholder="请输入上次定位时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">纬度</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="pointLat" lay-verify="required" placeholder="请输入纬度" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">经度</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="pointLong" lay-verify="required" placeholder="请输入经度" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">实时速度</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="realSpeed" lay-verify="required" placeholder="请输入实时速度" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">gps速度</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="gpsSpeed" lay-verify="required" placeholder="请输入gps速度" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="mileage" lay-verify="required" placeholder="请输入里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">方向</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="direction" lay-verify="required" placeholder="请输入方向" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">海拔</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="altitude" lay-verify="required" placeholder="请输入海拔" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车辆状态</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carState" lay-verify="required" placeholder="请输入车辆状态" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">报警状态</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="alarmState" lay-verify="required" placeholder="请输入报警状态" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车牌颜色</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateColor" lay-verify="required" placeholder="请输入车牌颜色" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">数据更新时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="lastUpTime" id="lastUpTime" lay-verify="required" placeholder="请输入数据更新时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">位置国家</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="mapCountry" lay-verify="required" placeholder="请输入位置国家" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">位置省份</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="mapProvince" lay-verify="required" placeholder="请输入位置省份" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">省份id</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="mapProvinceId" lay-verify="required" placeholder="请输入省份id" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">位置城市</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="mapCity" lay-verify="required" placeholder="请输入位置城市" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">城市id</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="mapCityId" lay-verify="required" placeholder="请输入城市id" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">位置县区</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="mapXianqu" lay-verify="required" placeholder="请输入位置县区" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">县区id</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="mapXianquId" lay-verify="required" placeholder="请输入县区id" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">详细位置</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="mapDetail" lay-verify="required" placeholder="请输入详细位置" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">开始里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="beginMileage" lay-verify="required" placeholder="请输入开始里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">开始里程时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="beginTime" id="beginTime" lay-verify="required" placeholder="请输入开始里程时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">当日是否运营</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="operatFlag" lay-verify="required" placeholder="请输入当日是否运营" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否上线</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="onlineState" lay-verify="required" placeholder="请输入是否上线" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">城市更新时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="areaUpTime" id="areaUpTime" lay-verify="required" placeholder="请输入城市更新时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">当日总时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="todayTimeTotal" lay-verify="required" placeholder="请输入当日总时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">当日总里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="todayMileageTotal" lay-verify="required" placeholder="请输入当日总里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">接收ip</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ip" lay-verify="required" placeholder="请输入接收ip" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">停车纬度</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="stopLat" lay-verify="required" placeholder="请输入停车纬度" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">停车经度</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="stopLong" lay-verify="required" placeholder="请输入停车经度" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">停留时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="stopMinuteNum" lay-verify="required" placeholder="请输入停留时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">停车开始时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="stopBeginTime" id="stopBeginTime" lay-verify="required" placeholder="请输入停车开始时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">停车截止时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="stopEndTime" id="stopEndTime" lay-verify="required" placeholder="请输入停车截止时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">清晨时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="morningMinuteNum" lay-verify="required" placeholder="请输入清晨时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">中午时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="noonMinuteNum" lay-verify="required" placeholder="请输入中午时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">黄昏时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="duskMinuteNum" lay-verify="required" placeholder="请输入黄昏时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">凌晨时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="lingchenMinuteNum" lay-verify="required" placeholder="请输入凌晨时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">午夜时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="midnightMinuteNum" lay-verify="required" placeholder="请输入午夜时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">清晨里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="morningMileage" lay-verify="required" placeholder="请输入清晨里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">中午里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="noonMileage" lay-verify="required" placeholder="请输入中午里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">黄昏里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="duskMileage" lay-verify="required" placeholder="请输入黄昏里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">午夜里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="midnightMileage" lay-verify="required" placeholder="请输入午夜里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">凌晨里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="lingchenMileage" lay-verify="required" placeholder="请输入凌晨里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="BigdataCarRealtimeGps-form-edit" id="BigdataCarRealtimeGps-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(BigdataCarRealtimeGps-form-edit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'/admin/BIGDATACARREALTIMEGPS/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('BigdataCarRealtimeGps-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+            laydate.render({
+                elem: '#lastPositionTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#lastUpTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#beginTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#areaUpTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#stopBeginTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#stopEndTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

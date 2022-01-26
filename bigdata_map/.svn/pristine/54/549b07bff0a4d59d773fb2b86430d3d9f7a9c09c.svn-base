@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>秦皇岛市智慧交通北斗大数据分析平台</title>
+    <!--<link href="css/animate.min.css" rel="stylesheet" type="text/css">-->
+    <!--<link href="css/layout.css" rel="stylesheet" type="text/css" />-->
+    <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <!--<link href="font/iconfont.css" rel="stylesheet" type="text/css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="css/datedropper.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">-->
+    <script src="js/tool.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <!--<script type="text/javascript" src="js/laydate/laydate.js"></script>-->
+</head>
+
+<body style="height: 100%;overflow-y: scroll;">
+
+<div class="main">
+    <div style="width: 50%;height: auto;float: left">
+        <table border="1">
+            <tr>
+                <td>安全等级:<p id="safetyLevel"></p></td>
+            </tr>
+            <tr>
+                <td>画像:<p id="portrait"></p></td>
+            </tr>
+            <tr>
+                <td>年龄:<p id="age"></p></td>
+            </tr>
+            <tr>
+                <td>身份证号:<p id="numberCode"></p></td>
+            </tr>
+            <tr>
+                <td>入职日期:<p id="startWorkTime"></p></td>
+            </tr>
+            <tr>
+                <td>企业:<p id="teamName"></p></td>
+            </tr>
+            <tr>
+                <td>性别:<p id="sex"></p></td>
+            </tr>
+            <tr>
+                <td>籍贯:<p id="oldAddress"></p></td>
+            </tr>
+            <tr>
+                <td>联系电话:<p id="phoneNum"></p></td>
+            </tr>
+            <tr>
+                <td>资格证号:<p id="driverCode"></p></td>
+            </tr>
+            <tr>
+                <td>驾驶证类型:<p id="driverType"></p></td>
+            </tr>
+            <tr>
+                <td>驾驶证号:<p id="driverCarCode"></p></td>
+            </tr>
+            <tr>
+                <td>准驾车型:<p id="driverCarType"></p></td>
+            </tr>
+        </table>
+        <table border="1">
+            <tr>
+                <td>车牌号</td>
+                <td>时间</td>
+                <td>所属企业</td>
+            </tr>
+            <tr>
+                <td id="carNum"></td>
+                <td id="changeTime"></td>
+                <td id="changeTeamName"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="width: 50%;height: auto;float: right;">
+        <table border="1">
+            <tr>
+                <td>行驶里程</td>
+                <td>全年行驶里程:<p id="liChengYear"></p></td>
+                <td>国道:<p id="guoDao"></p></td>
+                <td>高速:<p id="gaoSu"></p></td>
+                <td id="liChengPingFen"></td>
+            </tr>
+            <tr>
+                <td>行驶时长</td>
+                <td>全年驾驶时长:<p id="jiaShiYear"></p></td>
+                <td>危险时段驾驶时长:<p id="weiXianTiem"></p></td>
+                <td>白天:<p id="day"></p></td>
+                <td>夜晚:<p id="night"></p></td>
+                <td id="timePingFen"></td>
+            </tr>
+            <tr>
+                <td>行驶速度</td>
+                <td>全年最高速度:<p id="speedYear"></p></td>
+                <td>全年平均时速:<p id="speedPingJunYear"></p></td>
+                <td id="speedPingFen"></td>
+            </tr>
+            <tr>
+                <td>常去城市</td>
+                <td>高频次停靠点:<p id="afterCity"></p></td>
+                <td id="afterCityPingFen"></td>
+            </tr>
+            <tr>
+                <td>经营分析</td>
+                <td>本地从业情况:<p id="benDiWork"></p></td>
+                <td>驾驶行为分析:<p id="jiaShiFenxi"></p></td>
+                <td>安全生产情况:<p id="safetyWorkFenxi"></p></td>
+                <td id="jiYingPingFen"></td>
+            </tr>
+            <tr>
+                <td>危险驾驶</td>
+                <td>超速:<p id="onSpeed"></p></td>
+                <td>严重超速:<p id="onSpeedYanZhong"></p></td>
+                <td>疲劳:<p id="piLao"></p></td>
+                <td>严重疲劳:<p id="piLaoYanZhong"></p></td>
+                <td id="weiXianJiaShiPingFen"></td>
+            </tr>
+            <tr>
+                <td>安全生产</td>
+                <td>安全培训记录:<p id="safetyJiLu"></p></td>
+                <td>是否实名认证:<p id="isShiMingRenZheng"></p></td>
+                <td>驾驶证:<p id="jiaShiZheng"></p></td>
+                <td id="safetyPingFen"></td>
+            </tr>
+            <tr>
+                <td>诚信考核</td>
+                <td>诚信考核记录:<p id="chengXinKaoHe"></p></td>
+                <td id="chengXinKaoHePingFen"></td>
+            </tr>
+            <tr>
+                <td>健康档案</td>
+                <td>健康档案记录:<p id="jianKangJilu"></p></td>
+                <td id="jianKangJiluPingFen"></td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript">
+
+    selectAnQuanPingFen();
+    function selectAnQuanPingFen() {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataDriverDrawInfo/selectCarUserInfo.jsn",
+            data: {'driverId':'732d628776374678a16704cace348ae3'},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){//D:\work\hangling\bigdata_map\bigdata-drawing\src\main\resources\static\views\darwing\DriverPortraitList.html
+                debugger
+                //安全等级 safetyLevel
+                document.getElementById("safetyLevel").innerText='';
+                //画像 portrait
+                document.getElementById("portrait").innerText='';
+                // 年龄 age
+                document.getElementById("age").innerText='';
+                // 身份证号 numberCode
+                document.getElementById("numberCode").innerText='';
+                // 入职日期 startWorkTime
+                document.getElementById("startWorkTime").innerText='';
+                // 企业 teamName
+                document.getElementById("teamName").innerText='';
+                // 性别 sex
+                document.getElementById("sex").innerText='';
+                // 籍贯 oldAddress
+                document.getElementById("oldAddress").innerText='';
+                // 联系电话 phoneNum
+                document.getElementById("phoneNum").innerText='';
+                // 资格证号 driverCode
+                document.getElementById("driverCode").innerText='';
+                // 驾驶证类型 driverType
+                document.getElementById("driverType").innerText='';
+                // 驾驶证号 driverCarCode
+                document.getElementById("driverCarCode").innerText='';
+                // 准驾车型 driverCarType
+                document.getElementById("driverCarType").innerText='';
+
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

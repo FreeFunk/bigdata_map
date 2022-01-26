@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataBeidouCarTraceBkRecMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataBeidouCarTraceBkRec" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="COMP_ID" property="compId"/>
+			<result column="COMP_NAME" property="compName"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="START_TIME" property="startTime"/>
+			<result column="END_TIME" property="endTime"/>
+			<result column="START_LN_LAT" property="startLnLat"/>
+			<result column="END_LN_LAT" property="endLnLat"/>
+			<result column="POINT_DISTANCE" property="pointDistance"/>
+			<result column="BREAK_TYPE" property="breakType"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataBeidouCarTraceBkRecView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, COMP_ID, COMP_NAME, CAR_PLATE_NUM, CAR_FRAME_NUM, START_TIME, END_TIME, START_LN_LAT, END_LN_LAT, POINT_DISTANCE, BREAK_TYPE, COUNT_DATE, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.startTime != null'>
+					AND  START_TIME = #{queryObj.startTime}
+				</if>
+				<if test='queryObj != null and  queryObj.endTime != null'>
+					AND  END_TIME = #{queryObj.endTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countDate)'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.yearNum)'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouCarTraceBkRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_car_trace_bk_rec 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouCarTraceBkRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_car_trace_bk_rec 
+  		<include refid="where"/>
+  </select>
+
+	<select id="countByCarPlateNum" parameterType="map" resultType="int">
+		select count(1) from bigdata_beidou_car_trace_bk_rec
+		WHERE COUNT_MONTH = #{countMonth} and CAR_PLATE_NUM = #{carPlate} and BREAK_TYPE = #{type}
+	</select>
+
+  
+  
+</mapper>

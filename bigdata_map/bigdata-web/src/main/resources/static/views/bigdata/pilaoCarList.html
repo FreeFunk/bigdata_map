@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="css/layer-animate.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    <script src="js/tool.js"></script>
+</head>
+
+<body>
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+				<!--<input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " />-->
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+    <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">车辆列表</div>
+             <a href="javaScript:void(0)" onclick="goBack();" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="main">
+      <div class="ind">
+          <div class="blank40"></div>          
+          <!--<div class="mk " style="width:20%; height:900px; float:left">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+               <div class="blank20"></div>
+               <div class="tit">
+                     <span class="tit_l"></span>
+                     <span class="tit_m">高级检索</span>
+                     <span class="tit_r"></span>
+               </div>
+                <form id="carInfoForm" action="" method="post">
+                   <div class="con0 clearfix">
+                        <input type="hidden" name="queryObj.cityId" value="130300"/>
+                        <div class="mingcheng0">车牌号</div>
+                        <div>
+                            <input id="carPlateNum" class="input" name="queryObj.carPlateNum" type="text" />
+                        </div>
+                        <div class="blank10"></div>
+                        <div class="mingcheng0">企业名称</div>
+                        <div>
+                            <input id="ownerTeamName" class="input" name="queryObj.ownerTeamName" type="text" />
+                        </div>
+                        <div class="blank10"></div>
+                        <div class="mingcheng0">企业类型</div>
+                        <div>
+                            <select id="companyLavel" name="companyLavel" class="input00" style="height: 50px;">
+                                <option class="lsd" value ="">请选择</option>
+                                <option class="lsd" value ="TEAM_WXHWYS">危货</option>
+                                <option class="lsd" value="TEAM_KY">客运</option>
+                                <option class="lsd" value="TEAM_PTHW">普货</option>
+                            </select>
+                        </div>
+                        <div class="blank10"></div>
+                        <div class="mingcheng0">联系人</div>
+                        <div>
+                            <input id="ownerName" class="input" name="queryObj.ownerName" type="text" />
+                        </div>
+                        <div class="mingcheng0">车架号</div>
+                        <div>
+                            <input id="carFrameNum" class="input" name="queryObj.carFrameNum" type="text" />
+                        </div>
+                        <div class="mingcheng0">手机号</div>
+                        <div>
+                            <input id="ownerPhoneNum" class="input" name="queryObj.ownerPhoneNum" type="text" />
+                        </div>
+                        <div class="mingcheng0">技术档案编号</div>
+                        <div>
+                            <input id="carRecFileCode" class="input" name="queryObj.carRecFileCode" type="text" />
+                        </div>
+                        <div class="blank20"></div>
+                        <div class="center">
+                          <a href="javascript:void(0);" onclick="searchCarInfo();" class="clss"><i class="iconfont icon-sousuo5 " style="font-size:20px"></i>&nbsp;搜索</a>
+                        </div>
+                   </div>
+                </form>
+           </div>-->
+
+         <!-- <div class="mk " style="width:99%; height:900px; float:right">
+              <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>
+              <div class="blank20"></div>
+              <div class="con0 clearfix">
+                  <div style="height:850px; overflow-y: auto">
+                      <table id="carList" width="100%" class="grid06">
+                          <tbody><tr>
+                              <th style="width:10%">车牌号</th>
+                              <th style="width:20%">车架号</th>
+                              <th style="width:10%">车牌颜色</th>
+                              <th style="width:20%">车队名</th>
+                              <th style="width:20%">联系人</th>
+                              <th style="width:10%">联系电话</th>
+                              <th style="width:10%">技术档案编号</th>
+                          </tr>
+                          </tbody><tbody><tr style="cursor: pointer" onclick="gotoDetailPage('000150a9a50d4f2f8ce36cdd5a7ff7ec')"><td>冀C06E89</td><td>LGXC16AF8H0034623</td><td>蓝色</td><td>昌黎谊运车队</td><td>张宝安</td><td>13930369207</td><td>CI20180702015768</td></tr><tr style="cursor: pointer" onclick="gotoDetailPage('0001acc265fa461d8aee60094edca4dc')"><td>冀C66222</td><td>LZGJLG847HX086074</td><td>黄色</td><td>昌黎县双军运输服务有限公司</td><td>张建军</td><td>15233505688</td><td>CI20180821017510</td></tr><tr style="cursor: pointer" onclick="gotoDetailPage('000518af9db946639fe4aacac168b214')"><td>冀C6368E</td><td>LZ0B9JD34B103413</td><td>蓝色</td><td>昌黎宏坤车队</td><td>李凤利</td><td>13503231206</td><td>CI20170718004595</td></tr><tr style="cursor: pointer" onclick="gotoDetailPage('0006c2b22d71428d9933814f06cdad84')"><td>冀C37720</td><td>LZZ1BXNF4FW112360</td><td>黄色</td><td>昌黎通海车队</td><td>叶立飞</td><td>13803368156</td><td>CI20170829006038</td></tr><tr style="cursor: pointer" onclick="gotoDetailPage('000a13d75a1e41569ad772c323a3194c')"><td>冀C7C209</td><td>LVBV3JBB8FE042867</td><td>蓝色</td><td>昌黎宏坤车队</td><td>张明</td><td>15076090916</td><td>CI20171211011418</td></tr><tr style="cursor: pointer" onclick="gotoDetailPage('001fbe4f82234402a6c1ddac377d36c0')"><td>冀CH971挂</td><td>LA99HRP319CHCL573</td><td>黄色</td><td>秦皇岛海陆中天集装箱运输有限公司</td><td>秦皇岛海陆中天集装箱运输有限公司</td><td>13731797111</td><td>CI20181113019683</td></tr><tr style="cursor: pointer" onclick="gotoDetailPage('002b7cfa1c5f44e1b053e43fa024e4e1')"><td>冀C0000X</td><td>LVBV3JBB0FJ087602</td><td>蓝色</td><td>昌黎县永军冷冻食品有限公司</td><td>昌黎县永军冷冻食品有限公司</td><td>13903332133</td><td>CI20190112025503</td></tr><tr style="cursor: pointer" onclick="gotoDetailPage('002f6c4fce6d43578286543db28da6bd')"><td>冀C77580</td><td>LRDS6PEB8HH029534</td><td>黄色</td><td>昌黎县运达运输有限公司</td><td>昌黎县运达运输有限公司</td><td>13333355520</td><td>CI20190111022664</td></tr><tr style="cursor: pointer" onclick="gotoDetailPage('0031baa6e8de462eb41948c0a1e64faa')"><td>冀CY730挂</td><td>LA9940C32D0CJZ156</td><td>黄色</td><td>昌黎县双军运输服务有限公司</td><td>焦东洪</td><td>18031968555</td><td>CI20181015019150</td></tr><tr style="cursor: pointer" onclick="gotoDetailPage('0033841d929d4bc5a2423fe37e11e16a')"><td>冀CB6790</td><td>LFNAFRJM3DAC33939</td><td>黄色</td><td>昌黎昌锐车队</td><td>孙继林</td><td>13933662226</td><td>CI20170517002642</td></tr><tr style="cursor: pointer" onclick="gotoDetailPage('00367fd5de394fdeb8570640e07a697b')"><td>冀C25195</td><td>LFNFVXPX3G1F28929</td><td>黄色</td><td>昌黎谊运车队</td><td>才宇</td><td>13603232928</td><td>CI20180830017787</td></tr><tr style="cursor: pointer" onclick="gotoDetailPage('003a2f490b7847aa9930b7bd31f0111c')"><td>冀CR206挂</td><td>LA939VRC6E0HBS959</td><td>黄色</td><td></td><td></td><td></td><td></td></tr><tr style="cursor: pointer" onclick="gotoDetailPage('003dba162d4c4934baeca9c6e9d270e6')"><td>冀C9D165</td><td>LSYFJD4R0DH066109</td><td>蓝色</td><td>昌黎谊运车队</td><td>周艳超</td><td>15903331856</td><td>CI20171030009992</td></tr></tbody></table>
+
+                      <div class="blank20"></div>
+
+
+                      <div id="pageList" class="green-black"><a href="javaScript:void(0);" onclick="sendRequest('prev',1,2760)">&lt;上一页</a><a href="javaScript:void(0);" style="background-color: #E07C24;border: none" onclick="sendRequest('',1,2760)">1</a><a href="javaScript:void(0);" onclick="sendRequest('',2,2760)">2</a><a href="javaScript:void(0);" onclick="sendRequest('',3,2760)">3</a><a href="javaScript:void(0);" onclick="sendRequest('',4,2760)">4</a><a href="javaScript:void(0);" onclick="sendRequest('',5,2760)">5</a><em class="white">......</em><a href="javaScript:void(0);" onclick="sendRequest('',2760,2760)">2760</a><a href="javaScript:void(0);" onclick="sendRequest('next',1,2760)">下一页 &gt;</a></div>
+
+
+
+                  </div>
+              </div>
+          </div>-->
+          
+          <div class="mk " style="width:99%; height:900px; float:right">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>
+               <div class="blank20"></div>
+               <div class="con0 clearfix">
+                   <div  style="height:850px; overflow-y: auto">
+                              <table id="carList" width="100%" class="grid06">
+                                  <tr>
+                                      <th style="width:10%">车牌号</th>
+                                      <th style="width:10%">提醒次数</th>
+                                      <th style="width:10%">所属县区</th>
+                                      <th style="width:20%">所属企业（个人）</th>
+                                      <th style="width:10%">联系电话</th>
+                                      <th style="width:10%">许可证号</th>
+                                      <th style="width:10%">驾驶员</th>
+                                      <th style="width:10%">从业资格证号</th>
+                                      <th style="width:10%">联系电话</th>
+                                  </tr>
+                               </table>
+                       
+                              <div class="blank20"></div>
+                       
+                       
+                             <div id="pageList" class="green-black">
+                                    <!--<span class="disabled">&lt; Prev</span>
+                                    <span class="current">1</span>
+                                    <a href="#?page=2">2</a>
+                                    <a href="#?page=3">3</a>
+                                    <a href="#?page=4">4</a>
+                                    <a href="#?page=5">5</a>
+                                    <a href="#?page=6">6</a>
+                                    <a href="#?page=7">7</a><em class="white">......</em>
+                                    <a href="#?page=199">199</a>
+                                    <a href="#?page=200">200</a>
+                                    <a href="#?page=2">Next 
+                                    &gt; </a>-->
+                            </div> 
+                       
+                       
+                             
+                    </div>
+                </div>
+          </div>
+         
+           
+     </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/tool.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+
+
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+$(function(){
+    var queryArgs = getQueryParam();
+    var isFatigue = queryArgs.isFatigue;
+    if( typeof (isFatigue)=='undefined'){
+        queryArgs.isFatigue = "";
+    }
+    //查询多条数据
+    searchCarList(queryArgs);
+});
+
+function goBack() {
+    var queryArgs = getQueryParam();
+    var carType = decodeURI(queryArgs.carType);
+    var countDate = dateFormat("yyyy-MM-dd",new Date());
+    var year = countDate.substring(0,4);
+    var month = countDate.substring(5,7);
+    var date = countDate.substring(8,10);
+    var searchTime = year+"-"+month+"-"+date;
+    window.location.href="pilao.html?searchTime="+searchTime+"&carType="+carType;
+}
+
+function searchCarList(queryArgs){
+    $.ajax({
+      type:'POST',
+      url: basePathUrl + '/admin/bigdataTimeCarDayRec/qtlistpage.jsn',
+      data:{
+          "queryObj.carType":decodeURI(queryArgs.carType),
+          "queryObj.isFatigue":queryArgs.isFatigue,
+          "queryObj.countDate":queryArgs.countDate,
+          "queryObj.countMonth":queryArgs.countMonth,
+          "page":queryArgs.page,
+          "limit":queryArgs.limit
+      },
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+        },
+      success:function(data){
+          if(data.success){
+            var carList = data.list;
+            var html = "";
+            if(carList.length > 0){
+                for(var i=0;i<carList.length;i++){
+                    html += "<tr >";
+                    html += "<td style='cursor: pointer' onclick=gotoDetailPage('"+carList[i].carPlateNum+"')>"+carList[i].carPlateNum+"</td>";
+                    html += "<td>"+carList[i].fatigueNum+"</td>";
+                    html += "<td>"+carList[i].xianquName+"</td>";
+                    /*if(carList[i].teamName != null){
+                        html += "<td>"+carList[i].teamName+"</td>";
+                    }else{
+                        html += "<td></td>";
+                    }*/
+                    if(carList[i].contactPerson != null){
+                        html += "<td style='cursor: pointer' onclick=gotoYunShuYH('"+carList[i].ownerTeamId+"')>"+carList[i].contactPerson+"</td>";
+                    }else{
+                        html += "<td></td>";
+                    }
+                    if(carList[i].conctactphone != null){
+                        html += "<td>"+carList[i].conctactphone+"</td>";
+                    }else{
+                        html += "<td></td>";
+                    }
+                    if(carList[i].jyCertNumber != null){
+                        html += "<td>"+carList[i].jyCertNumber+"</td>";
+                    }else{
+                        html += "<td></td>";
+                    }
+                    if(typeof (carList[i].empName)=="undefined"){
+                        html += "<td></td>";
+                    }else {
+                        html += "<td style='cursor: pointer' onclick=gotoCongYeRY('"+carList[i].empId+"')>"+carList[i].empName+"</td>";
+                    }
+                    if(typeof (carList[i].empCode)=="undefined"){
+                        html += "<td></td>";
+                    }else {
+                        html += "<td style='cursor: pointer' onclick=gotoCongYeRY('"+carList[i].empId+"')>"+carList[i].empCode+"</td>";
+                    }
+                    if(typeof (carList[i].empPhone)=="undefined"){
+                        html += "<td></td>";
+                    }else {
+                        html += "<td style='cursor: pointer' onclick=gotoCongYeRY('"+carList[i].empId+"')>"+carList[i].empPhone+"</td>";
+                    }
+                    html += "</tr>";
+                }
+                setPageInfo(data.totalPage,data.start,data.limit);
+            }else{
+                html += "<tr><td colspan='9'>暂无信息</td></tr>";
+            }
+            $("#carList").html($("#carList").html() + html);
+          }else {
+              if(data.code==1001){
+                  location.href = '../../login.html';
+              }else {
+                  layer.msg('后台异常', {
+                      icon: 5
+                  });
+              }
+          }
+      }
+    });
+}
+
+function gotoCongYeRY(empId){
+    window.location.href = "congYeRenYuan.html?id="+empId;
+}
+
+
+function gotoYunShuYH(teamId){
+    if(teamId !=null && teamId !='' && teamId!='neiwang' && typeof (teamId) !='undefined' ){
+        window.location.href = "yunShuYeHu.html?teamId="+teamId;
+    }
+}
+
+function gotoDetailPage(carPlateNum){
+    window.parent.location.href = "yingYunCheLiang.html?queryObj.carPlateNum="+carPlateNum;
+}
+
+
+function setPageInfo(totalPage,start,limit){
+    var page = 0;
+    if(limit != 0){
+        page = start/limit;
+    }
+    var pageHtml = "";
+    var showPageCount = page + 5;
+    pageHtml += "<a href='javaScript:void(0);' onclick=sendRequest('prev',"+(page+1)+","+totalPage+")>&lt;上一页</a>";
+    if(page>0){
+        pageHtml += "<a href='javaScript:void(0);' onclick=sendRequest('',"+(1)+","+totalPage+")>首页</a>";
+    }
+    for(var i=page;i<totalPage;i++){
+        if(i < showPageCount){
+            if(i == page){
+                pageHtml += "<a href='javaScript:void(0);' style='background-color: #E07C24;border: none'  onclick=sendRequest('',"+(i+1)+","+totalPage+")>"+(i+1)+"</a>";
+            }else{
+                pageHtml += "<a href='javaScript:void(0);' onclick=sendRequest('',"+(i+1)+","+totalPage+")>"+(i+1)+"</a>";
+            }
+        }else{
+            if(i == showPageCount){
+                pageHtml += "<em class='white'>......</em>";
+                pageHtml += "<a href='javaScript:void(0);' onclick=sendRequest('',"+totalPage+","+totalPage+")>"+totalPage+"</a>";
+            }
+        }
+    }
+    pageHtml += "<a href='javaScript:void(0);' onclick=sendRequest('next',"+(page+1)+","+totalPage+")>下一页 &gt;</a>";
+    $("#pageList").html(pageHtml);
+}
+
+function sendRequest(pageFlag,page,totalPage){
+    debugger;
+    if(pageFlag == "next"){
+        page++;
+    }else{
+        if(pageFlag == "prev"){
+            page--;
+        }
+    }
+
+    if(page > 0 && page <= totalPage){
+        var url = document.URL;
+        var checkUrl = url.split("?");
+        if(checkUrl.length>1){
+            var urlArr = url.split("&page");
+            var sendUrl = urlArr[0] + "&page="+page+"&limit=13";
+            window.location.href = sendUrl;
+        }else{
+            var urlArr = url.split("?page");
+            var sendUrl = urlArr[0] + "?page="+page+"&limit=13";
+            window.location.href = sendUrl;
+        }
+    }
+}
+function goShouYe() {
+    window.location.href = "shouye.html";
+}
+</script>   
+  
+</body>
+</html>

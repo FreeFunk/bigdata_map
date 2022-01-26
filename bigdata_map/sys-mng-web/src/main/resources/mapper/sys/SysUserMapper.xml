@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.SysUserMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.SysUser" >
+		<id column="ID" property="id"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="COMP_ID" property="compId"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CREATE_USER" property="createUser"/>
+		<result column="DEPT_ID" property="deptId"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_SEX" property="userSex"/>
+		<result column="AGE" property="age"/>
+		<result column="PHONE" property="phone"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="ID_CARD_NUM" property="idCardNum"/>
+		<result column="ID_CARD_PHOTO1" property="idCardPhoto1"/>
+		<result column="ID_CARD_PHOTO" property="idCardPhoto"/>
+		<result column="HEAD_PHOTO" property="headPhoto"/>
+		<result column="USER_STATE" property="userState"/>
+		<result column="DATA_STATE" property="dataState"/>
+		<result column="LOGIN_STATE" property="loginState"/>
+		<result column="LOGIN_TIME" property="loginTime"/>
+		<result column="DEFAULT_ROLE_ID" property="defaultRoleId"/>
+		<result column="DEFAULT_ROLE_NAME" property="defaultRoleName"/>
+		<result column="IS_UP_PWD" property="isUpPwd"/>
+		<result column="PROVINCE_ID" property="provinceId"/>
+		<result column="PROVINCE_NAME" property="provinceName"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="XIANQU_ID" property="xianquId"/>
+		<result column="XIANQU_NAME" property="xianquName"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.SysUserView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List" >
+	 ID, USER_CODE, COMP_ID, CREATE_TIME, CREATE_USER, DEPT_ID, DEPT_NAME, USER_NAME, USER_SEX, AGE, PHONE,
+	 PASSWORD, ID_CARD_NUM, ID_CARD_PHOTO1, ID_CARD_PHOTO, HEAD_PHOTO, USER_STATE, DATA_STATE,
+	 LOGIN_STATE, LOGIN_TIME, DEFAULT_ROLE_ID, DEFAULT_ROLE_NAME,IS_UP_PWD,PROVINCE_ID,PROVINCE_NAME,CITY_ID,
+	 CITY_NAME,XIANQU_ID,XIANQU_NAME
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE='1'
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.deptId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.deptId)'>
+					AND  DEPT_ID = #{queryObj.deptId}
+				</if>
+				<if test='queryObj != null and  queryObj.age != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.age)'>
+					AND  AGE = #{queryObj.age}
+				</if>
+				<if test='queryObj != null and  queryObj.loginTime != null'>
+					AND  LOGIN_TIME = #{queryObj.loginTime}
+				</if>
+				<if test='queryObj != null and  queryObj.userName != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.userName)'>
+					AND  USER_NAME like '%${queryObj.userName}%'
+				</if>
+				<if test='queryObj != null and  queryObj.userCode != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.userCode)'>
+					AND  USER_CODE like '%${queryObj.userCode}%'
+				</if>
+				<if test='queryObj != null and  queryObj.defaultRoleName != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.defaultRoleName)'>
+					AND  DEFAULT_ROLE_NAME like '%${queryObj.defaultRoleName}%'
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.SysUserQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_user 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.SysUserQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_user 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 修改用户密码 -->
+	<update id="updateUserPwd" parameterType="com.edgedo.sys.entity.SysUser">
+		update sys_user set PASSWORD=#{password},IS_UP_PWD='1' where ID=#{id}
+	</update>
+	
+	<!--根据账号查询用户  -->
+  <select id="getAdminUserByCode" parameterType="string" resultMap="BaseResultViewMap">
+	  	select <include refid="Base_Column_List"/> from sys_user 
+	  	where USER_CODE=#{userCode} and DATA_STATE='1'
+  </select>
+  
+  <!-- 用户登录时设置登录状态和登录时间 -->
+	<update id="updateLoginStateLogin" parameterType="string">
+		update sys_user set LOGIN_STATE='LOGIN',LOGIN_TIME=now() where ID=#{id} and DATA_STATE='1'
+	</update>
+
+	<!-- 逻辑删除 -->
+	<update id="logicDeleteById" parameterType="string">
+		update sys_user set DATA_STATE='0' where ID=#{id} and DATA_STATE='1'
+	</update>
+
+	<!-- 逻辑删除企业管理员 -->
+	<update id="deleteByCompId" parameterType="string">
+		update sys_user set DATA_STATE='0' where COMP_ID=#{compId} and DATA_STATE='1'
+	</update>
+	
+	<!--  用户退出  -->
+	<update id="updateUserLogout" parameterType="string">
+		update sys_user set LOGIN_STATE='LOGOUT' where ID=#{userId} and DATA_STATE='1'
+	</update>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from sys_user
+    where ID = #{id,jdbcType=VARCHAR} and DATA_STATE='1'
+  </select>
+	<select id="selectByUserCode" parameterType="java.lang.String" resultType="java.lang.String">
+		select ID from sys_user
+		where USER_CODE=#{code} and DATA_STATE='1'
+	</select>
+
+	<select id="getByUserId" parameterType="java.lang.String" resultMap="BaseResultViewMap">
+		select * from sys_user WHERE ID = #{userId};
+	</select>
+
+
+
+	<select id="selectIdCardNum" parameterType="java.lang.String" resultType="String">
+		select ID from sys_user WHERE ID_CARD_NUM = #{idCardNum};
+	</select>
+
+
+</mapper>

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="BigdataTimeCarDayRec-form" id="BigdataTimeCarDayRec-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id" lay-verify="required" placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车牌号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateNum" lay-verify="required" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车架号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carFrameNum" lay-verify="required" placeholder="请输入车架号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车牌颜色</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateColor" lay-verify="required" placeholder="请输入车牌颜色" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车牌颜色文本</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateColorText" lay-verify="required" placeholder="请输入车牌颜色文本" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">所属企业ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ownerTeamId" lay-verify="required" placeholder="请输入所属企业ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">所属企业名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ownerTeamName" lay-verify="required" placeholder="请输入所属企业名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">清晨里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="earlyMorningMileage" lay-verify="required" placeholder="请输入清晨里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">清晨时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="earlyMorningTime" lay-verify="required" placeholder="请输入清晨时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">中午里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="noonMileage" lay-verify="required" placeholder="请输入中午里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">中午时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="noonTime" lay-verify="required" placeholder="请输入中午时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">黄昏里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="duskMileage" lay-verify="required" placeholder="请输入黄昏里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">黄昏时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="duskTime" lay-verify="required" placeholder="请输入黄昏时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">夜间里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nightMileage" lay-verify="required" placeholder="请输入夜间里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">夜间时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nightTime" lay-verify="required" placeholder="请输入夜间时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">凌晨时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="lingchenTime" lay-verify="required" placeholder="请输入凌晨时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">凌晨里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="lingchenMileage" lay-verify="required" placeholder="请输入凌晨里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">总里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sumMileage" lay-verify="required" placeholder="请输入总里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">总时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sumDuration" lay-verify="required" placeholder="请输入总时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车辆类型</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carType" lay-verify="required" placeholder="请输入车辆类型" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">统计时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="countTime" id="countTime" lay-verify="required" placeholder="请输入统计时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">省ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="provinceId" lay-verify="required" placeholder="请输入省ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">省名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="provinceName" lay-verify="required" placeholder="请输入省名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">城市ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cityId" lay-verify="required" placeholder="请输入城市ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">城市名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cityName" lay-verify="required" placeholder="请输入城市名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">县区ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="xianquId" lay-verify="required" placeholder="请输入县区ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">县区名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="xianquName" lay-verify="required" placeholder="请输入县区名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">上线状态</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="onlineState" lay-verify="required" placeholder="请输入上线状态" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否运营</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="operatFlag" lay-verify="required" placeholder="请输入是否运营" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">一类危险时段</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="firstDangerTimeFlag" lay-verify="required" placeholder="请输入一类危险时段" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">二类危险时段</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="secondDangerTimeFlag" lay-verify="required" placeholder="请输入二类危险时段" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">三类危险时段</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="thirdDangerTimeFlag" lay-verify="required" placeholder="请输入三类危险时段" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">统计日期</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="countDate" lay-verify="required" placeholder="请输入统计日期" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">统计月份</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="countMonth" lay-verify="required" placeholder="请输入统计月份" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">yearNum</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="yearNum" lay-verify="required" placeholder="请输入yearNum" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">联系人</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ownerName" lay-verify="required" placeholder="请输入联系人" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">联系电话</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ownerPhoneNum" lay-verify="required" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否超速</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isOverSpeed" lay-verify="required" placeholder="请输入是否超速" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="overSpeedNum" lay-verify="required" placeholder="请输入超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否严重超速</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isSeriousOverSpeed" lay-verify="required" placeholder="请输入是否严重超速" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">严重超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="seriousOverSpeedNum" lay-verify="required" placeholder="请输入严重超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否疲劳</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isFatigue" lay-verify="required" placeholder="请输入是否疲劳" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">疲劳次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="fatigueNum" lay-verify="required" placeholder="请输入疲劳次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否严重疲劳</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isSeriousFatigue" lay-verify="required" placeholder="请输入是否严重疲劳" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否高速超速</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isHighWayOverSpeed" lay-verify="required" placeholder="请输入是否高速超速" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highWayOverSpeedNum" lay-verify="required" placeholder="请输入高速超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否国道超速</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isGuodaoOverSpeed" lay-verify="required" placeholder="请输入是否国道超速" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="guodaoOverSpeedNum" lay-verify="required" placeholder="请输入国道超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">isDangerOverSpeed</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isDangerOverSpeed" lay-verify="required" placeholder="请输入isDangerOverSpeed" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">dangerOverSpeedNum</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dangerOverSpeedNum" lay-verify="required" placeholder="请输入dangerOverSpeedNum" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">isDangerFatigue</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isDangerFatigue" lay-verify="required" placeholder="请输入isDangerFatigue" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">dangerFatigueNum</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dangerFatigueNum" lay-verify="required" placeholder="请输入dangerFatigueNum" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否高速严重超速</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isHighWaySerOverSpeed" lay-verify="required" placeholder="请输入是否高速严重超速" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速严重超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highWaySerOverSpeedNum" lay-verify="required" placeholder="请输入高速严重超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否国道严重超速</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isGuodaoSerOverSpeed" lay-verify="required" placeholder="请输入是否国道严重超速" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道严重超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="guodaoSerOverSpeedNum" lay-verify="required" placeholder="请输入国道严重超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否国道危险时段超速</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isGuodaoDangerOverSpeed" lay-verify="required" placeholder="请输入是否国道危险时段超速" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道危险时段超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="guodaoDangerOverSpeedNum" lay-verify="required" placeholder="请输入国道危险时段超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否高速危险时段超速</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="isHighWayDangerOverSpeed" lay-verify="required" placeholder="请输入是否高速危险时段超速" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速危险时段超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highWayDangerOverSpeedNum" lay-verify="required" placeholder="请输入高速危险时段超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">超速司机  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="overSpeedDriver" lay-verify="required" placeholder="请输入超速司机  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">超速司机资格证  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="overSpeedDriverCode" lay-verify="required" placeholder="请输入超速司机资格证  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">超速司机联系电话  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="overSpeedDriverPhone" lay-verify="required" placeholder="请输入超速司机联系电话  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">严重超速司机  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="serOverSpeedDriver" lay-verify="required" placeholder="请输入严重超速司机  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">严重超速司机资格证  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="serOverSpeedDriverCode" lay-verify="required" placeholder="请输入严重超速司机资格证  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">严重超速司机联系电话  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="serOverSpeedDriverPhone" lay-verify="required" placeholder="请输入严重超速司机联系电话  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">疲劳司机  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="fatigueDriver" lay-verify="required" placeholder="请输入疲劳司机  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">疲劳司机资格证  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="fatigueDriverCode" lay-verify="required" placeholder="请输入疲劳司机资格证  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">疲劳司机联系电话  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="fatigueDriverPhone" lay-verify="required" placeholder="请输入疲劳司机联系电话  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速超速司机  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highWayOverSpeedDriver" lay-verify="required" placeholder="请输入高速超速司机  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速超速司机资格证  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highWayOverSpeedDriverCode" lay-verify="required" placeholder="请输入高速超速司机资格证  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速超速司机联系电话  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highWayOverSpeedDriverPhone" lay-verify="required" placeholder="请输入高速超速司机联系电话  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道超速司机  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="guodaoWayOverSpeedDriver" lay-verify="required" placeholder="请输入国道超速司机  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道超速司机资格证  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="guodaoWayOverSpeedDriverCode" lay-verify="required" placeholder="请输入国道超速司机资格证  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道超速司机联系电话  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="guodaoWayOverSpeedDriverPhone" lay-verify="required" placeholder="请输入国道超速司机联系电话  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道严重超速司机  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="guodaoWaySerOverSpeedDriver" lay-verify="required" placeholder="请输入国道严重超速司机  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道严重超速司机资格证  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="guodaoWaySerOverSpeedDriverCode" lay-verify="required" placeholder="请输入国道严重超速司机资格证  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道严重超速司机联系电话  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="guodaoWaySerOverSpeedDriverPhone" lay-verify="required" placeholder="请输入国道严重超速司机联系电话  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">危险时段超速司机  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dangerOverSpeedDriver" lay-verify="required" placeholder="请输入危险时段超速司机  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">危险时段超速司机资格证  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dangerOverSpeedDriverCode" lay-verify="required" placeholder="请输入危险时段超速司机资格证  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">危险时段超速司机联系电话  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dangerOverSpeedDriverPhone" lay-verify="required" placeholder="请输入危险时段超速司机联系电话  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道危险时段超速司机  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="guodaoDangerOverSpeedDriver" lay-verify="required" placeholder="请输入国道危险时段超速司机  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道危险时段超速司机资格证  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="guodaoDangerOverSpeedDriverCode" lay-verify="required" placeholder="请输入国道危险时段超速司机资格证  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道危险时段超速司机联系电话  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="guodaoDangerOverSpeedDriverPhone" lay-verify="required" placeholder="请输入国道危险时段超速司机联系电话  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速危险时段超速司机  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highWayDangerOverSpeedDriver" lay-verify="required" placeholder="请输入高速危险时段超速司机  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速危险时段超速司机资格证  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highWayDangerOverSpeedDriverCode" lay-verify="required" placeholder="请输入高速危险时段超速司机资格证  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速危险时段超速司机联系电话  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highWayDangerOverSpeedDriverPhone" lay-verify="required" placeholder="请输入高速危险时段超速司机联系电话  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">危险时段疲劳司机  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dangerFatigueDriver" lay-verify="required" placeholder="请输入危险时段疲劳司机  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">危险时段疲劳司机资格证  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dangerFatigueDriverCode" lay-verify="required" placeholder="请输入危险时段疲劳司机资格证  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">危险时段疲劳司机联系电话  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dangerFatigueDriverPhone" lay-verify="required" placeholder="请输入危险时段疲劳司机联系电话  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">平均速度  </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="avgSpeed" lay-verify="required" placeholder="请输入平均速度  " autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">从业人员姓名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="empName" lay-verify="required" placeholder="请输入从业人员姓名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">从业人员资格证号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="empCode" lay-verify="required" placeholder="请输入从业人员资格证号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">从业人员联系电话</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="empPhone" lay-verify="required" placeholder="请输入从业人员联系电话" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">从业人员主键</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="empId" lay-verify="required" placeholder="请输入从业人员主键" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="BigdataTimeCarDayRec-form-edit" id="BigdataTimeCarDayRec-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(BigdataTimeCarDayRec-form-edit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'/admin/bigdataTimeCarDayRec/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('BigdataTimeCarDayRec-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#countTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+ <link rel="stylesheet" type="text/css" href="dialog/index_files/flavr0.css">
+
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.SuperSlide.2.1.js"></script>
+</head>
+
+<body>
+ <div class="mk" style="width:100%; height:820px;">
+                                   <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                                   <div class="tit">
+                                         <span class="tit_l"></span>
+                                         <span class="tit_m">一 类</span>
+                                         <span class="tit_r"></span>
+                                   </div>
+                                   <div class="con clearfix">
+                                       
+                                       
+                                       <div class="w49 left">
+                                           <div id="aa1" style="width: 100%; height: 700px;"></div>
+                                          
+                                       </div>
+                                       
+                                       <div class="w49 right">
+                                          <div id="aa2" style="width: 100%; height: 700px;"></div>
+                                       </div>
+
+
+                                   </div>
+                               </div>   
+
+
+
+
+
+
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+</script>
+    
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChartP1 = echarts.init(document.getElementById('aa1'));
+        // 指定图表的配置项和数据
+        option = {
+color: ['#3398DB'],
+
+tooltip : {
+trigger: 'axis',
+axisPointer: {
+type: 'cross',
+label: {
+backgroundColor: '#6a7985'
+}
+}
+},
+legend: {
+data:['','',''],
+/*orient: 'vertical',*/
+top: '6%',
+right: '0%',
+icon: "circle",
+textStyle: {
+                        color: "#fff",
+                        fontSize: 14,
+                       
+                    },
+},
+
+grid: {
+left: '3%',
+right: '4%',
+bottom: '3%',
+containLabel: true
+},
+
+xAxis : [
+{
+type : 'category',
+
+axisTick: {show: true},
+
+data : ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+axisLabel : {interval:0},
+axisLine:{
+            lineStyle:{
+                color:'#21EDE8',
+                width:1,//这里是为了突出显示加上的
+            }
+        }
+
+}
+],
+yAxis : [
+{
+type : 'value',
+
+min: 0,
+max: 16000,
+splitNumber:8,
+splitLine:{      //去掉背景水平网格线
+show:true,
+lineStyle: {
+color: ['#237D88']
+}
+},
+axisLine:{
+            lineStyle:{
+                color:'#21EDE8',
+                width:1,//这里是为了突出显示加上的
+            }
+        }
+}
+],
+series : [
+{
+name:'',
+type:'bar',
+barWidth: '40%',
+label: {
+normal: {
+show: true,
+position: 'top'
+}
+},
+data:[3000, 4000, 5000, 1000,11000,12000,13000,14000,6000,7000,8000,9000]
+}
+]
+};
+        // 使用刚指定的配置项和数据显示图表。
+        myChartP1.setOption(option);
+</script>
+
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChartL = echarts.init(document.getElementById('aa2'));
+        // 指定图表的配置项和数据
+       option = {
+
+tooltip : {
+trigger: 'axis',
+axisPointer: {
+type: 'cross',
+label: {
+backgroundColor: '#6a7985'
+}
+}
+},
+
+legend: {
+data:['','',''],
+/*orient: 'vertical',*/
+top: '6%',
+right: '0%',
+icon: "circle",
+textStyle: {
+                        color: "#fff",
+                        fontSize: 14,
+                       
+                    },
+},
+
+grid: {
+left: '3%',
+right: '4%',
+bottom: '3%',
+containLabel: true
+},
+xAxis : [
+{
+type : 'category',
+axisTick: {show: true},
+
+data : ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+axisLabel : {interval:0},
+axisLine:{
+            lineStyle:{
+                color:'#21EDE8',
+                width:1,//这里是为了突出显示加上的
+            }
+        }
+
+}
+],
+yAxis : [
+{
+type : 'value',
+
+min: 0,
+max: 16000,
+splitNumber:8,
+splitLine:{      //去掉背景水平网格线
+show:true,
+lineStyle: {
+color: ['#237D88']
+}
+},
+axisLine:{
+            lineStyle:{
+                color:'#21EDE8',
+                width:1,//这里是为了突出显示加上的
+            }
+        }
+}
+],
+series : [
+{
+name:'',
+type:'line',
+stack: '',
+symbol:'none' ,
+symbolSize: 10,
+itemStyle: {
+normal: {
+color: "#F3891B",
+lineStyle: {
+    color: "#F3891B"
+           }}
+   },
+
+
+data:[11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000]
+},
+{
+name:'',
+type:'line',
+stack: '',
+symbol:'none',
+symbolSize: 10,
+itemStyle: {
+normal: {
+color: "#ff0000",
+lineStyle: {
+    color: "#ff0000"
+           }}
+   },
+
+data:[9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000]
+},
+{
+name:'',
+type:'line',
+stack: '',
+symbol:'circle',
+symbolSize: 10,
+label: {
+normal: {
+show: true,
+position: 'top'
+}
+},
+itemStyle: {
+normal: {
+color: "#3398DB",
+lineStyle: {
+    color: "#3398DB"
+           }}
+   },
+
+data:[3000, 4000, 5000, 1000,11000,12000,13000,14000,6000,7000,8000,9000]
+},
+
+]
+            };
+        // 使用刚指定的配置项和数据显示图表。
+        myChartL.setOption(option);
+</script>
+            
+            
+            
+ <script src="laydate/laydate.js"></script> <!-- 改成你的路径 -->
+<script>
+lay('#version').html('-v'+ laydate.v);
+
+//年范围
+laydate.render({
+  elem: '#test7'
+  ,type: 'year'
+  ,range: true
+});
+//年月范围
+laydate.render({
+  elem: '#test8'
+  ,type: 'month'
+  ,range: true
+});
+</script>           
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+  
+   
+</body>
+</html>

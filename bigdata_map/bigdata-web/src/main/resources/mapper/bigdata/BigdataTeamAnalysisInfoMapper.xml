@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataTeamAnalysisInfoMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataTeamAnalysisInfo" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="UPDATE_TIME" property="updateTime"/>
+			<result column="PROVINCE_ID" property="provinceId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_ID" property="cityId"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="XIANQU_ID" property="xianquId"/>
+			<result column="XIANQU_NAME" property="xianquName"/>
+			<result column="TEAM_ID" property="teamId"/>
+			<result column="TEAM_NAME" property="teamName"/>
+			<result column="TEAM_TYPE" property="teamType"/>
+			<result column="TEAM_CLS" property="teamCls"/>
+			<result column="COMP_NAME" property="compName"/>
+			<result column="ZHYG_CAR_NUM" property="zhygCarNum"/>
+			<result column="CAR_NUM" property="carNum"/>
+			<result column="ONLINE_RATE" property="onlineRate"/>
+			<result column="ONLINE_CAR_NUM" property="onlineCarNum"/>
+			<result column="OPERATION_RATE" property="operationRate"/>
+			<result column="OPERATION_NUM" property="operationNum"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataTeamAnalysisInfoView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, UPDATE_TIME, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, XIANQU_ID, XIANQU_NAME, TEAM_ID, TEAM_NAME, TEAM_TYPE,TEAM_CLS,COMP_NAME,ZHYG_CAR_NUM, CAR_NUM, ONLINE_RATE, ONLINE_CAR_NUM, OPERATION_RATE, OPERATION_NUM, COUNT_DATE, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.updateTime != null'>
+					AND  UPDATE_TIME = #{queryObj.updateTime}
+				</if>
+				<if test='queryObj != null and  queryObj.carNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.carNum)'>
+					AND  CAR_NUM = #{queryObj.carNum}
+				</if>
+				<if test='queryObj != null and  queryObj.onlineCarNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.onlineCarNum)'>
+					AND  ONLINE_CAR_NUM = #{queryObj.onlineCarNum}
+				</if>
+				<if test='queryObj != null and  queryObj.operationNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.operationNum)'>
+					AND  OPERATION_NUM = #{queryObj.operationNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countDate)'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.yearNum)'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataTeamAnalysisInfoQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_team_analysis_info 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataTeamAnalysisInfoQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_team_analysis_info 
+  		<include refid="where"/>
+  </select>
+
+	<select id="listPageByCountDate" parameterType="com.edgedo.bigdata.queryvo.BigdataTeamAnalysisInfoQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_team_analysis_info
+		WHERE  COUNT_DATE = #{queryObj.countDate}
+		<if test='queryObj.xianquId != null and queryObj.xianquId != "130300"'>
+			AND XIANQU_ID = #{queryObj.xianquId}
+		</if>
+		<if test='queryObj.xianquId != null and queryObj.xianquId == "130300"'>
+			AND CITY_ID = #{queryObj.xianquId}
+		</if>
+		<if test='queryObj.teamType != null and queryObj.teamType != ""'>
+			AND TEAM_TYPE = #{queryObj.teamType}
+		</if>
+		<if test='queryObj.teamName != null and queryObj.teamName != ""'>
+			AND TEAM_NAME like concat('%',#{queryObj.teamName},'%')
+		</if>
+		order by ZHYG_CAR_NUM DESC
+	</select>
+
+
+
+	<select id="selectByTeamType" parameterType="map" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_team_analysis_info
+		WHERE  COUNT_DATE = #{countDate} AND TEAM_TYPE = #{teamType} AND ZHYG_CAR_NUM >0
+		<if test='xianquId != null and xianquId != "130300"'>
+			AND XIANQU_ID = #{xianquId}
+		</if>
+		<if test='xianquId != null and xianquId == "130300"'>
+			AND CITY_ID = #{xianquId}
+		</if>
+		<if test='teamName != null and teamName != ""'>
+			AND TEAM_NAME like concat('%',#{teamName},'%')
+		</if>
+		order by ZHYG_CAR_NUM DESC
+	</select>
+
+
+</mapper>

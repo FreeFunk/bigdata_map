@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataFenxiAlarmTimeMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataFenxiAlarmTime" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="UPDATE_TIME" property="updateTime"/>
+			<result column="ZERO_ONE" property="zeroOne"/>
+			<result column="ONE_TWO" property="oneTwo"/>
+			<result column="TWO_THREE" property="twoThree"/>
+			<result column="THREE_FOUR" property="threeFour"/>
+			<result column="FOUR_FIVE" property="fourFive"/>
+			<result column="FIVE_SIX" property="fiveSix"/>
+			<result column="SIX_SEVEN" property="sixSeven"/>
+			<result column="SEVEN_EIGHT" property="sevenEight"/>
+			<result column="EIGHT_NINE" property="eightNine"/>
+			<result column="NINE_TEN" property="nineTen"/>
+			<result column="TEN_ELEVEN" property="tenEleven"/>
+			<result column="ELEVEN_TWELVE" property="elevenTwelve"/>
+			<result column="TWELVE_THIRTEEN" property="twelveThirteen"/>
+			<result column="THIRTEEN_FOURTEEN" property="thirteenFourteen"/>
+			<result column="FOURTEEN_FIFTEEN" property="fourteenFifteen"/>
+			<result column="FIFTEEN_SIXTEEN" property="fifteenSixteen"/>
+			<result column="SIXTEEN_SEVENTEEN" property="sixteenSeventeen"/>
+			<result column="SEVENTEEN_EIGHTEEN" property="seventeenEighteen"/>
+			<result column="EIGHTEEN_NINETEEN" property="eighteenNineteen"/>
+			<result column="NINETEEN_TWENTY" property="nineteenTwenty"/>
+			<result column="TWENTY_TWENTYONE" property="twentyTwentyone"/>
+			<result column="TWENTYONE_TWENTYTWO" property="twentyoneTwentytwo"/>
+			<result column="TWENTYTWO_TWENTYTHREE" property="twentytwoTwentythree"/>
+			<result column="TWENTYTHREE_TWENTYFOUR" property="twentythreeTwentyfour"/>
+			<result column="ALARM_TYPE" property="alarmType"/>
+			<result column="DATA_TYPE" property="dataType"/>
+			<result column="PROVINCE_ID" property="provinceId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_ID" property="cityId"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="XIANQU_ID" property="xianquId"/>
+			<result column="XIANQU_NAME" property="xianquName"/>
+			<result column="COUNT_TYPE" property="countType"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataFenxiAlarmTimeView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, UPDATE_TIME, ZERO_ONE, ONE_TWO, TWO_THREE, THREE_FOUR, FOUR_FIVE, FIVE_SIX, SIX_SEVEN, SEVEN_EIGHT, EIGHT_NINE, NINE_TEN, TEN_ELEVEN, ELEVEN_TWELVE, TWELVE_THIRTEEN, THIRTEEN_FOURTEEN, FOURTEEN_FIFTEEN, FIFTEEN_SIXTEEN, SIXTEEN_SEVENTEEN, SEVENTEEN_EIGHTEEN, EIGHTEEN_NINETEEN, NINETEEN_TWENTY, TWENTY_TWENTYONE, TWENTYONE_TWENTYTWO, TWENTYTWO_TWENTYTHREE, TWENTYTHREE_TWENTYFOUR, ALARM_TYPE, DATA_TYPE, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, XIANQU_ID, XIANQU_NAME, COUNT_TYPE, CAR_TYPE, COUNT_DATE, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.updateTime != null'>
+					AND  UPDATE_TIME = #{queryObj.updateTime}
+				</if>
+				<if test='queryObj != null and  queryObj.zeroOne != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.zeroOne)'>
+					AND  ZERO_ONE = #{queryObj.zeroOne}
+				</if>
+				<if test='queryObj != null and  queryObj.oneTwo != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.oneTwo)'>
+					AND  ONE_TWO = #{queryObj.oneTwo}
+				</if>
+				<if test='queryObj != null and  queryObj.twoThree != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.twoThree)'>
+					AND  TWO_THREE = #{queryObj.twoThree}
+				</if>
+				<if test='queryObj != null and  queryObj.threeFour != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.threeFour)'>
+					AND  THREE_FOUR = #{queryObj.threeFour}
+				</if>
+				<if test='queryObj != null and  queryObj.fourFive != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.fourFive)'>
+					AND  FOUR_FIVE = #{queryObj.fourFive}
+				</if>
+				<if test='queryObj != null and  queryObj.fiveSix != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.fiveSix)'>
+					AND  FIVE_SIX = #{queryObj.fiveSix}
+				</if>
+				<if test='queryObj != null and  queryObj.sixSeven != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sixSeven)'>
+					AND  SIX_SEVEN = #{queryObj.sixSeven}
+				</if>
+				<if test='queryObj != null and  queryObj.sevenEight != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sevenEight)'>
+					AND  SEVEN_EIGHT = #{queryObj.sevenEight}
+				</if>
+				<if test='queryObj != null and  queryObj.eightNine != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.eightNine)'>
+					AND  EIGHT_NINE = #{queryObj.eightNine}
+				</if>
+				<if test='queryObj != null and  queryObj.nineTen != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.nineTen)'>
+					AND  NINE_TEN = #{queryObj.nineTen}
+				</if>
+				<if test='queryObj != null and  queryObj.tenEleven != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.tenEleven)'>
+					AND  TEN_ELEVEN = #{queryObj.tenEleven}
+				</if>
+				<if test='queryObj != null and  queryObj.elevenTwelve != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.elevenTwelve)'>
+					AND  ELEVEN_TWELVE = #{queryObj.elevenTwelve}
+				</if>
+				<if test='queryObj != null and  queryObj.twelveThirteen != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.twelveThirteen)'>
+					AND  TWELVE_THIRTEEN = #{queryObj.twelveThirteen}
+				</if>
+				<if test='queryObj != null and  queryObj.thirteenFourteen != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.thirteenFourteen)'>
+					AND  THIRTEEN_FOURTEEN = #{queryObj.thirteenFourteen}
+				</if>
+				<if test='queryObj != null and  queryObj.fourteenFifteen != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.fourteenFifteen)'>
+					AND  FOURTEEN_FIFTEEN = #{queryObj.fourteenFifteen}
+				</if>
+				<if test='queryObj != null and  queryObj.fifteenSixteen != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.fifteenSixteen)'>
+					AND  FIFTEEN_SIXTEEN = #{queryObj.fifteenSixteen}
+				</if>
+				<if test='queryObj != null and  queryObj.sixteenSeventeen != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sixteenSeventeen)'>
+					AND  SIXTEEN_SEVENTEEN = #{queryObj.sixteenSeventeen}
+				</if>
+				<if test='queryObj != null and  queryObj.seventeenEighteen != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.seventeenEighteen)'>
+					AND  SEVENTEEN_EIGHTEEN = #{queryObj.seventeenEighteen}
+				</if>
+				<if test='queryObj != null and  queryObj.eighteenNineteen != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.eighteenNineteen)'>
+					AND  EIGHTEEN_NINETEEN = #{queryObj.eighteenNineteen}
+				</if>
+				<if test='queryObj != null and  queryObj.nineteenTwenty != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.nineteenTwenty)'>
+					AND  NINETEEN_TWENTY = #{queryObj.nineteenTwenty}
+				</if>
+				<if test='queryObj != null and  queryObj.twentyTwentyone != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.twentyTwentyone)'>
+					AND  TWENTY_TWENTYONE = #{queryObj.twentyTwentyone}
+				</if>
+				<if test='queryObj != null and  queryObj.twentyoneTwentytwo != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.twentyoneTwentytwo)'>
+					AND  TWENTYONE_TWENTYTWO = #{queryObj.twentyoneTwentytwo}
+				</if>
+				<if test='queryObj != null and  queryObj.twentytwoTwentythree != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.twentytwoTwentythree)'>
+					AND  TWENTYTWO_TWENTYTHREE = #{queryObj.twentytwoTwentythree}
+				</if>
+				<if test='queryObj != null and  queryObj.twentythreeTwentyfour != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.twentythreeTwentyfour)'>
+					AND  TWENTYTHREE_TWENTYFOUR = #{queryObj.twentythreeTwentyfour}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countDate)'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.yearNum)'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiAlarmTimeQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fenxi_alarm_time 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiAlarmTimeQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fenxi_alarm_time 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectByDay" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_alarm_time
+		where
+		COUNT_DATE=#{timeCount}
+			<if test='xianQuId == "130300"'>
+				AND CITY_ID = #{xianQuId}
+		      and COUNT_TYPE = 'CITY'
+			</if>
+			<if test='xianQuId != "130300"'>
+				AND XIANQU_ID = #{xianQuId}
+				and COUNT_TYPE = 'XIANQU'
+			</if>
+			 AND CAR_TYPE = #{carType}
+	</select>
+  
+  
+</mapper>

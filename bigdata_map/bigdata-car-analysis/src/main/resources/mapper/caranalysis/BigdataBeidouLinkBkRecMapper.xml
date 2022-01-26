@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataBeidouLinkBkRecMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataBeidouLinkBkRec" >
+			<id column="ID" property="id"/>
+			<result column="BK_START_TIME" property="bkStartTime"/>
+			<result column="BK_END_TIME" property="bkEndTime"/>
+			<result column="BK_MINUTE_NUM" property="bkMinuteNum"/>
+			<result column="COMP_ID" property="compId"/>
+			<result column="COMP_NAME" property="compName"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataBeidouLinkBkRecView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, BK_START_TIME, BK_END_TIME, BK_MINUTE_NUM, COMP_ID, COMP_NAME, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.bkStartTime != null'>
+					AND  BK_START_TIME = #{queryObj.bkStartTime}
+				</if>
+				<if test='queryObj != null and  queryObj.bkEndTime != null'>
+					AND  BK_END_TIME = #{queryObj.bkEndTime}
+				</if>
+				<if test='queryObj != null and  queryObj.bkMinuteNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.bkMinuteNum)'>
+					AND  BK_MINUTE_NUM = #{queryObj.bkMinuteNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.yearNum)'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouLinkBkRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_link_bk_rec 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouLinkBkRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_link_bk_rec 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectByTime" parameterType="map" resultMap="BaseResultViewMap" >
+		select <include refid="Base_Column_List"/> from bigdata_beidou_link_bk_rec
+		WHERE BK_START_TIME =#{bkStartTime} and COUNT_MONTH = #{countMonth} and  COMP_ID = #{compId}
+	</select>
+
+
+	<select id="sumLinkMinNum" parameterType="map" resultType="java.lang.Integer"  >
+		select  COALESCE(sum(BK_MINUTE_NUM),0) from bigdata_beidou_link_bk_rec
+		WHERE  COUNT_MONTH = #{countMonth} and  COMP_ID = #{compId}
+	</select>
+
+
+
+</mapper>

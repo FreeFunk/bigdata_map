@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.MapLocaltionPointMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.MapLocaltionPoint" >
+			<id column="ID" property="id"/>
+			<result column="PROVINCE_ID" property="provinceId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_ID" property="cityId"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="XIANQU_ID" property="xianquId"/>
+			<result column="XIANQU_NAME" property="xianquName"/>
+			<result column="CAR_NUM" property="carNum"/>
+			<result column="LONGITUDE" property="longitude"/>
+			<result column="LATITUDE" property="latitude"/>
+			<result column="COUNT_TYPE" property="countType"/>
+			<result column="CAR_TYPE" property="carType"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.MapLocaltionPointView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, XIANQU_ID, XIANQU_NAME, CAR_NUM, LONGITUDE, LATITUDE, COUNT_TYPE,CAR_TYPE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.carNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.carNum)'>
+					AND  CAR_NUM = #{queryObj.carNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.MapLocaltionPointQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from map_localtion_point 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.MapLocaltionPointQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from map_localtion_point 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectByXianQuId" parameterType="map" resultMap="BaseResultViewMap">
+		select
+			<include refid="Base_Column_List"/>
+		from map_localtion_point
+		where
+			COUNT_TYPE = 'XIANQU' and  XIANQU_ID = #{xianquId}
+		<if test="carType !=null and carType!=''">
+			and CAR_TYPE = #{carType}
+		</if>
+	</select>
+
+	<select id="countCarNumByCityId" parameterType="map" resultType="java.lang.Integer">
+		select
+			sum(CAR_NUM)
+		from map_localtion_point
+		where
+			COUNT_TYPE = 'XIANQU' and  CITY_ID = #{cityId}
+		<if test="carType !=null and carType!=''">
+			and CAR_TYPE = #{carType}
+		</if>
+	</select>
+
+
+	<select id="selectByCityId" parameterType="map" resultMap="BaseResultViewMap">
+		select
+		<include refid="Base_Column_List"/>
+		from map_localtion_point
+		where
+		COUNT_TYPE = 'CITY' and  CITY_ID = #{cityId}
+		<if test="carType !=null and carType!=''">
+			and CAR_TYPE = #{carType}
+		</if>
+	</select>
+
+	<select id="countCarNumByProviceId" parameterType="map" resultType="java.lang.Integer">
+		select
+			sum(CAR_NUM)
+		from map_localtion_point
+		where
+			COUNT_TYPE = 'CITY' and  PROVINCE_ID = #{proviceId}
+		<if test="carType !=null and carType!=''">
+			and CAR_TYPE = #{carType}
+		</if>
+	</select>
+
+	<select id="selectByProviceId" parameterType="map" resultMap="BaseResultViewMap">
+		select
+		<include refid="Base_Column_List"/>
+		from map_localtion_point
+		where
+		COUNT_TYPE = 'PROVINCE' and  PROVINCE_ID = #{proviceId}
+		<if test="carType !=null and carType!=''">
+			and CAR_TYPE = #{carType}
+		</if>
+	</select>
+
+
+
+
+
+
+
+
+
+  
+  
+</mapper>

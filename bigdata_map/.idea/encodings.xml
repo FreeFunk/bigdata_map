@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-alarm-job" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-alarm-job/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-alarm-job/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis-alarm-job" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis-alarm-job/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis-alarm-job/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis-check-job" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis-check-job/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis-check-job/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis-gps-job" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis-gps-job/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis-gps-job/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis-oper-job" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis-oper-job/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis-oper-job/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-analysis/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-trail-job" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-trail-job/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-car-trail-job/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-drawing" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-drawing/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-gps-809-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-gps-809-client/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bigdata-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-base" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-base/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/report-data-analyse-servivce" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/report-data-analyse-servivce/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sys-mng-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sys-mng-web/src/main/java" charset="UTF-8" />
+  </component>
+</project>

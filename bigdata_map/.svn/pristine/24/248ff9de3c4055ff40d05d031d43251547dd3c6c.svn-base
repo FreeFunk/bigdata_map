@@ -1,0 +1,1387 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>秦皇岛市智慧交通北斗大数据分析平台</title>
+    <link href="css/animate.min.css" rel="stylesheet" type="text/css">
+    <link href="css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/datedropper.css">
+    <link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    <script src="js/tool.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <style type="text/css">
+        .el-radio-button__inner {
+            line-height: 1;
+            white-space: nowrap;
+            vertical-align: middle;
+            background: #00000000;
+            border: 1px solid #1f6794;
+            font-weight: 500;
+            border-left: 0;
+            color: #77eaff;
+            -webkit-appearance: none;
+            text-align: center;
+            box-sizing: border-box;
+            margin: 0;
+            cursor: pointer;
+            transition: all .3s cubic-bezier(.645,.045,.355,1);
+            padding: 12px 20px;
+            font-size: 14px;
+            border-radius: 0;
+        }
+        .el-radio-button, .el-radio-button__inner {
+            display: inline-block;
+            position: relative;
+            outline: 0;
+        }
+        .el-radio-button--medium .el-radio-button__inner {
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 0;
+        }
+        .el-radio-button:first-child .el-radio-button__inner {
+            border-left: 1px solid #1f6794;
+            border-radius: 4px 0 0 4px;
+            box-shadow: none!important;
+        }
+        .el-radio-button__orig-radio {
+            opacity: 0;
+            outline: 0;
+            position: absolute;
+            z-index: -1;
+        }
+        .el-radio-button, .el-radio-button__inner {
+            display: inline-block;
+            position: relative;
+            outline: 0;
+        }
+        .el-radio-group {
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+            font-size: 0;
+        }
+        .el-row {
+            box-sizing: border-box;
+        }
+
+        .tab0 .nav-tabs0{
+            padding-left: 15px;
+            border-bottom: 4px solid #026C9C;
+        }
+        .tab0 .nav-tabs0 li a{
+            color: #fff;
+            padding: 8px 40px;
+            margin-right: 10px;
+            background: #026C9C;
+            text-shadow: 1px 1px 2px #000;
+            border: none;
+            float: left;
+            border-radius: 0;
+            opacity: 0.5;
+            position: relative;
+            transition: all 0.3s ease 0s;
+        }
+        .tab0 .nav-tabs0 li a:hover{
+            background: #026C9C;
+            opacity: 0.8;
+        }
+        .tab0 .nav-tabs0 li.active a{
+            opacity: 1;
+        }
+        .tab0 .nav-tabs0 li.active a,
+        .tab0 .nav-tabs0 li.active a:hover,
+        .tab0 .nav-tabs0 li.active a:focus{
+            color: #fff;
+            background: #026C9C;
+            border: none;
+            border-radius: 0;
+        }
+        .tab0 .nav-tabs0 li a:before,
+        .tab0 .nav-tabs0 li a:after{
+            content: "";
+            border-top: 42px solid transparent;
+            position: absolute;
+            top: -2px;
+        }
+        .tab0 .nav-tabs0 li a:before{
+            border-right: 15px solid #026C9C;
+            left: -15px;
+        }
+        .tab0 .nav-tabs0 li a:after{
+            border-left: 15px solid #026C9C;
+            right: -15px;
+        }
+        .tab0 .nav-tabs0 li a i,
+        .tab0 .nav-tabs0 li.active a i{
+            display: inline-block;
+            padding-right: 5px;
+            font-size: 17px;
+            text-shadow: none;
+        }
+        .tab0 .nav-tabs0 li a span{
+            display: inline-block;
+            font-size: 17px;
+            letter-spacing: -3px;
+
+            transition: all 0.3s ease 0s;
+        }
+        .tab0 .nav-tabs0 li a:hover span,
+        .tab0 .nav-tabs0 li.active a span{
+            letter-spacing: 5px;
+            opacity: 1;
+            transition: all 0.3s ease 0s;
+        }
+        .tab0 .tab-content0{
+            padding: 30px;
+            background: #fff;
+            font-size: 16px;
+            color: #6c6c6c;
+            line-height: 25px;
+        }
+        .tab0 .tab-content0 h3{
+            font-size: 24px;
+            margin-top: 0;
+        }
+        .chaxun1 { padding:14px 47px !important;margin-left:4.5%;margin-top:1.6%;border-radius:3px;box-shadow:rgb(50, 151, 207) 0px 0px 38px inset; color:#77eaff!important; font-size:19px !important; border:1px solid #52d5ff !important; text-decoration:none}
+        .chaxun1:hover{box-shadow:rgb(226, 120, 78) 0px 0px 38px inset; border:1px solid #ffdab5 !important; color:#fffffd !important; text-decoration:none}
+
+        .btn000Selected{box-shadow:rgb(226, 120, 78) 0px 0px 38px inset; border:1px solid #ffdab5 !important; color:#fffffd !important; text-decoration:none}
+
+        @media only screen and (max-width: 479px){
+            .tab0 .nav-tabs0 li{
+                width: 100%;
+                margin-bottom: 5px;
+                text-align: center;
+            }
+            .tab0 .nav-tabs0 li a span{
+                letter-spacing: 1px;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+            <!--<input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " /> -->
+            <span id=localtime></span>
+            <script type="text/javascript">
+                function showLocale(objD){
+                    var str,colorhead,colorfoot;
+                    var yy = objD.getYear();
+                    if(yy<1900) yy = yy+1900;
+                    var MM = objD.getMonth()+1;
+                    if(MM<10) MM = '0' + MM;
+                    var dd = objD.getDate();
+                    if(dd<10) dd = '0' + dd;
+                    var hh = objD.getHours();
+                    if(hh<10) hh = '0' + hh;
+                    var mm = objD.getMinutes();
+                    if(mm<10) mm = '0' + mm;
+                    var ss = objD.getSeconds();
+                    if(ss<10) ss = '0' + ss;
+                    var ww = objD.getDay();
+                    if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+                    if  (ww==0)  ww="星期日";
+                    if  (ww==1)  ww="星期一";
+                    if  (ww==2)  ww="星期二";
+                    if  (ww==3)  ww="星期三";
+                    if  (ww==4)  ww="星期四";
+                    if  (ww==5)  ww="星期五";
+                    if  (ww==6)  ww="星期六";
+                    colorfoot="</font>"
+                    str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+                    return(str);
+                }
+
+                function tick(){
+                    var today;
+                    today = new Date();
+                    document.getElementById("localtime").innerHTML = showLocale(today);
+                    window.setTimeout("tick()", 1000);
+                }
+
+                tick();
+            </script>
+        </div>
+    </div>
+    <div class="top_l">
+
+        <div class="bt">
+            <div class="bt_name left">企业分析</div>
+            <a href="javascript:history.back(-1)" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+<div class="main">
+    <div class="ind mt60" style="height: 950px;overflow-y: scroll">
+        <div style="width: 100%;height: 330px;">
+            <!-- 车辆安全月报 9月 -->
+            <div class="mk " style="width:40%; height:330px;float: left;">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>
+                <div class="blank20"></div>
+                <div class="con0 clearfix">
+                    <div  style="height:330px;width: 65%;float: left;">
+                        <h4 style="font-weight: bolder;color: #77eaff">企业安全月报（<label id="monthCount"></label>）</h4>
+                        <hr style="width: 80%;margin-left: 0px;">
+                        <h4 id="teamName" style="font-weight: bolder;color: #77eaff">公司或车队的名称</h4>
+                        <h4 id="xianquTransitType" style="color: #77eaff">公司或车队的名称/车辆运输类型</h4>
+                        <h4 style="color: #77eaff">统计车辆：<label id="countCarNum"></label></h4>
+                        <h4 style="color: #77eaff">统计周期：<label id="countDate"></label></h4>
+                        <h4 style="color: #77eaff">行驶里程：<label id="runMileage"></label>千米</h4>
+                        <h4 style="color: #77eaff">行驶时长：<label id="runTimeLength"></label></h4>
+                        <h4 style="color: #77eaff">报警次数：<label id="alarmNum"></label></h4>
+                    </div>
+                    <div style="width: 35%;height: 330px;float: left;">
+                        <h4 style="font-weight: bolder;color: #77eaff;margin-top: 90px;">安全评分：<label style="font-size: 80px;" id="safeScore">99</label></h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 行驶时长 -->
+            <div class="mk" style="width: 58%;height: 330px;float: left;margin-left: 2%;">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>
+                <div class="blank20"></div>
+                <div class="con0 clearfix">
+                    <h4 style="font-weight: bolder;color: #77eaff">行驶时长（单位：小时）</h4>
+                    <div id="runTimeChart" style="width: 100%;height: 280px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 100%;height: 350px;margin-top: 20px;">
+            <!-- 行驶里程 -->
+            <div class="mk" style="width: 49%;height: 330px;float: left;">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>
+                <div class="blank20"></div>
+                <div class="con0 clearfix">
+                    <h4 style="font-weight: bolder;color: #77eaff">行驶里程（单位：千米）</h4>
+                    <div id="runMileageChart" style="width: 100%;height: 280px;"></div>
+                </div>
+            </div>
+
+            <!-- 行驶时长 -->
+            <div class="mk" style="width: 49%;height: 330px;float: left;margin-left: 2%">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>
+                <div class="blank20"></div>
+                <div class="con0 clearfix">
+                    <h4 style="font-weight: bolder;color: #77eaff">行驶里程-top10（单位：千米）</h4>
+                    <div id="runMileageTopTenChart" style="width: 100%;height: 280px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 100%;height: 350px;">
+            <!-- 报警统计 -->
+            <div class="mk" style="width: 49%;height: 330px;float: left;">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>
+                <div class="blank20"></div>
+                <div class="con0 clearfix">
+                    <h4 style="font-weight: bolder;color: #77eaff">报警统计（单位：次）</h4>
+                    <div id="alarmChart" style="width: 100%;height: 280px;"></div>
+                </div>
+            </div>
+
+            <div class="mk" style="width: 49%;height: 330px;float: left;margin-left: 2%;">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>
+                <div class="blank20"></div>
+                <div class="con0 clearfix">
+                    <h4 style="font-weight: bolder;color: #77eaff">报警统计-top10（单位：次）</h4>
+                    <div id="alarmTypeTopTenChart" style="width: 100%;height: 280px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 100%;height: 400px;">
+            <!-- 报警统计 -->
+            <div class="mk" style="width: 100%;height: 380px;">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>
+                <div class="blank20"></div>
+                <div class="con0 clearfix">
+                    <h4 style="font-weight: bolder;color: #77eaff">报警类型(只列出前数量最大6中类型)</h4>
+                    <div id="alarmBZT" style="width: 40%;height: 330px;float: left;"></div>
+                    <div style="width: 60%;height: 330px;float: left;">
+                        <table style="width: 90%;margin-left: 5%;" class="grid06">
+                            <tr>
+                                <th width="20%">报警类型</th>
+                                <th width="10%">报警数量</th>
+                                <th width="10%">百分比</th>
+                                <th width="60%">报警数量（前三）</th>
+                            </tr>
+                        </table>
+                        <div style="width: 100%;height: 250px;overflow-y: scroll;">
+                            <table id="alarmTable" style="width: 90%; margin-left: 5%;" class="grid06">
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 100%;height: 500px;">
+            <div class="mk" style="width: 100%;height: 500px;">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>
+                <div class="blank20"></div>
+                <div class="con0 clearfix">
+                    <h4 style="font-weight: bolder;color: #77eaff">数据</h4>
+                    <table class="grid06" style="width: 96%;margin-left: 2%;">
+                        <tr>
+                            <th width="10%">日期</th>
+                            <th width="10%">行驶里程（千米）</th>
+                            <th width="10%">行驶时长</th>
+                            <th width="10%">平均速度（千米/小时）</th>
+                            <th width="5%">报警数量</th>
+                            <th width="15%">报警数量/百公里</th>
+                            <th width="20%">行驶里程（前三）</th>
+                            <th width="20%">报警数量（前三）</th>
+                        </tr>
+                    </table>
+                    <div style="width: 100%;height: 320px;overflow-y: scroll;">
+                        <table id="fenxiDetailData" style="width: 96%; margin-left: 2%;" class="grid06">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+    var xDateArr = new Array();
+    var alarmTypeArr = new Array();
+    var alarmNumArr = new Array();
+    var carMileageArr = new Array();
+    var carPlateMileageArr = new Array();
+    var carAlarmNumArr = new Array();
+    var carPlateAlarmNumArr = new Array();
+    var teamMileageArr = new Array();
+    var teamTimeLengthArr = new Array();
+    var teamAlarmNumArr = new Array();
+
+    //初始化查询条件和信息
+    $(document).ready(function(){
+        var queryArgs = getQueryParam();
+
+        var searchType = queryArgs.searchType;
+        var yearNum = queryArgs.yearNum;
+        var id = queryArgs.id;
+        var param = '';
+        if(searchType == 'week'){
+            var weekCountStr = queryArgs.weekCountStr;
+            param = "queryObj.yearNum="+yearNum+"&queryObj.weekCountStr="+weekCountStr+"&queryObj.id="+id;
+            searchTeamFenXiDetail(param,searchType,id);
+        }else{
+            var countMonth = queryArgs.countMonth;
+            param = "queryObj.yearNum="+yearNum+"&queryObj.countMonth="+countMonth+"&queryObj.id="+id;
+            searchTeamFenXiDetail(param,searchType,id);
+        }
+    })
+
+    //根据条件查询详细信息
+    function searchTeamFenXiDetail(paramMap,searchType,ownerTeamDayId){
+        if(searchType == 'week'){
+            $.ajax({
+                type: 'POST',
+                url: basePathUrl + '/admin/bigdataFenxiTeamWeek/selectVoById.jsn',
+                data: paramMap,
+                dataType: 'json',
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success: function(res){
+                    if(res.success){
+                        var fenxiTeamWeek = res.data;
+
+                        //设置标题显示
+                        $("#monthCount").html("第"+fenxiTeamWeek.countWeek+"周");
+
+                        //设置车辆安全月报数据
+                        $("#teamName").html(fenxiTeamWeek.teamName);
+                        if(typeof(fenxiTeamWeek.transitType) == 'undefined'){
+                            $("#xianquTransitType").html(fenxiTeamWeek.provinceName+fenxiTeamWeek.cityName+fenxiTeamWeek.xianquName+" / ");
+                        }else{
+                            $("#xianquTransitType").html(fenxiTeamWeek.provinceName+fenxiTeamWeek.cityName+fenxiTeamWeek.xianquName+" / "+fenxiTeamWeek.transitType);
+                        }
+                        $("#countCarNum").html(fenxiTeamWeek.countCarNum);
+                        $("#countDate").html(dateFormat('yyyy-MM-dd',new Date(fenxiTeamWeek.startCountDate))+" / "+dateFormat('yyyy-MM-dd',new Date(fenxiTeamWeek.endCountDate)));
+                        $("#runMileage").html(fenxiTeamWeek.runMileage);
+                        $("#runTimeLength").html(fenxiTeamWeek.runTimeLengthText);
+                        $("#alarmNum").html(fenxiTeamWeek.alarmNum);
+                        $("#safeScore").html(fenxiTeamWeek.safeScore);
+
+                        //行驶里程折线图
+                        setZheXianChart(fenxiTeamWeek.startCountDate,fenxiTeamWeek.endCountDate,fenxiTeamWeek.teamId,fenxiTeamWeek.yearNum,fenxiTeamWeek.countMonth,searchType);
+                        //里程前10的车辆
+                        setTopTenRunMileageCar(fenxiTeamWeek.teamId,fenxiTeamWeek.countWeek,fenxiTeamWeek.countMonth,fenxiTeamWeek.yearNum);
+                        //报警数前10的车辆
+                        setTopTenAlarmNumCar(fenxiTeamWeek.teamId,fenxiTeamWeek.countWeek,fenxiTeamWeek.countMonth,fenxiTeamWeek.yearNum);
+                        //报警类型前6
+                        setAlarmTypeTopSix(ownerTeamDayId,fenxiTeamWeek.countWeek,fenxiTeamWeek.countMonth,fenxiTeamWeek.yearNum);
+                    }else if(res.code = 1001){
+                        location.href = "../../login.html";
+                    }else{
+                        layer.msg('后台异常',{
+                            icon: 5
+                        })
+                    }
+                }
+            })
+        }else{
+            $.ajax({
+                type: 'POST',
+                url: basePathUrl + '/admin/bigdataFenxiTeamMonth/selectVoById.jsn',
+                data: paramMap,
+                dataType: 'json',
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success: function(res){
+                    if(res.success){
+                        debugger
+                        var fenxiTeamMonth = res.data;
+                        var yearNum = fenxiTeamMonth.yearNum;
+                        var countMonth = fenxiTeamMonth.countMonth+"";
+                        var countMonthArr = countMonth.split(yearNum+"");
+                        var monthInt = parseInt(countMonthArr[1]);
+
+                        //设置标题显示
+                        $("#monthCount").html(monthInt+"月");
+
+                        //设置企业安全月报数据
+                        $("#teamName").html(fenxiTeamMonth.teamName);
+                        if(typeof(fenxiTeamMonth.transitType) == 'undefined'){
+                            $("#xianquTransitType").html(fenxiTeamMonth.provinceName+fenxiTeamMonth.cityName+fenxiTeamMonth.xianquName+" / ");
+                        }else{
+                            $("#xianquTransitType").html(fenxiTeamMonth.provinceName+fenxiTeamMonth.cityName+fenxiTeamMonth.xianquName+" / "+fenxiTeamMonth.transitType);
+                        }
+                        $("#countCarNum").html(fenxiTeamMonth.countCarNum);
+                        $("#countDate").html(dateFormat('yyyy-MM-dd',new Date(yearNum,monthInt-1,1))+" / "+dateFormat('yyyy-MM-dd',new Date(yearNum,monthInt,0)));
+                        $("#runMileage").html(fenxiTeamMonth.runMileage);
+                        $("#runTimeLength").html(fenxiTeamMonth.runTimeLength);
+                        $("#alarmNum").html(fenxiTeamMonth.alarmNum);
+                        $("#safeScore").html(fenxiTeamMonth.safeScore);
+
+                        //行驶里程折线图
+                        setZheXianChart(fenxiTeamMonth.startCountDate,fenxiTeamMonth.endCountDate,fenxiTeamMonth.teamId,fenxiTeamMonth.yearNum,fenxiTeamMonth.countMonth,searchType);
+                        //里程前10的车辆
+                        setTopTenRunMileageCarMonth(fenxiTeamMonth.teamId,fenxiTeamMonth.countMonth,fenxiTeamMonth.yearNum);
+                        //报警数前10的车辆
+                        setTopTenAlarmNumCarMonth(fenxiTeamMonth.teamId,fenxiTeamMonth.countMonth,fenxiTeamMonth.yearNum);
+                        //报警类型前6
+                        setAlarmTypeTopSixMonth(ownerTeamDayId,fenxiTeamMonth.countMonth,fenxiTeamMonth.yearNum);
+                    }else if(res.code = 1001){
+                        location.href = "../../login.html";
+                    }else{
+                        layer.msg('后台异常',{
+                            icon: 5
+                        })
+                    }
+                }
+            })
+        }
+
+    }
+
+    //设置企业的形式里程，行驶时长，报警统计
+    function setZheXianChart(startCountDate,endCountDate,teamId,yearNum,countMonth,searchType){
+        var param ='';
+        if(searchType == 'week'){
+            param = "queryObj.yearNum="+yearNum+"&queryObj.countMonth="+countMonth+"&queryObj.teamId="+teamId+"&queryObj.countDateStart="+startCountDate+"&queryObj.countDateEnd="+endCountDate+"&queryObj.searchType="+searchType;
+        }else{
+            param = "queryObj.yearNum="+yearNum+"&queryObj.countMonth="+countMonth+"&queryObj.teamId="+teamId+"&queryObj.searchType="+searchType;
+        }
+        $.ajax({
+            type:'POST',
+            url: basePathUrl + '/admin/bigdataFenxiTeamDay/selectListForChart.jsn',
+            data: param,
+            dataType: 'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(res){
+                if(res.success){
+                    var teamDayList = res.data;
+                    //设置表格里面的数据
+                    setTeamFenXiDataTable(teamDayList);
+
+                    if(teamDayList.length > 0){
+                        //设置x轴坐标值
+                        setXDateArr(startCountDate,yearNum,countMonth,searchType,teamDayList.length);
+                        for(var i=0;i<teamDayList.length;i++){
+                            teamMileageArr[i] = teamDayList[i].runMileage;
+                            teamTimeLengthArr[i] = teamDayList[i].runTimeLength;
+                            teamAlarmNumArr[i] = teamDayList[i].alarmNum;
+                        }
+
+                        //行驶里程
+                        var mileageChart = echarts.init(document.getElementById('runMileageChart'));
+                        var mileageOption = {
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            color: ['#FF8247'],
+                            legend: {
+                                data:['行驶里程'],
+                                textStyle:{
+                                    color:'#77eaff'
+                                }
+                            },
+                            xAxis: {
+                                type: 'category',
+                                boundaryGap: false,
+                                axisLabel: {
+                                    show: true,
+                                    textStyle:{
+                                        color:'#77eaff'
+                                    }
+                                },
+                                axisLine: {
+                                    show: true,
+                                    lineStyle: {
+                                        color: '#77eaff'
+                                    }
+                                },
+                                splitLine: {
+                                    show: false
+                                },
+                                data: xDateArr,
+                            },
+                            yAxis: {
+                                type: 'value',
+                                axisLabel: {
+                                    show: true,
+                                    textStyle:{
+                                        color:'#77eaff'
+                                    }
+                                },
+                                axisLine: {
+                                    show: true,
+                                    lineStyle: {
+                                        color: '#77eaff'
+                                    }
+                                },
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['gray'],
+                                        width: 1,
+                                        type: 'dashed'
+                                    }
+                                }
+                            },
+                            series: [{
+                                name:'行驶里程',
+                                type:'line',
+                                stack: '总量',
+                                data: teamMileageArr
+                            }]
+                        };
+                        mileageChart.setOption(mileageOption);
+                        //行驶时长
+                        var timeLongChart = echarts.init(document.getElementById('runTimeChart'));
+                        var timeLengthOption = {
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            color: ['#FF8247'],
+                            legend: {
+                                data:['行驶时长'],
+                                textStyle:{
+                                    color:'#77eaff'
+                                }
+                            },
+                            xAxis: {
+                                type: 'category',
+                                boundaryGap: false,
+                                axisLabel: {
+                                    show: true,
+                                    textStyle:{
+                                        color:'#77eaff'
+                                    }
+                                },
+                                axisLine: {
+                                    show: true,
+                                    lineStyle: {
+                                        color: '#77eaff'
+                                    }
+                                },
+                                splitLine: {
+                                    show: false
+                                },
+                                data: xDateArr,
+                            },
+                            yAxis: {
+                                type: 'value',
+                                axisLabel: {
+                                    show: true,
+                                    textStyle:{
+                                        color:'#77eaff'
+                                    }
+                                },
+                                axisLine: {
+                                    show: true,
+                                    lineStyle: {
+                                        color: '#77eaff'
+                                    }
+                                },
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['gray'],
+                                        width: 1,
+                                        type: 'dashed'
+                                    }
+                                }
+                            },
+                            series: [
+                                {
+                                    name:'行驶时长',
+                                    type:'line',
+                                    stack: '总量',
+                                    data: teamTimeLengthArr
+                                }
+                            ]
+                        };
+                        timeLongChart.setOption(timeLengthOption);
+                        //报警统计
+                        var alarmChart = echarts.init(document.getElementById('alarmChart'));
+                        var alarmOption = {
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            color: ['#FF8247'],
+                            legend: {
+                                data:['报警数量'],
+                                textStyle:{
+                                    color:'#77eaff'
+                                }
+                            },
+                            xAxis: {
+                                type: 'category',
+                                boundaryGap: false,
+                                axisLabel: {
+                                    show: true,
+                                    textStyle:{
+                                        color:'#77eaff'
+                                    }
+                                },
+                                axisLine: {
+                                    show: true,
+                                    lineStyle: {
+                                        color: '#77eaff'
+                                    }
+                                },
+                                splitLine: {
+                                    show: false
+                                },
+                                data: xDateArr,
+                            },
+                            yAxis: {
+                                type: 'value',
+                                axisLabel: {
+                                    show: true,
+                                    textStyle:{
+                                        color:'#77eaff'
+                                    }
+                                },
+                                axisLine: {
+                                    show: true,
+                                    lineStyle: {
+                                        color: '#77eaff'
+                                    }
+                                },
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['gray'],
+                                        width: 1,
+                                        type: 'dashed'
+                                    }
+                                }
+                            },
+                            series: [
+                                {
+                                    name:'报警数量',
+                                    type:'line',
+                                    stack: '总量',
+                                    data: teamAlarmNumArr
+                                }
+                            ]
+                        };
+                        alarmChart.setOption(alarmOption);
+                    }
+                }else if(res.code = 1001){
+                    location.href = "../../login.html";
+                }else{
+                    layer.msg('后台异常',{
+                        icon: 5
+                    })
+                }
+            }
+        })
+    }
+
+    function setTeamFenXiDataTable(teamDayList){
+        var teamFenXiDataHtml = "";
+        if(teamDayList.length > 0){
+            for(var i=0;i<teamDayList.length;i++){
+                teamFenXiDataHtml += "<tr>";
+                teamFenXiDataHtml += "<td class='lsd' width='10%'>"+teamDayList[i].countDate+"</td>";
+                if(typeof(teamDayList[i].runMileage) == 'undefined'){
+                    teamFenXiDataHtml += "<td class='lsd' width='10%'>0</td>";
+                }else{
+                    teamFenXiDataHtml += "<td class='lsd' width='10%'>"+teamDayList[i].runMileage+"</td>";
+                }
+                if(typeof(teamDayList[i].runTimeLengthText) == 'undefined'){
+                    teamFenXiDataHtml += "<td class='lsd' width='10%'>0</td>";
+                }else{
+                    teamFenXiDataHtml += "<td class='lsd' width='10%'>"+teamDayList[i].runTimeLengthText+"</td>";
+                }
+                if(typeof(teamDayList[i].averageSpeed) == 'undefined'){
+                    teamFenXiDataHtml += "<td class='lsd' width='10%'>0</td>";
+                }else{
+                    teamFenXiDataHtml += "<td class='lsd' width='10%'>"+teamDayList[i].averageSpeed+"</td>";
+                }
+                if(typeof(teamDayList[i].alarmNum) == 'undefined'){
+                    teamFenXiDataHtml += "<td class='lsd' width='5%'>0</td>";
+                }else{
+                    teamFenXiDataHtml += "<td class='lsd' width='5%'>"+teamDayList[i].alarmNum+"</td>";
+                }
+                if(typeof(teamDayList[i].alarmRate) == 'undefined'){
+                    teamFenXiDataHtml += "<td class='lsd' width='15%'>0</td>";
+                }else{
+                    teamFenXiDataHtml += "<td class='lsd' width='15%'>"+teamDayList[i].alarmRate+"</td>";
+                }
+                if(typeof(teamDayList[i].runMileageTopThree) == 'undefined'){
+                    teamFenXiDataHtml += "<td class='lsd' width='20%'>无</td>";
+                }else{
+                    teamFenXiDataHtml += "<td class='lsd' width='20%'>"+teamDayList[i].runMileageTopThree+"</td>";
+                }
+                if(typeof(teamDayList[i].alarmNumTopThree) == 'undefined'){
+                    teamFenXiDataHtml += "<td class='lsd' width='20%'>无</td>";
+                }else{
+                    teamFenXiDataHtml += "<td class='lsd' width='20%'>"+teamDayList[i].alarmNumTopThree+"</td>";
+                }
+
+                teamFenXiDataHtml += "</tr>";
+            }
+        }else{
+            teamFenXiDataHtml += "<tr><td colspan='8'>暂无数据</td></tr>";
+        }
+        $("#fenxiDetailData").html(teamFenXiDataHtml);
+    }
+
+    //设置企业里程前10的车辆
+    function setTopTenRunMileageCar(teamId,countWeek,countMonth,yearNum){
+        var param = "queryObj.ownerTeamId="+teamId+"&queryObj.countWeek="+countWeek+"&queryObj.countMonth="+countMonth+"&queryObj.yearNum="+yearNum;
+        $.ajax({
+            type:'POST',
+            url: basePathUrl + '/admin/bigdataFenxiCarWeek/selectTopTenRunMileageByTeamId.jsn',
+            data: param,
+            dataType: 'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(res){
+                if(res.success){
+                    var carWeekList = res.data;
+                    if(carWeekList.length > 0){
+                        for(var i=0;i<carWeekList.length;i++){
+                            carPlateMileageArr[i] = carWeekList[i].carPlateNum;
+                            carMileageArr[i] = carWeekList[i].runMileage;
+                        }
+                    }
+                    //设置里程前10柱状图
+                    var myChart = echarts.init(document.getElementById('runMileageTopTenChart'));
+                    // 指定图表的配置项和数据
+                    var mileageTopTenOption = {
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        color: ['#FF8247'],
+                        legend: {
+                            data: ['行驶里程'],
+                            textStyle:{
+                                color:'#77eaff'
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: carPlateMileageArr,
+                            axisLabel: {
+                                show: true,
+                                textStyle:{
+                                    color:'#77eaff'
+                                }
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#77eaff'
+                                }
+                            },
+                            splitLine: {
+                                show: false
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLabel: {
+                                show: true,
+                                textStyle:{
+                                    color:'#77eaff'
+                                }
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#77eaff'
+                                }
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle:{
+                                    color: ['gray'],
+                                    width: 1,
+                                    type: 'dashed'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: '行驶里程',
+                            type: 'bar',
+                            data: carMileageArr
+                        }]
+                    };
+                    myChart.setOption(mileageTopTenOption);
+                }else if(res.code = 1001){
+                    location.href = "../../login.html";
+                }else{
+                    layer.msg('后台异常',{
+                        icon: 5
+                    })
+                }
+            }
+        })
+    }
+
+    //设置企业里程前10的车辆
+    function setTopTenRunMileageCarMonth(teamId,countMonth,yearNum){
+        var param = "queryObj.ownerTeamId="+teamId+"&queryObj.countMonth="+countMonth+"&queryObj.yearNum="+yearNum;
+        $.ajax({
+            type:'POST',
+            url: basePathUrl + '/admin/bigdataFenxiCarMonth/selectTopTenRunMileageByTeamId.jsn',
+            data: param,
+            dataType: 'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(res){
+                if(res.success){
+                    var carWeekList = res.data;
+                    if(carWeekList.length > 0){
+                        for(var i=0;i<carWeekList.length;i++){
+                            carPlateMileageArr[i] = carWeekList[i].carPlateNum;
+                            carMileageArr[i] = carWeekList[i].runMileage;
+                        }
+                    }
+                    //设置里程前10柱状图
+                    var myChart = echarts.init(document.getElementById('runMileageTopTenChart'));
+                    // 指定图表的配置项和数据
+                    var mileageTopTenOption = {
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        color: ['#FF8247'],
+                        legend: {
+                            data: ['行驶里程'],
+                            textStyle:{
+                                color:'#77eaff'
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: carPlateMileageArr,
+                            axisLabel: {
+                                show: true,
+                                textStyle:{
+                                    color:'#77eaff'
+                                }
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#77eaff'
+                                }
+                            },
+                            splitLine: {
+                                show: false
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLabel: {
+                                show: true,
+                                textStyle:{
+                                    color:'#77eaff'
+                                }
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#77eaff'
+                                }
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle:{
+                                    color: ['gray'],
+                                    width: 1,
+                                    type: 'dashed'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: '行驶里程',
+                            type: 'bar',
+                            data: carMileageArr
+                        }]
+                    };
+                    myChart.setOption(mileageTopTenOption);
+                }else if(res.code = 1001){
+                    location.href = "../../login.html";
+                }else{
+                    layer.msg('后台异常',{
+                        icon: 5
+                    })
+                }
+            }
+        })
+    }
+
+    //设置企业报警数前10的车辆
+    function setTopTenAlarmNumCar(teamId,countWeek,countMonth,yearNum){
+        var param = "queryObj.ownerTeamId="+teamId+"&queryObj.countWeek="+countWeek+"&queryObj.countMonth="+countMonth+"&queryObj.yearNum="+yearNum;
+        $.ajax({
+            type:'POST',
+            url: basePathUrl + '/admin/bigdataFenxiCarWeek/selectTopTenAlarmNumByTeamId.jsn',
+            data: param,
+            dataType: 'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(res){
+                if(res.success){
+                    var carWeekList = res.data;
+                    if(carWeekList.length > 0){
+                        for(var i=0;i<carWeekList.length;i++){
+                            carPlateAlarmNumArr[i] = carWeekList[i].carPlateNum;
+                            carAlarmNumArr[i] = carWeekList[i].alarmNum;
+                        }
+                    }
+                    //设置报警数前10柱状图
+                    var myChart = echarts.init(document.getElementById('alarmTypeTopTenChart'));
+                    // 指定图表的配置项和数据
+                    var mileageTopTenOption = {
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        color: ['#FF8247'],
+                        legend: {
+                            data: ['报警次数'],
+                            textStyle:{
+                                color:'#77eaff'
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: carPlateAlarmNumArr,
+                            axisLabel: {
+                                show: true,
+                                textStyle:{
+                                    color:'#77eaff'
+                                }
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#77eaff'
+                                }
+                            },
+                            splitLine: {
+                                show: false
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLabel: {
+                                show: true,
+                                textStyle:{
+                                    color:'#77eaff'
+                                }
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#77eaff'
+                                }
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle:{
+                                    color: ['gray'],
+                                    width: 1,
+                                    type: 'dashed'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: '报警次数',
+                            type: 'bar',
+                            data: carAlarmNumArr
+                        }]
+                    };
+                    myChart.setOption(mileageTopTenOption);
+                }else if(res.code = 1001){
+                    location.href = "../../login.html";
+                }else{
+                    layer.msg('后台异常',{
+                        icon: 5
+                    })
+                }
+            }
+        })
+    }
+
+    //设置企业报警数前10的车辆
+    function setTopTenAlarmNumCarMonth(teamId,countMonth,yearNum){
+        var param = "queryObj.ownerTeamId="+teamId+"&queryObj.countMonth="+countMonth+"&queryObj.yearNum="+yearNum;
+        $.ajax({
+            type:'POST',
+            url: basePathUrl + '/admin/bigdataFenxiCarMonth/selectTopTenAlarmNumByTeamId.jsn',
+            data: param,
+            dataType: 'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(res){
+                if(res.success){
+                    var carWeekList = res.data;
+                    if(carWeekList.length > 0){
+                        for(var i=0;i<carWeekList.length;i++){
+                            carPlateAlarmNumArr[i] = carWeekList[i].carPlateNum;
+                            carAlarmNumArr[i] = carWeekList[i].alarmNum;
+                        }
+                    }
+                    //设置报警数前10柱状图
+                    var myChart = echarts.init(document.getElementById('alarmTypeTopTenChart'));
+                    // 指定图表的配置项和数据
+                    var mileageTopTenOption = {
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        color: ['#FF8247'],
+                        legend: {
+                            data: ['报警次数'],
+                            textStyle:{
+                                color:'#77eaff'
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: carPlateAlarmNumArr,
+                            axisLabel: {
+                                show: true,
+                                textStyle:{
+                                    color:'#77eaff'
+                                }
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#77eaff'
+                                }
+                            },
+                            splitLine: {
+                                show: false
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLabel: {
+                                show: true,
+                                textStyle:{
+                                    color:'#77eaff'
+                                }
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#77eaff'
+                                }
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle:{
+                                    color: ['gray'],
+                                    width: 1,
+                                    type: 'dashed'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: '报警次数',
+                            type: 'bar',
+                            data: carAlarmNumArr
+                        }]
+                    };
+                    myChart.setOption(mileageTopTenOption);
+                }else if(res.code = 1001){
+                    location.href = "../../login.html";
+                }else{
+                    layer.msg('后台异常',{
+                        icon: 5
+                    })
+                }
+            }
+        })
+    }
+
+    //设置坐标轴上面的日期
+    function setXDateArr(startCountDate,yearNum,countMonth,searchType,timeLength){
+        debugger;
+        var startDate = new Date();
+        //设置坐标轴上面的日期
+        if(searchType == 'week'){
+            startDate = new Date(startCountDate);
+        }else{
+            var countMonthStr = countMonth+"";
+            var countMonthArr = countMonthStr.split(yearNum+"");
+            var monthInt = parseInt(countMonthArr[1]);
+            startDate = new Date(yearNum,monthInt-1,1);
+        }
+        for(var i=0;i<timeLength;i++){
+            xDateArr[i] = dateFormat('yyyy-MM-dd',startDate);
+            startDate.setDate(startDate.getDate()+1);
+            startDate = new Date(startDate);
+        }
+    }
+
+    //设置企业报警类型前6
+    function setAlarmTypeTopSix(ownerTeamDayId,countWeek,countMonth,yearNum){
+        var param = "queryObj.ownerTeamDayId="+ownerTeamDayId+"&queryObj.yearNum="+yearNum+"&queryObj.countMonth="+countMonth+"&queryObj.countWeek="+countWeek;
+        $.ajax({
+            type: 'POST',
+            url: basePathUrl + '/admin/bigdataFenxiTeamAlarmWeek/selectAlarmTypeTopSix.jsn',
+            data: param,
+            dataType: 'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(res){
+                debugger;
+                if(res.success){
+                    var alarmTypeHtml = "";
+                    var teamAlarmWeekList = res.data;
+                    if(teamAlarmWeekList.length > 0){
+                        for(var i=0;i<teamAlarmWeekList.length;i++){
+                            alarmNumArr[i] = {'value':teamAlarmWeekList[i].alarmNum,'name':teamAlarmWeekList[i].alarmTypeDesc};
+                            alarmTypeArr[i] = teamAlarmWeekList[i].alarmType;
+                            alarmTypeHtml += "<tr>";
+                            alarmTypeHtml += "<td class='lsd' width='20%'>"+teamAlarmWeekList[i].alarmTypeDesc+"</td>";
+                            alarmTypeHtml += "<td class='lsd' width='10%'>"+teamAlarmWeekList[i].alarmNum+"</td>";
+                            alarmTypeHtml += "<td class='lsd' width='10%'>"+teamAlarmWeekList[i].alarmRate+"</td>";
+                            alarmTypeHtml += "<td class='lsd' width='60%'>"+teamAlarmWeekList[i].alarmNumTopThree+"</td>";
+                            alarmTypeHtml += "</tr>";
+                        }
+                    }else{
+                        alarmTypeHtml += "<tr><td colspan='4'>暂无数据</td></tr>";
+                    }
+                    //设置表格数据
+                    $("#alarmTable").html(alarmTypeHtml);
+                    //汇总分析饼状图
+                    var hzChartB = echarts.init(document.getElementById('alarmBZT'));
+                    var hzOptionB = {
+                        tooltip: {//提示框，可以在全局也可以在
+                            trigger: 'item',  //提示框的样式
+                            formatter: "({b}: {c} ({d}%)",
+                            color:'#000', //提示框的背景色
+                            textStyle:{ //提示的字体样式
+                                color:"#77eaff",
+                            }
+                        },
+                        legend: {  //图例
+                            orient: 'vertical',  //图例的布局，竖直    horizontal为水平
+                            x: 'right',//图例显示在右边
+                            data: alarmTypeArr,
+                            textStyle:{    //图例文字的样式
+                                color:'#77eaff',  //文字颜色
+                                fontSize:12    //文字大小
+                            }
+                        },
+                        series: [
+                            {
+                                name:'汇总分析',
+                                type:'pie', //环形图的type和饼图相同
+                                radius: ['50%', '70%'],//饼图的半径，第一个为内半径，第二个为外半径
+                                avoidLabelOverlap: false,
+                                color:['#D1FBEF','#F9D858','#4CD0DD','#7FFFAA','#F08080','#FFA07A','#FFF68F','#FF8247','#FFBBFF','#FFFFFF','#CDB38B','#00FF00'],
+                                label: {
+                                    normal: {  //正常的样式
+                                        show: true,
+                                        formatter: '({b}: {c} ({d}%)',
+                                        position: 'left'
+                                    },
+                                    emphasis: { //选中时候的样式
+                                        show: true,
+                                        textStyle: {
+                                            fontSize: '20',
+                                            fontWeight: 'bold'
+                                        }
+                                    }
+                                },  //提示文字
+                                labelLine: {
+                                    normal: {
+                                        show: false
+                                    }
+                                },
+                                data: alarmNumArr
+                            }
+                        ]
+                    };
+                    hzChartB.setOption(hzOptionB);
+                }else if(res.code = 1001){
+                    location.href = "../../login.html";
+                }else{
+                    layer.msg('后台异常',{
+                        icon: 5
+                    })
+                }
+            }
+        })
+    }
+
+    //设置企业报警类型前6
+    function setAlarmTypeTopSixMonth(ownerTeamDayId,countMonth,yearNum){
+        var param = "queryObj.ownerTeamMonthId="+ownerTeamDayId+"&queryObj.yearNum="+yearNum+"&queryObj.countMonth="+countMonth;
+        $.ajax({
+            type: 'POST',
+            url: basePathUrl + '/admin/bigdataFenxiTeamAlarmMonth/selectAlarmTypeTopSix.jsn',
+            data: param,
+            dataType: 'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(res){
+                debugger;
+                if(res.success){
+                    var alarmTypeHtml = "";
+                    var teamAlarmWeekList = res.data;
+                    if(teamAlarmWeekList.length > 0){
+                        for(var i=0;i<teamAlarmWeekList.length;i++){
+                            alarmNumArr[i] = {'value':teamAlarmWeekList[i].alarmNum,'name':teamAlarmWeekList[i].alarmTypeDesc};
+                            alarmTypeArr[i] = teamAlarmWeekList[i].alarmType;
+                            alarmTypeHtml += "<tr>";
+                            alarmTypeHtml += "<td class='lsd' width='20%'>"+teamAlarmWeekList[i].alarmTypeDesc+"</td>";
+                            alarmTypeHtml += "<td class='lsd' width='10%'>"+teamAlarmWeekList[i].alarmNum+"</td>";
+                            alarmTypeHtml += "<td class='lsd' width='10%'>"+teamAlarmWeekList[i].alarmRate+"</td>";
+                            alarmTypeHtml += "<td class='lsd' width='60%'>"+teamAlarmWeekList[i].alarmNumTopThree+"</td>";
+                            alarmTypeHtml += "</tr>";
+                        }
+                    }else{
+                        alarmTypeHtml += "<tr><td colspan='4'>暂无数据</td></tr>";
+                    }
+                    //设置表格中的数据
+                    $("#alarmTable").html(alarmTypeHtml);
+                    //汇总分析饼状图
+                    var hzChartB = echarts.init(document.getElementById('alarmBZT'));
+                    var hzOptionB = {
+                        tooltip: {//提示框，可以在全局也可以在
+                            trigger: 'item',  //提示框的样式
+                            formatter: "({b}: {c} ({d}%)",
+                            color:'#000', //提示框的背景色
+                            textStyle:{ //提示的字体样式
+                                color:"#77eaff",
+                            }
+                        },
+                        legend: {  //图例
+                            orient: 'vertical',  //图例的布局，竖直    horizontal为水平
+                            x: 'right',//图例显示在右边
+                            data: alarmTypeArr,
+                            textStyle:{    //图例文字的样式
+                                color:'#77eaff',  //文字颜色
+                                fontSize:12    //文字大小
+                            }
+                        },
+                        series: [
+                            {
+                                name:'汇总分析',
+                                type:'pie', //环形图的type和饼图相同
+                                radius: ['50%', '70%'],//饼图的半径，第一个为内半径，第二个为外半径
+                                avoidLabelOverlap: false,
+                                color:['#D1FBEF','#F9D858','#4CD0DD','#7FFFAA','#F08080','#FFA07A','#FFF68F','#FF8247','#FFBBFF','#FFFFFF','#CDB38B','#00FF00'],
+                                label: {
+                                    normal: {  //正常的样式
+                                        show: true,
+                                        formatter: '({b}: {c} ({d}%)',
+                                        position: 'left'
+                                    },
+                                    emphasis: { //选中时候的样式
+                                        show: true,
+                                        textStyle: {
+                                            fontSize: '20',
+                                            fontWeight: 'bold'
+                                        }
+                                    }
+                                },  //提示文字
+                                labelLine: {
+                                    normal: {
+                                        show: false
+                                    }
+                                },
+                                data: alarmNumArr
+                            }
+                        ]
+                    };
+                    hzChartB.setOption(hzOptionB);
+                }else if(res.code = 1001){
+                    location.href = "../../login.html";
+                }else{
+                    layer.msg('后台异常',{
+                        icon: 5
+                    })
+                }
+            }
+        })
+    }
+
+    function goShouYe() {
+        window.location.href = "shouye.html";
+    }
+</script>
+
+
+</body>
+</html>

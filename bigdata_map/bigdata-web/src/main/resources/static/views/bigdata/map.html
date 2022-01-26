@@ -1,0 +1,902 @@
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>路书</title>
+	<style type="text/css">
+		body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		#map_canvas{width:100%;height:500px;}
+		#result {width:100%}
+		button {
+			    border: 1px solid #8BA4DC;
+    border-radius: 3px;
+        cursor: pointer;
+        background-color: #FFFFFF;
+    color: #000000;
+		}
+		.gpsList .tdcls{
+			border:1px solid #1f6794;
+			text-align: center;
+			color: #47C6F1;
+			height: 34px;
+			cursor:pointer;
+		}
+		.gpsList .trcls{
+			border:1px solid #1f6794;
+			width: 61%;
+			font-weight: 600;
+			color: #47C6F1;
+			height: 34px;
+			text-align: center;
+		}
+		.backcolor{
+			background-color: #fff;
+		}
+	</style>
+	 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=y0M3smRm6FRmGRYH2VT0mXLC6M4mhgPt"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/laydate/laydate.js"></script>
+	<script src="js/tool.js"></script>
+	<script src="js/layer/layer.js"></script>
+	<script src="js/convertor.js"></script>
+</head>
+<body>
+<div>
+	<div style="float: left;width: 20%;height: 100%;    border-radius: 2px;
+	    color: #1f6794;
+    background-color: #0b2137;
+    ">
+		<p style="margin-left: 10px; color: #47C6F1;">车牌号：<span id="carPlateNum"></span></p>
+		<p style="margin-left: 10px; color: #47C6F1;">开始时间：<input  type="text" class="input_rl " id="startTime" style="
+		width:60%; height: 32px; margin-left: 10px;    background-color: #0b2238;
+    border-radius: 3px;
+    border: 1px solid #1f6794;
+    color: #47C6F1;
+margin-top: 10px;"></p>
+		<p style="margin-left: 10px; color: #47C6F1;">结束时间：<input type="text" class="input_rl " id="endTime" style="
+		width:60%; height: 32px; margin-left: 10px;    background-color: #0b2238;
+    border-radius: 3px;
+    color: #47C6F1;
+    border: 1px solid #1f6794;
+margin-top: 10px;"></p>
+		<p style="text-align: center">
+			<button style="width: 85%;
+    height: 32px;
+    background-color: #0b2238;
+    color: #47C6F1;
+    border: 1px solid #1f6794;
+    border-radius: 3px;" type="button" onclick="searchByTime();">查询</button>
+		</p>
+		<table id="gpsList" class="gpsList" width="100%" style="height: 570px;
+			overflow-y: auto;
+			display: block;
+			border-collapse: collapse;">
+		</table>
+	</div>
+	<div id="map_canvas" style="float: left;width: 80%;height: 100%"></div>
+	<div style="    position: absolute;
+    left: 25%;
+    top: 15px;
+    ">
+		<input id="play" type="button" value="播放" onclick="play();" disabled />
+		<input id="pause" type="button" value="暂停" onclick="pause();" disabled />
+		<input id="reset" type="button" value="重置" onclick="reset()" disabled />
+	</div>
+
+</div>
+<script type="text/javascript">
+
+    var $=jQuery.noConflict();
+
+
+
+    var queryArgs = getQueryParam();
+
+	var carPlateNum = decodeURI(queryArgs.carPlateNum);
+	$("#carPlateNum").html(carPlateNum);
+    var carPlateColor = queryArgs.carPlateColor;
+    var alarmTime =queryArgs.time;
+    var alarmId = queryArgs.id;
+    var alarmType = queryArgs.alarmType;
+    if(typeof (alarmTime)=='undefined' || alarmTime==null || alarmTime ==''){
+        alarmTime = dateFormat("yyyy-MM-dd",new Date());
+	}
+	var startTime=alarmTime+" 00:00:00";
+	var endTime=alarmTime+" 23:59:59";
+    var countMonth = alarmTime.substring(0,4)+alarmTime.substring(5,7);
+    var countDate = alarmTime.substring(0,4)+alarmTime.substring(5,7)+alarmTime.substring(8,10);
+
+    laydate.render({
+        elem: '#startTime',
+        theme: '#884898',
+        type: 'datetime',
+        trigger:'click',
+        value:startTime,
+		done: function(value, date, endDate){
+            startTime = value;
+		}
+
+    });
+    laydate.render({
+        elem: '#endTime',
+        theme: '#884898',
+        type: 'datetime',
+        trigger:'click',
+        value:endTime,
+        done: function(value, date, endDate){
+            endTime = value;
+        }
+    });
+
+    var landmarkPois = [];
+    var baiduPointArr1 = [];
+    var gpsPointArr1=[];
+    var points = [];
+	var Marker;
+
+    var car;   //汽车图标
+    var centerPoint;
+
+    var timer;     //定时器
+    var index = 0; //记录播放到第几个point
+
+    var followChk, playBtn, pauseBtn, resetBtn; //几个控制按钮
+
+
+    var  map ;
+    var flag = "0";
+    function searchByTime() {
+		flag = "1";
+        if(startTime==null || startTime==""){
+            alert("开始时间不能为空！");
+			return false;
+		}
+        if(endTime==null || endTime==""){
+            alert("结束时间不能为空！");
+            return false;
+        }
+        var  start = startTime.substring(0,10);
+        var  end = endTime.substring(0,10);
+        if(start!=end){
+            alert("只能选择一天内的时间段！");
+            return false;
+		}
+		getCarGps();
+    }
+	getCarGps();
+    //获取所有的gps坐标
+    var loadIndex = '';
+    function getCarGps() {
+
+        followChk = document.getElementById("follow");
+        playBtn = document.getElementById("play");
+        pauseBtn = document.getElementById("pause");
+        resetBtn = document.getElementById("reset");
+
+        loadIndex = layer.load(1, {
+            shade: [0.5, '#fff']
+        });
+
+		map = new BMap.Map('map_canvas');
+		map.enableScrollWheelZoom();
+        map.centerAndZoom(new BMap.Point(119.59991,39.971502,39.971502), 13);
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/BIGDATACARREALTIMEGPS/getCarGps.jsn",
+            data: {'startTime':startTime,'endTime':endTime,
+                'queryObj.carPlateNum':carPlateNum,'queryObj.carPlateColor':carPlateColor},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                var html = "<tr id='title'><td  class='trcls'>时间</td><td class='trcls'>速度（Km/h）</td></tr>";
+                if(data.success){
+                    var gpsPointArr = [];
+                    gpsPointArr1 = data.data;
+                    for(var i = 0;i<data.data.length;i++){
+                        var point = {lat: data.data[i].pointLat, lng: data.data[i].pointLong};
+                        gpsPointArr.push(point);
+                        html += "<tr id="+data.data[i].lastPositionTime.replace(/\s/g,"")+">";
+                        html += "<td style='display: none;'>"+point.lat+"</td>";
+						html += "<td style='display: none;'>"+point.lng+"</td>";
+                        html += "<td class='tdcls'>"+data.data[i].lastPositionTime.substring(10,19)+"</td>";
+                        html += "<td class='tdcls'>"+data.data[i].realSpeed+"</td>";
+						html += "<td style='display: none;'>"+data.data[i].carPlateNum+"</td>";
+						html += "<td style='display: none;'>"+data.data[i].lastPositionTime+"</td>";
+                        html += "</tr>";
+                    }
+                    $("#gpsList").html(html);
+                    $("#gpsList tr").click(function(){
+						var lat = this.children[0].innerText;
+						var lng = this.children[1].innerText;
+						var realSpeed = this.children[3].innerText;
+						var carPlateNum = this.children[4].innerText;
+						var lastPositionTime = this.children[5].innerText;
+
+
+						var point1 = new BMap.Point(lng,lat);
+						var new_point1 = GpsToBaiduPoint(point1);
+						var beginIcon = new BMap.Icon("images/car.png", new BMap.Size(35,35),
+								{
+									anchor: new BMap.Size(10, 20),
+									infoWindowAnchor: new BMap.Size(10, 0)
+								});
+						map.removeOverlay(Marker);
+						Marker = new BMap.Marker(new_point1,{icon:beginIcon});
+						map.centerAndZoom(new_point1, 13);
+						map.addOverlay(Marker);
+						var opts = {
+							width : 350,     // 信息窗口宽度
+							height: 100,     // 信息窗口高度
+							title : "" , // 信息窗口标题
+							enableMessage:true//设置允许信息窗发送短息
+						}
+						var infoWindow = new BMap.InfoWindow("<p style='font-size: 12px;'><span style='\n" +
+								"    color: #4d89bf;'>车牌号：</span>"+carPlateNum+"</p>"+"<p style='font-size: 12px;'><span style='" +
+								"    color: #4d89bf;'>时间：</span>"+lastPositionTime+"</p>"+
+								"<p style='font-size: 12px;'><span style='" +
+								"    color: #4d89bf;'>速度：</span>"+realSpeed+"km/h</p>", opts);  // 创建信息窗口对象
+						map.openInfoWindow(infoWindow,new_point1); //开启信息窗口
+                        if(this.id!='title'){
+                            $(this).addClass("backcolor").siblings("tr").removeClass("backcolor");
+                        }
+                       //这行是进行背景色的切换，backcolor 是提前定义好的外部css样式，这里进行添加与删除同类的，即实现了选中改行，其他行颜色去掉。 backcolor 中的属性  要加上 !important ，提高其优先级
+                        //$(this).siblings("tr").find("td").removeClass("backcolor_font");   //下边两行是修改该tr中的字体颜色，该行的作用是删除样式
+                        //$(this).find("td").addClass("backcolor_font"); //该行是添加样式，因为想要实现的效果是点击某行，字体颜色切换，只有一行的字体颜色改变
+                    });
+                    //gps坐标批量转成百度坐标
+                    var baiduPointArr = GpsToBaiduPoints(gpsPointArr);
+                    baiduPointArr1 = baiduPointArr;
+                    points = baiduPointArr;
+                    map.clearOverlays();
+
+                    if(alarmType=='2'){
+                        getOverSpeedPoint();
+					}else if(alarmType=='4'){
+                        getPilaoPoint();
+                        getSeriousPilaoPoint();
+					}
+                    getStopCarGpsPoint();
+
+                    var carIcon = new BMap.Icon("images/blue90.png", new BMap.Size(20,20));
+                    //显示小车子
+                    car = new BMap.Marker(points[0],{icon:carIcon});
+                    car.setRotation(setRotation(points[0],points[1]));
+                    map.addOverlay(car);
+
+                    //点亮操作按钮
+                    playBtn.disabled = false;
+                    resetBtn.disabled = false;
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+    //画轨迹
+    function drawLine(baiduPointArr){
+        var arrPois = [];
+        for (var i = 0; i < baiduPointArr.length; i++) {
+            var p0 = baiduPointArr[i].lng;
+            var p1 = baiduPointArr[i].lat;
+            var point = new BMap.Point(p0, p1); //118.230272,33.482474
+            arrPois.push(point);
+        }
+        //画轨迹
+        var polyLine = new BMap.Polyline(arrPois, {
+            strokeColor: "blue", //设置颜色
+            strokeWeight: 5, //宽度
+            strokeOpacity: 0.5 //透明度
+        });
+        map.addOverlay(polyLine);
+    }
+    //画起始点
+    function drawIcon(baiduPointArr){
+        if(baiduPointArr.length>0 && flag=="1"){
+            map.centerAndZoom(new BMap.Point(baiduPointArr[0].lng,baiduPointArr[0].lat), 13);
+        }
+        var beginPoint = new BMap.Point(baiduPointArr[0].lng,baiduPointArr[0].lat);
+        var beginIcon = new BMap.Icon("images/start.png", new BMap.Size(35,35),
+            {
+                anchor: new BMap.Size(10, 20),
+                infoWindowAnchor: new BMap.Size(10, 0)
+            });
+        var beginMarker = new BMap.Marker(beginPoint,{icon:beginIcon});
+        beginMarker.setTop();
+        map.addOverlay(beginMarker);
+
+        var endPoint = new BMap.Point(baiduPointArr[baiduPointArr.length-1].lng,baiduPointArr[baiduPointArr.length-1].lat);
+        var endIcon = new BMap.Icon("images/end.png", new BMap.Size(35,35),
+            {
+                anchor: new BMap.Size(10, 20),
+                infoWindowAnchor: new BMap.Size(10, 0)
+            });
+        var endMarker = new BMap.Marker(endPoint,{icon:endIcon});
+        endMarker.setTop();
+        map.addOverlay(endMarker);
+    }
+    //初始化路书
+    function initLushu(map, baiduPointArr) {
+        var arrPois = [];
+        for (var i = 0; i < baiduPointArr.length; i++) {
+            var p0 = baiduPointArr[i].lng;
+            var p1 = baiduPointArr[i].lat;
+            var point = new BMap.Point(p0, p1); //118.230272,33.482474
+            arrPois.push(point);
+        }
+        var lushu = new BMapLib.LuShu(map, arrPois, {
+            defaultContent: "<p>车牌号："+carPlateNum+"</p>", //"从天安门到百度大厦"
+            autoView: true, //是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+            icon: new BMap.Icon(
+                "images/blue90.png",
+                new BMap.Size(52, 26),
+                {
+                    anchor: new BMap.Size(27, 13)
+                }
+            ),
+            speed: 4500,
+            enableRotation: true, //是否设置marker随着道路的走向进行旋转
+            landmarkPois: landmarkPois
+        });
+        //绑定事件
+        $("run").onclick = function(){
+            lushu.start();
+        }
+        $("stop").onclick = function(){
+            lushu.stop();
+        }
+        $("pause").onclick = function(){
+            lushu.pause();
+        }
+     /*   $("hide").onclick = function(){
+            lushu.hideInfoWindow();
+        }
+        $("show").onclick = function(){
+            lushu.showInfoWindow();
+        }*/
+        function $(element){
+            return document.getElementById(element);
+        }
+    }
+    //超速画点
+    function getOverSpeedPoint() {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataAlarmRecord/getOverSpeedPoint.jsn",
+            data: {'queryObj.id':alarmId,'queryObj.countMonth':countMonth},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    for(var i =0;i<data.list.length;i++){
+                        if(data.list[0].alarmType=='2'){
+                            var point = {lat: data.list[i].latitude, lng: data.list[i].longitude};
+                            var new_point = GpsToBaiduPoint(point);
+                            if(flag=="0"){
+								map.centerAndZoom(new BMap.Point(new_point.lng,new_point.lat), 13);
+							}
+                            var overspeedIcon;
+                            var msg = "";
+                            if(data.list[0].seriousFlag=='1'){
+                                overspeedIcon = new BMap.Icon("images/overspeedserious.png", new BMap.Size(35,35),
+                                    {
+                                        anchor: new BMap.Size(10, 30),
+                                        infoWindowAnchor: new BMap.Size(10, 0)
+                                    });
+								msg = "<p style='font-size: 12px;'><span style='color: #4d89bf;'>车牌号：</span>"+data.list[0].carPlateNum +"</p>"+
+										"<p style='font-size: 12px;'><span style='color: #4d89bf;'>时间：</span>"+data.list[0].alarmTime +"</p>"+
+										"<p style='font-size: 12px;'><span style='color: #4d89bf;'>限速值：</span>"+data.list[0].roadSpeedLimit+"</p>"+
+								"<p style='font-size: 12px;'><span style='color: #4d89bf;'>报警速度：</span>"+data.list[0].alarmSpeed+"</p>"+
+										"<p style='font-size: 12px;'><span style='color: #4d89bf;'>描述：</span>严重超速</p>"+
+								"<p style='font-size: 12px;'><span style='color: #4d89bf;'>位置：</span>"+data.list[0].locationInfoDesc+"</p>";
+							}else {
+                                overspeedIcon = new BMap.Icon("images/overspeed.png", new BMap.Size(35,35),
+                                    {
+                                        anchor: new BMap.Size(10, 30),
+                                        infoWindowAnchor: new BMap.Size(10, 0)
+                                    });
+								msg = "<p style='font-size: 12px;'><span style='color: #4d89bf;'>车牌号：</span>"+data.list[0].carPlateNum +"</p>"+
+										"<p style='font-size: 12px;'><span style='color: #4d89bf;'>时间：</span>"+data.list[0].alarmTime +"</p>"+
+										"<p style='font-size: 12px;'><span style='color: #4d89bf;'>限速值：</span>"+data.list[0].roadSpeedLimit+"km/h</p>"+
+										"<p style='font-size: 12px;'><span style='color: #4d89bf;'>报警速度：</span>"+data.list[0].alarmSpeed+"km/h</p>"+
+										"<p style='font-size: 12px;'><span style='color: #4d89bf;'>描述：</span>超速</p>"+
+										"<p style='font-size: 12px;'><span style='color: #4d89bf;'>位置：</span>"+data.list[0].locationInfoDesc+"</p>";
+							}
+                            var overspeedMarker = new BMap.Marker(new_point,{icon:overspeedIcon});
+                            map.addOverlay(overspeedMarker);
+                            var opts = {
+                                width : 350,     // 信息窗口宽度
+                                height: 180,     // 信息窗口高度
+                                title : "", // 信息窗口标题
+                                enableMessage:true,//设置允许信息窗发送短息
+                            }
+                            var infoWindow = new BMap.InfoWindow(msg, opts);  // 创建信息窗口对象
+                            overspeedMarker.addEventListener("click", function(){
+                                map.openInfoWindow(infoWindow,new_point	); //开启信息窗口
+                            });
+                        }
+
+                    /*    var landmarkPoint = {
+                            lat: new_point.lat,
+                            lng: new_point.lng,
+                            html: "<p>车牌号："+data.list[i].carPlateNum+"</p>"
+                            +"<p>报警类型：超速报警</p>"
+                            +"<p>速度："+data.list[i].alarmSpeed+"</p>"
+                            +"<p>位置："+data.list[i].locationInfoDesc+"</p>",
+                            pauseTime: 10
+                        };
+                        landmarkPois.push(landmarkPoint);*/
+                    }
+                    //画轨迹
+                    initMap(baiduPointArr1);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+    //疲劳画点
+    function getPilaoPoint() {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataAlarmRecord/getPilaoPoint.jsn",
+            data: {'queryObj.carPlateNum':carPlateNum,'queryObj.alarmTime':alarmTime,
+				'queryObj.countMonth':countMonth,'queryObj.alarmType':alarmType,'queryObj.alarmCls':'2','limit':21},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    if(data.list.length>0){
+						var  alarmTime = data.list[0].alarmTime;
+						if(compareTime(startTime,alarmTime) && compareTime(alarmTime,endTime)){
+							var point1 = {lat: data.list[0].latitude, lng: data.list[0].longitude};
+							var new_point1 = GpsToBaiduPoint(point1);
+							if(flag=="0"){
+								map.centerAndZoom(new BMap.Point(new_point1.lng,new_point1.lat), 13);
+							}
+							var pilaoIcon = new BMap.Icon("images/pilao.png", new BMap.Size(35,35),
+									{
+										anchor: new BMap.Size(10, 20),
+										infoWindowAnchor: new BMap.Size(10, 0)
+									});
+							var pilaoMarker = new BMap.Marker(new_point1,{icon:pilaoIcon});
+							map.addOverlay(pilaoMarker);
+							var opts = {
+								width : 300,     // 信息窗口宽度
+								height: 100,     // 信息窗口高度
+								title : "", // 信息窗口标题
+								enableMessage:true,//设置允许信息窗发送短息
+							}
+							var infoWindow1 = new BMap.InfoWindow("<p style='font-size: 12px;'><span style='color: #4d89bf;'>车牌号：</span>"+data.list[0].carPlateNum
+									+"<p style='font-size: 12px;'><span style='color: #4d89bf;'>时间：</span>"+data.list[0].alarmTime
+									+"</p>"+"<p style='font-size: 12px;'><span style='color: #4d89bf;'>描述：</span>疲劳驾驶</p>", opts);  // 创建信息窗口对象
+							pilaoMarker.addEventListener("click", function(){
+								map.openInfoWindow(infoWindow1,new_point1); //开启信息窗口
+							});
+						}
+					}
+                    initMap(baiduPointArr1);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+    //严重疲劳画点
+    function getSeriousPilaoPoint() {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataAlarmRecord/getSeriousPilaoPoint.jsn",
+            data: {'queryObj.carPlateNum':carPlateNum,'queryObj.alarmTime':alarmTime,
+                'queryObj.countMonth':countMonth,'queryObj.alarmType':alarmType,'queryObj.alarmCls':'2','limit':21},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    if(data.list.length>0){
+                        var  alarmTime = data.list[0].alarmTime;
+                        if(compareTime(startTime,alarmTime) && compareTime(alarmTime,endTime)){
+                            var point1 = {lat: data.list[0].latitude, lng: data.list[0].longitude};
+                            var new_point1 = GpsToBaiduPoint(point1);
+                            /*if(flag=="0"){
+                                map.centerAndZoom(new BMap.Point(new_point1.lng,new_point1.lat), 13);
+                            }*/
+                            var pilaoIcon = new BMap.Icon("images/seriouspilao.png", new BMap.Size(35,35),
+                                {
+                                    anchor: new BMap.Size(10, 20),
+                                    infoWindowAnchor: new BMap.Size(10, 0)
+                                });
+                            var pilaoMarker = new BMap.Marker(new_point1,{icon:pilaoIcon});
+                            map.addOverlay(pilaoMarker);
+                            var opts = {
+                                width : 300,     // 信息窗口宽度
+                                height: 100,     // 信息窗口高度
+                                title : "", // 信息窗口标题
+                                enableMessage:true,//设置允许信息窗发送短息
+                            }
+                            var infoWindow1 = new BMap.InfoWindow("<p style='font-size: 12px;'><span style='color: #4d89bf;'>车牌号：</span>"+data.list[0].carPlateNum
+                                +"<p style='font-size: 12px;'><span style='color: #4d89bf;'>时间：</span>"+data.list[0].alarmTime
+                                +"</p>"+"<p style='font-size: 12px;'><span style='color: #4d89bf;'>描述：</span>严重疲劳驾驶</p>", opts);  // 创建信息窗口对象
+                            pilaoMarker.addEventListener("click", function(){
+                                map.openInfoWindow(infoWindow1,new_point1); //开启信息窗口
+                            });
+                        }
+                    }
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+    //画停车点
+	function getStopCarGpsPoint() {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/BIGDATACARREALTIMEGPS/getStopCarGpsPoint.jsn",
+            data: {'startTime':startTime,'endTime':endTime,
+                'queryObj.carPlateNum':carPlateNum,'queryObj.carPlateColor':carPlateColor},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    var opts = {
+                        width : 350,     // 信息窗口宽度
+                        height: 180,     // 信息窗口高度
+                        title : "", // 信息窗口标题
+                        enableMessage:true,//设置允许信息窗发送短息
+                    }
+
+                    for(var i=0;i<data.data.length;i++){
+                        var point = {lat: data.data[i].pointLat, lng: data.data[i].pointLong};
+                        var new_point = GpsToBaiduPoint(point);
+                        var stopIcon = new BMap.Icon("images/stopIcon.png", new BMap.Size(35,35),
+                            {
+                                anchor: new BMap.Size(10, 20),
+                                infoWindowAnchor: new BMap.Size(10, 0)
+                            });
+                        var stopMarker = new BMap.Marker(new_point,{icon:stopIcon});
+                        var content = "<p style='font-size: 12px;'><span style='color: #4d89bf;'>车牌号：</span>"+data.data[i].carPlateNum +"</p>"+
+                            "<p style='font-size: 12px;'><span style='color: #4d89bf;'>开始时间：</span>"+data.data[i].startTime +"</p>"+
+                            "<p style='font-size: 12px;'><span style='color: #4d89bf;'>结束时间：</span>"+data.data[i].endTime+"</p>"+
+                            "<p style='font-size: 12px;'><span style='color: #4d89bf;'>停车时长：</span>"+formatSeconds(data.data[i].countSecond)+"</p>";
+                        map.addOverlay(stopMarker);               // 将标注添加到地图中
+                        addClickHandler(content,stopMarker);
+                    }
+
+                    function addClickHandler(content,marker){
+                        marker.addEventListener("click",function(e){
+                            openInfo(content,e)}
+                        );
+                    }
+
+                    function openInfo(content,e){
+                        var p = e.target;
+                        var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+                        var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象
+                        map.openInfoWindow(infoWindow,point); //开启信息窗口
+                    }
+
+
+                    /*//画停车点
+                    for(var i =0;i<data.data.length;i++){
+                        var point = {lat: data.data[i].pointLat, lng: data.data[i].pointLong};
+                        var new_point = GpsToBaiduPoint(point);
+                        var stopIcon = new BMap.Icon("images/stopIcon.png", new BMap.Size(35,35),
+                            {
+                                anchor: new BMap.Size(10, 20),
+                                infoWindowAnchor: new BMap.Size(10, 0)
+                            });
+                        var stopMarker = new BMap.Marker(new_point,{icon:stopIcon});
+                        map.addOverlay(stopMarker);
+
+                        var msg = "<p style='font-size: 12px;'><span style='color: #4d89bf;'>车牌号：</span>"+data.data[0].carPlateNum +"</p>"+
+                            "<p style='font-size: 12px;'><span style='color: #4d89bf;'>开始时间：</span>"+data.data[0].startTime +"</p>"+
+                            "<p style='font-size: 12px;'><span style='color: #4d89bf;'>结束时间：</span>"+data.data[0].endTime+"</p>"+
+                            "<p style='font-size: 12px;'><span style='color: #4d89bf;'>停车时长：</span>"+data.data[0].countSecond+"秒</p>";
+                        var opts = {
+                            width : 350,     // 信息窗口宽度
+                            height: 180,     // 信息窗口高度
+                            title : "", // 信息窗口标题
+                            enableMessage:true,//设置允许信息窗发送短息
+                        }
+                        var infoWindow = new BMap.InfoWindow(msg, opts);  // 创建信息窗口对象
+                        stopMarker.addEventListener("click", function(){
+                            map.openInfoWindow(infoWindow,new_point	); //开启信息窗口
+                        });
+                    }*/
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+    //画地图和轨迹
+    function initMap(baiduPointArr1) {
+        drawIcon(baiduPointArr1);
+        drawLine(baiduPointArr1);
+        //initLushu(map,baiduPointArr1);
+        layer.closeAll();
+    }
+	//判断日期，时间大小
+	function compareTime(logintime, logouttime) {
+		if (logintime.length > 0 && logouttime.length > 0) {
+			var logintimeTemp = logintime.split(" ");
+			var logouttimeTemp = logouttime.split(" ");
+
+			var arrloginDate = logintimeTemp[0].split("-");
+			var arrlogoutDate = logouttimeTemp[0].split("-");
+
+			var arrloginTime = logintimeTemp[1].split(":");
+			var arrlogoutTime = logouttimeTemp[1].split(":");
+
+			var allLoginDate = new Date(arrloginDate[0], arrloginDate[1], arrloginDate[2], arrloginTime[0], arrloginTime[1], arrloginTime[2]);
+			var allLogoutDate = new Date(arrlogoutDate[0], arrlogoutDate[1], arrlogoutDate[2], arrlogoutTime[0], arrlogoutTime[1], arrlogoutTime[2]);
+
+			if (allLoginDate.getTime() >= allLogoutDate.getTime()) {
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			return false;
+		}
+	}
+	//javascript秒数转化为时分秒
+    function formatSeconds(value) {
+        var secondTime = parseInt(value);// 秒
+        var minuteTime = 0;// 分
+        var hourTime = 0;// 小时
+        if(secondTime > 60) {//如果秒数大于60，将秒数转换成整数
+            //获取分钟，除以60取整数，得到整数分钟
+            minuteTime = parseInt(secondTime / 60);
+            //获取秒数，秒数取佘，得到整数秒数
+            secondTime = parseInt(secondTime % 60);
+            //如果分钟大于60，将分钟转换成小时
+            if(minuteTime > 60) {
+                //获取小时，获取分钟除以60，得到整数小时
+                hourTime = parseInt(minuteTime / 60);
+                //获取小时后取佘的分，获取分钟除以60取佘的分
+                minuteTime = parseInt(minuteTime % 60);
+            }
+        }
+        var result = "" + parseInt(secondTime) + "秒";
+
+        if(minuteTime > 0) {
+            result = "" + parseInt(minuteTime) + "分" + result;
+        }
+        if(hourTime > 0) {
+            result = "" + parseInt(hourTime) + "小时" + result;
+        }
+        return result;
+    }
+
+
+
+
+
+    function play() {
+
+        playBtn.disabled = true;
+        pauseBtn.disabled = false;
+        var tr = document.getElementById(gpsPointArr1[index].lastPositionTime.replace(/\s/g,""));
+        $(tr).addClass("backcolor").siblings("tr").removeClass("backcolor");
+        $("#gpsList")[0].scrollTop += 34;
+
+        var point = points[index];
+        if(index>0){
+            car.setRotation(setRotation(points[index-1],point));
+    }
+        car.setPosition(point);
+        index++;
+		map.panTo(point);
+
+        if(index < points.length) {
+            timer = window.setTimeout("play(" + index + ")", 500);
+        } else {
+            playBtn.disabled = true;
+            pauseBtn.disabled = true;
+            map.panTo(point);
+        }
+    }
+
+    function pause() {
+        playBtn.disabled = false;
+        pauseBtn.disabled = true;
+
+        if(timer) {
+            window.clearTimeout(timer);
+        }
+    }
+
+    function reset() {
+        playBtn.disabled = false;
+        pauseBtn.disabled = true;
+
+        if(timer) {
+            window.clearTimeout(timer);
+        }
+        index = 0;
+
+        car.setPosition(points[0]);
+        map.centerAndZoom(points[0], 13);
+
+        map.removeOverlay(Marker);
+        map.closeInfoWindow(Marker.point);
+
+    }
+
+    /**
+     *在每个点的真实步骤中设置小车转动的角度（车载图标）
+     *@param{BMap.Point} curPos 起点
+     *@param{BMap.Point} targetPos 终点
+     *@return deg 角度值
+     */
+     function setRotation (curPos, targetPos) {
+        var me = this;
+        var deg = 0;
+        //这个方法安卓api没有,但根据方法名称可以推断出是将经纬度进行一样倍数的放大或缩小,也忘了
+        //拿小数位比较多的double来计算对精度影响大不大,所以自己写了一个方法,直接将经纬度放大一百万倍
+        curPos = map.pointToPixel(curPos);
+        targetPos = map.pointToPixel(targetPos);
+        if (targetPos.x != curPos.x) {
+            var tan = (targetPos.y - curPos.y) / (targetPos.x - curPos.x),
+                atan = Math.atan(tan);
+            deg = atan * 360 / (2 * Math.PI);
+            if (targetPos.x < curPos.x) {
+                deg = -deg + 90 + 90;
+            } else {
+                deg = -deg;
+            }
+            deg=-deg;
+        } else {
+            var disy = targetPos.y - curPos.y;
+            var bias = 0;
+            if (disy > 0)
+                bias = -1
+            else
+                bias = 1
+            deg = -bias * 90;
+        }
+        return deg;
+    }
+
+    /**
+     * 单个坐标转换
+     * @param point
+     * @returns {BMap.Point}
+     */
+    function GpsToBaiduPoint(point){
+        var _t = wgs2bd(point.lat,point.lng);
+        var _BPoint = new BMap.Point(_t[1], _t[0]);
+        return _BPoint;
+    }
+
+    /**
+     * 批量坐标转换
+     * @param points
+     * @returns {Array}
+     */
+    function GpsToBaiduPoints(points){
+        var resultPoints = [];
+        $.each(points,function(index,point){
+            var _t = wgs2bd(point.lat,point.lng);
+            var _BPoint = new BMap.Point(_t[1], _t[0]);
+            resultPoints.push(_BPoint);
+        });
+        return resultPoints;
+    }
+
+    //////////////////////////////////////////
+    //////////////转换核心代码////////////////
+    //////////////////////////////////////////
+    var pi = 3.14159265358979324;
+    var a = 6378245.0;
+    var ee = 0.00669342162296594323;
+    var x_pi = 3.14159265358979324*3000.0/180.0;
+
+
+    //世界大地坐标转为百度坐标
+    function wgs2bd(lat,lon) {
+        var wgs2gcjR = wgs2gcj(lat, lon);
+        var gcj2bdR = gcj2bd(wgs2gcjR[0], wgs2gcjR[1]);
+        return gcj2bdR;
+    }
+
+    function gcj2bd(lat,lon) {
+        var x = lon, y = lat;
+        var z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
+        var theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
+        var bd_lon = z * Math.cos(theta) + 0.0065;
+        var bd_lat = z * Math.sin(theta) + 0.006;
+        var result = [];
+        result.push(bd_lat);
+        result.push(bd_lon);
+        return result;
+    }
+
+    function bd2gcj(lat,lon) {
+        var x = lon - 0.0065, y = lat - 0.006;
+        var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
+        var theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
+        var gg_lon = z * Math.cos(theta);
+        var gg_lat = z * Math.sin(theta);
+        var result = [];
+        result.push(gg_lat);
+        result.push(gg_lon);
+        return result;
+    }
+
+    function wgs2gcj(lat,lon) {
+        var dLat = transformLat(lon - 105.0, lat - 35.0);
+        var dLon = transformLon(lon - 105.0, lat - 35.0);
+        var radLat = lat / 180.0 * pi;
+        var magic = Math.sin(radLat);
+        magic = 1 - ee * magic * magic;
+        var sqrtMagic = Math.sqrt(magic);
+        dLat = (dLat * 180.0) / ((a * (1 - ee)) / (magic * sqrtMagic) * pi);
+        dLon = (dLon * 180.0) / (a / sqrtMagic * Math.cos(radLat) * pi);
+        var mgLat = lat + dLat;
+        var mgLon = lon + dLon;
+        var result = [];
+        result.push(mgLat);
+        result.push(mgLon);
+        return result;
+    }
+
+    function transformLat(lat,lon) {
+        var ret = -100.0 + 2.0 * lat + 3.0 * lon + 0.2 * lon * lon + 0.1 * lat * lon + 0.2 * Math.sqrt(Math.abs(lat));
+        ret += (20.0 * Math.sin(6.0 * lat * pi) + 20.0 * Math.sin(2.0 * lat * pi)) * 2.0 / 3.0;
+        ret += (20.0 * Math.sin(lon * pi) + 40.0 * Math.sin(lon / 3.0 * pi)) * 2.0 / 3.0;
+        ret += (160.0 * Math.sin(lon / 12.0 * pi) + 320 * Math.sin(lon * pi  / 30.0)) * 2.0 / 3.0;
+        return ret;
+    }
+
+    function transformLon(lat,lon) {
+        var ret = 300.0 + lat + 2.0 * lon + 0.1 * lat * lat + 0.1 * lat * lon + 0.1 * Math.sqrt(Math.abs(lat));
+        ret += (20.0 * Math.sin(6.0 * lat * pi) + 20.0 * Math.sin(2.0 * lat * pi)) * 2.0 / 3.0;
+        ret += (20.0 * Math.sin(lat * pi) + 40.0 * Math.sin(lat / 3.0 * pi)) * 2.0 / 3.0;
+        ret += (150.0 * Math.sin(lat / 12.0 * pi) + 300.0 * Math.sin(lat / 30.0 * pi)) * 2.0 / 3.0;
+        return ret;
+    }
+</script>
+</body>
+</html>

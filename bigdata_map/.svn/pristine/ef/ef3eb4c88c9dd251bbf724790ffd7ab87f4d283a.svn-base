@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>标题</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.mobile.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-form">
+        <div class="layui-card">
+            <!--这个input的value是选中的角色id-->
+            <input style="display: none" id="selectUserId"/>
+            <input style="display: none" id="selectUserName"/>
+            <input style="display: none" id="defaultRoleId"/>
+            <div class="layui-card-body">
+                <div id="sysroleMenueConfigTree" style="overflow-y:auto; overflow-x:auto; width:500px; height:350px;"></div>
+            </div>
+            <div class="layui-card-header">
+                <button id="userRoleConfig" class="layui-btn layui-btn-fluid">维护<font id="userName"></font>菜单</button>
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <input type="button" lay-submit lay-filter="SysOrgLevelRole-form-config" id="SysOrgLevelRole-form-config" value="确认维护">
+        </div>
+    </div>
+</div>
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<!--引入ztree的js文件-->
+<script src="../../../../../layuiadmin/layui/layui-xtree.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index:'lib/index',
+            common:'common'
+        }).use(['index','element', 'form','common','tree'], function(){
+            var $ = layui.$
+                ,tree = layui.tree
+                ,common = layui.common
+                ,admin = layui.admin
+                ,element = layui.element
+                ,form = layui.form;
+
+            //初始化用户的名字
+            var initText = function(){
+                $("#userName").text($("#selectUserName").val());
+            }
+            initText();
+
+            //监听配置菜单的按钮
+            var userId = $("#selectUserId").val();
+
+            var defaultRoleId = $("#defaultRoleId").val();
+
+            document.getElementById('userRoleConfig').onclick = function () {
+                debugger
+                var roleIdList = xtree.GetAllChecked();
+                for (var i = 0; i < roleIdList.length; i++) {
+                    //将选中的值进行角色菜单的添加
+                    roleIdList[i] = roleIdList[i].value;
+                }
+                configRoleMenue(userId,roleIdList);
+            }
+
+            //后台值的修改
+            var configRoleMenue = function(userId,roleIdList){
+                var roleIdListJsonStr = JSON.stringify(roleIdList);
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:'/admin/sysUserRole/userRoleConfig.jsn',
+                    data:{
+                        "queryObj.userId":userId,
+                        'roleIdListJsonStr':roleIdListJsonStr,
+                        'defaultRoleId':defaultRoleId
+                    },
+                    method:"POST",
+                    success:function(data){
+                        //弹窗维护成功，并且关闭本html界面
+                        parent.layer.close(index);
+                        parent.layer.msg('角色'+$('#selectRoleName').val()+'菜单维护成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            }
+
+            //初始化菜单树
+            var xtree;
+            var initMenuTree = function() {
+                debugger
+                admin.req({
+                    url:'/admin/sysOrgLevelRole/loadUserRoleTree.jsn',
+                    data:{
+                        'userId':userId
+                        ,'defaultRoleId':defaultRoleId
+                    },
+                    method:"post",
+                    success:function (data) {
+                        debugger
+                        var treeData = data.data;
+                        //创建tree
+                        xtree = new layuiXtree({
+                            elem: 'sysroleMenueConfigTree' //放xtree的容器（必填）
+                            ,form: form //layui form对象 （必填）
+                            ,data: treeData //数据，结构请参照下面 （必填）
+                            ,isopen: false //初次加载时全部展开，默认true （选填）
+                            ,icon: { //图标样式 （选填）
+                                close: "&#xe622;" //节点关闭的图标
+                                ,end: "" //末尾节点的图标
+                            }
+                        });
+                    }
+                });
+            }
+            initMenuTree();
+
+        });
+</script>
+</body>
+</html>
+

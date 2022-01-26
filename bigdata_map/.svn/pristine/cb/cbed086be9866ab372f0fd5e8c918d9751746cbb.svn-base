@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataTimeAnalysisMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataTimeAnalysis" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="EARLY_MORNING_MILEAGE" property="earlyMorningMileage"/>
+			<result column="EARLY_MORNING_TIME" property="earlyMorningTime"/>
+			<result column="NOON_MILEAGE" property="noonMileage"/>
+			<result column="NOON_TIME" property="noonTime"/>
+			<result column="DUSK_MILEAGE" property="duskMileage"/>
+			<result column="DUSK_TIME" property="duskTime"/>
+			<result column="NIGHT_MILEAGE" property="nightMileage"/>
+			<result column="NIGHT_TIME" property="nightTime"/>
+			<result column="LINGCHEN_MILEAGE" property="lingchenMileage"/>
+			<result column="LINGCHEN_TIME" property="lingchenTime"/>
+			<result column="EARLY_MORNING_MILEAGE_RATE" property="earlyMorningMileageRate"/>
+			<result column="EARLY_MORNING_MILEAGE_FLAG" property="earlyMorningMileageFlag"/>
+			<result column="EARLY_MORNING_TIME_RATE" property="earlyMorningTimeRate"/>
+			<result column="EARLY_MORNING_TIME_FLAG" property="earlyMorningTimeFlag"/>
+			<result column="NOON_MILEAGE_RATE" property="noonMileageRate"/>
+			<result column="NOON_MILEAGE_FLAG" property="noonMileageFlag"/>
+			<result column="NOON_TIME_RATE" property="noonTimeRate"/>
+			<result column="NOON_TIME_FLAG" property="noonTimeFlag"/>
+			<result column="DUSK_MILEAGE_RETE" property="duskMileageRete"/>
+			<result column="DUSK_MILEAGE_FLAG" property="duskMileageFlag"/>
+			<result column="DUSK_TIME_RATE" property="duskTimeRate"/>
+			<result column="DUSK_TIME_FLAG" property="duskTimeFlag"/>
+			<result column="NIGHT_MILEAGE_RATE" property="nightMileageRate"/>
+			<result column="NIGHT_MILEAGE_FLAG" property="nightMileageFlag"/>
+			<result column="NIGHT_TIME_RATE" property="nightTimeRate"/>
+			<result column="NIGHT_TIME_FLAG" property="nightTimeFlag"/>
+			<result column="LINGCHEN_TIME_RATE" property="lingchenTimeRate"/>
+			<result column="LINGCHEN_TIME_FLAG" property="lingchenTimeFlag"/>
+			<result column="LINGCHEN_MILEAGE_RATE" property="lingchenMileageRate"/>
+			<result column="LINGCHEN_MILEAGE_FLAG" property="lingchenMileageFlag"/>
+			<result column="SUM_MILEAGE" property="sumMileage"/>
+			<result column="SUM_DURATION" property="sumDuration"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_TIME" property="countTime"/>
+			<result column="FIRST_DANGER_TIME_NUM" property="firstDangerTimeNum"/>
+			<result column="SECOND_DANGER_TIME_NUM" property="secondDangerTimeNum"/>
+			<result column="THIRD_DANGER_TIME_NUM" property="thirdDangerTimeNum"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="FIRST_DANGER_MILEAGE" property="firstDangerMileage"/>
+			<result column="SECOND_DANGER_MILEAGE" property="secondDangerMileage"/>
+			<result column="THIRD_DANGER_MILEAGE" property="thirdDangerMileage"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataTimeAnalysisView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, EARLY_MORNING_MILEAGE, EARLY_MORNING_TIME, NOON_MILEAGE, NOON_TIME, DUSK_MILEAGE, DUSK_TIME, NIGHT_MILEAGE, NIGHT_TIME, LINGCHEN_MILEAGE, LINGCHEN_TIME, EARLY_MORNING_MILEAGE_RATE, EARLY_MORNING_MILEAGE_FLAG, EARLY_MORNING_TIME_RATE, EARLY_MORNING_TIME_FLAG, NOON_MILEAGE_RATE, NOON_MILEAGE_FLAG, NOON_TIME_RATE, NOON_TIME_FLAG, DUSK_MILEAGE_RETE, DUSK_MILEAGE_FLAG, DUSK_TIME_RATE, DUSK_TIME_FLAG, NIGHT_MILEAGE_RATE, NIGHT_MILEAGE_FLAG, NIGHT_TIME_RATE, NIGHT_TIME_FLAG, LINGCHEN_TIME_RATE, LINGCHEN_TIME_FLAG, LINGCHEN_MILEAGE_RATE, LINGCHEN_MILEAGE_FLAG, SUM_MILEAGE, SUM_DURATION, CAR_TYPE, COUNT_TIME, FIRST_DANGER_TIME_NUM, SECOND_DANGER_TIME_NUM, THIRD_DANGER_TIME_NUM, COUNT_MONTH, COUNT_DATE, FIRST_DANGER_MILEAGE, SECOND_DANGER_MILEAGE, THIRD_DANGER_MILEAGE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+				<if test='queryObj != null and  queryObj.firstDangerTimeNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.firstDangerTimeNum)'>
+					AND  FIRST_DANGER_TIME_NUM = #{queryObj.firstDangerTimeNum}
+				</if>
+				<if test='queryObj != null and  queryObj.secondDangerTimeNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.secondDangerTimeNum)'>
+					AND  SECOND_DANGER_TIME_NUM = #{queryObj.secondDangerTimeNum}
+				</if>
+				<if test='queryObj != null and  queryObj.thirdDangerTimeNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.thirdDangerTimeNum)'>
+					AND  THIRD_DANGER_TIME_NUM = #{queryObj.thirdDangerTimeNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countDate)'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataTimeAnalysisQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_time_analysis 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataTimeAnalysisQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_time_analysis 
+  		<include refid="where"/>
+  </select>
+
+	<!--首页获取疲劳分析的数据-->
+	<select id="getTimeAnalysisData" parameterType="com.edgedo.bigdata.queryvo.BigdataTimeAnalysisQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_time_analysis
+		WHERE CAR_TYPE = #{queryObj.carType}
+		AND date_format(COUNT_TIME,'%Y%m%d') = date_format(#{queryObj.countTime},'%Y%m%d') limit 1
+	</select>
+
+  
+</mapper>

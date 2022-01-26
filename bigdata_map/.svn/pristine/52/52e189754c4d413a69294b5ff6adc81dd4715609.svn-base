@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaflet 加载 Echarts3</title>
+    <link rel="stylesheet" href="../leaflet/leaflet.css">
+    <style>
+        html, body, #map {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        #forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#c11;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:fixed;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}}
+		table{empty-cells:show;border-collapse:collapse;border-spacing:0;}
+    .grid{}
+	.grid th{ background:#00192E; font-size:13px; color:#007CB2; padding:3px 5px; border:1px solid #05365F}
+	.grid td{background:#00192E; font-size:13px; color:#16E1FE; padding:3px 5px;border:1px solid #05365F}
+	
+	.hj{ padding:10px 0px; font-size:15px;}
+	.hj em{ font-family:Arial; font-weight:bold; color:#F90; font-style:normal; display:inline-block; margin:0px 8px; font-size:19px}
+	.con{ height:200px; overflow-y:auto;}
+	
+	::-webkit-scrollbar
+{
+    width: 5px;
+    height: 5px;
+    background-color: #F5F5F5;
+}
+ 
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 5px;
+    background-color: #F5F5F5;
+}
+ 
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb
+{
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+   
+.main{ padding:10px; background:rgba(20,100,168,.6); border:1px solid #63a4db; position:relative; width:300px; height:250px;}
+.a1{ position:absolute; width:12px; height:12px;  background:url(a.png) no-repeat; top:-2px; left:-2px; display:inline-block}  
+.a2{ position:absolute; width:12px; height:12px; background:url(b.png) no-repeat; top:-2px; right:-2px; display:inline-block} 
+.a3{ position:absolute; width:12px; height:12px; background:url(c.png) no-repeat; bottom:-2px; right:-2px; display:inline-block} 
+.a4{ position:absolute; width:12px; height:12px; background:url(d.png) no-repeat; bottom:-2px; left:-2px; display:inline-block} 
+        </style>
+</head>
+<body>
+
+<div id="map"></div>
+<script src="../dist/main.min.js"></script>
+<script>
+
+
+
+    var map = L.map('map');
+    var baseLayers = {
+        "高德地图": L.tileLayer('http://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+            subdomains: "1234"
+        }),
+        '高德影像': L.layerGroup([L.tileLayer('http://webst0{s}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}', {
+            subdomains: "1234"
+        }), L.tileLayer('http://t{s}.tianditu.cn/DataServer?T=cta_w&X={x}&Y={y}&L={z}', {
+            subdomains: "1234"
+        })]),
+        "立体地图": L.tileLayer('https://a.tiles.mapbox.com/v3/examples.c7d2024a/{z}/{x}/{y}.png', {
+            attribution: 'Map &copy; Pacific Rim Coordination Center (PRCC).  Certain data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            key: 'BC9A493B41014CAABB98F0471D759707',
+            styleId: 22677
+        }),
+        "Foursquare": L.tileLayer('https://a.tiles.mapbox.com/v3/foursquare.map-0y1jh28j/{z}/{x}/{y}.png', {
+            attribution: 'Map &copy; Pacific Rim Coordination Center (PRCC).  Certain data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            key: 'BC9A493B41014CAABB98F0471D759707',
+            styleId: 22677
+        }),
+        'GeoQ灰色底图': L.tileLayer('http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}').addTo(map)
+    };
+    L.tileLayer('https://a.tiles.mapbox.com/v3/foursquare.map-0y1jh28j/{z}/{x}/{y}.png', {
+        attribution: 'Map &copy; Pacific Rim Coordination Center (PRCC).  Certain data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+        key: 'BC9A493B41014CAABB98F0471D759707',
+        styleId: 22677
+    });
+   /*var layercontrol = L.control.layers(baseLayers,{}, {
+        position: "topleft"
+    }).addTo(map);*/
+    var longitude =119.398397;
+    var latitude = 39.933062;
+    var data = [
+        {
+            name:'河北省秦皇岛市抚宁区G1京哈高速代山头村委会',
+            value:[longitude,latitude]
+        }
+    ]
+
+    map.setView(L.latLng(latitude,longitude), 14);
+    var overlay = new L.echartsLayer3(map, echarts);
+    var chartsContainer = overlay.getEchartsContainer();
+    var myChart = overlay.initECharts(chartsContainer);
+    option = {
+    // backgroundColor: '#404a59',
+    title: {
+        text: '',
+        left: 'center',
+		top:'20',
+        textStyle: {
+            color: '#2deefe',
+			fontSize:'25',
+			fontFamily:'Microsoft YaHei',
+			fontWeight:'normal'
+        }
+    },
+    geo: {
+        map: '',
+        label: {
+            emphasis: {
+                show: false
+            }
+        },
+        roam: true,
+        itemStyle: {
+            normal: {
+                areaColor: '#323c48',
+                borderColor: '#111'
+            },
+            emphasis: {
+                areaColor: '#2a333d'
+            }
+        }
+    },
+    series : [
+        {
+            name: '危险路段',
+            type: 'effectScatter',
+            coordinateSystem: 'geo',
+            data: data,
+            /*data: convertData(data.sort(function (a, b) {
+                return b.value - a.value;
+            }).slice(0, 6)),*/
+            symbolSize:10,
+            showEffectOn: 'render',
+            rippleEffect:{              //涟漪特效相关配置。
+							period:3,               //动画的时间。
+							scale:5,              //动画中波纹的最大缩放比例。
+							brushType:'fill',      //波纹的绘制方式，可选 'stroke' 和 'fill'。
+						},
+            hoverAnimation: true,
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: true
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#fe2f00',
+                    shadowBlur: 10,
+                    shadowColor: '#333'
+                }
+            },
+            zlevel: 1
+        }
+    ]
+};
+    // 使用刚指定的配置项和数据显示图表。
+    overlay.setOption(option);
+
+    function updateMapPoint(name,longitude, latitude) {
+        debugger;
+        map.setView(L.latLng(latitude,longitude), 14);
+        option = {
+            // backgroundColor: '#404a59',
+            title: {
+                text: '',
+                left: 'center',
+                top:'20',
+                textStyle: {
+                    color: '#2deefe',
+                    fontSize:'25',
+                    fontFamily:'Microsoft YaHei',
+                    fontWeight:'normal'
+                }
+            },
+            geo: {
+                map: '',
+                label: {
+                    emphasis: {
+                        show: false
+                    }
+                },
+                roam: true,
+                itemStyle: {
+                    normal: {
+                        areaColor: '#323c48',
+                        borderColor: '#111'
+                    },
+                    emphasis: {
+                        areaColor: '#2a333d'
+                    }
+                }
+            },
+            series : [
+                {
+                    name: '危险路段',
+                    type: 'effectScatter',
+                    coordinateSystem: 'geo',
+                    data:  [
+                        {
+                            name:name,
+                            value:[longitude,latitude]
+                        }
+                    ],
+                    /*data: convertData(data.sort(function (a, b) {
+                        return b.value - a.value;
+                    }).slice(0, 6)),*/
+                    symbolSize:10,
+                    showEffectOn: 'render',
+                    rippleEffect:{              //涟漪特效相关配置。
+                        period:3,               //动画的时间。
+                        scale:5,              //动画中波纹的最大缩放比例。
+                        brushType:'fill',      //波纹的绘制方式，可选 'stroke' 和 'fill'。
+                    },
+                    hoverAnimation: true,
+                    label: {
+                        normal: {
+                            formatter: '{b}',
+                            position: 'right',
+                            show: true
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#fe2f00',
+                            shadowBlur: 10,
+                            shadowColor: '#333'
+                        }
+                    },
+                    zlevel: 1
+
+
+
+
+
+                }
+
+            ]
+        };
+        overlay.setOption(option,true);
+    }
+
+</script>
+</body>
+</html>

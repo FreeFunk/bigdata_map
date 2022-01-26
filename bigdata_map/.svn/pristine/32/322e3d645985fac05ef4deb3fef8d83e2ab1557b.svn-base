@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataFatigueAnalysisSumCountMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataFatigueAnalysisSumCount" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="SUM_FATIGUE_MILEAGE" property="sumFatigueMileage"/>
+			<result column="SUM_FATIGUE_TIME" property="sumFatigueTime"/>
+			<result column="SUM_FATIGUE_NUM" property="sumFatigueNum"/>
+			<result column="SUM_SERIOUS_FATIGUE_MILEAGE" property="sumSeriousFatigueMileage"/>
+			<result column="SUM_SERIOUS_FATIGUE_TIME" property="sumSeriousFatigueTime"/>
+			<result column="SUM_SERIOUS_FATIGUE_NUM" property="sumSeriousFatigueNum"/>
+			<result column="SUM_NIGHT_FATIGUE_MILEAGE" property="sumNightFatigueMileage"/>
+			<result column="SUM_NIGHT_FATIGUE_TIME" property="sumNightFatigueTime"/>
+			<result column="SUM_NIGHT_FATIGUE_NUM" property="sumNightFatigueNum"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_TYPE" property="countType"/>
+			<result column="COUNT_TIME" property="countTime"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="COUNT_YEAR" property="countYear"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataFatigueAnalysisSumCountView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, SUM_FATIGUE_MILEAGE, SUM_FATIGUE_TIME, SUM_FATIGUE_NUM, SUM_SERIOUS_FATIGUE_MILEAGE, SUM_SERIOUS_FATIGUE_TIME, SUM_SERIOUS_FATIGUE_NUM, SUM_NIGHT_FATIGUE_MILEAGE, SUM_NIGHT_FATIGUE_TIME, SUM_NIGHT_FATIGUE_NUM, CAR_TYPE, COUNT_TYPE, COUNT_TIME, COUNT_MONTH, COUNT_YEAR
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.sumFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sumFatigueNum)'>
+					AND  SUM_FATIGUE_NUM = #{queryObj.sumFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.sumSeriousFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sumSeriousFatigueNum)'>
+					AND  SUM_SERIOUS_FATIGUE_NUM = #{queryObj.sumSeriousFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.sumNightFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sumNightFatigueNum)'>
+					AND  SUM_NIGHT_FATIGUE_NUM = #{queryObj.sumNightFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.countYear != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countYear)'>
+					AND  COUNT_YEAR = #{queryObj.countYear}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataFatigueAnalysisSumCountQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fatigue_analysis_sum_count 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataFatigueAnalysisSumCountQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fatigue_analysis_sum_count 
+  		<include refid="where"/>
+  </select>
+
+	<select id="getFatigueSumCountData" parameterType="com.edgedo.bigdata.queryvo.BigdataFatigueAnalysisSumCountQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_fatigue_analysis_sum_count
+		WHERE CAR_TYPE = #{queryObj.carType}
+		AND COUNT_TYPE = #{queryObj.countType}
+		<if test="queryObj.countType !=null and queryObj.countType == 'MONTH'">
+			AND COUNT_MONTH = #{queryObj.countMonth}
+		</if>
+		<if test="queryObj.countType !=null and queryObj.countType == 'YEAR'">
+			AND COUNT_YEAR = #{queryObj.countYear}
+		</if>
+		limit 1
+	</select>
+
+
+
+</mapper>

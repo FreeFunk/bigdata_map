@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.drawing.mapper.BigdataDriverCountMonthAndYearMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.drawing.entity.BigdataDriverCountMonthAndYear" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="COMP_ID" property="compId"/>
+			<result column="COMP_NAME" property="compName"/>
+			<result column="TEAM_ID" property="teamId"/>
+			<result column="TEAM_NAME" property="teamName"/>
+			<result column="PROVINCE_ID" property="provinceId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_ID" property="cityId"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="XIANQU_ID" property="xianquId"/>
+			<result column="XIANQU_NAME" property="xianquName"/>
+			<result column="DRIVER_ID" property="driverId"/>
+			<result column="DRIVER_NAME" property="driverName"/>
+			<result column="DRIVER_SEX" property="driverSex"/>
+			<result column="DRIVER_AGE" property="driverAge"/>
+			<result column="DRIVER_PHONE" property="driverPhone"/>
+			<result column="DRIVER_ID_CARD" property="driverIdCard"/>
+			<result column="DRIVER_CODE" property="driverCode"/>
+			<result column="NATIONAL_ROAD_MILEAGE" property="nationalRoadMileage"/>
+			<result column="HIGH_SPEED_MILEAGE" property="highSpeedMileage"/>
+			<result column="OTHER_ROAD_MILEAGE" property="otherRoadMileage"/>
+			<result column="DAY_RUN_MILEAGE" property="dayRunMileage"/>
+			<result column="NIGHT_RUN_MILEAGE" property="nightRunMileage"/>
+			<result column="DANGER_RUN_MILEAGE" property="dangerRunMileage"/>
+			<result column="SUM_MILEAGE" property="sumMileage"/>
+			<result column="DAY_RUN_TIME_LENGTH" property="dayRunTimeLength"/>
+			<result column="NIGHT_RUN_TIME_LENGTH" property="nightRunTimeLength"/>
+			<result column="DANGER_RUN_TIME_LENGTH" property="dangerRunTimeLength"/>
+			<result column="SUM_RUN_TIME_LENGTH" property="sumRunTimeLength"/>
+			<result column="DAY_RUN_AVERAGE_SPEED" property="dayRunAverageSpeed"/>
+			<result column="NIGHT_RUN_AVERAGE_SPEED" property="nightRunAverageSpeed"/>
+			<result column="DANGER_RUN_AVERAGE_SPEED" property="dangerRunAverageSpeed"/>
+			<result column="AVERAGE_SPEED" property="averageSpeed"/>
+			<result column="HIGHEST_SPEED" property="highestSpeed"/>
+			<result column="OVERSPEED_NUM" property="overspeedNum"/>
+			<result column="SERIOUS_OVERSPEED_NUM" property="seriousOverspeedNum"/>
+			<result column="TIRED_NUM" property="tiredNum"/>
+			<result column="SERIOUS_TIRED_NUM" property="seriousTiredNum"/>
+			<result column="SAFETY_WARNING_NUM" property="safetyWarningNum"/>
+			<result column="SAFETRAIN_NUM" property="safetrainNum"/>
+			<result column="WARNING_RATE" property="warningRate"/>
+			<result column="COUNT_TYPE" property="countType"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.drawing.queryvo.BigdataDriverCountMonthAndYearView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, COMP_ID, COMP_NAME, TEAM_ID, TEAM_NAME, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, XIANQU_ID, XIANQU_NAME, DRIVER_ID, DRIVER_NAME, DRIVER_SEX, DRIVER_AGE, DRIVER_PHONE, DRIVER_ID_CARD, DRIVER_CODE, NATIONAL_ROAD_MILEAGE, HIGH_SPEED_MILEAGE, OTHER_ROAD_MILEAGE, DAY_RUN_MILEAGE, NIGHT_RUN_MILEAGE, DANGER_RUN_MILEAGE, SUM_MILEAGE, DAY_RUN_TIME_LENGTH, NIGHT_RUN_TIME_LENGTH, DANGER_RUN_TIME_LENGTH, SUM_RUN_TIME_LENGTH, DAY_RUN_AVERAGE_SPEED, NIGHT_RUN_AVERAGE_SPEED, DANGER_RUN_AVERAGE_SPEED, AVERAGE_SPEED, HIGHEST_SPEED, OVERSPEED_NUM, SERIOUS_OVERSPEED_NUM, TIRED_NUM, SERIOUS_TIRED_NUM, SAFETY_WARNING_NUM, SAFETRAIN_NUM, WARNING_RATE, COUNT_TYPE, COUNT_DATE, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.driverAge != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.driverAge)'>
+					AND  DRIVER_AGE = #{queryObj.driverAge}
+				</if>
+				<if test='queryObj != null and  queryObj.overspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.overspeedNum)'>
+					AND  OVERSPEED_NUM = #{queryObj.overspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.seriousOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.seriousOverspeedNum)'>
+					AND  SERIOUS_OVERSPEED_NUM = #{queryObj.seriousOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.tiredNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.tiredNum)'>
+					AND  TIRED_NUM = #{queryObj.tiredNum}
+				</if>
+				<if test='queryObj != null and  queryObj.seriousTiredNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.seriousTiredNum)'>
+					AND  SERIOUS_TIRED_NUM = #{queryObj.seriousTiredNum}
+				</if>
+				<if test='queryObj != null and  queryObj.safetyWarningNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.safetyWarningNum)'>
+					AND  SAFETY_WARNING_NUM = #{queryObj.safetyWarningNum}
+				</if>
+				<if test='queryObj != null and  queryObj.safetrainNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.safetrainNum)'>
+					AND  SAFETRAIN_NUM = #{queryObj.safetrainNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countDate)'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.yearNum)'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.drawing.queryvo.BigdataDriverCountMonthAndYearQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_driver_count_month_and_year 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.drawing.queryvo.BigdataDriverCountMonthAndYearQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_driver_count_month_and_year 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectVoByDriverId" parameterType="com.edgedo.drawing.queryvo.BigdataDriverCountMonthAndYearQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_driver_count_month_and_year
+		where YEAR_NUM=#{queryObj.yearNum}
+		and COUNT_MONTH=#{queryObj.countMonth}
+		and DRIVER_ID=#{queryObj.driverId}
+		limit 1
+	</select>
+
+</mapper>

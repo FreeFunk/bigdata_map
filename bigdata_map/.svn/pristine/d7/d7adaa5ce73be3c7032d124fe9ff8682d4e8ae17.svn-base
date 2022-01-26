@@ -1,0 +1,85 @@
+server:
+  port: 8098
+mybatis:
+  mapper-locations: classpath:mapper/caranalysis/*.xml
+mybatis-plus:
+  global-config:
+    db-config:
+      db-type: MYSQL
+spring:
+  datasource:
+    name: datasource
+    url: jdbc:mysql://60.205.180.76:8066/bigdata_db?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    tomcat:
+      max-active: 5
+      min-idle: 2
+      max-idle: 5
+      initial-size: 2
+      test-on-borrow: true
+      test-on-return: false
+      max-wait: 30000
+  aop:
+    proxy-target-class: true
+    auto: true
+
+controller.scanPackage: com.edgedo
+#rsa公钥
+JwtRsaSecKey.rsaPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkR7i7tBvWop/3H32izJz/zCLxEG5Jv469h3G57hBWixq78zgmymqZxwmB+zFsXDd6gI+7769NYZUEsm9L9BHIGEIprOr2JtdMg8Ypxs7Niyq1sw7WcDXseK+w02QFuzaXQg6Df6j/NlxJ3d6mHGpQUfW298qDauh9HZu287SWUqjZWXeEW3nthfLtmBkH4tnG5U1qzu6xAvhoKgqpJQpFnfXlTCbWOy+LBQ2s3FqDIu8C9AM8+kfF2lbu3v/NTRG+UNi6f7Oxt6q8Yh6iDu1mFrow5X7S8aLGA6R3I7ElP24tnB56vIR0HI4lq2i6gNnlMyCPyWRVUDh0UkhxqpmdQIDAQAB
+#rsa私钥
+JwtRsaSecKey.rsaPrivateKey: MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCRHuLu0G9ain/cffaLMnP/MIvEQbkm/jr2HcbnuEFaLGrvzOCbKapnHCYH7MWxcN3qAj7vvr01hlQSyb0v0EcgYQims6vYm10yDxinGzs2LKrWzDtZwNex4r7DTZAW7NpdCDoN/qP82XEnd3qYcalBR9bb3yoNq6H0dm7bztJZSqNlZd4Rbee2F8u2YGQfi2cblTWrO7rEC+GgqCqklCkWd9eVMJtY7L4sFDazcWoMi7wL0Azz6R8XaVu7e/81NEb5Q2Lp/s7G3qrxiHqIO7WYWujDlftLxosYDpHcjsSU/bi2cHnq8hHQcjiWraLqA2eUzII/JZFVQOHRSSHGqmZ1AgMBAAECggEBAJEa6xqTu+QyfGsCYJUKm8XcysQwW2xL5LTXTV3BdUcvBrZEi4lafhKfqL9f1sT38EzedgPPGu38JPCsW8kFXzlXDQlyui/aGbPGOIZOykP/IcupZub11jb+XHR4h80Eg8tmQHZh2aMn4ObvptvrOqwVoxcy65/DsCr6iRqskNPKNltu1eCRduQzI0ygb1vTcVT0KqEKqe5UdvQfbc4ciwZkYkWWXr2NVt2UB2Vycm9ym7835/STsSXGNBNxjQnBWKjLAhNGKrbK4IfQehcmk9QjmK/1mLQmjus5Lri1h4JYPXpfU9+T02iFGa+H5DtaUe4Kpd2i1qRYrcXI9EjY3TkCgYEAw6tnHBm9A+bcgN2GC/gX72k1y56uGEN2WnB4f0sIfWs4+EqeJeLoEIO+5/pmXLv7rN7luigRgaaC8vFlS/qbwkysEIw5lNyrU1i4O352pT1ENTe73x425hdrtHkTSzt+3KcQd4iZ8wcNuJGOOtRF7GpR3acIIeFRm+oA3IauC4cCgYEAvd2OZgYh4v+MZT+1BUs/gVIzqXDUsTHvSgIqNUs8/LA1lGjYhsaAfCRBUUegjO+ovo8y+VNDJDyX1Rj67BifVmteIChPuyxFTLHd03Oe4HtAB7BErgM7Y/VUf5tkiJf6kyMNqjVfXfiHGKARdf7SZF+VT0/VCXpcGlXMIkVdVSMCgYEAnvkdduk6dncU4+YXSJYy7CKwwFSV4cS93dDPNazCoxOAX8pQHzvxi6lea583l1RrsBIQ12RChPHCJpwVzts3vW8JxRAIoHeBAuBsHnoq7ymNxycXDrm/pMWWjjRohpE6Cw/5AwUK/zbV4QTxZ76baO8gwFM6+jvUUDaYqJMLyPUCgYEArPs3apJ5uzPyeKijR1B4al03Pk/TKCGDjt0MEYQb62irWCxx4dDmbLQnYmMszlrnVb5nxaprSI+AEaFxszr3qKenmQrBIZnDBY4juSvk+0avXpHk8Nl2+aohsyUjYiN9IyLTp1h7K8VraC8l2WgxzUscYKcuRDVbxo6Wrj6eOxsCgYAiH0eK9lQsJ/Gi/IzFU57yu3tLxoYm9b3aWxlM/vxaEDRiLeji7q9B+gXpqzP19x7d4QWIjMNsFtqrPJWmRJJD1tI6f3wPz0r8Sjnwq+iTzZvrvXvWh+gtGfvkHSkne1dYv8oIPy6zWXeLwGbPpzMgO4WQOZX+PhqX2gLMx+pM3g==
+#jwt token秘钥
+JwtRsaSecKey.jwtSecretkey: 6a4c9416da35432ca5ff612ce88eb6de
+#分析大数据文件夹
+bigdata.dataHistoryGpsForder: /server/vdb1/gpsdata/remoteFile
+#实时位置的文件夹
+bigdata.dataRealTimeGpsFilePath: /server/vdb1/xyxClient/RemoteInfo.log
+#数据分析城市id
+bigdata.cityId: 130300
+#数据查询接口url
+bigdata.commonSearchUrl: http://127.0.0.1:8098
+
+
+#Matser的ip地址
+redis.hostName: 124.239.153.145
+#端口号
+redis.port: 16379
+#如果有密码
+redis.password: xyx_gps_redis
+#客户端超时时间单位是毫秒 默认是2000
+redis.timeout: 10000
+
+#最大空闲数
+redis.maxIdle: 300
+#连接池的最大数据库连接数。设为0表示无限制,如果是jedis 2.4以后用redis.maxTotal
+#redis.maxActive: 600
+#控制一个pool可分配多少个jedis实例,用来替换上面的redis.maxActive,如果是jedis 2.4以后用该属性
+redis.maxTotal: 1000
+#最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
+redis.maxWaitMillis: 1000
+#连接的最小空闲时间 默认1800000毫秒(30分钟)
+redis.minEvictableIdleTimeMillis: 300000
+#每次释放连接的最大数目,默认3
+redis.numTestsPerEvictionRun: 1024
+#逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1
+redis.timeBetweenEvictionRunsMillis: 30000
+#是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个
+redis.testOnBorrow: true
+#在空闲时检查有效性, 默认false
+redis.testWhileIdle: true
+
+#redis集群配置
+spring.redis.cluster.nodes: 49.4.67.20:16379
+spring.redis.cluster.max-redirects: 3
+
+#地图反查百度秘钥
+baidu.baidu_geocoder_ak: zQTyHWw2m3T2pGVUylSprh13n5680CYf
+localcityname: 秦皇岛
+#公共查询接口地址
+ReportDataUrl: http://localhost:8097
+#红树林主动安全的车辆静态数据地址
+TongBuCarInfoUrl: http://39.106.199.153:6013/carinfo?userid=123456&userkey=123456
+#红树林主动安全平台id
+gpsCompId: 123456

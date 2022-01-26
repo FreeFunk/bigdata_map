@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="BigdataOverspeedAnalysis-form" id="BigdataOverspeedAnalysis-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id" lay-verify="required" placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速超速里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highOverspeedMileage" lay-verify="required" placeholder="请输入高速超速里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速超速时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highOverspeedTime" lay-verify="required" placeholder="请输入高速超速时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highOverspeedNum" lay-verify="required" placeholder="请输入高速超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速严重超速里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highSeriousOverspeedMileage" lay-verify="required" placeholder="请输入高速严重超速里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速严重超速时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highSeriousOverspeedTime" lay-verify="required" placeholder="请输入高速严重超速时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速严重超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highSeriousOverspeedNum" lay-verify="required" placeholder="请输入高速严重超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速危险时段超速里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highNightOverspeedMileage" lay-verify="required" placeholder="请输入高速危险时段超速里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速危险时段超速时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highNightOverspeedTime" lay-verify="required" placeholder="请输入高速危险时段超速时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速危险时段超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highNightOverspeedNum" lay-verify="required" placeholder="请输入高速危险时段超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道超速里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nationalOverspeedMileage" lay-verify="required" placeholder="请输入国道超速里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道超速时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nationalOverspeedTime" lay-verify="required" placeholder="请输入国道超速时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nationalOverspeedNum" lay-verify="required" placeholder="请输入国道超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道严重超速里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nationalSeriousOverspeedMileage" lay-verify="required" placeholder="请输入国道严重超速里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道严重超速时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nationalSeriousOverspeedTime" lay-verify="required" placeholder="请输入国道严重超速时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道严重超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nationalSeriousOverspeedNum" lay-verify="required" placeholder="请输入国道严重超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道危险时段超速里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nationalNightOverspeedMileage" lay-verify="required" placeholder="请输入国道危险时段超速里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道危险时段超国道夜间超速时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nationalNightOverspeedTime" lay-verify="required" placeholder="请输入国道危险时段超国道夜间超速时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道危险时段超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nationalNightOverspeedNum" lay-verify="required" placeholder="请输入国道危险时段超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他道路超速里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="otherOverspeedMileage" lay-verify="required" placeholder="请输入其他道路超速里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他道路超速超速时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="otherOverspeedTime" lay-verify="required" placeholder="请输入其他道路超速超速时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他道路超速超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="otherOverspeedNum" lay-verify="required" placeholder="请输入其他道路超速超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他道路严重超速里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="otherSeriousOverspeedMileage" lay-verify="required" placeholder="请输入其他道路严重超速里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他道路严重超速时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="otherSeriousOverspeedTime" lay-verify="required" placeholder="请输入其他道路严重超速时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他道路严重超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="otherSeriousOverspeedNum" lay-verify="required" placeholder="请输入其他道路严重超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他道路危险时段超速里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="otherNightOverspeedMileage" lay-verify="required" placeholder="请输入其他道路危险时段超速里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他道路危险时段超速时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="otherNightOverspeedTime" lay-verify="required" placeholder="请输入其他道路危险时段超速时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他道路危险时段超速次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="otherNightOverspeedNum" lay-verify="required" placeholder="请输入其他道路危险时段超速次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">超速总里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sumOverspeedMileage" lay-verify="required" placeholder="请输入超速总里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">超速总时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sumOverspeedTime" lay-verify="required" placeholder="请输入超速总时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">超速总次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sumOverspeedNum" lay-verify="required" placeholder="请输入超速总次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">严重超速总里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sumSeriousOverspeedMileage" lay-verify="required" placeholder="请输入严重超速总里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">严重超速总时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sumSeriousOverspeedTime" lay-verify="required" placeholder="请输入严重超速总时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">严重超速总次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sumSeriousOverspeedNum" lay-verify="required" placeholder="请输入严重超速总次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">危险时段超速总里程</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sumNightOverspeedMileage" lay-verify="required" placeholder="请输入危险时段超速总里程" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">危险时段超速总时长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sumNightOverspeedTime" lay-verify="required" placeholder="请输入危险时段超速总时长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">危险时段超速总次数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sumNightOverspeedNum" lay-verify="required" placeholder="请输入危险时段超速总次数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道超速占比</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nationalOverspeedRate" lay-verify="required" placeholder="请输入国道超速占比" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国道超速标识</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nationaloverspeedflAg" lay-verify="required" placeholder="请输入国道超速标识" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速超速占比</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highOverspeedRate" lay-verify="required" placeholder="请输入高速超速占比" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">高速超速标识</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="highoverspeedflAg" lay-verify="required" placeholder="请输入高速超速标识" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他道路超速占比</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="otherOverspeedRate" lay-verify="required" placeholder="请输入其他道路超速占比" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他道路超速标识</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="otheroverspeedflAg" lay-verify="required" placeholder="请输入其他道路超速标识" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">严重超速占比</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="seriousOverspeedRate" lay-verify="required" placeholder="请输入严重超速占比" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">严重超速标识</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="seriousoverspeedflAg" lay-verify="required" placeholder="请输入严重超速标识" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车辆类型</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carType" lay-verify="required" placeholder="请输入车辆类型" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">统计时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="countTime" id="countTime" lay-verify="required" placeholder="请输入统计时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="BigdataOverspeedAnalysis-form-edit" id="BigdataOverspeedAnalysis-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(BigdataOverspeedAnalysis-form-edit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'/admin/bigdataOverspeedAnalysis/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('BigdataOverspeedAnalysis-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#countTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

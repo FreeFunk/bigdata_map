@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="BigdataBeidouCompMonthCheck-form" id="BigdataBeidouCompMonthCheck-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id" lay-verify="required" placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">更新时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="updateTime" id="updateTime" lay-verify="required" placeholder="请输入更新时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">运营商id</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="compId" lay-verify="required" placeholder="请输入运营商id" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">运营商名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="compName" lay-verify="required" placeholder="请输入运营商名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">得分</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="score" lay-verify="required" placeholder="请输入得分" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车辆总数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carNum" lay-verify="required" placeholder="请输入车辆总数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">当月上线数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="onlineCarNum" lay-verify="required" placeholder="请输入当月上线数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">上线率</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="onlineRate" lay-verify="required" placeholder="请输入上线率" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">当月中断分钟数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="linkBreakMinute" lay-verify="required" placeholder="请输入当月中断分钟数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">联通率</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="linkRate" lay-verify="required" placeholder="请输入联通率" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">当月轨迹不完整车数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="traceUncompleteCarNum" lay-verify="required" placeholder="请输入当月轨迹不完整车数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">轨迹完整率</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="traceCompleteRate" lay-verify="required" placeholder="请输入轨迹完整率" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">数据合格率</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="dataQualifiedRate" lay-verify="required" placeholder="请输入数据合格率" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">司机卡当月上传数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="driverCardUpCarNum" lay-verify="required" placeholder="请输入司机卡当月上传数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">司机卡上传率</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="driverCardUploadRate" lay-verify="required" placeholder="请输入司机卡上传率" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">司机卡记录总数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="driverCarRecCount" lay-verify="required" placeholder="请输入司机卡记录总数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">司机卡合格数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="driverCardQualifiedNum" lay-verify="required" placeholder="请输入司机卡合格数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">司机身份卡信息准确率</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="driverCardQualifiedRate" lay-verify="required" placeholder="请输入司机身份卡信息准确率" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">分段限速报警准确率</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="speedAlarmQualifiedRate" lay-verify="required" placeholder="请输入分段限速报警准确率" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">轨迹漂移车辆数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="traceFlayCarNum" lay-verify="required" placeholder="请输入轨迹漂移车辆数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车辆漂移率</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="traceFlyRate" lay-verify="required" placeholder="请输入车辆漂移率" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">回传间隔合格车辆数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="gpsUploadTimeQualifiedNum" lay-verify="required" placeholder="请输入回传间隔合格车辆数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">回传间隔合格率</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="gpsUploadTimeQualifiedRate" lay-verify="required" placeholder="请输入回传间隔合格率" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">统计月份</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="countMonth" lay-verify="required" placeholder="请输入统计月份" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">年份</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="yearNum" lay-verify="required" placeholder="请输入年份" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="BigdataBeidouCompMonthCheck-form-edit" id="BigdataBeidouCompMonthCheck-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(BigdataBeidouCompMonthCheck-form-edit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'/admin/bigdataBeidouCompMonthCheck/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('BigdataBeidouCompMonthCheck-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#updateTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

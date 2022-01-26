@@ -1,0 +1,10 @@
+bigdata_alarm_record -- 报警记录表 按月横向分片，单月的表按天做分区  - done
+bigdata_car_day_oftenrun_route -- 车辆长跑路线表 按月分片 ，单月按天做分区 -done
+car_month_oftenrun_route -- 车辆月度路线统计 按年分片，单年按季度做分区 - done  可以修改成按月分片，按天分区
+oftenrun_route_month_count -- 长跑路线月度统计 按年分片,单年按季度做分区 - done
+bigdata_car_stop_record -- 车辆停车记录表  按月分片，单月按天做分区 - done
+car_day_direction_distribution--  车辆去向分布日统计  按年分表，单年按月分区 --done
+bigdata_time_car_day_rec -- 车辆行驶时间分析  按月分片，单月按天做分区 --done
+bigdata_driver_card_rec -- 司机身份卡记录表  按月分片，单月按天做分区  --done
+bigdata_car_stop_rec -- 车辆停车表  按月分片，单月按天做分区 - done
+

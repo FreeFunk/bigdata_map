@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataSafetyProductionSituationMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataSafetyProductionSituation" >
+			<id column="ID" property="id"/>
+			<result column="FATIGUE_RUN_NUM" property="fatigueRunNum"/>
+			<result column="FATIGUE_RATE" property="fatigueRate"/>
+			<result column="OVERSPEED_RUN_NUM" property="overspeedRunNum"/>
+			<result column="OVERSPEED_RATE" property="overspeedRate"/>
+			<result column="TEAM_SAFETY_NUM" property="teamSafetyNum"/>
+			<result column="TEAM_SAFETY_RATE" property="teamSafetyRate"/>
+			<result column="CAR_ONLINE_RATE" property="carOnlineRate"/>
+			<result column="CAR_ONLINE_RATE_UP" property="carOnlineRateUp"/>
+			<result column="CAR_OPERATE_RATE" property="carOperateRate"/>
+			<result column="CAR_OPERATE_RATE_UP" property="carOperateRateUp"/>
+			<result column="EMP_ADD_NUM" property="empAddNum"/>
+			<result column="EMP_ADD_RATE" property="empAddRate"/>
+			<result column="CAR_ADD_NUM" property="carAddNum"/>
+			<result column="CAR_ADD_RATE" property="carAddRate"/>
+			<result column="TEAM_ADD_NUM" property="teamAddNum"/>
+			<result column="TEAM_ADD_RATE" property="teamAddRate"/>
+			<result column="YEAR_SCORE" property="yearScore"/>
+			<result column="YEAR_SCORE_RATE" property="yearScoreRate"/>
+			<result column="COUNT_TIME" property="countTime"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataSafetyProductionSituationView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, FATIGUE_RUN_NUM, FATIGUE_RATE, OVERSPEED_RUN_NUM, OVERSPEED_RATE, TEAM_SAFETY_NUM, TEAM_SAFETY_RATE, CAR_ONLINE_RATE, CAR_ONLINE_RATE_UP, CAR_OPERATE_RATE, CAR_OPERATE_RATE_UP, EMP_ADD_NUM, EMP_ADD_RATE, CAR_ADD_NUM, CAR_ADD_RATE, TEAM_ADD_NUM, TEAM_ADD_RATE, YEAR_SCORE, YEAR_SCORE_RATE, COUNT_TIME
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.fatigueRunNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.fatigueRunNum)'>
+					AND  FATIGUE_RUN_NUM = #{queryObj.fatigueRunNum}
+				</if>
+				<if test='queryObj != null and  queryObj.overspeedRunNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.overspeedRunNum)'>
+					AND  OVERSPEED_RUN_NUM = #{queryObj.overspeedRunNum}
+				</if>
+				<if test='queryObj != null and  queryObj.teamSafetyNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.teamSafetyNum)'>
+					AND  TEAM_SAFETY_NUM = #{queryObj.teamSafetyNum}
+				</if>
+				<if test='queryObj != null and  queryObj.empAddNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.empAddNum)'>
+					AND  EMP_ADD_NUM = #{queryObj.empAddNum}
+				</if>
+				<if test='queryObj != null and  queryObj.carAddNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.carAddNum)'>
+					AND  CAR_ADD_NUM = #{queryObj.carAddNum}
+				</if>
+				<if test='queryObj != null and  queryObj.teamAddNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.teamAddNum)'>
+					AND  TEAM_ADD_NUM = #{queryObj.teamAddNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataSafetyProductionSituationQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_safety_production_situation 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataSafetyProductionSituationQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_safety_production_situation 
+  		<include refid="where"/>
+  </select>
+
+
+	<select id="getSafetyProductionSituationData" parameterType="com.edgedo.bigdata.queryvo.BigdataSafetyProductionSituationQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_safety_production_situation
+		WHERE date_format(COUNT_TIME,'%Y%m') = date_format(#{queryObj.countTime},'%Y%m')
+	</select>
+  
+  
+</mapper>

@@ -1,0 +1,43 @@
+package com.edgedo.timetask;
+
+import com.edgedo.bigdata.entity.BigdataCarRealtimeGps;
+import com.edgedo.bigdata.service.BigdataCarRealtimeGpsService;
+import com.edgedo.common.util.RedisUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.Map;
+
+/**
+ * @ClassName UpdateCarRealGpsInfo
+ * @Description 更新车辆实时的经纬度
+ * @Author 床前明月光
+ * @Date 2019/9/10 14:40
+ **/
+//同步车辆的位置信息
+/*@Component*/
+public class UpdateCarRealGpsInfo {
+
+    @Autowired
+    BigdataCarRealtimeGpsService bigdataCarRealtimeGpsService;
+    @Autowired
+    RedisUtil redisUtil;
+
+    //同步车辆的位置信息
+   /* @Scheduled(cron = "0 0/10 * * * ?")*/
+    public void updateCarRealGps(){
+        try {
+            String gpsCarRedsMapKey = BigdataCarRealtimeGpsService.CAR_REAL_TIME_GPS_MAP_KEY;
+            Map<Object,Object> carMap = redisUtil.hmget(gpsCarRedsMapKey);
+            for (Map.Entry<Object, Object> entry : carMap.entrySet()) {
+                BigdataCarRealtimeGps ora = (BigdataCarRealtimeGps)entry.getValue();
+                bigdataCarRealtimeGpsService.insertOrUpdate(ora);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+}

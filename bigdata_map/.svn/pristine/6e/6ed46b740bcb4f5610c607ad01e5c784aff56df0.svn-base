@@ -1,0 +1,54 @@
+package com.edgedo.timetask;
+
+import com.edgedo.bigdata.entity.BigdataAlarmRecord;
+import com.edgedo.bigdata.mapper.BigdataAlarmRecordMapper;
+import com.edgedo.bigdata.mapper.BigdataSafetyWarningMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+/**
+ *  大数据报警时段统计(一天的每个小时的记录) bigdata_fenxi_alarm_time
+ *  大数据报警周月统计(7天和30天) bigdata_fenxi_count
+ *  报警数量 (全部   常规报警-bigdata_alarm_record   主动安全-bigdata_safety_warning)
+ *  处理数量 (全部   常规报警-bigdata_alarm_record   主动安全-bigdata_safety_warning)
+ */
+
+@Component
+public class BigdataAlarmAndSafeCount {
+
+    @Autowired
+    private BigdataAlarmRecordMapper bigdataAlarmRecordMapper;
+
+    @Autowired
+    private BigdataSafetyWarningMapper bigdataSafetyWarningMapper;
+
+
+    //bigdata_fenxi_alarm_time 一天的数据  查出统计时间  对应当天的时段
+    //@Scheduled(cron = "0/2 * * * * ?")//0/2 * * * * ?每天九点更新0 0 9 * * ?
+    public void countAlarmAndSafeDay(){
+        Date dateCurr = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateStr = simpleDateFormat.format(dateCurr);
+        String[] str = dateStr.split("-");// 2019  09 08
+        Integer yearNum = new Integer(str[0]);//年
+        Integer countMonth = new Integer(str[0]+str[1]);//月
+        Integer countDay = new Integer(str[0]+str[1]+str[2]);//日
+        //1.先从表中查出当天数据 bigdata_alarm_record bigdata_safety_warning
+        //List<BigdataAlarmRecord> num = bigdataAlarmRecordMapper.selectAlarmNumAndHandlerDay(yearNum,countMonth,countDay,"06:00","07:00");
+        int num = bigdataSafetyWarningMapper.selectAlarmNumDay(yearNum,countMonth,
+                countDay,"130302","普货","06:00","07:00");
+        int num1 =  bigdataSafetyWarningMapper.selectHandlerDay(yearNum,countMonth,
+                countDay,"130302","普货","06:00","07:00");
+        //1)bigdata_alarm_record表中没有省市县
+        //2)bigdata_alarm_record表中处理状态都为空
+        //3)bigdata_fenxi_alarm_time表中  一天 有 车辆类型 区域统计类型 数据类型(报警,处理) 报警分类也要分开统计，还是不统计ALARM_TYPE
+        int s = 0;
+        //2.查出的两个集合
+    }
+
+}

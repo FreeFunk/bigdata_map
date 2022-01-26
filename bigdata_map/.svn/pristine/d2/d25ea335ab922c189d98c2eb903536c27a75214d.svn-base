@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.SysRoleMenueMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.SysRoleMenue" >
+			<result column="MENUE_ID" property="menueId"/>
+			<result column="ROLE_ID" property="roleId"/>
+    </resultMap>
+
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.SysRoleMenueView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 MENUE_ID, ROLE_ID
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+        <if test='queryObj != null and queryObj.roleId != null and queryObj.roleId != "" '>
+            AND  ROLE_ID = #{queryObj.roleId}
+        </if>
+        <if test='queryObj != null and queryObj.menueId != null and queryObj.menueId != "" '>
+            AND  MENUE_ID = #{queryObj.menueId}
+        </if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.SysRoleMenueQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_role_menue 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="String" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_role_menue
+      <include refid="where"/>
+  </select>
+
+
+    <select id="selectMenueIdsByRoleId" parameterType="String" resultMap="BaseResultViewMap">
+        select <include refid="Base_Column_List"/> from sys_role_menue
+        where ROLE_ID = #{roleId}
+    </select>
+
+    <delete id="deleteByAllMess" parameterType="com.edgedo.sys.queryvo.SysRoleMenueQuery">
+        delete from sys_role_menue where MENUE_ID = #{queryObj.menueId} and ROLE_ID = #{queryObj.roleId}
+    </delete>
+
+    <delete id="deleteByRoleId" parameterType="com.edgedo.sys.queryvo.SysRoleMenueQuery">
+        delete from sys_role_menue where ROLE_ID = #{queryObj.roleId}
+    </delete>
+  
+  
+</mapper>

@@ -1,0 +1,542 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="css/layer-animate.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+</head>
+
+<body>
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+				<!--<input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " />-->
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+    <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">车辆列表</div>
+             <a href="javaScript:history.back(-1);" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="main">
+      <div class="ind">
+          <div class="blank40"></div>          
+
+          <div class="mk " style="width:99%; height:900px; float:right">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>
+               <div class="blank20"></div>
+               <div class="con0 clearfix">
+                   <div  style="height:850px; overflow-y: auto">
+                       <div id="ss" class="layui-fluid">
+                           <div class="layui-card">
+                               <table id="BigdataAlarmRecord-list" lay-filter="BigdataAlarmRecord-list"></table>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+          </div>
+         
+           
+     </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+
+<script>
+    layui.config({
+        base: '../../../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index:'lib/index',
+        common:'common',
+        $tool:'tool'
+    }).use(['index','table','$tool', 'form','common'], function(exports){
+        var $ = layui.$
+            ,$tool = layui.$tool
+            ,table = layui.table
+            ,common = layui.common
+            ,admin = layui.admin
+            ,form = layui.form;
+
+        //查询
+        form.on('submit(BigdataAlarmRecord-search)', function(data){
+            var field = data.field;
+
+            //执行重载
+            table.reload('BigdataAlarmRecord-list', {
+                where: field
+            });
+        });
+
+        /*
+        * 定义表格
+        * */
+        defineTable = function () {
+            debugger;
+            var queryArgs = $tool.getQueryParam();
+            var seriousFlag = queryArgs.seriousFlag;
+            if( typeof (seriousFlag)=='undefined'){
+                queryArgs.seriousFlag = "";
+            }
+            var dangerTimeFlag = queryArgs.dangerTimeFlag;
+            if( typeof (dangerTimeFlag)=='undefined'){
+                queryArgs.dangerTimeFlag = "";
+            }
+            var headers = layui.admin.getTokenHeader();
+            table.render({
+                elem: '#BigdataAlarmRecord-list' //指定原始表格的选择器（id选择器）
+                ,url:layui.setter.basePath +'/admin/bigdataAlarmRecord/qtlistpage.jsn' //模拟接口
+                ,headers:headers
+                ,method: 'post',
+                where:{
+                    "queryObj.alarmType":queryArgs.alarmType,
+                    "queryObj.carType":decodeURI(queryArgs.carType),
+                    "queryObj.alarmCls":queryArgs.alarmCls,
+                    "queryObj.countDate":queryArgs.countDate,
+                    "queryObj.countMonth":queryArgs.countMonth,
+                    "queryObj.roadLevel":queryArgs.roadLevel,
+                    "queryObj.seriousFlag":queryArgs.seriousFlag,
+                    "queryObj.dangerTimeFlag":queryArgs.dangerTimeFlag,
+                }
+                ,parseData: function(res){ //res 即为原始返回的数据
+                    return {
+                        "code": res.success, //解析接口状态
+                        "msg": res.errMsg, //解析提示文本
+                        "count": res.totalCount, //解析数据长度
+                        "data": res.list //解析数据列表
+                    };
+                }
+                ,response: {
+                    statusCode: true //规定成功的状态码，默认：0
+                }
+                ,cols: [[
+                    {field: 'id',align: 'center', width: 200, title: '主键',hide:true}
+                    ,{field: 'bid',align: 'center', width: 200, title: '业务主键'}
+                    ,{field: 'compId',align: 'center', width: 200, title: '运营商id' }
+                    ,{field: 'createTime',align: 'center', width: 200, title: '创建时间',templet: function(d){
+                            return common.DateFormat(d.createTime,"yyyy-MM-dd");}}
+                    ,{field: 'carPlateNum',align: 'center', width: 200, title: '车牌号码'}
+                    ,{field: 'carPlateColor',align: 'center', width: 200, title: '车牌颜色'}
+                    ,{field: 'simCode',align: 'center', width: 200, title: 'SIM卡号' }
+                    ,{field: 'alarmType',align: 'center', width: 200, title: '报警类型（报警类型 1线路报警2超速报警3紧急报警4疲劳驾驶）',sort: true}
+                    ,{field: 'alarmTime',align: 'center', width: 200, title: '报警时间',templet: function(d){
+                            return common.DateFormat(d.alarmTime,"yyyy-MM-dd");} }
+                    ,{field: 'driver',align: 'center', width: 200, title: '司机' }
+                ]]
+                ,autoSort: false
+                ,page:
+                    {   /*prev:'上一页',*/
+                        layout:['prev', 'page', 'next']
+                    }
+                ,limit: 10
+                ,limits: [10, 20, 30,40]
+                ,text: {
+                    none: '暂无相关数据'
+                }
+                ,done:function (res, curr, count) {
+                    $('th').css({'padding':'12px 10px','border':'1px solid #0F4B79','background-color': 'rgb(5, 38, 68)', 'color': '#01ADF9','font-size':'19px','text-align':'center'})
+                    $('td').css({'padding':'12px 10px','border':'1px solid #0F4B79','background-color': '#023F6B', 'color': '#01ADF9','font-size':'19px','text-align':'center'})
+                    $('.layui-form').css({'border':'1px solid #0F4B79','background-color': '#023F6B','font-size':'19px'})
+                    $('.layui-table-header').css({'overflow':'initial'})
+                    $('.layui-table-page').css({'border':'1px solid #0F4B79','text-align':'center'})
+                    $('.td').css({'border':'1px solid #0F4B79'})
+                    $('.layui-input').css({'border':'1px solid #0F4B79','background-color': 'rgb(5, 38, 68)'})
+                    $('.layui-laypage-btn').css({'border':'1px solid #0F4B79','background-color': 'rgb(5, 38, 68)'})
+                    $('select').css({'border':'1px solid #0F4B79','background-color': 'rgb(5, 38, 68)','color':'#999999'})
+                    $('.layui-laypage-prev').css({'color':'#999999'})
+                    $('.layui-laypage-next').css({'color':'#999999'})
+                    $('.layui-laypage-count').css({'color':'#999999'})
+                }
+            });
+
+            //为toolbar添加事件响应
+            table.on('tool(BigdataAlarmRecord-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                /*var data = obj.data;*///获得当前行数据
+                //区分事件
+                switch(obj.event){
+                    case 'del':
+                        deleteVo(obj);
+                        break;
+                    case 'edit':
+                        editVo(obj);
+                        break;
+                };
+            });
+
+            //监听排序事件
+            table.on('sort(BigdataAlarmRecord-list)', function(obj){ //注：sort是工具条事件名，LAY-app-province-list是table原始容器的属性 lay-filter="对应的值"
+                var sort = obj.field;
+                //默认排序
+                switch(obj.field){
+                    case 'id':
+                        sort ="ID";
+                        break;
+                    case 'bid':
+                        sort ="B_ID";
+                        break;
+                    case 'compId':
+                        sort ="COMP_ID";
+                        break;
+                    case 'createTime':
+                        sort ="CREATE_TIME";
+                        break;
+                    case 'carPlateNum':
+                        sort ="CAR_PLATE_NUM";
+                        break;
+                    case 'carPlateColor':
+                        sort ="CAR_PLATE_COLOR";
+                        break;
+                    case 'simCode':
+                        sort ="SIM_CODE";
+                        break;
+                    case 'alarmType':
+                        sort ="ALARM_TYPE";
+                        break;
+                    case 'alarmTime':
+                        sort ="ALARM_TIME";
+                        break;
+                    case 'driver':
+                        sort ="DRIVER";
+                        break;
+                    case 'longitude':
+                        sort ="LONGITUDE";
+                        break;
+                    case 'latitude':
+                        sort ="LATITUDE";
+                        break;
+                    case 'alarmCls':
+                        sort ="ALARM_CLS";
+                        break;
+                    case 'alarmSpeed':
+                        sort ="ALARM_SPEED";
+                        break;
+                    case 'alarmTimeInfo':
+                        sort ="ALARM_TIME_INFO";
+                        break;
+                    case 'alarmState':
+                        sort ="ALARM_STATE";
+                        break;
+                    case 'dealType':
+                        sort ="DEAL_TYPE";
+                        break;
+                    case 'dealRemark':
+                        sort ="DEAL_REMARK";
+                        break;
+                    case 'dealTime':
+                        sort ="DEAL_TIME";
+                        break;
+                    case 'dataQualified':
+                        sort ="DATA_QUALIFIED";
+                        break;
+                    case 'failReason':
+                        sort ="FAIL_REASON";
+                        break;
+                };
+                if(obj.type==null){
+                    return;
+                }
+                //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+                table.reload('BigdataAlarmRecord-list', {
+                    initSort: obj//记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                    ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                        orderBy: sort+" "+obj.type //排序字段
+                    }
+                });
+            });
+        }
+        defineTable();
+
+        //删除
+        deleteVo = function (obj) {
+            layer.confirm('确定删除此记录吗？', function(index){
+                admin.req({
+                    url:layui.setter.basePath +'/admin/BIGDATAALARMRECORD/deleteByIds.jsn',
+                    data:{'ids':obj.data.id},
+                    method:"post",
+                    success:function (data) {
+                        table.reload('BigdataAlarmRecord-list',
+                            {page:
+                                    { curr: common.deleteJumpPage(obj) // 执行页面跳转方法
+                                    }
+                            }
+                        );
+                        layer.close(index);
+                        layer.msg('删除成功', {
+                            icon: 1
+                        });
+                    },
+                });
+            });
+        }
+        //编辑
+        editVo = function (obj) {
+            layer.open({
+                type: 2
+                ,title: '编辑'
+                ,content: 'BigdataAlarmRecordEdit.html'
+                ,maxmin: true
+                ,area: ['550px', '550px']
+                ,btn: ['确定', '取消']
+                ,success: function(layero, index){
+                    var s = layero.find('iframe');
+                    $("id",s[0].contentWindow.document).val(obj.data.id);
+                    //给iframe元素赋值
+                    var othis = layero.find('iframe').contents().find("#BigdataAlarmRecord-form").click();
+
+                    othis.find('input[name="id"]').val(obj.data.id);
+                    othis.find('input[name="bid"]').val(obj.data.bid);
+                    othis.find('input[name="compId"]').val(obj.data.compId);
+                    othis.find('input[name="createTime"]').val(obj.data.createTime);
+                    othis.find('input[name="carPlateNum"]').val(obj.data.carPlateNum);
+                    othis.find('input[name="carPlateColor"]').val(obj.data.carPlateColor);
+                    othis.find('input[name="simCode"]').val(obj.data.simCode);
+                    othis.find('input[name="alarmType"]').val(obj.data.alarmType);
+                    othis.find('input[name="alarmTime"]').val(obj.data.alarmTime);
+                    othis.find('input[name="driver"]').val(obj.data.driver);
+                    othis.find('input[name="longitude"]').val(obj.data.longitude);
+                    othis.find('input[name="latitude"]').val(obj.data.latitude);
+                    othis.find('input[name="alarmCls"]').val(obj.data.alarmCls);
+                    othis.find('input[name="alarmSpeed"]').val(obj.data.alarmSpeed);
+                    othis.find('input[name="alarmTimeInfo"]').val(obj.data.alarmTimeInfo);
+                    othis.find('input[name="alarmState"]').val(obj.data.alarmState);
+                    othis.find('input[name="dealType"]').val(obj.data.dealType);
+                    othis.find('input[name="dealRemark"]').val(obj.data.dealRemark);
+                    othis.find('input[name="dealTime"]').val(obj.data.dealTime);
+                    othis.find('input[name="dataQualified"]').val(obj.data.dataQualified);
+                    othis.find('input[name="failReason"]').val(obj.data.failReason);
+                }
+                ,yes: function(index, layero){
+                    var submit = layero.find('iframe').contents().find("#BigdataAlarmRecord-form-edit");
+                    submit.trigger('click');
+                }
+            });
+        }
+
+        //点击事件
+        var active = {
+            //批量删除
+            batchdel: function(){
+                var checkStatus = table.checkStatus('BigdataAlarmRecord-list')
+                    ,checkData = checkStatus.data; //得到选中的数据
+
+                if(checkData.length === 0){
+                    return layer.msg('请选择数据');
+                }
+
+                layer.confirm('确定删除吗？', function(index) {
+                    var ids = "" ;
+                    for(var i = 0;i<checkData.length;i++){
+                        if(ids==""){
+                            ids= checkData[i].id;
+                        }else {
+                            ids = ids+","+checkData[i].id;
+                        }
+                    }
+                    admin.req({
+                        url:layui.setter.basePath +'/admin/BIGDATAALARMRECORD/deleteByIds.jsn',
+                        data:{'ids':ids},
+                        method:"post",
+                        success:function (data) {
+                            table.reload('BigdataAlarmRecord-list',
+                                {page:
+                                        { curr: common.deleteDulJumpPage(checkStatus) // 执行页面跳转方法
+                                        }
+                                }
+                            );
+                            layer.msg('删除成功', {
+                                icon: 1
+                            });
+                        },
+                    });
+                });
+            }
+            //添加
+            ,add: function(){
+                layer.open({
+                    type: 2
+                    ,title: '添加'
+                    ,content: 'BigdataAlarmRecordAdd.html'
+                    ,maxmin: true
+                    ,area: ['550px', '550px']
+                    ,btn: ['确定', '取消']
+                    ,yes: function(index, layero){
+                        //点击确认触发 iframe 内容中的按钮提交
+                        var submit = layero.find('iframe').contents().find("#BigdataAlarmRecord-form-submit");
+                        submit.click();
+                    }
+                });
+            }
+        }
+        //绑定点击事件
+        $('.layui-btn.layuiadmin-btn-comm').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+    });
+
+</script>
+<script>
+
+/*$(function(){
+    var queryArgs = getQueryParam();
+    var seriousFlag = queryArgs.seriousFlag;
+    if( typeof (seriousFlag)=='undefined'){
+        queryArgs.seriousFlag = "";
+    }
+    var dangerTimeFlag = queryArgs.dangerTimeFlag;
+    if( typeof (dangerTimeFlag)=='undefined'){
+        queryArgs.dangerTimeFlag = "";
+    }
+    debugger;
+    //查询多条数据
+    searchCarList(queryArgs);
+});
+
+function searchCarList(queryArgs){
+    $.ajax({
+      type:'POST',
+      url: basePathUrl + '/admin/bigdataAlarmRecord/qtlistpage.jsn',
+      data:{
+          "queryObj.alarmType":queryArgs.alarmType,
+          "queryObj.carType":decodeURI(queryArgs.carType),
+          "queryObj.alarmCls":queryArgs.alarmCls,
+          "queryObj.countDate":queryArgs.countDate,
+          "queryObj.countMonth":queryArgs.countMonth,
+          "queryObj.roadLevel":queryArgs.roadLevel,
+          "queryObj.seriousFlag":queryArgs.seriousFlag,
+          "queryObj.dangerTimeFlag":queryArgs.dangerTimeFlag,
+          "page":queryArgs.page,
+          "limit":queryArgs.limit
+      },
+      success:function(data){
+          debugger;
+          if(data.success){
+            var carList = data.list;
+            var html = "";
+            if(carList.length > 0){
+                for(var i=0;i<carList.length;i++){
+                    html += "<tr style='cursor: pointer' onclick=gotoDetailPage('"+carList[i].carPlateNum+"')>";
+                    html += "<td>"+carList[i].carPlateNum+"</td>";
+                    html += "<td>"+carList[i].carFrameNum+"</td>";
+                    html += "<td>"+carList[i].carPlateColor+"</td>";
+                    if(carList[i].teamName != null){
+                        html += "<td>"+carList[i].teamName+"</td>";
+                    }else{
+                        html += "<td></td>";
+                    }
+                    if(carList[i].contactPerson != null){
+                        html += "<td>"+carList[i].contactPerson+"</td>";
+                    }else{
+                        html += "<td></td>";
+                    }
+                    if(carList[i].conctactphone != null){
+                        html += "<td>"+carList[i].conctactphone+"</td>";
+                    }else{
+                        html += "<td></td>";
+                    }
+                    if(carList[i].jyCertNumber != null){
+                        html += "<td>"+carList[i].jyCertNumber+"</td>";
+                    }else{
+                        html += "<td></td>";
+                    }
+                    html += "</tr>";
+                }
+                setPageInfo(data.totalPage,data.start,data.limit);
+            }else{
+                html += "<tr><td colspan='7'>暂无信息</td></tr>";
+            }
+            $("#carList").html($("#carList").html() + html);
+          }
+      }
+    });
+}
+
+function gotoDetailPage(carPlateNum){
+    window.parent.location.href = "yingYunCheLiang.html?queryObj.carPlateNum="+carPlateNum;
+}*/
+
+function goShouYe() {
+    window.location.href = "shouye.html";
+}
+
+</script>   
+  
+</body>
+</html>

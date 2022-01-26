@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.OftenrunRouteMonthCountMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.OftenrunRouteMonthCount" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="START_PROVINCE_ID" property="startProvinceId"/>
+			<result column="START_PROVINCE_NAME" property="startProvinceName"/>
+			<result column="END_PROVINCE_ID" property="endProvinceId"/>
+			<result column="END_PROVINCE_NAME" property="endProvinceName"/>
+			<result column="START_CITY_ID" property="startCityId"/>
+			<result column="START_CITY_NAME" property="startCityName"/>
+			<result column="END_CITY_ID" property="endCityId"/>
+			<result column="END_CITY_NAME" property="endCityName"/>
+			<result column="RUN_ROUTE" property="runRoute"/>
+			<result column="RUN_NUM" property="runNum"/>
+			<result column="SUM_MILEAGE" property="sumMileage"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_TYPE" property="countType"/>
+			<result column="COUNT_TIME" property="countTime"/>
+			<result column="MONTH_STR" property="monthStr"></result>
+			<result column="COUNT_MONTH" property="countMonth"></result>
+			<result column="QUARTER_TYPE" property="quarterType"></result>
+			<result column="YEAR_NUM" property="yearNum"></result>
+
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.OftenrunRouteMonthCountView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, START_PROVINCE_ID, START_PROVINCE_NAME, END_PROVINCE_ID, END_PROVINCE_NAME,
+	  START_CITY_ID, START_CITY_NAME, END_CITY_ID, END_CITY_NAME, RUN_ROUTE, RUN_NUM, SUM_MILEAGE,
+	  CAR_TYPE, COUNT_TYPE, COUNT_TIME,MONTH_STR,COUNT_MONTH,QUARTER_TYPE,YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.runNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.runNum)'>
+					AND  RUN_NUM = #{queryObj.runNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.OftenrunRouteMonthCountQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from oftenrun_route_month_count 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.OftenrunRouteMonthCountQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from oftenrun_route_month_count 
+  		<include refid="where"/>
+  </select>
+
+
+	<select id="getOftenRunRoute" parameterType="com.edgedo.bigdata.queryvo.OftenrunRouteMonthCountQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from oftenrun_route_month_count
+		WHERE CAR_TYPE = #{queryObj.carType} AND COUNT_TYPE = #{queryObj.countType}
+		<if test="queryObj.countType != null and queryObj.countType =='QUARTER'">
+			AND QUARTER_TYPE = #{queryObj.quarterType}
+			AND date_format(COUNT_TIME,'%Y') = date_format(#{queryObj.countTime},'%Y')
+		</if>
+		<if test="queryObj.countType != null and queryObj.countType =='MONTH'">
+			AND date_format(COUNT_TIME,'%Y%m') = date_format(#{queryObj.countTime},'%Y%m')
+		</if>
+		order by RUN_NUM DESC limit 20
+	</select>
+
+
+  
+  
+</mapper>

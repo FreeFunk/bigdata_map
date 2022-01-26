@@ -1,0 +1,1926 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>秦皇岛市智慧交通北斗大数据分析平台</title>
+    <link href="css/animate.min.css" rel="stylesheet" type="text/css">
+    <link href="css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/datedropper.css">
+    <link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    <script src="js/tool.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <style type="text/css">
+        .el-radio-button__inner {
+            line-height: 1;
+            white-space: nowrap;
+            vertical-align: middle;
+            background: #00000000;
+            border: 1px solid #1f6794;
+            font-weight: 500;
+            border-left: 0;
+            color: #77eaff;
+            -webkit-appearance: none;
+            text-align: center;
+            box-sizing: border-box;
+            margin: 0;
+            cursor: pointer;
+            transition: all .3s cubic-bezier(.645,.045,.355,1);
+            padding: 12px 20px;
+            font-size: 14px;
+            border-radius: 0;
+        }
+        .el-radio-button, .el-radio-button__inner {
+            display: inline-block;
+            position: relative;
+            outline: 0;
+        }
+        .el-radio-button--medium .el-radio-button__inner {
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 0;
+        }
+        .el-radio-button:first-child .el-radio-button__inner {
+            border-left: 1px solid #1f6794;
+            border-radius: 4px 0 0 4px;
+            box-shadow: none!important;
+        }
+        .el-radio-button__orig-radio {
+            opacity: 0;
+            outline: 0;
+            position: absolute;
+            z-index: -1;
+        }
+        .el-radio-button, .el-radio-button__inner {
+            display: inline-block;
+            position: relative;
+            outline: 0;
+        }
+        .el-radio-group {
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+            font-size: 0;
+        }
+        .el-row {
+            box-sizing: border-box;
+        }
+
+        .tab0 .nav-tabs0{
+            padding-left: 15px;
+            border-bottom: 4px solid #026C9C;
+        }
+        .tab0 .nav-tabs0 li a{
+            color: #fff;
+            padding: 8px 40px;
+            margin-right: 10px;
+            background: #026C9C;
+            text-shadow: 1px 1px 2px #000;
+            border: none;
+            float: left;
+            border-radius: 0;
+            opacity: 0.5;
+            position: relative;
+            transition: all 0.3s ease 0s;
+        }
+        .tab0 .nav-tabs0 li a:hover{
+            background: #026C9C;
+            opacity: 0.8;
+        }
+        .tab0 .nav-tabs0 li.active a{
+            opacity: 1;
+        }
+        .tab0 .nav-tabs0 li.active a,
+        .tab0 .nav-tabs0 li.active a:hover,
+        .tab0 .nav-tabs0 li.active a:focus{
+            color: #fff;
+            background: #026C9C;
+            border: none;
+            border-radius: 0;
+        }
+        .tab0 .nav-tabs0 li a:before,
+        .tab0 .nav-tabs0 li a:after{
+            content: "";
+            border-top: 42px solid transparent;
+            position: absolute;
+            top: -2px;
+        }
+        .tab0 .nav-tabs0 li a:before{
+            border-right: 15px solid #026C9C;
+            left: -15px;
+        }
+        .tab0 .nav-tabs0 li a:after{
+            border-left: 15px solid #026C9C;
+            right: -15px;
+        }
+        .tab0 .nav-tabs0 li a i,
+        .tab0 .nav-tabs0 li.active a i{
+            display: inline-block;
+            padding-right: 5px;
+            font-size: 17px;
+            text-shadow: none;
+        }
+        .tab0 .nav-tabs0 li a span{
+            display: inline-block;
+            font-size: 17px;
+            letter-spacing: -3px;
+
+            transition: all 0.3s ease 0s;
+        }
+        .tab0 .nav-tabs0 li a:hover span,
+        .tab0 .nav-tabs0 li.active a span{
+            letter-spacing: 5px;
+            opacity: 1;
+            transition: all 0.3s ease 0s;
+        }
+        .tab0 .tab-content0{
+            padding: 30px;
+            background: #fff;
+            font-size: 16px;
+            color: #6c6c6c;
+            line-height: 25px;
+        }
+        .tab0 .tab-content0 h3{
+            font-size: 24px;
+            margin-top: 0;
+        }
+        .chaxun1 { padding:14px 47px !important;margin-left:4.5%;margin-top:1.6%;border-radius:3px;box-shadow:rgb(50, 151, 207) 0px 0px 38px inset; color:#77eaff!important; font-size:19px !important; border:1px solid #52d5ff !important; text-decoration:none}
+        .chaxun1:hover{box-shadow:rgb(226, 120, 78) 0px 0px 38px inset; border:1px solid #ffdab5 !important; color:#fffffd !important; text-decoration:none}
+        .blank50 {CLEAR: both; DISPLAY: block; OVERFLOW: hidden; HEIGHT: 10px; line-height: 40px; font-size: 0px;}
+        @media only screen and (max-width: 479px){
+            .tab0 .nav-tabs0 li{
+                width: 100%;
+                margin-bottom: 5px;
+                text-align: center;
+            }
+            .tab0 .nav-tabs0 li a span{
+                letter-spacing: 1px;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body style="height: 100%;overflow-y: scroll;">
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+            <!--<input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " /> -->
+            <span id=localtime></span>
+            <script type="text/javascript">
+                function showLocale(objD){
+                    var str,colorhead,colorfoot;
+                    var yy = objD.getYear();
+                    if(yy<1900) yy = yy+1900;
+                    var MM = objD.getMonth()+1;
+                    if(MM<10) MM = '0' + MM;
+                    var dd = objD.getDate();
+                    if(dd<10) dd = '0' + dd;
+                    var hh = objD.getHours();
+                    if(hh<10) hh = '0' + hh;
+                    var mm = objD.getMinutes();
+                    if(mm<10) mm = '0' + mm;
+                    var ss = objD.getSeconds();
+                    if(ss<10) ss = '0' + ss;
+                    var ww = objD.getDay();
+                    if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+                    if  (ww==0)  ww="星期日";
+                    if  (ww==1)  ww="星期一";
+                    if  (ww==2)  ww="星期二";
+                    if  (ww==3)  ww="星期三";
+                    if  (ww==4)  ww="星期四";
+                    if  (ww==5)  ww="星期五";
+                    if  (ww==6)  ww="星期六";
+                    colorfoot="</font>"
+                    str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+                    return(str);
+                }
+
+                function tick(){
+                    var today;
+                    today = new Date();
+                    document.getElementById("localtime").innerHTML = showLocale(today);
+                    window.setTimeout("tick()", 1000);
+                }
+
+                tick();
+            </script>
+        </div>
+    </div>
+    <div class="top_l">
+
+        <div class="bt">
+            <div class="bt_name left">报警数据分析</div>
+            <a href="shouye.html" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+<div class="main">
+    <div class="ind mt60">
+        <Div style="position: relative">
+            <div style="float: left;width:40%; margin:auto">
+
+                <div>
+                    <!--onchange="selectXianQu();"-->
+                    <div class="mingcheng0" style="display: inline-block;padding-right: 10px;">车辆类型</div>
+                    <select  id="companyLavel" name="companyLavel" class="input00" style="width: 20%;height: 50px;margin-right: 40px;">
+                        <option class="lsd" value ="">请选择</option>
+                        <option class="lsd" value ="TEAM_WXHWYS">危货</option>
+                        <option class="lsd" value="TEAM_KY">客运</option>
+                        <option class="lsd" value="TEAM_PTHW">普货</option>
+                    </select>
+                    <div class="mingcheng0" style="display: inline-block;padding-right: 10px;">县区</div>
+                    <select id="xianquId" name="xianquId" class="input00" style="width: 20%;height: 50px;">
+                        <option class="lsd" value ="">请选择</option>
+                        <option class="lsd" value ="130302">海港区</option>
+                        <option class="lsd" value="130303">山海关区</option>
+                        <option class="lsd" value="130304">北戴河区</option>
+                        <option class="lsd" value="130306">抚宁区</option>
+                        <option class="lsd" value="130321">青龙县</option>
+                        <option class="lsd" value="130322">昌黎县</option>
+                        <option class="lsd" value="130324">卢龙县</option>
+                        <option class="lsd" value="130371">开发区</option>
+                    </select>
+                    <a href="javaScript:void(0);" class="chaxun1" onclick="selectAll();">查询</a>
+                </div>
+            </div>
+
+            <div style="padding-right: 83px;float: right;width:40%; margin:auto" data-v-dd3e2e28="" class="el-row">
+                <input type="text" class="input_rl " id="timeChangeAge" style="display:none;width:18%;height: 55px; margin-right: 10px;margin-left: 121px;    margin-top: 2px;">
+                <select id="timeChangeWeek" class="input00" style="display:none;width:150px;height: 18%; margin-right: 10px;margin-left: -11px;    margin-top: 3px;">
+                    <option class="lsd" value ="">请选择</option>
+                </select>
+                <input type="text" class="input_rl " id="timeChangeDay" style="display:none;width:18%;height: 55px; margin-right: 10px;margin-left: 274px;    margin-top: 2px;">
+                <input type="text" class="input_rl " id="timeChange" style="width:18%;height: 55px; margin-right: 10px;margin-left: 274px;    margin-top: 2px;">
+                <div data-v-dd3e2e28="" role="radiogroup" class="el-radio-group" style="float: right;">
+                    <label onclick="dayOnclick();" data-v-dd3e2e28="" role="radio" tabindex="0" class="el-radio-button el-radio-button--medium"><input type="radio" tabindex="-1" class="el-radio-button__orig-radio" value="prevDay"><span id="day" style="height: 55px;width: 130px;padding-top: 20px;font-size: 20px;" class="el-radio-button__inner">过去一天<!----></span></label>
+                    <label onclick="weekOnclick();" data-v-dd3e2e28="" role="radio" tabindex="-1" class="el-radio-button el-radio-button--medium"><input type="radio" tabindex="-1" class="el-radio-button__orig-radio" value="prevWeek"><span id="week" style="height: 55px;width: 130px;padding-top: 20px;font-size: 20px;" class="el-radio-button__inner">过去一周<!----></span></label>
+                    <label onclick="monthOnclick();" data-v-dd3e2e28="" role="radio" tabindex="0" class="el-radio-button el-radio-button--medium is-active" aria-checked="true"><input type="radio" tabindex="-1" class="el-radio-button__orig-radio" value="prevMonth"><span id="month" style="height: 55px;width: 130px;padding-top: 20px;font-size: 20px;background-color: darkcyan;" class="el-radio-button__inner">过去一月<!----></span></label>
+                </div>
+            </div>
+
+        </Div>
+
+        <div class="blank40"></div>
+
+        <div style="display: block;padding-left: 235px;">
+            <div class="dh0">
+                <ul>
+                    <li  style="border-radius: 8px;padding-top: 10px;font-weight: initial;text-align: center;color: white;font-size: 20px;width: 12%;height: 115px;background-image: linear-gradient(160deg, #43B7D8 20%,#0BA89D 80%);" onclick="gotoBigDataCarFenXi()" class="cd-popup-trigger1">报警车辆数<span id="baoJingCarNum" style="margin: 0 auto;display: block;margin-top: 13px;width: 50%;height: 50px;padding-top: 10px;font-weight: bold;text-align: center;color: white;font-size: 24px; "></span></li>
+                    <li  style="border-radius: 8px;margin-left: 125px;padding-top: 10px;font-weight: initial;text-align: center;color: white;font-size: 20px;width: 12%;height: 115px;background-image: linear-gradient(160deg, #D29277 20%,#ff8b00 80%);" class="cd-popup-trigger1">报警企业数<span id="baoJingQiYeNum" style="margin: 0 auto;display: block;margin-top: 13px;width: 50%;height: 50px;padding-top: 10px;font-weight: bold;text-align: center;color: white;font-size: 24px; "></span></li>
+                    <li  style="border-radius: 8px;margin-left: 125px;padding-top: 10px;font-weight: initial;text-align: center;color: white;font-size: 20px;width: 12%;height: 115px;background-image: linear-gradient(160deg, #FA6472 20%,#DF4D5A 80%);" class="cd-popup-trigger2">行驶里程数(千米)<span id="runNum" style="margin: 0 auto;display: block;margin-top: 13px;width:50%;height: 50px;padding-top: 10px;font-weight: bold;text-align: center;color: white;font-size: 24px; "></span></li>
+                    <li  style="border-radius: 8px;margin-left: 125px;padding-top: 10px;font-weight: initial;text-align: center;color: white;font-size: 20px;width: 12%;height: 115px;background-image: linear-gradient(160deg, #D29277 20%,#ff8b00 80%);" class="cd-popup-trigger2">常规报警/处理数量<span id="chuLiNum" style="margin: 0 auto;display: block;margin-top: 13px;width: 50%;height: 50px;padding-top: 10px;font-weight: bold;text-align: center;color: white;font-size: 24px; "></span></li>
+                    <li  style="border-radius: 8px;margin-left: 125px;padding-top: 10px;font-weight: initial;text-align: center;color: white;font-size: 20px;width: 12%;height: 115px;background-image: linear-gradient(160deg, #43B7D8 20%,#0BA89D 80%);" class="cd-popup-trigger2">主动安全报警/处理数量<span id="zhuDongAnQuan" style="margin: 0 auto;display: block;margin-top: 13px;width: 50%;height: 50px;padding-top: 10px;font-weight: bold;text-align: center;color: white;font-size: 24px; "></span></li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="blank40"></div>
+        <div>
+            <div style="width: 33.333%;height: 425px;display: inline-block;">
+                <div style="border: 1px solid rgb(40, 92, 124); border-radius: 4px;">
+                    <div style="height: 10px;"></div>
+                    <div style="border-bottom: 1px solid rgb(40, 92, 124); font-weight: 600; height: 50px;">
+                        <span  style="margin-left: 24px; color: rgb(71, 198, 241); font-size: 24px;">报警类型分析</span>
+                    </div>
+                    <div id="baoJinTypeId" style="border-bottom: 1px solid rgb(40, 92, 124); height: 375px;">
+
+                    </div>
+                </div>
+
+            </div>
+            <div style="width: 66.133%;height: 425px;display: inline-block;">
+                <div style="border: 1px solid rgb(40, 92, 124); border-radius: 4px;">
+                    <div style="height: 10px;"></div>
+                    <div style="border-bottom: 1px solid rgb(40, 92, 124); font-weight: 600; height: 50px;">
+                        <span style="margin-left: 24px; color: rgb(71, 198, 241); font-size: 24px;">报警时段统计</span>
+                        <div role="radiogroup" class="el-radio-group" style="float: right;margin-right: 23px;">
+                            <label onclick="quanBuOnclick();"  role="radio" tabindex="0" class="el-radio-button el-radio-button--medium"><input type="radio" tabindex="-1" class="el-radio-button__orig-radio" value="prevDay"><span  style="background-color: darkcyan;height: 38px;width: 130px;padding-top: 11px;font-size: 20px;" class="el-radio-button__inner" id="quanBu">全部<!----></span></label>
+                            <label onclick="changGuiOnclick();" role="radio" tabindex="-1" class="el-radio-button el-radio-button--medium"><input type="radio" tabindex="-1" class="el-radio-button__orig-radio" value="prevWeek"><span  style="height: 38px;width: 130px;padding-top: 11px;font-size: 20px;" class="el-radio-button__inner" id="changGui">常规<!----></span></label>
+                            <label onclick="zhuDongOnclick();" role="radio" tabindex="0" class="el-radio-button el-radio-button--medium is-active" aria-checked="true"><input type="radio" tabindex="-1" class="el-radio-button__orig-radio" value="prevMonth"><span  style="height: 38px;width: 130px;padding-top: 11px;font-size: 20px;" class="el-radio-button__inner" id="zhuDongAnQua">主动安全<!----></span></label>
+                        </div>
+                    </div>
+                    <div id="baoJinTimeId" style="border-bottom: 1px solid rgb(40, 92, 124); height: 375px;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="blank50"></div>
+        <div>
+            <div style="width: 31%;height: 500px;display: inline-block;">
+                <div style="border: 1px solid rgb(40, 92, 124); border-radius: 4px;">
+                    <div style="height: 10px;"></div>
+                    <div style="border-bottom: 1px solid rgb(40, 92, 124); font-weight: 600; height: 50px;">
+                        <span  style="margin-left: 24px; color: rgb(71, 198, 241); font-size: 24px;">车辆安全评分</span>
+                        <div role="radiogroup" class="el-radio-group" style="float: right;margin-right: 23px;">
+                            <label onclick="qianShiOnclick();"  role="radio" tabindex="0" class="el-radio-button el-radio-button--medium"><input type="radio" tabindex="-1" class="el-radio-button__orig-radio" value="prevDay"><span  style="background-color: darkcyan;height: 38px;width: 130px;padding-top: 11px;font-size: 20px;" class="el-radio-button__inner" id="anQuanPingFenQianShi">前十名<!----></span></label>
+                            <label onclick="houShiOnclick();" role="radio" tabindex="-1" class="el-radio-button el-radio-button--medium"><input type="radio" tabindex="-1" class="el-radio-button__orig-radio" value="prevWeek"><span  style="height: 38px;width: 130px;padding-top: 11px;font-size: 20px;" class="el-radio-button__inner" id="anQuanPingFenHouShi" >后十名<!----></span></label>
+                        </div>
+                    </div>
+                    <div id="anQuanPingFen" style="border-bottom: 1px solid rgb(40, 92, 124); height: 425px;">
+
+                    </div>
+                </div>
+
+            </div>
+            <div style="width: 35%;height: 500px;display: inline-block;">
+                <div style="border: 1px solid rgb(40, 92, 124); border-radius: 4px;">
+                    <div style="height: 10px;"></div>
+                    <div style="border-bottom: 1px solid rgb(40, 92, 124); font-weight: 600; height: 50px;">
+                        <span style="margin-left: 24px; color: rgb(71, 198, 241); font-size: 24px;">企业报警排名</span>
+                        <div role="radiogroup" class="el-radio-group" style="float: right;margin-right: 291px;">
+                            <label onclick="anQuanOnclick();"  role="radio" tabindex="0" class="el-radio-button el-radio-button--medium"><input type="radio" tabindex="-1" class="el-radio-button__orig-radio" value="prevDay"><span  style="background-color: darkcyan;height: 38px;width: 130px;padding-top: 11px;font-size: 20px;" class="el-radio-button__inner" id="anQuanPingFenQiYe">安全评分<!----></span></label>
+                            <label onclick="baiGongLiOnclick();" role="radio" tabindex="-1" class="el-radio-button el-radio-button--medium"><input type="radio" tabindex="-1" class="el-radio-button__orig-radio" value="prevWeek"><span  style="height: 38px;width: 159px;padding-top: 11px;font-size: 20px;" class="el-radio-button__inner" id="baiGongLiQiYe" >报警数/百公里<!----></span></label>
+                        </div>
+                        <div role="radiogroup" class="el-radio-group" style="float: right;margin-right: -562px;">
+                            <label onclick="qianShiOnclick1();"  role="radio" tabindex="0" class="el-radio-button el-radio-button--medium"><input type="radio" tabindex="-1" class="el-radio-button__orig-radio" value="prevDay"><span  style="background-color: darkcyan;height: 38px;width: 130px;padding-top: 11px;font-size: 20px;" class="el-radio-button__inner" id="qianShi">前十名<!----></span></label>
+                            <label onclick="houShiOnclick1();" role="radio" tabindex="-1" class="el-radio-button el-radio-button--medium"><input type="radio" tabindex="-1" class="el-radio-button__orig-radio" value="prevWeek"><span  style="height: 38px;width: 130px;padding-top: 11px;font-size: 20px;" class="el-radio-button__inner" id="houShi" >后十名<!----></span></label>
+                        </div>
+                    </div>
+                    <div id="qiYeBaoJing" style="border-bottom: 1px solid rgb(40, 92, 124); height: 425px;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script type="text/javascript">
+    //报警类型扇形图
+    function selectBaoJingType(carType,xianquId,time,timeChangeAge,timeChangeWeek,timeType){
+        if(isNaN(time)){//true  为字符串  周
+            time=0;
+        }
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataFenxiAlarm/selectBaoJingType.jsn",
+            data: {
+                'carType':carType,
+                'xianQuId':xianquId,
+                'timeCount':time,
+                'timeChangeAge':timeChangeAge,
+                'timeChangeWeek':timeChangeWeek,
+                'timeType':timeType},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    debugger
+                    var baoJingTypeStrArr = data.data.baoJingTypeStrArr;
+                    var jsonArray = data.data.jsonArray;
+                    // 基于准备好的dom，初始化echarts实例
+                    myChart = echarts.init(document.getElementById('baoJinTypeId'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#0BCE35', '#F542CE', '#DAD525','#3AF9FF','#92FF99'],
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b}: {c} ({d}%)"
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            x: 'left',
+                            textStyle:{
+                                color: '#FFFFFF',
+                                fontSize: 20,
+                                fontWeight: 300
+                            },
+                            data:baoJingTypeStrArr
+                        },
+                        series: [
+                            {
+                                name:'数据来源',
+                                type:'pie',
+                                radius: ['50%', '70%'],
+                                avoidLabelOverlap: false,
+                                label: {
+                                    normal: {
+                                        formatter: '{b|{b}：}{c}  {per|{d}%}  ',
+
+                                        borderWidth: 1,
+                                        borderRadius: 4,
+                                        shadowBlur:3,
+                                        shadowOffsetX: 2,
+                                        shadowOffsetY: 2,
+                                        shadowColor: '#999',
+                                        padding: [0, 7],
+                                        rich: {
+                                            a: {
+                                                color: '#999',
+                                                lineHeight: 22,
+                                                align: 'center'
+                                            },
+                                            b: {
+                                                fontSize: 16,
+                                                lineHeight: 33
+                                            },
+                                            per: {
+                                                color: '#eee',
+                                                backgroundColor: '#334455',
+                                                padding: [2, 4],
+                                                borderRadius: 2
+                                            }
+                                        }
+                                    },
+                                    emphasis: {
+                                        show: true,
+                                        textStyle: {
+                                            fontSize: '30',
+                                            fontWeight: 'bold'
+                                        }
+                                    }
+                                },
+
+                                data:jsonArray
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function getZheXianTuDay(quanBuBaoJinStrArr,quanBuChuLiStrArr) {
+        // 基于准备好的dom，初始化echarts实例
+        myChart = echarts.init(document.getElementById('baoJinTimeId'));
+        // 指定图表的配置项和数据
+        option = {
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    interval:0,
+                    rotate:-30,
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 300
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+                data: ['00:00-01:00', '01:00-02:00', '02:00-03:00', '03:00-04:00', '04:00-05:00', '05:00-06:00',
+                    '06:00-07:00','07:00-08:00','08:00-09:00','09:00-10:00','10:00-11:00','11:00-12:00',
+                    '12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00',
+                    '18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00','22:00-23:00','23:00-24:00']
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel : {
+                    formatter: '{value}',
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 300
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+            },
+            series: [{
+                name:'报警数量',
+                data: quanBuBaoJinStrArr,
+                type: 'line',
+                areaStyle: {
+                    //rgb(40, 92, 124)
+                    normal: {
+                        color: '#285C7C' //改变区域颜色
+                    }
+                },
+                itemStyle : {
+                    normal : {
+                        color:'#285C7C', //改变折线点的颜色
+                        lineStyle:{
+                            color:'#285C7C' //改变折线颜色
+                        }
+                    }
+                }
+            }
+                ,{
+                    name:'处理数量',
+                    data: quanBuChuLiStrArr,
+                    type: 'line',
+                    areaStyle: {
+                        //rgb(40, 92, 124)
+                        normal: {
+                            color: '#FFC304' //改变区域颜色
+                        }
+                    },
+                    itemStyle : {
+                        normal : {
+                            color:'#FFC304', //改变折线点的颜色
+                            lineStyle:{
+                                color:'#FFC304' //改变折线颜色
+                            }
+                        }
+                    }
+                }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+
+    //报警处理时间段  折线图
+    //点击右上角切换折线图
+    function selectBaoJingTime(carType,xianquId,time,timeChangeAge,timeChangeWeek,timeType) {
+        if(timeType=='DAY'){
+            $.ajax({
+                type: "POST",
+                url: basePathUrl+"/admin/bigdataFenxiAlarmTime/selectBaoJingDay.jsn",
+                data: {
+                    'carType':carType,
+                    'xianQuId':xianquId,
+                    'timeCount':time,
+                    'timeType':timeType},
+                dataType: "json",
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success: function(data){
+                    if(data.success){
+                        debugger
+                        //quanBu changGui zhuDongAnQua
+                        //判断当前那个被选中
+                        var quanBuBackground = document.getElementById("quanBu").style.backgroundColor;
+                        var changGuiBackground = document.getElementById("changGui").style.backgroundColor;
+                        var zhuDongAnQuaBackground = document.getElementById("zhuDongAnQua").style.backgroundColor;
+
+                        var changGuiBaoJingStrArr = data.data.changGuiBaoJingStrArr;
+                        if(changGuiBaoJingStrArr==''){
+                            changGuiBaoJingStrArr.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                        }
+                        var changGuiChuLiStrArr = data.data.changGuiChuLiStrArr;
+                        if(changGuiChuLiStrArr==''){
+                            changGuiChuLiStrArr.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                        }
+                        var anQuanBaoJinStrArr = data.data.anQuanBaoJinStrArr;
+                        if(anQuanBaoJinStrArr==''){
+                            anQuanBaoJinStrArr.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                        }
+                        var anQuanChuLiStrArr = data.data.anQuanChuLiStrArr;
+                        if(anQuanChuLiStrArr==''){
+                            anQuanChuLiStrArr.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                        }
+                        var quanBuBaoJinStrArr = data.data.quanBuBaoJinStrArr;
+                        if(quanBuBaoJinStrArr==''){
+                            quanBuBaoJinStrArr.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                        }
+                        var quanBuChuLiStrArr = data.data.quanBuChuLiStrArr;
+                        if(quanBuChuLiStrArr==''){
+                            quanBuChuLiStrArr.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                        }
+                        if(quanBuBackground=='darkcyan'){
+                            getZheXianTuDay(quanBuBaoJinStrArr,quanBuChuLiStrArr)
+                        }else if (changGuiBackground=='darkcyan') {
+                            getZheXianTuDay(changGuiBaoJingStrArr,changGuiChuLiStrArr)
+                        }else if (zhuDongAnQuaBackground=='darkcyan') {
+                            getZheXianTuDay(anQuanBaoJinStrArr, anQuanChuLiStrArr)
+
+                        }
+                    }else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+                }
+            });
+        }else if(timeType=="WEEK"){
+            if(isNaN(time)){//true  为字符串  周
+                time=0;
+            }
+            var timeWeek;
+            if(timeChangeWeek.indexOf("@@") == -1){
+                var curDate = new Date();
+                var nowdate = new Date(curDate.getTime()-7*24*3600*1000);
+                var currArr = dateFtt("yyyy-MM-dd",curDate).split("-");
+                var betArr = dateFtt("yyyy-MM-dd",nowdate).split("-");
+                timeWeek = betArr[0]+betArr[1]+betArr[2]+"-"+currArr[0]+currArr[1]+currArr[2];
+            }
+            $.ajax({
+                type: "POST",
+                url: basePathUrl+"/admin/bigdataFenxiCount/selectBaoJingWeekAndMonth.jsn",
+                data: {
+                    'carType':carType,
+                    'xianQuId':xianquId,
+                    'timeCount':time,
+                    'timeChangeAge':timeChangeAge,
+                    'timeChangeWeek':timeChangeWeek,
+                    'timeWeek':timeWeek,
+                    'timeType':timeType},
+                dataType: "json",
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success: function(data){
+                    debugger
+                    //判断当前那个被选中
+                    var quanBuBackground = document.getElementById("quanBu").style.backgroundColor;
+                    var changGuiBackground = document.getElementById("changGui").style.backgroundColor;
+                    var zhuDongAnQuaBackground = document.getElementById("zhuDongAnQua").style.backgroundColor;
+
+                    var quanBuBaoJinList = data.data.quanBuBaoJinList;
+                    if(quanBuBaoJinList==''){
+                        quanBuBaoJinList.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                    }
+                    var quanBuLChuLiist = data.data.quanBuLChuLiist;
+                    if(quanBuLChuLiist==''){
+                        quanBuLChuLiist.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                    }
+                    var changGuiBaoJinList = data.data.changGuiBaoJinList;
+                    if(changGuiBaoJinList==''){
+                        changGuiBaoJinList.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                    }
+                    var changGuiChuLiList = data.data.changGuiChuLiList;
+                    if(changGuiChuLiList==''){
+                        changGuiChuLiList.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                    }
+                    var zhuDongBaoJinList = data.data.zhuDongBaoJinList;
+                    if(zhuDongBaoJinList==''){
+                        zhuDongBaoJinList.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                    }
+                    var zhuDongChuLiList = data.data.zhuDongChuLiList;
+                    if(zhuDongChuLiList==''){
+                        zhuDongChuLiList.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                    }
+                    var weekList = data.data.weekList;
+                    if(weekList==''){
+                        weekList = data.data.weekList1;
+                    }
+
+                    if(quanBuBackground=='darkcyan'){
+                        getZheXianTu(weekList,quanBuBaoJinList,quanBuLChuLiist);
+                    }else if (changGuiBackground=='darkcyan') {
+                        getZheXianTu(weekList,changGuiBaoJinList,changGuiChuLiList);
+                    }else if (zhuDongAnQuaBackground=='darkcyan') {
+                        getZheXianTu(weekList,zhuDongBaoJinList,zhuDongChuLiList);
+                    }else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+                }
+            });
+        }else if (timeType=="MONTH"){
+            $.ajax({
+                type: "POST",
+                url: basePathUrl+"/admin/bigdataFenxiCount/selectBaoJingWeekAndMonth.jsn",
+                data: {
+                    'carType':carType,
+                    'xianQuId':xianquId,
+                    'timeCount':time,
+                    'timeChangeAge':timeChangeAge,
+                    'timeChangeWeek':timeChangeWeek,
+                    'timeType':timeType},
+                dataType: "json",
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success: function(data){
+                    //判断当前那个被选中
+                    debugger
+                    var quanBuBackground = document.getElementById("quanBu").style.backgroundColor;
+                    var changGuiBackground = document.getElementById("changGui").style.backgroundColor;
+                    var zhuDongAnQuaBackground = document.getElementById("zhuDongAnQua").style.backgroundColor;
+
+                    var quanBuBaoJinList = data.data.quanBuBaoJinList;
+                    if(quanBuBaoJinList==''){
+                        quanBuBaoJinList.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                    }
+                    var quanBuLChuLiist = data.data.quanBuLChuLiist;
+                    if(quanBuLChuLiist==''){
+                        quanBuLChuLiist.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                    }
+                    var changGuiBaoJinList = data.data.changGuiBaoJinList;
+                    if(changGuiBaoJinList==''){
+                        changGuiBaoJinList.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                    }
+                    var changGuiChuLiList = data.data.changGuiChuLiList;
+                    if(changGuiChuLiList==''){
+                        changGuiChuLiList.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                    }
+                    var zhuDongBaoJinList = data.data.zhuDongBaoJinList;
+                    if(zhuDongBaoJinList==''){
+                        zhuDongBaoJinList.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                    }
+                    var zhuDongChuLiList = data.data.zhuDongChuLiList;
+                    if(zhuDongChuLiList==''){
+                        zhuDongChuLiList.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+                    }
+                    var weekList = data.data.weekList;
+                    if(weekList==''){
+                        weekList = data.data.weekList1;
+                    }
+
+                    if(quanBuBackground=='darkcyan'){
+                        getZheXianTu(weekList,quanBuBaoJinList,quanBuLChuLiist);
+                    }else if (changGuiBackground=='darkcyan') {
+                        getZheXianTu(weekList,changGuiBaoJinList,changGuiChuLiList);
+                    }else if (zhuDongAnQuaBackground=='darkcyan') {
+                        getZheXianTu(weekList,zhuDongBaoJinList,zhuDongChuLiList);
+                    }else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function getZheXianTu(weekList,zhuDongBaoJinList,zhuDongChuLiList) {
+        // 基于准备好的dom，初始化echarts实例
+        myChart = echarts.init(document.getElementById('baoJinTimeId'));
+        // 指定图表的配置项和数据
+        option = {
+            tooltip : {
+                trigger: 'axis',
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 300
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+                data: weekList
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 300
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+            },
+            series: [{
+                name:'报警数量',
+                data: zhuDongBaoJinList,
+                type: 'line',
+                areaStyle: {
+                    //rgb(40, 92, 124)
+                    normal: {
+                        color: '#285C7C' //改变区域颜色
+                    }
+                },
+                itemStyle : {
+                    normal : {
+                        color:'#285C7C', //改变折线点的颜色
+                        lineStyle:{
+                            color:'#285C7C' //改变折线颜色
+                        }
+                    }
+                }
+            },{
+                name:'处理数量',
+                data: zhuDongChuLiList,
+                type: 'line',
+                areaStyle: {
+                    //rgb(40, 92, 124)
+                    normal: {
+                        color: '#FFC304' //改变区域颜色
+                    }
+                },
+                itemStyle : {
+                    normal : {
+                        color:'#FFC304', //改变折线点的颜色
+                        lineStyle:{
+                            color:'#FFC304' //改变折线颜色
+                        }
+                    }
+                }
+            }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+
+
+    function selectAnQuanPingFen(carType,xianQuId,time,timeChangeAge,timeChangeWeek,timeType) {
+        if(timeType=='DAY'){
+            $.ajax({
+                type: "POST",
+                url: basePathUrl+"/admin/bigdataTimeCarDayRec/selectAnQuanPingFen.jsn",
+                data: {
+                    'carType':carType,
+                    'xianQuId':xianQuId,
+                    'timeCount':time,
+                    'timeType':timeType},
+                dataType: "json",
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success: function(data){
+                    var anQuanPingFenQianShi = document.getElementById("anQuanPingFenQianShi").style.backgroundColor;
+                    var anQuanPingFenHouShi = document.getElementById("anQuanPingFenHouShi").style.backgroundColor;
+
+                    var carNumQianShiList = data.data.carNumQianShiList;
+                    var scoreQianShiList = data.data.scoreQianShiList;
+                    var carNumHouShiList = data.data.carNumHouShiList;
+                    var scoreHouShiList = data.data.scoreHouShiList;
+                    if (anQuanPingFenQianShi=='darkcyan') {
+                        getTongJiTu(carNumQianShiList,scoreQianShiList);
+                    }else if (anQuanPingFenHouShi=='darkcyan') {
+                        getTongJiTu(carNumHouShiList,scoreHouShiList);
+                    } else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+                }
+            });
+        }else if(timeType=="WEEK"){
+            var date = new Date();
+            var nowdate = new Date(date.getTime()-7*24*3600*1000);
+            var arr = dateFtt("yyyyMM",date);
+            var countMonth = Number(arr);
+            var time = dateFtt("yyyyMMdd",nowdate)+"-"+dateFtt("yyyyMMdd",date);
+            if(timeChangeWeek==""){
+                var curDate = new Date();
+                var nowdate = new Date(curDate.getTime()-7*24*3600*1000);
+                var y = nowdate.getFullYear();//年
+                var m = nowdate.getMonth()+1;//月
+                var d = nowdate.getDate();//日
+                timeChangeWeek = getWeek( new Date(String(y)+"-"+String(m)+"-"+String(d))).toString();
+                timeChangeAge = y;
+            }
+            $.ajax({
+                type: "POST",
+                url: basePathUrl+"/admin/bigdataFenxiCarWeek/selectAnQuanPingFen.jsn",
+                data: {
+                    'carType':carType,
+                    'xianQuId':xianQuId,
+                    'timeChangeAge':timeChangeAge,
+                    'timeChangeWeek':timeChangeWeek,
+                    'countMonth':countMonth,
+                    'time':time,
+                    'timeType':timeType},
+                dataType: "json",
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success: function(data){
+                    var anQuanPingFenQianShi = document.getElementById("anQuanPingFenQianShi").style.backgroundColor;
+                    var anQuanPingFenHouShi = document.getElementById("anQuanPingFenHouShi").style.backgroundColor;
+
+                    var carNumQianShiList = data.data.carNumQianShiList;
+                    var scoreQianShiList = data.data.scoreQianShiList;
+                    var carNumHouShiList = data.data.carNumHouShiList;
+                    var scoreHouShiList = data.data.scoreHouShiList;
+                    if (anQuanPingFenQianShi=='darkcyan') {
+                        getTongJiTu(carNumQianShiList,scoreQianShiList);
+                    }else if (anQuanPingFenHouShi=='darkcyan') {
+                        getTongJiTu(carNumHouShiList,scoreHouShiList);
+                    } else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+                }
+            });
+        }else if (timeType=="MONTH") {
+            $.ajax({
+                type: "POST",
+                url: basePathUrl + "/admin/bigdataFenxiCarMonth/selectAnQuanPingFen.jsn",
+                data: {
+                    'carType': carType,
+                    'xianQuId': xianQuId,
+                    'timeCount': time,
+                    'timeChangeAge': timeChangeAge,
+                    'timeChangeWeek': timeChangeWeek,
+                    'timeType': timeType
+                },
+                dataType: "json",
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success: function(data){
+                    var anQuanPingFenQianShi = document.getElementById("anQuanPingFenQianShi").style.backgroundColor;
+                    var anQuanPingFenHouShi = document.getElementById("anQuanPingFenHouShi").style.backgroundColor;
+
+                    var carNumQianShiList = data.data.carNumQianShiList;
+                    var scoreQianShiList = data.data.scoreQianShiList;
+                    var carNumHouShiList = data.data.carNumHouShiList;
+                    var scoreHouShiList = data.data.scoreHouShiList;
+
+                    if (anQuanPingFenQianShi=='darkcyan') {
+                        getTongJiTu(carNumQianShiList,scoreQianShiList);
+                    }else if (anQuanPingFenHouShi=='darkcyan') {
+                        getTongJiTu(carNumHouShiList,scoreHouShiList);
+                    } else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    //去到报警车辆数详细界面
+    function gotoBigDataCarFenXi(){
+        var companyLavel = $("#companyLavel").val();
+        companyLavel = "TEAM_PTHW";
+        var xianquId = $("#xianquId").val();
+        xianquId = "130322";
+        window.location.href = "BigDataCarFenXi.html?carType="+companyLavel+"&xianquId="+xianquId;
+    }
+
+    function getTongJiTu(carNumHouShiList,scoreHouShiList) {
+        // 基于准备好的dom，初始化echarts实例
+        myChart = echarts.init(document.getElementById('anQuanPingFen'));
+        option = {
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'       // 默认为直线，可选为：'line' | 'shadow'
+                },
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type : 'category',
+                splitLine: {show:false},
+                axisLabel: {
+                    show: true,
+                    interval:0,
+                    rotate:-30,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 300
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+                data : carNumHouShiList
+            },
+
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 300
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+            },
+            series: [
+                {
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            color: '#FFC304'
+                        }
+                    },
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'inside'
+                        }
+                    },
+                    data:scoreHouShiList
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    //企业报警排名
+    function selectQiYeBaoJing(carType,xianQuId,time,timeChangeAge,timeChangeWeek,timeType) {
+        if(timeType=='DAY'){
+            var str = time.toString().split("");//20190909
+            var yearNum = Number(str[0]+str[1]+str[2]+str[3]);
+            var countMonth = Number(str[0]+str[1]+str[2]+str[3]+str[4]+str[5]);
+            $.ajax({
+                type: "POST",
+                url: basePathUrl+"/admin/bigdataFenxiTeamDay/selectQiYeBaoJingPaiMing.jsn",
+                data: {
+                    'carType':carType,
+                    'xianQuId':xianQuId,
+                    'timeCount':time,
+                    'yearNum':yearNum,
+                    'countMonth':countMonth,
+                    'timeType':timeType},
+                dataType: "json",
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success: function(data){
+                    var anQuanPingFenQiYe = document.getElementById("anQuanPingFenQiYe").style.backgroundColor;
+                    var baiGongLiQiYe = document.getElementById("baiGongLiQiYe").style.backgroundColor;
+                    var qianShi = document.getElementById("qianShi").style.backgroundColor;
+                    var houShi = document.getElementById("houShi").style.backgroundColor;
+                    // anQuanPingFenQiYe qianShi   houShi
+                    //baiGongLiQiYe qianShi   houShi
+                    var anQuanQianShiQiYeName = data.data.anQuanQianShiQiYeName;
+                    var anQuanQianShiQiYePingFen = data.data.anQuanQianShiQiYePingFen;
+                    var anQuanHouShiQiYeName = data.data.anQuanHouShiQiYeName;
+                    var anQuanHouShiQiYePingFen = data.data.anQuanHouShiQiYePingFen;
+                    var baiGongLiQianShiQiYeName = data.data.baiGongLiQianShiQiYeName;
+                    var baiGongLiQianShiQiYePingFen = data.data.baiGongLiQianShiQiYePingFen;
+                    var baiGongLiHouShiQiYeName = data.data.baiGongLiHouShiQiYeName;
+                    var baiGongLiHouShiQiYePingFen = data.data.baiGongLiHouShiQiYePingFen;
+
+                    if (anQuanPingFenQiYe=='darkcyan' && qianShi=='darkcyan') {
+                        getTongJiTu1(anQuanQianShiQiYeName,anQuanQianShiQiYePingFen);
+                    }else if (anQuanPingFenQiYe=='darkcyan' && houShi=='darkcyan') {
+                        getTongJiTu1(anQuanHouShiQiYeName,anQuanHouShiQiYePingFen);
+                    } else if (baiGongLiQiYe=='darkcyan' && qianShi=='darkcyan') {
+                        getTongJiTu1(baiGongLiQianShiQiYeName,baiGongLiQianShiQiYePingFen);
+                    }else if (baiGongLiQiYe=='darkcyan' && houShi=='darkcyan') {
+                        getTongJiTu1(baiGongLiHouShiQiYeName,baiGongLiHouShiQiYePingFen);
+                    } else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+                }
+            });
+        }else if(timeType=="WEEK"){
+            if(timeChangeWeek==""){
+                debugger
+                var curDate = new Date();
+                var nowdate = new Date(curDate.getTime()-7*24*3600*1000);
+                var y = nowdate.getFullYear();//年
+                var m = nowdate.getMonth()+1;//月
+                var d = nowdate.getDate();//日
+                timeChangeWeek = getWeek( new Date(String(y)+"-"+String(m)+"-"+String(d)));
+                timeChangeAge = y;
+            }
+            $.ajax({
+                type: "POST",
+                url: basePathUrl+"/admin/bigdataFenxiTeamWeek/selectQiYeBaoJingPaiMing.jsn",
+                data: {
+                    'carType':carType,
+                    'xianQuId':xianQuId,
+                    'timeChangeAge':timeChangeAge,
+                    'timeChangeWeek':timeChangeWeek,
+                    'timeType':timeType},
+                dataType: "json",
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success: function(data){
+                    var anQuanPingFenQiYe = document.getElementById("anQuanPingFenQiYe").style.backgroundColor;
+                    var baiGongLiQiYe = document.getElementById("baiGongLiQiYe").style.backgroundColor;
+                    var qianShi = document.getElementById("qianShi").style.backgroundColor;
+                    var houShi = document.getElementById("houShi").style.backgroundColor;
+                    // anQuanPingFenQiYe qianShi   houShi
+                    //baiGongLiQiYe qianShi   houShi
+                    var anQuanQianShiQiYeName = data.data.anQuanQianShiQiYeName;
+                    var anQuanQianShiQiYePingFen = data.data.anQuanQianShiQiYePingFen;
+                    var anQuanHouShiQiYeName = data.data.anQuanHouShiQiYeName;
+                    var anQuanHouShiQiYePingFen = data.data.anQuanHouShiQiYePingFen;
+                    var baiGongLiQianShiQiYeName = data.data.baiGongLiQianShiQiYeName;
+                    var baiGongLiQianShiQiYePingFen = data.data.baiGongLiQianShiQiYePingFen;
+                    var baiGongLiHouShiQiYeName = data.data.baiGongLiHouShiQiYeName;
+                    var baiGongLiHouShiQiYePingFen = data.data.baiGongLiHouShiQiYePingFen;
+
+                    if (anQuanPingFenQiYe=='darkcyan' && qianShi=='darkcyan') {
+                        getTongJiTu1(anQuanQianShiQiYeName,anQuanQianShiQiYePingFen);
+                    }else if (anQuanPingFenQiYe=='darkcyan' && houShi=='darkcyan') {
+                        getTongJiTu1(anQuanHouShiQiYeName,anQuanHouShiQiYePingFen);
+                    } else if (baiGongLiQiYe=='darkcyan' && qianShi=='darkcyan') {
+                        getTongJiTu1(baiGongLiQianShiQiYeName,baiGongLiQianShiQiYePingFen);
+                    }else if (baiGongLiQiYe=='darkcyan' && houShi=='darkcyan') {
+                        getTongJiTu1(baiGongLiHouShiQiYeName,baiGongLiHouShiQiYePingFen);
+                    } else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+                }
+            });
+        }else if (timeType=="MONTH") {
+            $.ajax({
+                type: "POST",
+                url: basePathUrl + "/admin/bigdataFenxiTeamMonth/selectQiYeBaoJingPaiMing.jsn",
+                data: {
+                    'carType': carType,
+                    'xianQuId': xianQuId,
+                    'timeCount': time,
+                    'timeChangeAge': timeChangeAge,
+                    'timeChangeWeek': timeChangeWeek,
+                    'timeType': timeType
+                },
+                dataType: "json",
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+                },
+                success: function(data){//houShi qianShi anQuanPingFenQiYe baiGongLiQiYe
+                    var anQuanPingFenQiYe = document.getElementById("anQuanPingFenQiYe").style.backgroundColor;
+                    var baiGongLiQiYe = document.getElementById("baiGongLiQiYe").style.backgroundColor;
+                    var qianShi = document.getElementById("qianShi").style.backgroundColor;
+                    var houShi = document.getElementById("houShi").style.backgroundColor;
+                    // anQuanPingFenQiYe qianShi   houShi
+                    //baiGongLiQiYe qianShi   houShi
+                    debugger
+                    var anQuanQianShiQiYeName = data.data.anQuanQianShiQiYeName;
+                    var anQuanQianShiQiYePingFen = data.data.anQuanQianShiQiYePingFen;
+                    var anQuanHouShiQiYeName = data.data.anQuanHouShiQiYeName;
+                    var anQuanHouShiQiYePingFen = data.data.anQuanHouShiQiYePingFen;
+                    var baiGongLiQianShiQiYeName = data.data.baiGongLiQianShiQiYeName;
+                    var baiGongLiQianShiQiYePingFen = data.data.baiGongLiQianShiQiYePingFen;
+                    var baiGongLiHouShiQiYeName = data.data.baiGongLiHouShiQiYeName;
+                    var baiGongLiHouShiQiYePingFen = data.data.baiGongLiHouShiQiYePingFen;
+
+                    if (anQuanPingFenQiYe=='darkcyan' && qianShi=='darkcyan') {
+                        getTongJiTu1(['总费用','房租','水电费','交通费','伙食费','日用品数'],[100, 1200, 300, 200, 900, 300]);
+                    }else if (anQuanPingFenQiYe=='darkcyan' && houShi=='darkcyan') {
+                        getTongJiTu1(['总费用','房租','水电费','交通费','伙食费','日用品数'],[2900, 100, 300, 200, 900, 300]);
+                    } else if (baiGongLiQiYe=='darkcyan' && qianShi=='darkcyan') {
+                        getTongJiTu1(['总费用','房租','水电费','交通费','伙食费','日用品数'],[2900, 1200, 300, 5000, 900, 300]);
+                    }else if (baiGongLiQiYe=='darkcyan' && houShi=='darkcyan') {
+                        getTongJiTu1(['总费用','房租','水电费','交通费','伙食费','日用品数'],[2900, 1200, 300, 200, 900, 41404]);
+                    }else {
+                        if(data.code==1001){
+                            location.href = '../../login.html';
+                        }else {
+                            layer.msg('后台异常', {
+                                icon: 5
+                            });
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function getTongJiTu1(carNumHouShiList,scoreHouShiList) {
+        // 基于准备好的dom，初始化echarts实例
+        myChart = echarts.init(document.getElementById('qiYeBaoJing'));
+        option = {
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'       // 默认为直线，可选为：'line' | 'shadow'
+                },
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type : 'category',
+                splitLine: {show:false},
+                axisLabel: {
+                    show: true,
+                    interval:0,
+                    rotate:-30,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 300
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+                data : carNumHouShiList
+            },
+
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 300
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
+            },
+            series: [
+                {
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            color: '#1AE66B'
+                        }
+                    },
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'inside'
+                        }
+                    },
+                    data:scoreHouShiList
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+</script>
+<script>
+    $("#pickdate").dateDropper({
+        animate: false,
+        format: 'Y-m-d',
+        maxYear: '2020'
+    });
+
+</script>
+<script>
+
+    function selectAll() {
+        selectXianQu();
+    }
+
+    function anQuanOnclick() {
+        document.getElementById("anQuanPingFenQiYe").style.backgroundColor='darkcyan';
+        document.getElementById("baiGongLiQiYe").style.backgroundColor='';
+        selectQiYe();
+    }
+    function baiGongLiOnclick() {
+        document.getElementById("baiGongLiQiYe").style.backgroundColor='darkcyan';
+        document.getElementById("anQuanPingFenQiYe").style.backgroundColor='';
+        selectQiYe();
+    }
+
+    function qianShiOnclick1() {
+        document.getElementById("qianShi").style.backgroundColor='darkcyan';
+        document.getElementById("houShi").style.backgroundColor='';
+        selectQiYe();
+    }
+
+    function houShiOnclick1() {
+        document.getElementById("houShi").style.backgroundColor='darkcyan';
+        document.getElementById("qianShi").style.backgroundColor='';
+        selectQiYe();
+    }
+
+    function qianShiOnclick() {
+        document.getElementById("anQuanPingFenQianShi").style.backgroundColor='darkcyan';
+        document.getElementById("anQuanPingFenHouShi").style.backgroundColor='';
+        selectAnQuan();
+    }
+    function houShiOnclick() {
+        document.getElementById("anQuanPingFenQianShi").style.backgroundColor='';
+        document.getElementById("anQuanPingFenHouShi").style.backgroundColor='darkcyan';
+        selectAnQuan();
+    }
+
+    function quanBuOnclick() {
+        document.getElementById("quanBu").style.backgroundColor='darkcyan';
+        document.getElementById("zhuDongAnQua").style.backgroundColor='';
+        document.getElementById("changGui").style.backgroundColor='';
+        selectZhuDongAndChangGui();
+    }
+    function changGuiOnclick() {
+        //改变背景色 quanBu changGui zhuDongAnQua
+        document.getElementById("quanBu").style.backgroundColor='';
+        document.getElementById("zhuDongAnQua").style.backgroundColor='';
+        document.getElementById("changGui").style.backgroundColor='darkcyan';
+        selectZhuDongAndChangGui();
+    }
+    function zhuDongOnclick() {
+        //改变背景色
+        document.getElementById("changGui").style.backgroundColor='';
+        document.getElementById("quanBu").style.backgroundColor='';
+        document.getElementById("zhuDongAnQua").style.backgroundColor='darkcyan';
+        selectZhuDongAndChangGui();
+    }
+
+    function selectQiYe() {
+        //点击县区
+        var xianquId = $("#xianquId").val();
+        if(xianquId==""){
+            xianquId='130300';
+        }
+        //获取其他信息
+        var carType = $("#companyLavel").val();
+        if(carType=="TEAM_WXHWYS"){
+            carType = "危货";
+        }else if (carType=="TEAM_KY") {
+            carType = "客运";
+        }else if(carType=="TEAM_PTHW"){
+            carType = "普货";
+        }
+        var dayBackground = document.getElementById("day").style.backgroundColor;
+        var weekBackground = document.getElementById("week").style.backgroundColor;
+        var monthBackground = document.getElementById("month").style.backgroundColor;
+        var time;
+        var timeChangeAge;
+        var timeChangeWeek;
+        var timeType;
+        debugger
+        if(dayBackground=='darkcyan'){
+            var s = $("#timeChangeDay").val();
+            if(s==""){
+                var curDate = new Date();
+                var nowdate = new Date(curDate.getTime() - 24*60*60*1000);
+                time = Number(dateFtt("yyyyMMdd",nowdate));
+                timeType='DAY';
+            }else {
+                var timeStr = $("#timeChangeDay").val();
+                var str = timeStr.split("-");
+                time = Number(str[0]+str[1]+str[2]);
+                timeType='DAY';
+            }
+        }else if (weekBackground=='darkcyan') {
+            var s1 = $("#timeChangeAge").val();
+            var s2 = $("#timeChangeWeek").val();
+            if(s2==""){
+                var curDate = new Date();
+                var nowdate = new Date(curDate.getTime()-7*24*3600*1000);
+                var y = nowdate.getFullYear();//年
+                var m = nowdate.getMonth()+1;//月
+                var d = nowdate.getDate();//日
+                timeChangeWeek = getWeek( new Date(String(y)+"-"+String(m)+"-"+String(d))).toString();
+                timeChangeAge = y;
+                timeType='WEEK';
+            }else {
+                timeChangeAge = $("#timeChangeAge").val();
+                timeChangeWeek = $("#timeChangeWeek").val();
+                timeType='WEEK';
+            }
+        }else if (monthBackground=='darkcyan'){
+            var s4 = $("#timeChange").val();
+            if(s4==""){
+                var nowdate = new Date();
+                nowdate.setMonth(nowdate.getMonth()-1);
+                time = Number(dateFtt("yyyyMM",nowdate));
+                timeChangeAge = dateFtt("yyyy",nowdate);
+                timeType='MONTH';
+            }else {
+                var timeStr = $("#timeChange").val();
+                var str = timeStr.split("-");
+                time = Number(str[0]+str[1]);
+                timeChangeAge = str[0];
+                timeType='MONTH';
+            }
+        }
+        selectQiYeBaoJing(carType,xianquId,time,timeChangeAge,timeChangeWeek,timeType);
+    }
+
+    function selectZhuDongAndChangGui() {
+        //点击县区
+        var xianquId = $("#xianquId").val();
+        if(xianquId==""){
+            xianquId='130300';
+        }
+        //获取其他信息
+        var carType = $("#companyLavel").val();
+        if(carType=="TEAM_WXHWYS"){
+            carType = "危货";
+        }else if (carType=="TEAM_KY") {
+            carType = "客运";
+        }else if(carType=="TEAM_PTHW"){
+            carType = "普货";
+        }
+        var dayBackground = document.getElementById("day").style.backgroundColor;
+        var weekBackground = document.getElementById("week").style.backgroundColor;
+        var monthBackground = document.getElementById("month").style.backgroundColor;
+        var time;
+        var timeChangeAge;
+        var timeChangeWeek;
+        var timeType;
+        debugger
+        if(dayBackground=='darkcyan'){
+            var s = $("#timeChangeDay").val();
+            if(s==""){
+                var curDate = new Date();
+                var nowdate = new Date(curDate.getTime() - 24*60*60*1000);
+                time = Number(dateFtt("yyyyMMdd",nowdate));
+                timeType='DAY';
+            }else {
+                var timeStr = $("#timeChangeDay").val();
+                var str = timeStr.split("-");
+                time = Number(str[0]+str[1]+str[2]);
+                timeType='DAY';
+            }
+        }else if (weekBackground=='darkcyan') {
+            var s1 = $("#timeChangeAge").val();
+            var s2 = $("#timeChangeWeek").val();
+            if(s2==""){
+                var curDate = new Date();
+                var nowdate = new Date(curDate.getTime()-7*24*3600*1000);
+                var y = nowdate.getFullYear();//年
+                var m = nowdate.getMonth()+1;//月
+                var d = nowdate.getDate();//日
+                timeChangeWeek = getWeek( new Date(String(y)+"-"+String(m)+"-"+String(d))).toString();
+                timeChangeAge = y;
+                timeType='WEEK';
+            }else {
+                timeChangeAge = $("#timeChangeAge").val();
+                timeChangeWeek = $("#timeChangeWeek").val();
+                timeType='WEEK';
+            }
+        }else if (monthBackground=='darkcyan'){
+            var s4 = $("#timeChange").val();
+            if(s4==""){
+                var nowdate = new Date();
+                nowdate.setMonth(nowdate.getMonth()-1);
+                time = Number(dateFtt("yyyyMM",nowdate));
+                timeType='MONTH';
+            }else {
+                var timeStr = $("#timeChange").val();
+                var str = timeStr.split("-");
+                time = Number(str[0]+str[1]);
+                timeType='MONTH';
+            }
+        }
+        selectBaoJingTime(carType,xianquId,time,timeChangeAge,timeChangeWeek,timeType);
+    }
+
+    function selectAnQuan() {
+        //点击县区
+        var xianquId = $("#xianquId").val();
+        if(xianquId==""){
+            xianquId='130300';
+        }
+        //获取其他信息
+        var carType = $("#companyLavel").val();
+        if(carType=="TEAM_WXHWYS"){
+            carType = "危货";
+        }else if (carType=="TEAM_KY") {
+            carType = "客运";
+        }else if(carType=="TEAM_PTHW"){
+            carType = "普货";
+        }
+        var dayBackground = document.getElementById("day").style.backgroundColor;
+        var weekBackground = document.getElementById("week").style.backgroundColor;
+        var monthBackground = document.getElementById("month").style.backgroundColor;
+        var time;
+        var timeChangeAge;
+        var timeChangeWeek;
+        var timeType;
+        debugger
+        if(dayBackground=='darkcyan'){
+            var s = $("#timeChangeDay").val();
+            if(s==""){
+                var curDate = new Date();
+                var nowdate = new Date(curDate.getTime() - 24*60*60*1000);
+                time = Number(dateFtt("yyyyMMdd",nowdate));
+                timeType='DAY';
+            }else {
+                var timeStr = $("#timeChangeDay").val();
+                var str = timeStr.split("-");
+                time = Number(str[0]+str[1]+str[2]);
+                timeType='DAY';
+            }
+        }else if (weekBackground=='darkcyan') {
+            var s1 = $("#timeChangeAge").val();
+            var s2 = $("#timeChangeWeek").val();
+            if(s2==""){
+                var curDate = new Date();
+                var nowdate = new Date(curDate.getTime()-7*24*3600*1000);
+                var y = nowdate.getFullYear();//年
+                var m = nowdate.getMonth()+1;//月
+                var d = nowdate.getDate();//日
+                timeChangeWeek = getWeek( new Date(String(y)+"-"+String(m)+"-"+String(d))).toString();
+                timeChangeAge = y;
+                timeType='WEEK';
+            }else {
+                timeChangeAge = $("#timeChangeAge").val();
+                timeChangeWeek = $("#timeChangeWeek").val();
+                timeType='WEEK';
+            }
+        }else if (monthBackground=='darkcyan'){
+            var s4 = $("#timeChange").val();
+            if(s4==""){
+                var nowdate = new Date();
+                nowdate.setMonth(nowdate.getMonth()-1);
+                time = Number(dateFtt("yyyyMM",nowdate));
+                timeType='MONTH';
+            }else {
+                var timeStr = $("#timeChange").val();
+                var str = timeStr.split("-");
+                time = Number(str[0]+str[1]);
+                timeType='MONTH';
+            }
+        }
+        selectAnQuanPingFen(carType,xianquId,time,timeChangeAge,timeChangeWeek,timeType);
+    }
+
+    //获取当年第一天
+    function getFirstDayOfYear (date) {
+        date.setDate(1);
+        date.setMonth(0);
+        return date;
+    }
+    function selectSet() {
+        var week = ['第1周','第2周','第3周','第4周','第5周','第6周','第7周','第8周','第9周','第10周',
+            '第11周','第12周','第13周','第14周','第15周','第16周','第17周','第18周','第19周','第20周',
+            '第21周','第22周','第23周','第24周','第25周','第26周','第27周','第28周','第29周','第30周',
+            '第31周','第32周','第33周','第34周','第35周','第36周','第37周','第38周','第39周','第40周',
+            '第41周','第42周','第43周','第44周','第45周','第46周','第47周','第48周','第49周','第50周',
+            '第51周','第52周','第53周'];
+        var nowdate = new Date();
+        var y = nowdate.getFullYear();//年
+        var year = Number(y);
+        var da = new Date(year,0,1);
+        var n = 7-(da.getDay()+6)%7;
+        var oneDay = new Date(da.setDate(da.getDate()+n-1));//首先算出这年的第一天
+        var arr = dateFtt("yyyy-MM-dd",getFirstDayOfYear(new Date())).split("-");
+        var arr1 = dateFtt("yyyy-MM-dd",oneDay).split("-");
+        var value = week[0]+"@@"+arr[0]+arr[1]+arr[2]+"-"+arr1[0]+arr1[1]+arr1[2];
+        $("#timeChangeWeek").append("<option class=\"lsd\" value="+value+">"+week[0]+"</option>");
+        for(var i=1;i<week.length;i++){
+            debugger
+            var n = 7-(da.getDay()+6)%7;
+            var dateFirst = new Date(da.setDate(da.getDate()+n));//首先算出这年的第一个星期一
+            var dateLast = new Date(da.setDate(da.getDate()+6));//之后每次对日期加6就行了
+            var arr = dateFtt("yyyy-MM-dd",dateFirst).split("-");
+            var arr1 = dateFtt("yyyy-MM-dd",dateLast).split("-");
+
+            var value = week[i]+"@@"+arr[0]+arr[1]+arr[2]+"-"+arr1[0]+arr1[1]+arr1[2];
+
+            $("#timeChangeWeek").append("<option class=\"lsd\" value="+value+">"+week[i]+"</option>");
+        }
+    }
+    selectSet();
+
+    /**************************************时间格式化处理************************************/
+    function dateFtt(fmt,date)
+    { //author: meizz
+        var o = {
+            "M+" : date.getMonth()+1,     //月份
+            "d+" : date.getDate(),     //日
+            "h+" : date.getHours(),     //小时
+            "m+" : date.getMinutes(),     //分
+            "s+" : date.getSeconds(),     //秒
+            "q+" : Math.floor((date.getMonth()+3)/3), //季度
+            "S" : date.getMilliseconds()    //毫秒
+        };
+        if(/(y+)/.test(fmt))
+            fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("("+ k +")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        return fmt;
+    }
+
+    function dayOnclick() {
+        //改变背景色
+        document.getElementById("timeChangeAge").style.display='none';
+        document.getElementById("timeChangeWeek").style.display='none';
+        document.getElementById("timeChange").style.display='none';
+        document.getElementById("timeChangeDay").style.display='';
+        document.getElementById("week").style.backgroundColor='';
+        document.getElementById("month").style.backgroundColor='';
+        document.getElementById("day").style.backgroundColor='darkcyan';
+    }
+
+    function weekOnclick() {
+        document.getElementById("timeChangeAge").style.display='';
+        document.getElementById("timeChangeWeek").style.display='';
+        document.getElementById("timeChange").style.display='none';
+        document.getElementById("timeChangeDay").style.display='none';
+        document.getElementById("week").style.backgroundColor='darkcyan';
+        document.getElementById("month").style.backgroundColor='';
+        document.getElementById("day").style.backgroundColor='';
+    }
+    function monthOnclick() {
+        document.getElementById("timeChangeAge").style.display='none';
+        document.getElementById("timeChangeWeek").style.display='none';
+        document.getElementById("timeChange").style.display='';
+        document.getElementById("timeChangeDay").style.display='none';
+        document.getElementById("week").style.backgroundColor='';
+        document.getElementById("month").style.backgroundColor='darkcyan';
+        document.getElementById("day").style.backgroundColor='';
+    }
+
+    function getWeek(dt){
+        let d1 = new Date(dt);
+        let d2 = new Date(dt);
+        d2.setMonth(0);
+        d2.setDate(1);
+        let rq = d1-d2;
+        let days = Math.ceil(rq/(24*60*60*1000));
+        let num = Math.ceil(days/7);
+        return num;
+    }
+
+    function selectXianQu() {
+        //点击县区
+        var xianquId = $("#xianquId").val();
+        if(xianquId==""){
+            xianquId='130300';
+        }
+        //获取其他信息
+        var carType = $("#companyLavel").val();
+        if(carType=="TEAM_WXHWYS"){
+            carType = "危货";
+        }else if (carType=="TEAM_KY") {
+            carType = "客运";
+        }else if(carType=="TEAM_PTHW"){
+            carType = "普货";
+        }
+        var dayBackground = document.getElementById("day").style.backgroundColor;
+        var weekBackground = document.getElementById("week").style.backgroundColor;
+        var monthBackground = document.getElementById("month").style.backgroundColor;
+        var time;
+        var timeChangeAge;
+        var timeChangeWeek;
+        var timeType;
+        debugger
+        if(dayBackground=='darkcyan'){
+            var s = $("#timeChangeDay").val();
+            if(s==""){
+                var curDate = new Date();
+                var nowdate = new Date(curDate.getTime() - 24*60*60*1000);
+                time = Number(dateFtt("yyyyMMdd",nowdate));
+                timeType='DAY';
+            }else {
+                var timeStr = $("#timeChangeDay").val();
+                var str = timeStr.split("-");
+                time = Number(str[0]+str[1]+str[2]);
+                timeType='DAY';
+            }
+        }else if (weekBackground=='darkcyan') {
+            var s1 = $("#timeChangeAge").val();
+            var s2 = $("#timeChangeWeek").val();
+            debugger
+            if(s2==""){
+                var curDate = new Date();
+                var nowdate = new Date(curDate.getTime()-7*24*3600*1000);
+                var y = nowdate.getFullYear();//年
+                var m = nowdate.getMonth()+1;//月
+                var d = nowdate.getDate();//日
+                timeChangeWeek = getWeek( new Date(String(y)+"-"+String(m)+"-"+String(d))).toString();
+                timeChangeAge = y;
+                timeType='WEEK';
+            }else {
+                timeChangeAge = $("#timeChangeAge").val();
+                timeChangeWeek = $("#timeChangeWeek").val();
+                timeType='WEEK';
+            }
+        }else if (monthBackground=='darkcyan'){
+            var s4 = $("#timeChange").val();
+            if(s4==""){
+                var nowdate = new Date();
+                nowdate.setMonth(nowdate.getMonth()-1);
+                time = Number(dateFtt("yyyyMM",nowdate));
+                timeType='MONTH';
+            }else {
+                var timeStr = $("#timeChange").val();
+                var str = timeStr.split("-");
+                time = Number(str[0]+str[1]);
+                timeType='MONTH';
+            }
+        }
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataFenxiCount/selectXianQu.jsn",
+            data: {
+                'carType':carType,
+                'xianQuId':xianquId,
+                'timeCount':time,
+                'timeChangeAge':timeChangeAge,
+                'timeChangeWeek':timeChangeWeek,
+                'timeType':timeType},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){//baoJingCarNum baoJingQiYeNum runNum chuLiNum zhuDongAnQuan
+                    debugger
+                    var bigdataFenxiCount = data.data;
+                    if(bigdataFenxiCount==undefined){
+                        document.getElementById("baoJingCarNum").innerText=0;
+                        document.getElementById("baoJingQiYeNum").innerText=0;
+                        document.getElementById("runNum").innerText=0;
+                        document.getElementById("chuLiNum").innerText=0+"/"+0;
+                        document.getElementById("zhuDongAnQuan").innerText=0+"/"+0;
+                    }else {
+                        document.getElementById("baoJingCarNum").innerText=bigdataFenxiCount.alarmCarNum;
+                        document.getElementById("baoJingQiYeNum").innerText=bigdataFenxiCount.alarmCompNum;
+                        document.getElementById("runNum").innerText=bigdataFenxiCount.runMileage;
+                        document.getElementById("chuLiNum").innerText=bigdataFenxiCount.commonAlarmNum+"/"+bigdataFenxiCount.commonHandleNum;
+                        document.getElementById("zhuDongAnQuan").innerText=bigdataFenxiCount.safeAlarmNum+"/"+bigdataFenxiCount.safeHandleNum;
+                    }
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+        debugger
+        selectBaoJingType(carType,xianquId,time,timeChangeAge,timeChangeWeek,timeType);
+        selectBaoJingTime(carType,xianquId,time,timeChangeAge,timeChangeWeek,timeType);
+        selectAnQuanPingFen(carType,xianquId,time,timeChangeAge,timeChangeWeek,timeType);
+        selectQiYeBaoJing(carType,xianquId,time,timeChangeAge,timeChangeWeek,timeType);
+    }
+
+    laydate.render({
+        elem: '#timeChangeAge',
+        theme: '#884898'
+        ,type: 'year'
+        ,trigger:'click'
+    });
+    laydate.render({
+        elem: '#timeChange',
+        theme: '#884898',
+        type: 'month',
+        trigger:'click'
+    });
+    laydate.render({
+        elem: '#timeChangeDay',
+        theme: '#884898',
+        trigger:'click'
+    });
+
+    function setCarType() {
+
+        //获取参数
+        var queryArgs = getQueryParam();
+        var carType = decodeURI(queryArgs.carType);
+        //判断是否携带车辆类型查询
+        if(carType==""){
+            $("#companyLavel").val("");
+        }else if (carType=="危货") {
+            $("#companyLavel").val("TEAM_WXHWYS");
+        }else if (carType=="客运") {
+            $("#companyLavel").val("TEAM_KY");
+        }else if (carType=="普货") {
+            $("#companyLavel").val("TEAM_PTHW");
+        }
+        //执行查询
+        //判断当前的下拉选择是否有值
+        var xianQuId =  $("#xianquId").val();
+        //默认月份开始查询
+        if(xianQuId==""){
+            //默认全市 -秦皇岛
+            xianQuId = "130300";
+        }
+        //获取当前时间
+        var nowdate = new Date();
+        nowdate.setMonth(nowdate.getMonth()-1);
+        var arr = dateFtt("yyyy-MM-dd",nowdate);
+        var timeCount = arr;
+        debugger
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataFenxiCount/setBaoJinInfo.jsn",
+            data: {
+                'carType':carType,
+                'xianQuId':xianQuId,
+                'timeCount':timeCount},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){//baoJingCarNum baoJingQiYeNum runNum chuLiNum zhuDongAnQuan
+                    debugger
+                    var bigdataFenxiCount = data.data;
+                    if(bigdataFenxiCount==undefined){
+                        document.getElementById("baoJingCarNum").innerText=0;
+                        document.getElementById("baoJingQiYeNum").innerText=0;
+                        document.getElementById("runNum").innerText=0;
+                        document.getElementById("chuLiNum").innerText=0+"/"+0;
+                        document.getElementById("zhuDongAnQuan").innerText=0+"/"+0;
+                    }else {
+                        document.getElementById("baoJingCarNum").innerText=bigdataFenxiCount.alarmCarNum;
+                        document.getElementById("baoJingQiYeNum").innerText=bigdataFenxiCount.alarmCompNum;
+                        document.getElementById("runNum").innerText=bigdataFenxiCount.runMileage;
+                        document.getElementById("chuLiNum").innerText=bigdataFenxiCount.commonAlarmNum+"/"+bigdataFenxiCount.commonHandleNum;
+                        document.getElementById("zhuDongAnQuan").innerText=bigdataFenxiCount.safeAlarmNum+"/"+bigdataFenxiCount.safeHandleNum;
+                    }
+
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+        var timeType = "MONTH";
+        var time = Number(dateFtt("yyyyMM",nowdate));
+        var timeChangeAge = dateFtt("yyyy",nowdate);
+        var timeChangeWeek = "";
+        //carType,xianquId,time,timeChangeAge,timeChangeWeek,timeType
+        selectBaoJingType(carType,xianQuId,time,timeChangeAge,timeChangeWeek,timeType);
+        selectBaoJingTime(carType,xianQuId,time,timeChangeAge,timeChangeWeek,timeType);
+        selectAnQuanPingFen(carType,xianQuId,time,timeChangeAge,timeChangeWeek,timeType);
+        selectQiYeBaoJing(carType,xianQuId,time,timeChangeAge,timeChangeWeek,timeType);
+    }
+    setCarType();
+</script>
+</body>
+</html>

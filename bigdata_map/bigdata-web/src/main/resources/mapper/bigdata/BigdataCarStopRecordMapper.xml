@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataCarStopRecordMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataCarStopRecord" >
+			<id column="ID" property="id"/>
+			<result column="CAR_REAL_ID" property="carRealId"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="BEGIN_TIME" property="beginTime"/>
+			<result column="END_TIME" property="endTime"/>
+			<result column="STOP_MINITE_NUM" property="stopMiniteNum"/>
+			<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+			<result column="MAP_PROVINCE" property="mapProvince"/>
+			<result column="MAP_PROVINCE_ID" property="mapProvinceId"/>
+			<result column="MAP_CITY" property="mapCity"/>
+			<result column="MAP_CITY_ID" property="mapCityId"/>
+			<result column="MAP_XIANQU" property="mapXianqu"/>
+			<result column="MAP_XIANQU_ID" property="mapXianquId"/>
+			<result column="MAP_DETAIL" property="mapDetail"/>
+			<result column="POINT_LAT" property="pointLat"/>
+			<result column="POINT_LONG" property="pointLong"/>
+			<result column="ALTITUDE" property="altitude"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_DATE" property="countDate"></result>
+			<result column="COUNT_MONTH" property="countMonth"></result>
+			<result column="YEAR_NUM" property="yearNum"></result>
+
+    </resultMap>
+
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataCarStopRecordView" extends="BaseResultMap">
+
+    </resultMap>
+
+
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CAR_REAL_ID, CAR_PLATE_NUM, BEGIN_TIME, END_TIME, STOP_MINITE_NUM, CAR_PLATE_COLOR,
+	  MAP_COUNTRY, MAP_PROVINCE,MAP_PROVINCE_ID, MAP_CITY,MAP_CITY_ID, MAP_XIANQU,MAP_XIANQU_ID,
+	  MAP_DETAIL,POINT_LAT, POINT_LONG, ALTITUDE,CAR_TYPE,COUNT_DATE,COUNT_MONTH,YEAR_NUM
+  </sql>
+
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.endTime != null'>
+					AND  END_TIME = #{queryObj.endTime}
+				</if>
+				<if test='queryObj != null and  queryObj.stopMiniteNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.stopMiniteNum)'>
+					AND  STOP_MINITE_NUM = #{queryObj.stopMiniteNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataCarStopRecordQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_car_stop_record 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataCarStopRecordQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_car_stop_record 
+  		<include refid="where"/>
+  </select>
+  
+  
+</mapper>

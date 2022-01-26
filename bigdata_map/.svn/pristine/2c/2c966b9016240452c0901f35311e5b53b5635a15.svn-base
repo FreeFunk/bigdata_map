@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.reportdata.mapper.TransitCarTeamMapper" >
+
+    <resultMap id="transitCarTeamMap" type="com.edgedo.reportdata.entity.TransitCarTeam" >
+        <result column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="ORDER_NUMBER" jdbcType="DECIMAL" property="orderNumber" />
+        <result column="CREATE_USER_NAME" jdbcType="VARCHAR" property="createUserName" />
+        <result column="CREATE_USER_ID" jdbcType="VARCHAR" property="createUserId" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="OPERATOR" jdbcType="VARCHAR" property="operator" />
+        <result column="OPERATE_TIME" jdbcType="TIMESTAMP" property="operateTime" />
+        <result column="VERSION" jdbcType="VARCHAR" property="version" />
+        <result column="DATA_STATE" jdbcType="VARCHAR" property="dataState" />
+        <result column="TEAM_NAME" jdbcType="VARCHAR" property="teamName" />
+        <result column="PROVINCE_ID" jdbcType="VARCHAR" property="provinceId" />
+        <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName" />
+        <result column="CITY_ID" jdbcType="VARCHAR" property="cityId" />
+        <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName" />
+        <result column="XIANQU_ID" jdbcType="VARCHAR" property="xianquId" />
+        <result column="XIANQU_NAME" jdbcType="VARCHAR" property="xianquName" />
+        <result column="CAR_COUNT" jdbcType="DECIMAL" property="carCount" />
+        <result column="TEAM_ADMIN_ID" jdbcType="VARCHAR" property="teamAdminId" />
+        <result column="TEAM_ADMIN_CODE" jdbcType="VARCHAR" property="teamAdminCode" />
+        <result column="TEAM_ADMIN_PHONE" jdbcType="VARCHAR" property="teamAdminPhone" />
+        <result column="TEAM_ADMIN_NAME" jdbcType="VARCHAR" property="teamAdminName" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="TEAM_TYPE" jdbcType="VARCHAR" property="teamType" />
+        <result column="CHECK_PHONE_FLAG" jdbcType="VARCHAR" property="checkPhoneFlag" />
+        <result column="CHECK_RENZHENG_FLAG" jdbcType="VARCHAR" property="checkRenzhengFlag"/>
+
+        <!-- 2017.08.14修改 -->
+        <result column="LICENCE_AUTHORITY" jdbcType="VARCHAR" property="licenceAuthority" />
+        <result column="EXA_CHECK_DATE" jdbcType="TIMESTAMP" property="exaCheckDate" />
+        <result column="BUSINESS_CERT" jdbcType="VARCHAR" property="businessCert" />
+        <result column="JY_CERT_NUMBER" jdbcType="VARCHAR" property="jyCertNumber" />
+        <result column="JY_CERT_IMAGE_SRC" jdbcType="VARCHAR" property="jyCertImageSrc" />
+        <result column="JY_SCOPE" jdbcType="VARCHAR" property="jyScope" />
+        <result column="BUSINESS_CERT_CODE" jdbcType="VARCHAR" property="businessCertCode" />
+        <result column="BUSINESS_CERT_IMAGE_SRC" jdbcType="VARCHAR" property="businessCertImageSrc" />
+        <result column="JY_MAN_NAME" jdbcType="VARCHAR" property="jyManName" />
+        <result column="LEGAL_REPRESENT_NAME" jdbcType="VARCHAR" property="legalRepresentName" />
+        <result column="JY_LICENCE_TYPE" jdbcType="VARCHAR" property="jyLicenceType" />
+        <result column="JY_CHARGE_MAN_PHONE" jdbcType="VARCHAR" property="jyChargeManPhone" />
+        <result column="JY_MAN_NAME_BOOK_IMAGE_SRC" jdbcType="VARCHAR" property="jyManNameBookImageSrc" />
+        <result column="QR_CODE_IMAGE_SRC" jdbcType="VARCHAR" property="qrCodeImageSrc" />
+        <result column="CAR_AMOUNT" jdbcType="VARCHAR" property="carAmount" />
+        <result column="LICENSE_SEND_REASON" jdbcType="VARCHAR" property="licenseSendReason" />
+        <result column="ADMINISTRATOR" jdbcType="VARCHAR" property="administrator" />
+        <result column="LICENSE_VALID_DATE" jdbcType="TIMESTAMP" property="licenseValidDate" />
+        <result column="ESCORT_MAN_NAME" jdbcType="VARCHAR" property="escortManName" />
+        <result column="CHECKED_STATE" jdbcType="VARCHAR" property="checkedState" />
+        <result column="TAXATION_SEND_DATE" jdbcType="TIMESTAMP" property="taxationSendDate" />
+        <result column="TAXATION_CHANGE_DATE" jdbcType="TIMESTAMP" property="taxationChangeDate" />
+        <result column="GC_AMOUNT" jdbcType="VARCHAR" property="gcAmount" />
+        <result column="WSHS_FACILITY_CASE" jdbcType="VARCHAR" property="wshsFacilityCase" />
+        <result column="ZYQX_FACILITY_CASE" jdbcType="VARCHAR" property="zyqxFacilityCase" />
+        <result column="AQFH_FACILITY_CASE" jdbcType="VARCHAR" property="aqfhFacilityCase" />
+        <result column="UNSAFE_DRIVER_NAME" jdbcType="VARCHAR" property="unsafeDriverName" />
+        <result column="CAR_SUM_TON" jdbcType="VARCHAR" property="carSumTon" />
+        <result column="PARK_SUM_AREA" jdbcType="VARCHAR" property="parkSumArea" />
+        <result column="ECONOMIC_TYPE" jdbcType="VARCHAR" property="economicType" />
+        <result column="BUSINESS_CERT_IMAGE" jdbcType="VARCHAR" property="businessCertImage" />
+        <result column="LEGAL_REPRESENT_LICENCE_TYPE" jdbcType="VARCHAR" property="legalRepresentLicenceType" />
+        <result column="CHECK_INSTITUTION" jdbcType="VARCHAR" property="checkInstitution" />
+        <result column="TEAM_PHONE_NUMBER" jdbcType="VARCHAR" property="teamPhoneNumber" />
+        <result column="TEAM_TELEPHONE" jdbcType="VARCHAR" property="teamTelephone" />
+        <result column="TEAM_EMAIL" jdbcType="VARCHAR" property="teamEmail" />
+        <result column="POST_CODE" jdbcType="VARCHAR" property="postCode" />
+        <result column="TEAM_ADDRESS" jdbcType="VARCHAR" property="teamAddress" />
+        <result column="ASSESS_DATE" jdbcType="TIMESTAMP" property="assessDate" />
+        <result column="INSTITU_FRAME_NUMBER" jdbcType="VARCHAR" property="instituFrameNumber" />
+        <result column="LAND_TAX_NUMBER" jdbcType="VARCHAR" property="landTaxNumber" />
+        <result column="BUSINESS_LICENSE_NUMBER" jdbcType="VARCHAR" property="businessLicenseNumber" />
+        <result column="RESIDENCE_INSTITUTION" jdbcType="VARCHAR" property="residenceInstitution" />
+        <result column="COMPANY_LAVEL" jdbcType="VARCHAR" property="companyLevel" />
+        <result column="CHANGE_DATE" jdbcType="TIMESTAMP" property="changeDate" />
+        <result column="ZL_XY_CHECKED_RESULT" jdbcType="VARCHAR" property="zlXyCheckedResult" />
+
+        <result column="MNG_ANQUAN_ZEREN_PHOTO" jdbcType="VARCHAR" property="mngAnquanZerenPhoto" />
+        <result column="CONGYE_ANQUAN_ZEREN_PHOTO" jdbcType="VARCHAR" property="congyeAnquanZerenPhoto" />
+        <result column="ANQUAN_SC_CHECK_ZD_PHOTO" jdbcType="VARCHAR" property="anquanScCheckZdPhoto" />
+        <result column="ANQUAN_SC_EDU_ZD_PHOTO" jdbcType="VARCHAR" property="anquanScEduZdPhoto" />
+        <result column="ANQUAN_MNG_ZD_PHOTO" jdbcType="VARCHAR" property="anquanMngZdPhoto" />
+        <result column="YINGJI_YUAN_ZD_PHOTO" jdbcType="VARCHAR" property="yingjiYuanZdPhoto" />
+        <result column="ANQUAN_SC_GUICHENG_PHOTO" jdbcType="VARCHAR" property="anquanScGuichengPhoto" />
+        <result column="ANQUAN_SC_KH_ZD_PHOTO" jdbcType="VARCHAR" property="anquanScKhZdPhoto" />
+        <result column="ANQUAN_SGCL_ZD_PHOTO" jdbcType="VARCHAR" property="anquanSgclZdPhoto" />
+        <result column="SEND_ID" jdbcType="VARCHAR" property="sendId" />
+        <result column="CHECK_SAFE_FILE_SEND" jdbcType="VARCHAR" property="checkSafeFileSend" />
+        <!--2017 12 2 增-->
+        <result column="BZH_LAVEL" jdbcType="VARCHAR" property="biaozhunLavel" />
+        <result column="BZH_ZS_PHOTO" jdbcType="VARCHAR" property="biaozhunPhoto" />
+        <result column="ZS_END_DATA" jdbcType="TIMESTAMP" property="zhengshuEndDate" />
+        <result column="CHANGDI_GH_PHOTO" jdbcType="VARCHAR" property="cdghPhoto" />
+        <result column="XFSHA_PHOTO" jdbcType="VARCHAR" property="xfsPhoto" />
+        <result column="XFQIU_PHOTO" jdbcType="VARCHAR" property="xfqiuPhoto" />
+        <result column="MHQ_PHOTO" jdbcType="VARCHAR" property="mhqPhoto" />
+        <result column="CHANGDI_PHOTO" jdbcType="VARCHAR" property="changdiPhoto" />
+        <result column="CHANGDIWEIZHI" jdbcType="VARCHAR" property="changdiweizhi" />
+        <result column="MONEY_ZHIDU" jdbcType="VARCHAR" property="moneyzdPhoto" />
+        <!--2018 4 3 增  物流的制度-->
+        <result column="CYRY_AQGL_ZD" jdbcType="VARCHAR" property="cyryaqglZd" />
+        <result column="AQ_SGBGL_ZD" jdbcType="VARCHAR" property="aqsgbglZd" />
+        <result column="AQ_YHZG_ZD" jdbcType="VARCHAR" property="aqyhzgZd" />
+        <result column="GSXC_AB_ZD" jdbcType="VARCHAR" property="gsxcabZd" />
+        <result column="LH_ZD" jdbcType="VARCHAR" property="lhZd" />
+        <result column="AJJ_WLS_WDW" jdbcType="VARCHAR" property="ajjWlswdw" />
+        <result column="AJJ_JTGD" jdbcType="VARCHAR" property="ajjJtgd" />
+        <result column="HW_SLHJ_YS_ZD" jdbcType="VARCHAR" property="hwslhjysZd" />
+        <result column="TZGL_ZD" jdbcType="VARCHAR" property="tzglZd" />
+        <result column="GS_ZD" jdbcType="VARCHAR" property="gsZd" />
+
+        <!--同步状态-->
+        <result column="TONGBU_STATE" jdbcType="VARCHAR" property="tongBuState" />
+        <result column="UNDO_TASK" jdbcType="INTEGER" property="undoTask"/>
+        <result column="EMP_NUM" jdbcType="INTEGER" property="empNum"/>
+        <result column="TRAINING_NUM" jdbcType="INTEGER" property="trainingNum"/>
+        <result column="FINISHED_CAR_NUM" jdbcType="INTEGER" property="finishedCarNum"/>
+
+        <!--经营许可证下发时间-->
+        <result column="LICENCE_SEND_TIME" jdbcType="TIMESTAMP" property="licenceSendTime"></result>
+    </resultMap>
+
+    <resultMap id="TeamReceiveMap" type="com.edgedo.reportdata.entity.TeamReceive" >
+        <result column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="ORDER_NUMBER" jdbcType="DECIMAL" property="orderNumber" />
+        <result column="CREATE_USER_NAME" jdbcType="VARCHAR" property="createUserName" />
+        <result column="CREATE_USER_ID" jdbcType="VARCHAR" property="createUserId" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="OPERATOR" jdbcType="VARCHAR" property="operator" />
+        <result column="OPERATE_TIME" jdbcType="TIMESTAMP" property="operateTime" />
+        <result column="VERSION" jdbcType="VARCHAR" property="version" />
+        <result column="REVIEW_CASE_QUESTION" jdbcType="VARCHAR" property="reviewCaseQuestion" />
+        <result column="CHECK_CODE" jdbcType="VARCHAR" property="checkCode" />
+        <result column="COMPANY_NAME" jdbcType="VARCHAR" property="companyName" />
+        <result column="COMPANY_ADDRESS" jdbcType="VARCHAR" property="companyAddress" />
+        <result column="CHECK_TIME2" jdbcType="TIMESTAMP" property="checkTime2" />
+        <result column="CHECK_MAN_NAME" jdbcType="VARCHAR" property="checkManName" />
+        <result column="CHEECK_CONTENT" jdbcType="VARCHAR" property="checkContent" />
+        <result column="CHEECK_CASE_QUESTION" jdbcType="VARCHAR" property="checkCaseQuestion" />
+        <result column="CUR_CHANGE" jdbcType="VARCHAR" property="curChange" />
+        <result column="CUR_CHANGE_CHARGED_MAN_NAME" jdbcType="VARCHAR" property="curChangeChargedManName" />
+        <result column="CUR_CHANGE_CHARGED_DATE" jdbcType="TIMESTAMP" property="curChangeChargedDate" />
+        <result column="LIMIT_CHANGE" jdbcType="VARCHAR" property="limitChange" />
+        <result column="LIMIT_CHANGE_CHARGED_PERSON" jdbcType="VARCHAR" property="limitChangeChargedPerson" />
+        <result column="LIMIT_CHANGE_DATE" jdbcType="TIMESTAMP" property="limitChangeDate" />
+        <result column="REVIEW_CASE_MAN_NAME" jdbcType="VARCHAR" property="reviewCaseManName" />
+        <result column="CONGYE_ANQUAN_ZEREN" jdbcType="VARCHAR" property="congyeAnquanZeren" />
+        <result column="ANQUAN_SC_CHECK_ZD" jdbcType="VARCHAR" property="anquanScCheckZd" />
+        <result column="ANQUAN_SC_EDU_ZD" jdbcType="VARCHAR" property="anquanScEduZd" />
+        <result column="ANQUAN_MNG_ZD" jdbcType="VARCHAR" property="anquanMngZd" />
+        <result column="YINGJI_YUAN_ZD" jdbcType="VARCHAR" property="yingjiYuanZd" />
+        <result column="ANQUAN_SC_GUICHENG" jdbcType="VARCHAR" property="anquanScGuicheng" />
+        <result column="ANQUAN_SC_KH_ZD" jdbcType="VARCHAR" property="anquanScKhZd" />
+        <result column="ANQUAN_SGCL_ZD" jdbcType="VARCHAR" property="anquanSgclZd" />
+        <result column="FIRE_EXTINGUISHER" jdbcType="VARCHAR" property="fireExtinguisher" />
+        <result column="YGC_SEND_ID" jdbcType="VARCHAR" property="ygcSendId" />
+        <result column="PT_DWZ_STATE" jdbcType="VARCHAR" property="ptDwzState" />
+        <result column="URL" jdbcType="VARCHAR" property="url" />
+        <result column="LEDGER_TYPE_ID" jdbcType="DECIMAL" property="ledgerTypeId" />
+
+        <result column="REVIEW_CASE_DATE" jdbcType="TIMESTAMP" property="reviewCaseDate" />
+        <result column="CHACKED_CHARGE_MAN_NAME" jdbcType="VARCHAR" property="checkedChargeManName" />
+        <result column="CHACKED_CHARGE_DATE" jdbcType="TIMESTAMP" property="checkedChargeDate" />
+        <result column="CHECK_CHARGE_MAN_NAME" jdbcType="VARCHAR" property="checkChargeManName" />
+        <result column="CHECK_CHARGE_DATE" jdbcType="TIMESTAMP" property="checkChargeDate" />
+        <result column="SEND_DATE" jdbcType="TIMESTAMP" property="sendDate" />
+        <result column="TEAM_ID" jdbcType="VARCHAR" property="teamId" />
+        <result column="TEAM_NAME" jdbcType="VARCHAR" property="teamName" />
+        <result column="SEND_MAN_ID" jdbcType="VARCHAR" property="sendManId" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="CHECK_STATE" jdbcType="VARCHAR" property="checkState" />
+        <result column="CHECK_TIME" jdbcType="TIMESTAMP" property="checkTime" />
+        <result column="OFFICIAL_SEAL" jdbcType="VARCHAR" property="officialSeal" />
+        <result column="MNG_ANQUAN_ZEREN" jdbcType="VARCHAR" property="mngAnquanZeren" />
+        <result column="FIRE_EXTINGUISHER_PHOTO" jdbcType="VARCHAR" property="fireExtinguisherPhoto" />
+        <result column="FIRE_SAND" jdbcType="VARCHAR" property="fireSand" />
+        <result column="FIRE_SAND_PHONO" jdbcType="VARCHAR" property="fireSandPhoto" />
+        <result column="FIRE_SPADE" jdbcType="VARCHAR" property="fireSpade" />
+        <result column="FIRE_SPADE_PHOTO" jdbcType="VARCHAR" property="fireSpadePhoto" />
+        <result column="DANGER_CAR_CHECK" jdbcType="VARCHAR" property="dangerCarCheck" />
+        <result column="DANGER_CAR_CHECK_FLAG" jdbcType="VARCHAR" property="dangerCarCheckFlag" />
+
+        <!-- 2017.08.17修改 -->
+        <result column="MNG_ANQUAN_ZEREN_PHOTO" jdbcType="VARCHAR" property="mngAnquanZerenPhoto" />
+        <result column="CONGYE_ANQUAN_ZEREN_PHOTO" jdbcType="VARCHAR" property="congyeAnquanZerenPhoto" />
+        <result column="ANQUAN_SC_CHECK_ZD_PHOTO" jdbcType="VARCHAR" property="anquanScCheckZdPhoto" />
+        <result column="ANQUAN_SC_EDU_ZD_PHOTO" jdbcType="VARCHAR" property="anquanScEduZdPhoto" />
+        <result column="ANQUAN_MNG_ZD_PHOTO" jdbcType="VARCHAR" property="anquanMngZdPhoto" />
+        <result column="YINGJI_YUAN_ZD_PHOTO" jdbcType="VARCHAR" property="yingjiYuanZdPhoto" />
+        <result column="ANQUAN_SC_GUICHENG_PHOTO" jdbcType="VARCHAR" property="anquanScGuichengPhoto" />
+        <result column="ANQUAN_SC_KH_ZD_PHOTO" jdbcType="VARCHAR" property="anquanScKhZdPhoto" />
+        <result column="ANQUAN_SGCL_ZD_PHOTO" jdbcType="VARCHAR" property="anquanSgclZdPhoto" />
+
+        <!--  下发备注  -->
+        <result column="REMARK_PTTZ" jdbcType="VARCHAR" property="remarkPttz" />
+        <result column="REMARK_GLZD" jdbcType="VARCHAR" property="remarkGlzd" />
+        <result column="REMARK_CD" jdbcType="VARCHAR" property="remarkCd" />
+        <result column="REMARK_XFQC" jdbcType="VARCHAR" property="remarkXfqc" />
+        <result column="REMARK_CHECK" jdbcType="VARCHAR" property="remarkCheck" />
+
+        <result column="is_pass" jdbcType="VARCHAR" property="isPass" />
+    </resultMap>
+
+
+    <!-- ******* 新增字段请修改这里  ******  -->
+    <sql id="Base_Column_List">
+      ID, ORDER_NUMBER, CREATE_USER_NAME, CREATE_USER_ID, CREATE_TIME, OPERATOR, OPERATE_TIME, VERSION, DATA_STATE, TEAM_NAME,
+      PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, XIANQU_ID, XIANQU_NAME, CAR_COUNT, TEAM_ADMIN_ID, TEAM_ADMIN_CODE,
+       TEAM_ADMIN_PHONE,TEAM_ADMIN_NAME,REMARK,TEAM_TYPE,CHECK_PHONE_FLAG,CHECK_RENZHENG_FLAG,LICENCE_AUTHORITY,EXA_CHECK_DATE,
+  	BUSINESS_CERT,JY_CERT_NUMBER,JY_CERT_IMAGE_SRC,JY_SCOPE,BUSINESS_CERT_CODE,BUSINESS_CERT_IMAGE_SRC,JY_MAN_NAME,LEGAL_REPRESENT_NAME,
+  	JY_LICENCE_TYPE,JY_CHARGE_MAN_PHONE,JY_MAN_NAME_BOOK_IMAGE_SRC,QR_CODE_IMAGE_SRC,CAR_AMOUNT,LICENSE_SEND_REASON,
+  	ADMINISTRATOR,LICENSE_VALID_DATE,ESCORT_MAN_NAME,CHECKED_STATE,TAXATION_SEND_DATE,TAXATION_CHANGE_DATE,GC_AMOUNT,
+  	WSHS_FACILITY_CASE,ZYQX_FACILITY_CASE,AQFH_FACILITY_CASE,UNSAFE_DRIVER_NAME,CAR_SUM_TON,PARK_SUM_AREA,ECONOMIC_TYPE,
+  	BUSINESS_CERT_IMAGE,LEGAL_REPRESENT_LICENCE_TYPE,CHECK_INSTITUTION,TEAM_PHONE_NUMBER,TEAM_TELEPHONE,TEAM_EMAIL,
+  	POST_CODE,TEAM_ADDRESS,ASSESS_DATE,INSTITU_FRAME_NUMBER,LAND_TAX_NUMBER,BUSINESS_LICENSE_NUMBER,RESIDENCE_INSTITUTION,
+ 	COMPANY_LAVEL,CHANGE_DATE,ZL_XY_CHECKED_RESULT,MNG_ANQUAN_ZEREN_PHOTO,CONGYE_ANQUAN_ZEREN_PHOTO,ANQUAN_SC_CHECK_ZD_PHOTO,
+      ANQUAN_SC_EDU_ZD_PHOTO,ANQUAN_MNG_ZD_PHOTO,YINGJI_YUAN_ZD_PHOTO,ANQUAN_SC_GUICHENG_PHOTO,ANQUAN_SC_KH_ZD_PHOTO,ANQUAN_SGCL_ZD_PHOTO,
+      BZH_LAVEL,BZH_ZS_PHOTO,ZS_END_DATA,CHANGDI_GH_PHOTO,XFSHA_PHOTO,XFQIU_PHOTO,MHQ_PHOTO,CHANGDI_PHOTO,CHANGDIWEIZHI,MONEY_ZHIDU,
+      CYRY_AQGL_ZD,AQ_SGBGL_ZD,AQ_YHZG_ZD,GSXC_AB_ZD,LH_ZD,AJJ_WLS_WDW,AJJ_JTGD,HW_SLHJ_YS_ZD,TZGL_ZD,GS_ZD,
+      FZR_AQSC_ZR_ZD,CYRY_AQSC_ZR_ZD,AQSC_JYPX_ZD,AQSC_KHYJC_ZD,AQSGBG_TJYCL_ZD,TONGBU_STATE,UNDO_TASK,EMP_NUM,TRAINING_NUM,FINISHED_CAR_NUM,LICENCE_SEND_TIME
+    </sql>
+
+    <!-- ******* 利用好这里的动态查询条件  ******  -->
+    <sql id="where">
+        <where>
+            <if test='queryObj != null and  queryObj.createTime != null'>
+                AND  CREATE_TIME = #{queryObj.createTime}
+            </if>
+        </where>
+
+    </sql>
+
+    <select id="selectCountCarTeam" parameterType="com.edgedo.reportdata.queryvo.TransitCarTeamQuery" resultType="int">
+        /*!mycat:sql=select app_id from zhyg_db where app_id='${cityId}'*/ select count(1) from transit_car_team
+        <trim prefix="WHERE (" suffix=")" prefixOverrides="AND | OR">
+            <if test="teamName != null and teamName != ''">
+                AND TEAM_NAME LIKE concat('%',#{teamName,jdbcType = VARCHAR},'%')
+            </if>
+            <if test="xianquId != null and xianquId != ''">
+                AND XIANQU_ID = #{xianquId,jdbcType = VARCHAR}
+            </if>
+            <if test="companyLavel != null and companyLavel != ''">
+                AND COMPANY_LAVEL = #{companyLavel,jdbcType = VARCHAR}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectCarTeamInfoListPage" parameterType="com.edgedo.reportdata.queryvo.TransitCarTeamQuery" resultMap="transitCarTeamMap">
+        /*!mycat:sql = select app_id from zhyg_db where app_id = '${cityId}'*/
+        select <include refid="Base_Column_List"/> from transit_car_team
+        <trim prefix="WHERE (" suffix=")" prefixOverrides="AND | OR">
+            <if test="teamName != null and teamName != ''">
+              AND TEAM_NAME LIKE concat('%',#{teamName},'%')
+            </if>
+            <if test="teamId != null and teamId != ''">
+                AND ID = #{teamId}
+            </if>
+            <if test="xianquId != null and xianquId != ''">
+              AND XIANQU_ID = #{xianquId}
+            </if>
+            <if test="companyLavel != null and companyLavel != ''">
+                AND COMPANY_LAVEL = #{companyLavel}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectCarTeamInfo" parameterType="com.edgedo.reportdata.queryvo.TransitCarTeamQuery" resultMap="transitCarTeamMap">
+        /*!mycat:sql = select app_id from zhyg_db where app_id = '${cityId}'*/
+        select <include refid="Base_Column_List"/> from transit_car_team
+        <trim prefix="WHERE (" suffix=")" prefixOverrides="AND | OR">
+            <if test="teamName != null and teamName != ''">
+                AND TEAM_NAME LIKE concat('%',#{teamName},'%')
+            </if>
+            <if test="teamId != null and teamId != ''">
+                AND ID = #{teamId}
+            </if>
+            <if test="xianquId != null and xianquId != ''">
+                AND XIANQU_ID = #{xianquId}
+            </if>
+            <if test="companyLavel != null and companyLavel != ''">
+                AND COMPANY_LAVEL = #{companyLavel}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectTeamReceiveByTeamId" parameterType="com.edgedo.reportdata.queryvo.TransitCarTeamQuery" resultMap="TeamReceiveMap">
+      /*!mycat:sql = select app_id from zhyg_db where app_id = '${cityId}'*/ select ID,SEND_DATE,OPERATOR,TEAM_NAME from team_receive
+        where TEAM_ID = #{teamId,jdbcType = VARCHAR}
+    </select>
+
+    <select id="selectTeamReceiveInfoById" parameterType="map" resultMap="TeamReceiveMap">
+        /*!mycat:sql = select app_id from zhyg_db where app_id = '${cityId}'*/ select * from team_receive
+        where ID = #{id,jdbcType = VARCHAR}
+    </select>
+
+
+</mapper>

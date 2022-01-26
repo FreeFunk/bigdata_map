@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.edgedo.plant</groupId>
+		<artifactId>edgedo_plant</artifactId>
+		<version>1.0-RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.edgedo.bigdata</groupId>
+	<artifactId>bigdata-car-gps-service-client-starter</artifactId>
+	<version>1.0-RELEASE</version>
+	<packaging>jar</packaging>
+	<name>大数据gps定位查询服务项目引入</name>
+	<description>大数据gps定位查询服务项目引入</description>
+
+	<properties>
+	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>edgedo_plant_release</id>
+			<name>edgedo_plant_release</name>
+			<url>http://140.143.246.143:10001/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>edgedo_plant_snapshot</id>
+			<name>edgedo_plant_release</name>
+			<url>http://140.143.246.143:10001/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.edgedo.plant</groupId>
+			<artifactId>common-base</artifactId>
+			<version>1.0-RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>com.edgedo.bigdata</groupId>
+			<artifactId>bigdata-car-gps-service-client-api</artifactId>
+			<version>1.0-RELEASE</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<!-- ***************** 打包不打入3方jar begin   **************** -->
+					<includes>   <!-- exclude third part jar files -->
+						<include>
+							<groupId>nothing</groupId>
+							<artifactId>nothing</artifactId>
+						</include>
+					</includes>
+					<fork>true</fork>
+					<!-- ********************** 打包不打入3方jar end *****************-->
+					<!--<addResources>true</addResources>-->
+					<!-- ***************** 完整可运行的jar begin   **************** -->
+					<classifier>exec</classifier>
+					<!-- ***************** 完整可运行的jar begin   **************** -->
+				</configuration>
+
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+
+</project>

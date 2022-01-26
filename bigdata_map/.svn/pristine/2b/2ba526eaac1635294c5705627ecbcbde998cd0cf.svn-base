@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataBeidouSafetyCarInfoMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataBeidouSafetyCarInfo" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="UPDATE_TIME" property="updateTime"/>
+			<result column="COMP_ID" property="compId"/>
+			<result column="COMP_NAME" property="compName"/>
+			<result column="PROVINCE_ID" property="provinceId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_ID" property="cityId"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="XIANQU_ID" property="xianquId"/>
+			<result column="XIANQU_NAME" property="xianquName"/>
+			<result column="TEAM_ID" property="teamId"/>
+			<result column="TEAM_NAME" property="teamName"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="INSTALL_TIME" property="installTime"/>
+			<result column="MODEL_CODE" property="modelCode"/>
+			<result column="MANUFACTURER_NAME" property="manufacturerName"/>
+			<result column="MANUFACTURER_ID" property="manufacturerId"/>
+			<result column="MODEL_ID" property="modelId"/>
+			<result column="SIM" property="sim"/>
+			<result column="DSM_ID" property="dsmId"/>
+			<result column="ADAS_ID" property="adasId"/>
+			<result column="UPLOAD_TIME" property="uploadTime"/>
+			<result column="altitude" property="altitude"/>
+			<result column="lon" property="lon"/>
+			<result column="lat" property="lat"/>
+			<result column="mileage" property="mileage"/>
+			<result column="state" property="state"/>
+			<result column="direction" property="direction"/>
+			<result column="alarm" property="alarm"/>
+			<result column="speed" property="speed"/>
+			<result column="state_desc" property="stateDesc"/>
+			<result column="CHANNEL_ENABLE" property="channelEnable"/>
+			<result column="CHANNEL_NUM" property="channelNum"/>
+			<result column="PROTOCOL" property="protocol"/>
+			<result column="DEVICE_TYPE" property="deviceType"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataBeidouSafetyCarInfoView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, UPDATE_TIME, COMP_ID, COMP_NAME, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME,
+	 XIANQU_ID, XIANQU_NAME, TEAM_ID, TEAM_NAME, CAR_PLATE_NUM, CAR_PLATE_COLOR, CAR_FRAME_NUM, CAR_TYPE,
+	 INSTALL_TIME, MODEL_CODE, MANUFACTURER_NAME, MANUFACTURER_ID, MODEL_ID, SIM, DSM_ID, ADAS_ID, UPLOAD_TIME,
+	 altitude,lon,lat,mileage,state,direction,alarm,speed,state_desc,CHANNEL_ENABLE,CHANNEL_NUM,PROTOCOL,DEVICE_TYPE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.updateTime != null'>
+					AND  UPDATE_TIME = #{queryObj.updateTime}
+				</if>
+				<if test='queryObj != null and  queryObj.installTime != null'>
+					AND  INSTALL_TIME = #{queryObj.installTime}
+				</if>
+				<if test='queryObj != null and  queryObj.uploadTime != null'>
+					AND  UPLOAD_TIME = #{queryObj.uploadTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouSafetyCarInfoQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_safety_car_info 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouSafetyCarInfoQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_safety_car_info 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectByCarPlateNumAndColor" parameterType="com.edgedo.bigdata.entity.BigdataBeidouSafetyCarInfo" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_beidou_safety_car_info
+		WHERE CAR_PLATE_NUM = #{carPlateNum} and CAR_PLATE_COLOR = #{carPlateColor} limit 1
+	</select>
+
+	<select id="countByCarPlateNumAndColor" parameterType="com.edgedo.bigdata.entity.BigdataBeidouSafetyCarInfo" resultType="int">
+		select count(1) from bigdata_beidou_safety_car_info
+		WHERE CAR_PLATE_NUM = #{carPlateNum} and CAR_PLATE_COLOR = #{carPlateColor} limit 1
+	</select>
+
+	<update id="updateByCarPlateNumAndColor" parameterType="com.edgedo.bigdata.entity.BigdataBeidouSafetyCarInfo">
+		update bigdata_beidou_safety_car_info
+		<set>
+			<if test='updateTime != null'>
+				UPDATE_TIME = #{updateTime},
+			</if>
+			<if test="compId != null and compId!=''">
+				COMP_ID = #{compId},
+			</if>
+			<if test="compName != null and compName!=''">
+				COMP_NAME = #{compName},
+			</if>
+			<if test="provinceId != null and provinceId!=''">
+				PROVINCE_ID = #{provinceId},
+			</if>
+			<if test="provinceName != null and provinceName!=''">
+				PROVINCE_NAME = #{provinceName},
+			</if>
+			<if test="cityId != null and cityId!=''">
+				CITY_ID = #{cityId},
+			</if>
+			<if test="cityName != null and cityName!=''">
+				CITY_NAME = #{cityName},
+			</if>
+			<if test="xianquId != null and xianquId!=''">
+				XIANQU_ID = #{xianquId},
+			</if>
+			<if test="xianquName != null and xianquName!=''">
+				XIANQU_NAME = #{xianquName},
+			</if>
+			<if test="teamId != null and teamId!=''">
+				TEAM_ID = #{teamId},
+			</if>
+			<if test="teamName != null and teamName!=''">
+				TEAM_NAME = #{teamName},
+			</if>
+			<if test="carPlateNum != null and carPlateNum!=''">
+				CAR_PLATE_NUM = #{carPlateNum},
+			</if>
+			<if test="carPlateColor != null and carPlateColor!=''">
+				CAR_PLATE_COLOR = #{carPlateColor},
+			</if>
+			<if test="carFrameNum != null and carFrameNum!=''">
+				CAR_FRAME_NUM = #{carFrameNum},
+			</if>
+			<if test="carType != null and carType!=''">
+				CAR_TYPE = #{carType},
+			</if>
+			<if test='installTime != null'>
+				INSTALL_TIME = #{installTime},
+			</if>
+			<if test="modelCode != null and modelCode!=''">
+				MODEL_CODE = #{modelCode},
+			</if>
+			<if test="manufacturerName != null and manufacturerName!=''">
+				MANUFACTURER_NAME = #{manufacturerName},
+			</if>
+			<if test="manufacturerId != null and manufacturerId!=''">
+				MANUFACTURER_ID = #{manufacturerId},
+			</if>
+			<if test="modelId != null and modelId!=''">
+				MODEL_ID = #{modelId},
+			</if>
+			<if test="sim != null and sim!=''">
+				SIM = #{sim},
+			</if>
+			<if test="dsmId != null and dsmId!=''">
+				DSM_ID = #{dsmId},
+			</if>
+			<if test="adasId != null and adasId!=''">
+				ADAS_ID = #{adasId},
+			</if>
+			<if test="channelEnable != null and channelEnable!=''">
+				CHANNEL_ENABLE = #{channelEnable},
+			</if>
+			<if test="channelNum != null and channelNum!=''">
+				CHANNEL_NUM = #{channelNum},
+			</if>
+			<if test="protocol != null and protocol!=''">
+				PROTOCOL = #{protocol},
+			</if>
+			<if test="deviceType != null and deviceType!=''">
+				DEVICE_TYPE = #{deviceType},
+			</if>
+
+
+		</set>
+		where  CAR_PLATE_NUM = #{carPlateNum} and CAR_PLATE_COLOR = #{carPlateColor} limit 1
+	</update>
+  
+  
+</mapper>

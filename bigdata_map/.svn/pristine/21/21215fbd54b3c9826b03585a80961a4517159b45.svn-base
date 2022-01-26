@@ -1,0 +1,180 @@
+########################备注信息###########################
+######### 根据com.edgedo下面包结构书写下面内容  ###########
+#永不执行的表达式 '-'
+timetask:
+  #########alarm包
+  alarm:
+    Get2gAlertAndCardInfoFromQueue:
+      enable: true
+      cron:
+        #下载报警
+        downQueueAlert2Db: '-'
+        #下载司机卡记录到数据库中
+        downDriverCardRec2Db: '-'
+    GetAlarmFromRedis:
+      enable: true
+      cron:
+        #从缓存中获取天地通的主动安全报警
+        getAlarm: '-'
+        #将报警信息放进队列里
+        leftPushAttachRequest: '-'
+        #从缓存中回去附件信息
+        getSafetyFileInfo: '-'
+        #清理key
+        deleteAlarmTimeKey: '-'
+  #########analysis包
+  analysis:
+    BigDataAnalysisCarStop:
+      enable: true
+      cron:
+      #设置停车记录的地理位置
+        fenxiCarStopRec: 0 24 * * * ?
+    BigdataAnalysisCoefficient:
+      enable: true
+      cron:
+        #客货危的系数统计
+        execute: 0 0/5 * * * ?
+    BigdataAnalysisFatigue:
+      enable: true
+      cron:
+        #疲劳驾驶分析日统计
+        execute: 0 0/5 * * * ?
+        #疲劳驾驶的年度统计
+        fatigueSumCount: 0 52 23 * * ?
+    BigDataAnalysisOperative:
+      enable: true
+      cron:
+        #同步车辆的位置信息
+        synCarLocationInfo: '-'
+        #只更新GPS表
+        synCarLocationInfoGps: '-'
+        #将系统内的数据清零
+        initCarGpsInfo: 0 5 * * * ?
+        #查询不在今天定位的车辆信息初始化数据
+        initCarGpsInfoNew: 0 0/30 * * * ?
+        #分析上线率运营率等信息
+        fenxiOpertiveInfo: 0 0/10 * * * ?
+    BigDataAnalysisOperativeInfo:
+      enable: true
+      cron:
+        #运营分析详情(城市县区日统计)
+        initData: 0 0/5 * * * ?
+        #运营分析详情(企业日统计)
+        initTeamCount: 0 0/30 * * * ?
+    BigdataAnalysisOverspeed:
+      enable: true
+      cron:
+        #超速分析日统计
+        execute: 0 0/5 * * * ?
+        #超速汇总统计
+        overSpeedSumCount: 0 52 * * * ?
+    BigDataAnalysisQuXiangFenbu:
+      enable: true
+      cron:
+        #去向分布日分析
+        fenxiStopRecord: 0 0/24 * * * ?
+        #当月去向分布月度汇总
+        quXiangMonthSum: 0 0/58 * * * ?
+        #当季度去向分布月度汇总
+        quXiangJiDuSum: 0 0/58 * * * ?
+        #车辆 长跑线路统计 后半夜统计长跑线路
+        changpaoXianluTj: 0 0 22 * * ?
+        #11点时候统计车辆月度长跑路线
+        changpaoCarMonthJiduCount: 0 0 23 * * ?
+        #非车辆月度季度常跑路线汇总
+        changpaoMonthJiduSum: 0 7 11 * * ?
+    BigdataAnalysisTimeInfo:
+      enable: true
+      cron:
+        #每日生成车辆的时段里程信息
+        carDayTimeInfo: 0 55 * * * ?
+        #每日生成车辆的时段里程信息
+        carDayTimeOverSpeedAndFatigueInfo: 0 2/10 * * * ?
+        #汇总三种类型车辆的日统计信息
+        sumCarDayTimeInfo: 0 0/10 * * * ?
+        #汇总分类型的危险时段的统计
+        sumMonthOrYearDanger: 0 0/5 * * * ?
+    BigdataEmpAlarmAnalysisToTrainLession:
+      enable: true
+      cron:
+        #统计从业人员的月度报警情况 每月1号凌晨1点开整
+        updateSumEmpMonthAlarm: 0 * * 1 * ?
+        #发送安全学习小程序的站内信提醒 每月2号凌晨开整
+        sendTrainSiteMsgOfAlarmEmp: 0 * * 2 * ?
+    BigDataTongBuRedTreeCarInfo:
+      enable: true
+      cron:
+        #1个小时同步一次车辆信息
+        tongbuCarInfo: '-'
+    BigdataUpdateCarInfo:
+      enable: true
+      cron:
+        #更新车辆信息表
+        updateCarInfo: 0 44 22 * * ?
+        #同步gps车到car_info中
+        tongBuCarInfoByGps1: 0 28 * * * ?
+    UpdateMapPoint:
+      enable: true
+      cron:
+        #更新每个县区下的不同类型的车的数量，更新地图
+        countByCarType: 0 0/5 * * * ?
+    BigdataAnalysisPushLearnRec:
+      enable: true
+      cron:
+        #分析超速的定向课件
+        fenxiPushLearnRecOverspeed: 0 0 4 * * ?
+        #分析疲劳的定向课件
+        fenxiPushLearnRecPilao: 0 0 4 * * ?
+        #分析疲劳的定向课件
+        fenxiEmpPushLearnRec: 0 0 5 * * ?
+  #########beidou包
+  beidou:
+    BigdataBeidouComDayAnalysis:
+      enable: true
+      cron:
+        #北斗数据接入日统计
+        initData: 0 0/5 * * * ?
+    BigdataBeidouComMonthAnalysis:
+      enable: true
+      cron:
+        #北斗数据接入月统计
+        updateComMonthCheck: 0 0/30 * * * ?
+  #########driver包
+  driver:
+    BigdataAnalysisDriverAlarm:
+      enable: true
+      cron:
+        #分析司机的报警情况
+        fenxiDriverAlarmCount: 0 0 2 * * ?
+    BigdataAnalysisDriverDrawInfo:
+      enable: true
+      cron:
+        #司机画像分析
+        fenxiDriverDrawInfo: 0 0 2 * * ?
+    BigdataAnalysisDriverStopCount:
+      enable: true
+      cron:
+        #统计司机的停车记录
+        fenxiDriverStopCount: 0 0 1 * * ?
+    BigdataAnalysisDriverTimeJob:
+      enable: true
+      cron:
+        #车辆和司机每日的分段划分一个车某天是哪些司机开过
+        fenxiCarDriverDayPartition: '-'
+        #车辆和司机每日的分段划分一个车某天是哪些司机开过
+        saveDayPartitionAndSumDriverDayRun: '-'
+        #每天 3点多统计当月
+        sumDriverCurMonthAndYearCount: 0 9 3 * * ?
+  #########transmit包
+  transmit:
+    BigdataTransmitPlatLoadJob:
+      enable: true
+      cron:
+        #加载数据转发权限的配置
+        loadTransmitPlat: 0 0/10 * * * ?
+  monitor:
+    BigdataMonitorTask:
+      enable: true
+      cron:
+        monitorGpsData: 0 0/5 * * * ?
+        monitorAlarmSendMsg: 0 0/5 * * * ?

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataCarRealtimeGpsMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataCarRealtimeGps" >
+			<id column="ID" property="id"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="LAST_POSITION_TIME" property="lastPositionTime"/>
+			<result column="POINT_LAT" property="pointLat"/>
+			<result column="POINT_LONG" property="pointLong"/>
+			<result column="REAL_SPEED" property="realSpeed"/>
+			<result column="GPS_SPEED" property="gpsSpeed"/>
+			<result column="MILEAGE" property="mileage"/>
+			<result column="DIRECTION" property="direction"/>
+			<result column="ALTITUDE" property="altitude"/>
+			<result column="CAR_STATE" property="carState"/>
+			<result column="ALARM_STATE" property="alarmState"/>
+			<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+			<result column="LAST_UP_TIME" property="lastUpTime"/>
+			<result column="MAP_COUNTRY" property="mapCountry"/>
+			<result column="MAP_PROVINCE" property="mapProvince"/>
+			<result column="MAP_PROVINCE_ID" property="mapProvinceId"/>
+			<result column="MAP_CITY" property="mapCity"/>
+			<result column="MAP_CITY_ID" property="mapCityId"/>
+			<result column="MAP_XIANQU" property="mapXianqu"/>
+			<result column="MAP_XIANQU_ID" property="mapXianquId"/>
+			<result column="MAP_DETAIL" property="mapDetail"/>
+			<result column="BEGIN_MILEAGE" property="beginMileage"/>
+			<result column="BEGIN_TIME" property="beginTime"/>
+			<result column="OPERAT_FLAG" property="operatFlag"/>
+			<result column="ONLINE_STATE" property="onlineState"/>
+			<result column="AREA_UP_TIME" property="areaUpTime"/>
+			<result column="TODAY_TIME_TOTAL" property="todayTimeTotal"/>
+			<result column="TODAY_MILEAGE_TOTAL" property="todayMileageTotal"/>
+			<result column="IP" property="ip"/>
+			<result column="STOP_LAT" property="stopLat"/>
+			<result column="STOP_LONG" property="stopLong"/>
+			<result column="STOP_MINUTE_NUM" property="stopMinuteNum"/>
+			<result column="STOP_BEGIN_TIME" property="stopBeginTime"/>
+			<result column="STOP_END_TIME" property="stopEndTime"/>
+			<result column="MORNING_MINUTE_NUM" property="morningMinuteNum"/>
+			<result column="NOON_MINUTE_NUM" property="noonMinuteNum"/>
+			<result column="DUSK_MINUTE_NUM" property="duskMinuteNum"/>
+			<result column="LINGCHEN_MINUTE_NUM" property="lingchenMinuteNum"/>
+			<result column="MIDNIGHT_MINUTE_NUM" property="midnightMinuteNum"/>
+			<result column="MORNING_MILEAGE" property="morningMileage"/>
+			<result column="NOON_MILEAGE" property="noonMileage"/>
+			<result column="DUSK_MILEAGE" property="duskMileage"/>
+			<result column="MIDNIGHT_MILEAGE" property="midnightMileage"/>
+			<result column="LINGCHEN_MILEAGE" property="lingchenMileage"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataCarRealtimeGpsView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CAR_PLATE_NUM, CAR_FRAME_NUM, LAST_POSITION_TIME, POINT_LAT, POINT_LONG, REAL_SPEED,
+	  GPS_SPEED, MILEAGE, DIRECTION, ALTITUDE, CAR_STATE, ALARM_STATE, CAR_PLATE_COLOR, LAST_UP_TIME,
+	  MAP_COUNTRY, MAP_PROVINCE, MAP_PROVINCE_ID, MAP_CITY, MAP_CITY_ID, MAP_XIANQU, MAP_XIANQU_ID,
+	   MAP_DETAIL, BEGIN_MILEAGE, BEGIN_TIME, OPERAT_FLAG, ONLINE_STATE, AREA_UP_TIME, TODAY_TIME_TOTAL,
+	    TODAY_MILEAGE_TOTAL, IP, STOP_LAT, STOP_LONG, STOP_MINUTE_NUM, STOP_BEGIN_TIME, STOP_END_TIME,
+	     MORNING_MINUTE_NUM, NOON_MINUTE_NUM, DUSK_MINUTE_NUM, LINGCHEN_MINUTE_NUM, MIDNIGHT_MINUTE_NUM,
+	      MORNING_MILEAGE, NOON_MILEAGE, DUSK_MILEAGE, MIDNIGHT_MILEAGE, LINGCHEN_MILEAGE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.lastPositionTime != null'>
+					AND  LAST_POSITION_TIME = #{queryObj.lastPositionTime}
+				</if>
+				<if test='queryObj != null and  queryObj.lastUpTime != null'>
+					AND  LAST_UP_TIME = #{queryObj.lastUpTime}
+				</if>
+				<if test='queryObj != null and  queryObj.beginTime != null'>
+					AND  BEGIN_TIME = #{queryObj.beginTime}
+				</if>
+				<if test='queryObj != null and  queryObj.areaUpTime != null'>
+					AND  AREA_UP_TIME = #{queryObj.areaUpTime}
+				</if>
+				<if test='queryObj != null and  queryObj.stopMinuteNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.stopMinuteNum)'>
+					AND  STOP_MINUTE_NUM = #{queryObj.stopMinuteNum}
+				</if>
+				<if test='queryObj != null and  queryObj.stopBeginTime != null'>
+					AND  STOP_BEGIN_TIME = #{queryObj.stopBeginTime}
+				</if>
+				<if test='queryObj != null and  queryObj.stopEndTime != null'>
+					AND  STOP_END_TIME = #{queryObj.stopEndTime}
+				</if>
+				<if test='queryObj != null and  queryObj.morningMinuteNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.morningMinuteNum)'>
+					AND  MORNING_MINUTE_NUM = #{queryObj.morningMinuteNum}
+				</if>
+				<if test='queryObj != null and  queryObj.noonMinuteNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.noonMinuteNum)'>
+					AND  NOON_MINUTE_NUM = #{queryObj.noonMinuteNum}
+				</if>
+				<if test='queryObj != null and  queryObj.duskMinuteNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.duskMinuteNum)'>
+					AND  DUSK_MINUTE_NUM = #{queryObj.duskMinuteNum}
+				</if>
+				<if test='queryObj != null and  queryObj.lingchenMinuteNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.lingchenMinuteNum)'>
+					AND  LINGCHEN_MINUTE_NUM = #{queryObj.lingchenMinuteNum}
+				</if>
+				<if test='queryObj != null and  queryObj.midnightMinuteNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.midnightMinuteNum)'>
+					AND  MIDNIGHT_MINUTE_NUM = #{queryObj.midnightMinuteNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataCarRealtimeGpsQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_car_realtime_gps 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataCarRealtimeGpsQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_car_realtime_gps 
+  		<include refid="where"/>
+  </select>
+  
+  
+</mapper>

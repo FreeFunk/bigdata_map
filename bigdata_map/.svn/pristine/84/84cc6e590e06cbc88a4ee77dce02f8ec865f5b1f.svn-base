@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.drawing.mapper.BigdataDriverStopRecMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.drawing.entity.BigdataDriverStopRec" >
+			<id column="ID" property="id"/>
+			<result column="CAR_REAL_ID" property="carRealId"/>
+			<result column="DRIVER_ID" property="driverId"/>
+			<result column="DRIVER_NAME" property="driverName"/>
+			<result column="DRIVER_SEX" property="driverSex"/>
+			<result column="DRIVER_AGE" property="driverAge"/>
+			<result column="DRIVER_PHONE" property="driverPhone"/>
+			<result column="DRIVER_ID_CARD" property="driverIdCard"/>
+			<result column="DRIVER_CODE" property="driverCode"/>
+			<result column="MAP_COUNTRY" property="mapCountry"/>
+			<result column="MAP_PROVINCE" property="mapProvince"/>
+			<result column="MAP_PROVINCE_ID" property="mapProvinceId"/>
+			<result column="MAP_CITY" property="mapCity"/>
+			<result column="MAP_CITY_ID" property="mapCityId"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.drawing.queryvo.BigdataDriverStopRecView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CAR_REAL_ID, DRIVER_ID, DRIVER_NAME, DRIVER_SEX, DRIVER_AGE, DRIVER_PHONE, DRIVER_ID_CARD, DRIVER_CODE, MAP_COUNTRY, MAP_PROVINCE, MAP_PROVINCE_ID, MAP_CITY, MAP_CITY_ID, COUNT_DATE, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.driverAge != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.driverAge)'>
+					AND  DRIVER_AGE = #{queryObj.driverAge}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countDate)'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.yearNum)'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.drawing.queryvo.BigdataDriverStopRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_driver_stop_rec 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.drawing.queryvo.BigdataDriverStopRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_driver_stop_rec 
+  		<include refid="where"/>
+  </select>
+
+
+	<select id="selectGroupCityIdById" parameterType="map" resultType="com.edgedo.drawing.entity.BigdataDriverStopCount">
+			select  DRIVER_ID driverId , DRIVER_NAME driverName, DRIVER_SEX driverSex, DRIVER_AGE driverAge,
+			 DRIVER_PHONE driverPhone, DRIVER_ID_CARD driverIdCard, DRIVER_CODE driverCode,
+		MAP_COUNTRY mapCountry, MAP_PROVINCE mapProvince, MAP_PROVINCE_ID mapProvinceId,
+		MAP_CITY mapCity, MAP_CITY_ID mapCityId,count(1) stopNum
+			from bigdata_driver_stop_rec
+			WHERE COUNT_MONTH = #{countMonth} AND DRIVER_ID = #{driverId}
+			GROUP BY MAP_CITY_ID
+	</select>
+
+  
+  
+</mapper>

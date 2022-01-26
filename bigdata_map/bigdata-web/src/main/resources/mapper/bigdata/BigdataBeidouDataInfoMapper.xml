@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataBeidouDataInfoMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataBeidouDataInfo" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="UPLOAD_TIME" property="uploadTime"/>
+			<result column="OPERATOR_NAME" property="operatorName"/>
+			<result column="CAR_NUM" property="carNum"/>
+			<result column="UPLOAD_CAR_NUM" property="uploadCarNum"/>
+			<result column="UPLOAD_RATE" property="uploadRate"/>
+			<result column="LOSS_PACKAGE_NUM" property="lossPackageNum"/>
+			<result column="LOSS_PACKAGE_RATE" property="lossPackageRate"/>
+			<result column="RECEIVE_NUM" property="receiveNum"/>
+			<result column="RECEIVE_RATE" property="receiveRate"/>
+			<result column="QUALIFIED_NUM" property="qualifiedNum"/>
+			<result column="QUALIFIED_RATE" property="qualifiedRate"/>
+			<result column="COUNT_TIME" property="countTime"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataBeidouDataInfoView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, UPLOAD_TIME, OPERATOR_NAME, CAR_NUM, UPLOAD_CAR_NUM, UPLOAD_RATE, LOSS_PACKAGE_NUM, LOSS_PACKAGE_RATE, RECEIVE_NUM, RECEIVE_RATE, QUALIFIED_NUM, QUALIFIED_RATE, COUNT_TIME
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.uploadTime != null'>
+					AND  UPLOAD_TIME = #{queryObj.uploadTime}
+				</if>
+				<if test='queryObj != null and  queryObj.carNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.carNum)'>
+					AND  CAR_NUM = #{queryObj.carNum}
+				</if>
+				<if test='queryObj != null and  queryObj.uploadCarNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.uploadCarNum)'>
+					AND  UPLOAD_CAR_NUM = #{queryObj.uploadCarNum}
+				</if>
+				<if test='queryObj != null and  queryObj.lossPackageNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.lossPackageNum)'>
+					AND  LOSS_PACKAGE_NUM = #{queryObj.lossPackageNum}
+				</if>
+				<if test='queryObj != null and  queryObj.receiveNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.receiveNum)'>
+					AND  RECEIVE_NUM = #{queryObj.receiveNum}
+				</if>
+				<if test='queryObj != null and  queryObj.qualifiedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.qualifiedNum)'>
+					AND  QUALIFIED_NUM = #{queryObj.qualifiedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouDataInfoQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_data_info 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouDataInfoQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_data_info 
+  		<include refid="where"/>
+  </select>
+
+
+	<select id="listpageForBeidouDataInfo" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouDataInfoQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_beidou_data_info
+		WHERE date_format(UPLOAD_TIME,'%Y%m%d') = date_format(#{queryObj.countTime},'%Y%m%d')
+		<if test="queryObj.operatorName !=null and queryObj.operatorName != ''">
+			AND  OPERATOR_NAME like concat('%',#{queryObj.operatorName},'%')
+		</if>
+	</select>
+  
+</mapper>

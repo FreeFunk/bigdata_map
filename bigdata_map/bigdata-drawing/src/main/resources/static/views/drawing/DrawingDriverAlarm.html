@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>秦皇岛市智慧交通北斗大数据分析平台</title>
+    <link href="css/animate.min.css" rel="stylesheet" type="text/css">
+    <link href="css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/datedropper.css">
+    <link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/tool.js"></script>
+</head>
+<body>
+
+<!-- 头部样式 -->
+<div class="top ">
+    <div class="top_r">
+        <div class="time">
+            <span style="float: right" id=localtime></span>
+            <script type="text/javascript">
+                function showLocale(objD){
+                    var str,colorhead,colorfoot;
+                    var yy = objD.getYear();
+                    if(yy<1900) yy = yy+1900;
+                    var MM = objD.getMonth()+1;
+                    if(MM<10) MM = '0' + MM;
+                    var dd = objD.getDate();
+                    if(dd<10) dd = '0' + dd;
+                    var hh = objD.getHours();
+                    if(hh<10) hh = '0' + hh;
+                    var mm = objD.getMinutes();
+                    if(mm<10) mm = '0' + mm;
+                    var ss = objD.getSeconds();
+                    if(ss<10) ss = '0' + ss;
+                    var ww = objD.getDay();
+                    if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+                    if  (ww==0)  ww="星期日";
+                    if  (ww==1)  ww="星期一";
+                    if  (ww==2)  ww="星期二";
+                    if  (ww==3)  ww="星期三";
+                    if  (ww==4)  ww="星期四";
+                    if  (ww==5)  ww="星期五";
+                    if  (ww==6)  ww="星期六";
+                    colorfoot="</font>"
+                    str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+                    return(str);
+                }
+
+                function tick(){
+                    var today;
+                    today = new Date();
+                    document.getElementById("localtime").innerHTML = showLocale(today);
+                    window.setTimeout("tick()", 1000);
+                }
+
+                tick();
+            </script>
+        </div>
+    </div>
+
+    <div class="top_l">
+        <div class="bt">
+            <div class="bt_name left">告警情况详情</div>
+            <a href="#" onclick="javaScript:history.back(-1);" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+    </div>
+
+    <div class="top_m ">
+        <div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="ind mt100" style="position: relative">
+        <span style="position:absolute; right:20px;" id="demo-alert" >
+            <span class="demo-actions">
+                <input type="text" class="input_rl " id="pickdate" onchange="yearChange()" style="width:130px; height: 20px; margin-right: 10px;"/>
+            </span>
+      </span>
+        <div style="height: 100px">
+        </div>
+        <div class="bd">
+            <ul class="lh">
+                <!-- 超速分析 -->
+                <div class="mk left" style="width:32%; height:650px;margin-left: 1%">
+                    <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                    <div class="tit">
+                        <span class="tit_l"></span>
+                        <span class="tit_m">超速驾驶分析</span>
+                        <span class="tit_r"></span>
+                    </div>
+                    <div class="con clearfix">
+
+                        <div>
+                            <div class="xs left" style="width:98%; margin-right:2%">
+                                <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                <h4>超速总报警次数</h4>
+                                <h3><label id="overSpeedCount">0</label><em>次</em></h3>
+                            </div>
+                        </div>
+                        <div class="blank40"></div>
+                        <div style=" width:100%;height:370px" id="overSpeedChart"></div>
+
+                    </div>
+                </div>
+                <!-- 疲劳分析 -->
+                <div class="mk left" style="width:32%; height:650px;margin-left: 1%">
+                    <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                    <div class="tit">
+                        <span class="tit_l"></span>
+                        <span class="tit_m">疲劳驾驶分析</span>
+                        <span class="tit_r"></span>
+                    </div>
+                    <div class="con clearfix">
+
+                        <div>
+                            <div class="xs left" style="width:98%; margin-right:2%">
+                                <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                <h4>疲劳总报警次数</h4>
+                                <h3><label id="tiredCount">0</label><em>次</em></h3>
+                            </div>
+                        </div>
+                        <div class="blank40"></div>
+                        <div style=" width:100%;height:370px" id="tiredChart"></div>
+
+                    </div>
+                </div>
+                <!-- 主动安全报警分析 -->
+                <div class="mk left" style="width:32%; height:650px;margin-left: 1%;">
+                    <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                    <div class="tit">
+                        <span class="tit_l"></span>
+                        <span class="tit_m">主动安全报警分析</span>
+                        <span class="tit_r"></span>
+                    </div>
+                    <div class="con clearfix">
+
+                        <div>
+                            <div class="xs left" style="width:98%; margin-right:2%">
+                                <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                <h4>主动安全报警次数</h4>
+                                <h3><label id="safetyCount">0</label><em>次</em></h3>
+                            </div>
+                        </div>
+                        <div class="blank40"></div>
+                        <div style=" width:100%;height:370px" id="safetyChart"></div>
+
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="js/echarts.min.js"></script>
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+    $("#pickdate").dateDropper({
+        animate: false,
+        format: 'Y',
+        maxYear: '2030'
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+        debugger;
+        var queryArgs = getQueryParam();
+        var driverId = decodeURI(queryArgs.driverId);
+        var yearNum = decodeURI(queryArgs.yearNum);
+
+        $("#pickdate").val(yearNum);
+
+        searchDriverAlarm(driverId,yearNum);
+    })
+
+    //查询驾驶员告警情况
+    function searchDriverAlarm(driverId,yearNum){
+        $.ajax({
+            type:'POST',
+            url:basePathUrl + '/admin/bigdataDriverCountMonthAndYear/selectAlarmByDriverId.jsn',
+            data:{"queryObj.driverId":driverId,"queryObj.yearNum":yearNum},
+            dataType:"json",
+            beforeSend:function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    debugger;
+                    var dateList = data.data.dateList;
+                    var overSpeedList = data.data.overSpeedList;
+                    var seriousOverSpeedList = data.data.seriousOverSpeedList;
+                    var tiredList = data.data.tiredList;
+                    var seriousTiredList = data.data.seriousTiredList;
+                    var safetyList = data.data.safetyList;
+
+                    var overSpeedCount = 0;
+                    var tiredCount = 0;
+                    var safetyCount = 0;
+                    for(var i=0;i<overSpeedList.length;i++){
+                        overSpeedCount += overSpeedList[i] + seriousOverSpeedList[i];
+                        tiredCount += tiredList[i] + seriousTiredList[i];
+                        safetyCount += safetyList[i];
+                    }
+                    $("#overSpeedCount").html(overSpeedCount);
+                    $("#tiredCount").html(tiredCount);
+                    $("#safetyCount").html(safetyCount);
+
+                    initOverSpeedEchart(dateList,overSpeedList,seriousOverSpeedList);
+                    initTiredEchart(dateList,tiredList,seriousTiredList);
+                    initSafetyEchart(dateList,safetyList);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        })
+    }
+
+    //超速报警
+    function initOverSpeedEchart(dateList,overSpeedList,seriousOverSpeedList){
+        var totalMileageChart = echarts.init(document.getElementById("overSpeedChart"));
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data: ['超速', '严重超速'],
+                textStyle: {
+                    color: "#fff",
+                    fontSize: 14,
+                },
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: dateList,
+                    axisLine:{
+                        lineStyle:{
+                            color:'#21EDE8',
+                            width:1
+                        }
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '次',
+                    axisLine:{
+                        lineStyle:{
+                            color:'#21EDE8',
+                            width:1,//这里是为了突出显示加上的
+                        }
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '超速',
+                    type: 'line',
+                    areaStyle: {
+                        normal: {
+                            color: '#DDA38F' //改变区域颜色
+                        }
+                    },
+                    itemStyle : {
+                        normal: {
+                            color: '#DDA38F', //改变折线点的颜色
+                            lineStyle: {
+                                color: '#D48265' //改变折线颜色
+                            }
+                        }
+                    },
+                    data: overSpeedList
+                },
+                {
+                    name: '严重超速',
+                    type: 'line',
+                    areaStyle: {
+                        normal: {
+                            color: '#D06D6A' //改变区域颜色
+                        }
+                    },
+                    itemStyle : {
+                        normal: {
+                            color: '#D06D6A', //改变折线点的颜色
+                            lineStyle: {
+                                color: '#CC5D5A' //改变折线颜色
+                            }
+                        }
+                    },
+                    data: seriousOverSpeedList
+                }
+            ]
+        };
+        totalMileageChart.setOption(option);
+    }
+    //疲劳报警
+    function initTiredEchart(dateList,tiredList,seriousTiredList){
+        var totalMileageChart = echarts.init(document.getElementById("tiredChart"));
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data: ['疲劳', '严重疲劳'],
+                textStyle: {
+                    color: "#fff",
+                    fontSize: 14,
+                },
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: dateList,
+                    axisLine:{
+                        lineStyle:{
+                            color:'#21EDE8',
+                            width:1
+                        }
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '次',
+                    axisLine:{
+                        lineStyle:{
+                            color:'#21EDE8',
+                            width:1,//这里是为了突出显示加上的
+                        }
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '疲劳',
+                    type: 'line',
+                    areaStyle: {
+                        normal: {
+                            color: '#DDA38F' //改变区域颜色
+                        }
+                    },
+                    itemStyle : {
+                        normal: {
+                            color: '#DDA38F', //改变折线点的颜色
+                            lineStyle: {
+                                color: '#D48265' //改变折线颜色
+                            }
+                        }
+                    },
+                    data: tiredList
+                },
+                {
+                    name: '严重疲劳',
+                    type: 'line',
+                    areaStyle: {
+                        normal: {
+                            color: '#D06D6A' //改变区域颜色
+                        }
+                    },
+                    itemStyle : {
+                        normal: {
+                            color: '#D06D6A', //改变折线点的颜色
+                            lineStyle: {
+                                color: '#CC5D5A' //改变折线颜色
+                            }
+                        }
+                    },
+                    data: seriousTiredList
+                }
+            ]
+        };
+        totalMileageChart.setOption(option);
+    }
+    //主动安全报警
+    function initSafetyEchart(dateList,valueList){
+        var totalMileageChart = echarts.init(document.getElementById("safetyChart"));
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                },
+                formatter:function(params){
+                    var result = '';
+                    params.forEach(function (item) {
+                        result +=item.seriesName + "<br/>" + item.marker + " " + item.value + "次";
+                    });
+                    return result;
+                }
+            },
+            legend: {
+                data: ['主动安全'],
+                textStyle: {
+                    color: "#fff",
+                    fontSize: 14,
+                },
+            },
+            toolbox: {
+
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: dateList,
+                    axisLine:{
+                        lineStyle:{
+                            color:'#21EDE8',
+                            width:1
+                        }
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '次',
+                    axisLine:{
+                        lineStyle:{
+                            color:'#21EDE8',
+                            width:1,//这里是为了突出显示加上的
+                        }
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '主动安全',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {
+                        normal: {
+                            color: '#D06D6A' //改变区域颜色
+                        }
+                    },
+                    itemStyle : {
+                        normal: {
+                            color: '#D06D6A', //改变折线点的颜色
+                            lineStyle: {
+                                color: '#CC5D5A' //改变折线颜色
+                            }
+                        }
+                    },
+                    data: valueList
+                }
+            ]
+        };
+        totalMileageChart.setOption(option);
+    }
+
+    //选择不同年份显示不同数据
+    function yearChange(){
+        debugger;
+        var queryArgs = getQueryParam();
+        var driverId = decodeURI(queryArgs.driverId);
+        var yearNum = parseInt($("#pickdate").val());
+
+        searchDriverAlarm(driverId,yearNum);
+    }
+    function goShouYe() {
+        window.location.href = "../bigdata/shouye.html";
+    }
+
+</script>
+</html>

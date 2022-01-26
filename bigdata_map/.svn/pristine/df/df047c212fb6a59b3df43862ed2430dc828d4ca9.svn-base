@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.SysPowerMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.SysPower" >
+			<id column="ID" property="id"/>
+			<result column="POWER_KEY" property="powerKey"/>
+			<result column="DI_KEY" property="diKey"/>
+			<result column="POWER_NAME" property="powerName"/>
+			<result column="POWER_DESC" property="powerDesc"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="ORDER_NUMBER" property="orderNumber"/>
+			<result column="MENUE_ID" property="menueId"/>
+    </resultMap>
+
+	<resultMap id="BaseResultMap2" type="com.edgedo.sys.entity.SysBzModel" >
+		<id column="ID" property="id"/>
+		<result column="MODEL_NAME" property="modelName"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="IS_LEAF" property="isLeaf"/>
+		<result column="SORT_NUM" property="sortNum"/>
+	</resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.SysPowerView" extends="BaseResultMap">
+    
+    </resultMap>
+
+	<resultMap id="BaseResultViewMapSyn" type="com.edgedo.sys.queryvo.SysPowerViewSyn" extends="BaseResultMap">
+
+	</resultMap>
+
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, POWER_KEY, DI_KEY, POWER_NAME, POWER_DESC, CREATE_TIME, ORDER_NUMBER, MENUE_ID
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+  				<!--类似查询-->
+  				<if test='queryObj != null and  queryObj.powerKey != null and queryObj.powerKey != ""'>
+					AND  POWER_KEY like concat('%',#{queryObj.powerKey},'%')
+				</if>
+				<!--
+		  		<if test='queryObj != null and  queryObj.orderNumber != null and queryObj.orderNumber != ""'>
+					AND  ORDER_NUMBER like concat('%',#{queryObj.orderNumber},'%')
+				</if>
+				-->
+				<if test='queryObj != null and  queryObj.powerName != null and queryObj.powerName != ""'>
+					AND  POWER_NAME like concat('%',#{queryObj.powerName},'%')
+				</if>
+				<!--
+				<if test='queryObj != null and  queryObj.powerDesc != null and queryObj.powerDesc != ""'>
+					AND  POWER_DESC like concat('%',#{queryObj.powerDesc},'%')
+				</if>
+				-->
+				<!--准确查询-->
+				<if test='queryObj != null and  queryObj.id != null and queryObj.id != ""'>
+					AND  ID = #{queryObj.id}
+				</if>
+				
+				<if test='queryObj != null and  queryObj.diKey != null and queryObj.diKey != ""'>
+					AND  DI_KEY = #{queryObj.diKey}
+				</if>
+				
+				<if test='queryObj != null and  queryObj.createTime != null and queryObj.createTime != ""'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				
+				<if test='queryObj != null and  queryObj.menueId != null and queryObj.menueId != ""'>
+					AND  MENUE_ID = #{queryObj.menueId}
+				</if>
+				
+				<if test='queryObj != null and  queryObj.powerDesc != null and queryObj.powerDesc != ""'>
+					AND  POWER_DESC = #{queryObj.powerDesc}
+				</if>
+				
+				<if test='queryObj != null and  queryObj.orderNumber != null and queryObj.orderNumber != ""'>
+					AND  ORDER_NUMBER = #{queryObj.orderNumber}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.SysPowerQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_power 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.SysPowerQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_power 
+  		<include refid="where"/>
+  </select>
+  
+  <!-- 根据用户获得用户权限 -->
+	<select id="selectPowerByUserId" parameterType="string" resultMap="BaseResultViewMap">
+		select p.ID, p.DI_KEY, p.POWER_KEY, p.POWER_NAME, p.POWER_DESC, p.CREATE_TIME,
+		 p.ORDER_NUMBER, p.MENUE_ID from sys_power p,sys_role_power rp,sys_user_role r
+		 where rp.ROLE_ID=r.ROLE_ID and rp.POWER_ID=p.ID and r.USER_ID=#{userId}
+	</select>
+
+	<!-- 根据parentId 查询 -->
+	<select id="selectByPreantID" parameterType="string" resultMap="BaseResultViewMapSyn">
+		select <include refid="Base_Column_List"/>
+		from sys_power
+		where PARENT_ID = #{parentId} order by ORDER_NUMBER asc
+	</select>
+
+	<select id="selectModelById" parameterType="string" resultMap="BaseResultMap2">
+		select * from sys_bz_model where ID = #{menueId}
+	</select>
+  
+</mapper>

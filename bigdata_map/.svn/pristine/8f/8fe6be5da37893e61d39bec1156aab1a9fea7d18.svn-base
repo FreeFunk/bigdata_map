@@ -1,0 +1,510 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="css/layer-animate.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script src="js/layer/layer.js"></script>
+
+    <script src="js/tool.js"></script>
+</head>
+
+<body>
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+                
+                   
+                <!--<input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " /> -->
+            <input type="text" class="input_rl " id="searchDate" style="width:150px; height: 48px; margin-right: 10px; ">
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+    <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">时段分析</div>
+             <a href="shouye.html" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="main">
+      <div class="ind mt60">
+                           <Div style="position: relative">
+                                 <div style="width:60%; margin:auto">
+                                   
+                                    <div class="xs left" style="width:49%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>总里程</h4>
+                                      <h3 id="sumMileage">0<em>Km</em></h3>
+                                   </div> 
+                                   <div class="xs right" style="width:49%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>总时长</h4>
+                                      <h3 id="sumTime">0<em>h</em></h3>
+                                   </div> 
+                                </div>
+                                 
+                         </Div>
+           
+           <div class="blank20"></div>
+           
+           
+     <div class="mk" style="height:780px">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em>    
+                <div class="con0 clearfix">
+                      <div>
+                         
+                       
+                            
+                             
+                      <Div class="blank40"></Div>  
+                          
+                      <div>   
+                         <div style="float: left; width: 10%;"><h4 class="bat">清晨</h4></div>     
+                         <div style="float: right; width: 85%; margin-right: 5%">
+                               <h3 class="progress-title">行驶里程<em class="sz" id="earlyMorningMileage">0</em>Km</h3>
+                               <div class="progress">
+                                    <div class="progress-bar" style="width:0%;" id="jd01">
+                                        <div class="progress-value" id="earlyMorningMileageRate">
+                                            0%<i class="iconfont icon-jiantouarrow499 hs"></i>
+                                        </div>
+                                    </div>
+                               </div>
+                                
+                               <h3 class="progress-title">行驶时长<em class="sz" id="earlyMorningTime"></em>h</h3>
+                               <div class="progress">
+                                    <div class="progress-bar" style="width:0%;" id="jd02">
+                                        <div class="progress-value" id="earlyMorningTimeRate">
+                                            0%<i class="iconfont icon-jiantouarrow499 hs"></i>
+                                        </div>
+                                    </div>
+                               </div>
+                                
+                          </div>
+                      </div> 
+                          
+                          
+                          
+                          
+                   <Div class="blank40"></Div><Div class="blank20"></Div>   
+                          
+                      <div>   
+                         <div style="float: left; width: 10%;"><h4 class="bat">中午</h4></div>     
+                         <div style="float: right; width: 85%; margin-right: 5%">
+                               <h3 class="progress-title">行驶里程<em class="sz" id="noonMileage">0</em>Km</h3>
+                               <div class="progress">
+                                    <div class="progress-bar" style="width:0%;" id="jd03">
+                                        <div class="progress-value" id="noonMileageRate">
+                                            0%<i class="iconfont icon-jiantouarrow499 hs"></i>
+                                        </div>
+                                    </div>
+                               </div>
+                                
+                               <h3 class="progress-title">行驶时长<em class="sz" id="noonTime">0</em>h</h3>
+                               <div class="progress">
+                                    <div class="progress-bar" style="width:0%;" id="jd04">
+                                        <div class="progress-value" id="noonTimeRate">
+                                            0%<i class="iconfont icon-jiantouarrow499 hs"></i>
+                                        </div>
+                                    </div>
+                               </div>
+                                
+                          </div>
+                      </div> 
+                          
+                          
+                          
+                <Div class="blank40"></Div><Div class="blank20"></Div>    
+                          
+                      <div>   
+                         <div style="float: left; width: 10%;"><h4 class="bat">黄昏</h4></div>     
+                         <div style="float: right; width: 85%; margin-right: 5%">
+                               <h3 class="progress-title">行驶里程<em class="sz" id="duskMileage">0</em>Km</h3>
+                               <div class="progress">
+                                    <div class="progress-bar" style="width:0%;" id="jd05">
+                                        <div class="progress-value" id="duskMileageRete">
+                                            0%<i class="iconfont icon-jiantouarrow499 hs"></i>
+                                        </div>
+                                    </div>
+                               </div>
+                                
+                               <h3 class="progress-title">行驶时长<em class="sz" id="duskTime">0</em>h</h3>
+                               <div class="progress">
+                                    <div class="progress-bar" style="width:0%;" id="jd06">
+                                        <div class="progress-value" id="duskTimeRate">
+                                            0%<i class="iconfont icon-jiantouarrow499 hs"></i>
+                                        </div>
+                                    </div>
+                               </div>
+                                
+                          </div>
+                      </div>    
+                    
+                      
+                    <Div class="blank40"></Div><Div class="blank20"></Div>     
+                          
+                      <div>   
+                         <div style="float: left; width: 10%;"><h4 class="bat">夜晚</h4></div>     
+                         <div style="float: right; width: 85%; margin-right: 5%">
+                               <h3 class="progress-title">行驶里程<em class="sz" id="nightMileage">0</em>Km</h3>
+                               <div class="progress">
+                                    <div class="progress-bar" style="width:0%;" id="jd07">
+                                        <div class="progress-value" id="nightMileageRate">
+                                            0%<i class="iconfont icon-jiantouarrow499 hs"></i>
+                                        </div>
+                                    </div>
+                               </div>
+                                
+                               <h3 class="progress-title">行驶时长<em class="sz" id="nightTime">0</em>h</h3>
+                               <div class="progress">
+                                    <div class="progress-bar" style="width:0%;" id="jd08">
+                                        <div class="progress-value" id="nightTimeRate">0%
+                                            <i class="iconfont icon-jiantouarrow499 hs"></i></div>
+                                    </div>
+                               </div>
+                                
+                          </div>
+                      </div>    
+                   
+                    
+                     
+                    
+
+
+                </div>
+    </div>
+           
+           
+           
+           
+           
+           
+           
+         
+      
+      </div> 
+</div>
+
+
+
+
+
+
+
+
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+</script>
+    
+    
+<script>
+    setColor();
+	function setColor(){
+	  var jd01 = document.getElementById("jd01").style;
+	  var jd02 = document.getElementById("jd02").style;
+	  var jd03 = document.getElementById("jd03").style;
+	  var jd04 = document.getElementById("jd04").style;
+	  var jd05 = document.getElementById("jd05").style;
+	  var jd06 = document.getElementById("jd06").style;
+      var jd07 = document.getElementById("jd07").style;
+	  var jd08 = document.getElementById("jd08").style;
+	  
+	  var jd01num = parseInt(jd01.width);
+	  var jd02num = parseInt(jd02.width);
+	  var jd03num = parseInt(jd03.width);
+	  var jd04num = parseInt(jd04.width);
+	  var jd05num = parseInt(jd05.width);
+	  var jd06num = parseInt(jd06.width);
+      var jd07num = parseInt(jd07.width);
+	  var jd08num = parseInt(jd08.width);
+	  
+	  setOnece(jd01num,jd01);
+	  setOnece(jd02num,jd02);
+	  setOnece(jd03num,jd03);
+	  setOnece(jd04num,jd04);
+	  setOnece(jd05num,jd05);
+	  setOnece(jd06num,jd06);
+      setOnece(jd07num,jd07);
+      setOnece(jd08num,jd08);
+	  
+	}     
+	
+	function setOnece(num,object){
+        var timer;
+        var widthnum = 0;
+        timer = setInterval(function(){
+        widthnum +=1;
+        if(widthnum<=25){
+            object.background="#48CBF5";
+            object.color="#48CBF5";
+        }
+        if(widthnum>25){
+            object.background="#FFC304";
+            object.color="#FFC304";
+        }
+        if(widthnum>50){
+            object.background="#F2545B";
+            object.color="#F2545B";
+        }
+        if(widthnum>75){
+            object.background="#C127C9";
+            object.color="#C127C9";
+        }
+        if(widthnum==num){
+        clearInterval(timer);
+        }
+        },50/5);
+	}  
+</script>
+    <script type="text/javascript">
+        //初始化数据
+        $(document).ready(function(){
+
+            //获取参数
+            var queryArgs = getQueryParam();
+            queryArgs.carType = decodeURI(queryArgs.carType);
+            //初始化日期
+            initLayDate(queryArgs.searchTime);
+            //超速详情
+            timeDetail(queryArgs);
+        });
+        //初始化日期
+        function initLayDate(searchTime) {
+            laydate.render({
+                elem: '#searchDate',
+                theme: '#884898',
+                value: searchTime,
+                btns: ['confirm'],
+                done: function(value, date, endDate){
+                    if(value!=""){
+                        var queryArgs = getQueryParam();
+                        queryArgs.carType = decodeURI(queryArgs.carType);
+                        queryArgs.searchTime = value;
+                        timeDetail(queryArgs);
+                    }
+                }
+            });
+        }
+
+        function timeDetail(queryArgs) {
+            //超速详情
+            $.ajax({
+                type: "POST",
+                url: basePathUrl+"/admin/bigdataTimeAnalysis/getTimeAnalysisData.jsn",
+                data: {'queryObj.carType':queryArgs.carType,'queryObj.countTime':queryArgs.searchTime},
+                dataType: "json",
+                success: function(data){
+                    if(data.success){
+                        debugger;
+                        if(typeof(data.data) == "undefined"){
+                            $("#sumMileage").html(0+"<em>Km</em>");
+                            $("#sumTime").html(0+"<em>h</em>");
+                            //清晨
+                            $("#earlyMorningMileage").html('0%');
+                            $("#jd01").css('width','0%');
+                            $("#earlyMorningMileageRate").html('0%');
+                            $("#earlyMorningTime").html('0%');
+                            $("#jd02").css('width','0%');
+                            $("#earlyMorningTimeRate").html('0%');
+                            //中午
+                            $("#noonMileage").html('0%');
+                            $("#jd03").css('width','0%');
+                            $("#noonMileageRate").html('0%');
+                            $("#noonTime").html('0%');
+                            $("#jd04").css('width','0%');
+                            $("#noonTimeRate").html('0%');
+                            //黄昏
+                            $("#duskMileage").html('0%');
+                            $("#jd05").css('width','0%');
+                            $("#duskMileageRate").html('0%');
+                            $("#duskTime").html('0%');
+                            $("#jd06").css('width','0%');
+                            $("#duskTimeRate").html('0%');
+                            //夜间
+                            $("#nightMileage").html('0%');
+                            $("#jd07").css('width','0%');
+                            $("#nightMileageRate").html('0%');
+                            $("#nightTime").html('0%');
+                            $("#jd08").css('width','0%');
+                            $("#nightTimeRate").html('0%');
+                        }else {
+                            $("#sumMileage").html(data.data.sumMileage+"<em>Km</em>");
+                            $("#sumTime").html(data.data.sumDuration+"<em>h</em>");
+                            //清晨
+                            $("#earlyMorningMileage").html(data.data.earlyMorningMileage);
+                            $("#jd01").css('width', parseInt(data.data.earlyMorningMileageRate*100)+'%');
+                            var earlyMorningMileage = parseInt(data.data.earlyMorningMileageRate*100)+"%";
+                            if(data.data.earlyMorningMileageFlag=='1'){
+                                earlyMorningMileage +="<i class=\"iconfont icon-jiantouarrow499 hs\"></i>";
+                            }else{
+                                earlyMorningMileage +="<i class=\"iconfont icon-jiantouarrow505 ls\"></i>";
+                            }
+                            $("#earlyMorningMileageRate").html(earlyMorningMileage);
+
+                            $("#earlyMorningTime").html(data.data.earlyMorningTime);
+                            $("#jd02").css('width', parseInt(data.data.earlyMorningTimeRate*100)+'%');
+                            var earlyMorningTime = parseInt(data.data.earlyMorningTimeRate*100)+"%";
+                            if(data.data.earlyMorningTimeFlag=='1'){
+                                earlyMorningTime +="<i class=\"iconfont icon-jiantouarrow499 hs\"></i>";
+                            }else{
+                                earlyMorningTime +="<i class=\"iconfont icon-jiantouarrow505 ls\"></i>";
+                            }
+                            $("#earlyMorningTimeRate").html(earlyMorningTime);
+
+                            //中午
+                            $("#noonMileage").html(data.data.noonMileage);
+                            $("#jd03").css('width', parseInt(data.data.noonMileageRate*100)+'%');
+                            var noonMileage = parseInt(data.data.noonMileageRate*100)+"%";
+                            if(data.data.noonMileageFlag=='1'){
+                                noonMileage +="<i class=\"iconfont icon-jiantouarrow499 hs\"></i>";
+                            }else{
+                                noonMileage +="<i class=\"iconfont icon-jiantouarrow505 ls\"></i>";
+                            }
+                            $("#noonMileageRate").html(noonMileage);
+
+                            $("#noonTime").html(data.data.noonTime);
+                            $("#jd04").css('width', parseInt(data.data.noonTimeRate*100)+'%');
+                            var noonTime = parseInt(data.data.noonTimeRate*100)+"%";
+                            if(data.data.noonTimeFlag=='1'){
+                                noonTime +="<i class=\"iconfont icon-jiantouarrow499 hs\"></i>";
+                            }else{
+                                noonTime +="<i class=\"iconfont icon-jiantouarrow505 ls\"></i>";
+                            }
+                            $("#noonTimeRate").html(noonTime);
+
+                            //黄昏
+                            $("#duskMileage").html(data.data.duskMileage);
+                            $("#jd05").css('width', parseInt(data.data.duskMileageRete*100)+'%');
+                            var duskMileage = parseInt(data.data.duskMileageRete*100)+"%";
+                            if(data.data.duskMileageFlag=='1'){
+                                duskMileage +="<i class=\"iconfont icon-jiantouarrow499 hs\"></i>";
+                            }else{
+                                duskMileage +="<i class=\"iconfont icon-jiantouarrow505 ls\"></i>";
+                            }
+                            $("#duskMileageRete").html(duskMileage);
+
+                            $("#duskTime").html(data.data.duskTime);
+                            $("#jd06").css('width', parseInt(data.data.duskTimeRate*100)+'%');
+                            var duskTime = parseInt(data.data.duskTimeRate*100)+"%";
+                            if(data.data.duskTimeFlag=='1'){
+                                duskTime +="<i class=\"iconfont icon-jiantouarrow499 hs\"></i>";
+                            }else{
+                                duskTime +="<i class=\"iconfont icon-jiantouarrow505 ls\"></i>";
+                            }
+                            $("#duskTimeRate").html(duskTime);
+
+                            //夜间
+                            $("#nightMileage").html(data.data.nightMileage);
+                            $("#jd07").css('width', parseInt(data.data.nightMileageRate*100)+'%');
+                            var nightMileage = parseInt(data.data.nightMileageRate*100)+"%";
+                            if(data.data.nightMileageFlag=='1'){
+                                nightMileage +="<i class=\"iconfont icon-jiantouarrow499 hs\"></i>";
+                            }else{
+                                nightMileage +="<i class=\"iconfont icon-jiantouarrow505 ls\"></i>";
+                            }
+                            $("#nightMileageRate").html(nightMileage);
+
+                            $("#nightTime").html(data.data.nightTime);
+                            $("#jd08").css('width', parseInt(data.data.nightTimeRate*100)+'%');
+                            var nightTime = parseInt(data.data.nightTimeRate*100)+"%";
+                            if(data.data.nightTimeFlag=='1'){
+                                nightTime +="<i class=\"iconfont icon-jiantouarrow499 hs\"></i>";
+                            }else{
+                                nightTime +="<i class=\"iconfont icon-jiantouarrow505 ls\"></i>";
+                            }
+                            $("#nightTimeRate").html(nightTime);
+
+                        }
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            });
+        }
+        function goShouYe() {
+            window.location.href = "shouye.html";
+        }
+    </script>
+</body>
+</html>

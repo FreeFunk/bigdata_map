@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/countUp.js"></script>
+</head>
+<body>
+    <div id="box"></div>
+    <script type="text/javascript">
+        var options = {
+            useEasing: true, 
+            useGrouping: true, 
+            separator: ',', 
+            decimal: '.', 
+        };
+        var demo = new CountUp('box', 0, 10, 0, 100, options);
+        if (!demo.error) {
+            demo.start();
+        } else {
+            console.error(demo.error);
+        }
+    </script>
+</body>
+</html>

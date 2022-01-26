@@ -1,0 +1,508 @@
+package com.edgedo.bigdata.service;
+
+import com.edgedo.bigdata.entity.*;
+import com.edgedo.bigdata.mapper.BigdataAlarmRecordMapper;
+import com.edgedo.bigdata.mapper.BigdataSafetyWarningMapper;
+import com.edgedo.common.util.Guid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Service
+@Transactional(propagation = Propagation.REQUIRED,rollbackFor=Exception.class)
+public class BigdataSafetyWarningService {
+
+	Map<String,String> warnTypeMap = new HashMap<String,String>();
+	{
+		warnTypeMap.put("1","紧急报警");warnTypeMap.put("2","超速报警");warnTypeMap.put("3","疲劳驾驶");
+		warnTypeMap.put("4","危险预警");warnTypeMap.put("5","GNSS 模块发生故障");warnTypeMap.put("6","GNSS 天线未接或被剪断");
+		warnTypeMap.put("7","GNSS 天线短路");warnTypeMap.put("8","终端主电源欠压");warnTypeMap.put("9","终端主电源掉电");
+		warnTypeMap.put("10","终端LCD 或显示器故障");warnTypeMap.put("11","TTS 模块故障");warnTypeMap.put("12","摄像头故障");
+		warnTypeMap.put("13","道路运输证IC 卡模块故障");warnTypeMap.put("14","超速预警");warnTypeMap.put("15","疲劳驾驶预警");
+		warnTypeMap.put("19","当天累计驾驶超时");warnTypeMap.put("20","超时停车");warnTypeMap.put("21","进出区域");
+		warnTypeMap.put("22","进出路线");warnTypeMap.put("23","路段行驶时间不足/过长");warnTypeMap.put("24","路线偏离报警");
+		warnTypeMap.put("25","车辆VSS 故障");warnTypeMap.put("26","车辆油量异常");warnTypeMap.put("27","车辆被盗");
+		warnTypeMap.put("28","车辆非法点火");warnTypeMap.put("29","车辆非法位移");warnTypeMap.put("30","碰撞预警");
+		warnTypeMap.put("31","侧翻预警");warnTypeMap.put("32","非法开门报警");warnTypeMap.put("180","前向碰撞预警");
+		warnTypeMap.put("181","车辆偏离预警");warnTypeMap.put("182","车距过近预警");warnTypeMap.put("186","疲劳驾驶报警");
+		warnTypeMap.put("187","接打电话报警");warnTypeMap.put("188","抽烟报警");warnTypeMap.put("189","注意力分散报警");
+		warnTypeMap.put("190","异常报警");warnTypeMap.put("301","视频信号丢失报警");warnTypeMap.put("302","视频信号遮挡报警");
+		warnTypeMap.put("303","存储单元故障报警");warnTypeMap.put("304","其他视频设备故障报警");warnTypeMap.put("305","客车超员报警");
+		warnTypeMap.put("306","异常驾驶行为报警");warnTypeMap.put("307","特殊报警录像达到存储阈值报警");
+
+	}
+	
+	@Autowired
+	private BigdataSafetyWarningMapper mapper;
+	@Autowired
+	private CarInfoService carInfoService;
+	@Autowired
+	private BigdataBeidouCompService beidouCompService;
+	@Autowired
+	private BigdataBeidouSafetyCarInfoService bigdataBeidouSafetyCarInfoService;
+	@Autowired
+	private BigdataAlarmRecordMapper bigdataAlarmRecordMapper;
+
+	/***
+	 * 新增方法
+	 * @return
+	 */
+	public String insert(BigdataSafetyWarning voObj) {
+		voObj.setId(Guid.guid());
+		mapper.insert(voObj);
+		return "";
+	}
+	
+	/***
+	 * 动态修改方法
+	 * @param
+	 * @return
+	 */
+	public String update(BigdataSafetyWarning voObj) {
+		mapper.updateById(voObj);
+		return "";
+	}
+	
+	/***
+	 * 全修改
+	 * @param
+	 * @return
+	 */
+	public String updateAll(BigdataSafetyWarning voObj) {
+		mapper.updateAllColumnById(voObj);
+		return "";
+	}
+	
+	
+	
+	/**
+	 * 单个删除
+	 * @param id
+	 */
+	public int delete(String id) {
+		
+		return mapper.deleteById(id);
+	}
+	
+	/**
+	 * 批量删除
+	 * @param ids
+	 */
+	public int deleteByIds(List<String> ids) {
+		
+		return mapper.deleteBatchIds(ids);
+	}
+	
+	
+	
+	/**
+	 * 加载单个
+	 * @param id
+	 */
+	public BigdataSafetyWarning loadById(String id) {
+		return mapper.selectById(id);
+	}
+
+	/**
+	 * 将发送来的主动安全报警存到数据库里
+	 * @param alarmList
+	 */
+	public void updateAccepAlarms(List<BeidouProactiveSecurityAlarm1> alarmList,String userId,String userkey) {
+		//查询运营商
+		BigdataBeidouComp beidouComp = beidouCompService.loadById(userId);
+		if(beidouComp==null){
+			return;
+		}
+		String key = beidouComp.getSingKey();
+		if(!key.equals(userkey)){
+			return;
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddmmhhss");
+		for(BeidouProactiveSecurityAlarm1 safeAlarm : alarmList){
+			String starttimeStr = safeAlarm.getStarttime();
+
+			BigdataSafetyWarning warning = new BigdataSafetyWarning();
+			warning.setAlarmState(safeAlarm.getAlarmstate());
+			warning.setBid(safeAlarm.getAlarmid());
+			String carPlateNum = safeAlarm.getVehicle_no();
+			warning.setCarPlateNum(carPlateNum);
+			String plateColor = safeAlarm.getVehicle_color();
+			warning.setCarPlateColorText(plateColor);
+			//车牌颜色代码
+			String colorCode = CarInfoService.genCarPlateColorCodeFromText(plateColor);
+			warning.setCarPlateColor(colorCode);
+			String carId = carPlateNum + "_" + colorCode;
+			//查询车架号
+			CarInfo carInfo = carInfoService.loadById(carId);
+			if(carInfo!=null){
+				warning.setCarFrameNum(carInfo.getCarFrameNum());
+				warning.setCarType(carInfo.getCarType());
+
+				warning.setEmpCode(carInfo.getEmpCode());
+				warning.setEmpIdCard(carInfo.getEmpCode());
+				warning.setEmpName(carInfo.getEmpName());
+				warning.setEmpId(carInfo.getEmpId());
+				warning.setOwnerTeamId(carInfo.getOwnerTeamId());
+				warning.setOwnerTeamName(carInfo.getOwnerTeamName());
+				warning.setProvinceId(carInfo.getProvinceId());
+				warning.setProvinceName(carInfo.getProvinceName());
+				warning.setCityId(carInfo.getCityId());
+				warning.setCityName(carInfo.getCityName());
+				warning.setXianquId(carInfo.getXianquId());
+				warning.setXianquName(carInfo.getXianquName());
+
+			}
+			warning.setCompId(beidouComp.getId());
+			warning.setCompName(beidouComp.getCompName());
+
+			if(starttimeStr!=null && starttimeStr.length()>0){
+				try {
+					Date starttime = sdf.parse(starttimeStr);
+					String startDay = starttimeStr.substring(0,8);
+					Integer countDate = new Integer(startDay);
+					warning.setCountDate(countDate);
+					warning.setCountMonth(countDate/100);
+					warning.setStarttime(starttime);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			warning.setCreateTime(new Date());
+
+			warning.setDeviceno(safeAlarm.getDeviceno());
+			Double direction = safeAlarm.getDirection();
+			if(direction!=null){
+				warning.setDirection(new BigDecimal(direction));
+			}
+			String endtimeStr = safeAlarm.getEndtime();
+			if(endtimeStr!=null && endtimeStr.length()>0){
+				try {
+					Date endtime = sdf.parse(endtimeStr);
+					warning.setEndtime(endtime);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			//处理结果描述
+			warning.setDetailInfo(safeAlarm.getHandledesc());
+			warning.setHandlePeople(safeAlarm.getHandlepeople());
+			warning.setHandleState(safeAlarm.getHandlestate());
+			warning.setHandleType(safeAlarm.getHandlemethod());
+			String handleTimeStr = safeAlarm.getHandletime();
+			if(handleTimeStr!=null && handleTimeStr.length()>0){
+				try {
+					Date handleTime = sdf.parse(handleTimeStr);
+					warning.setHandleTime(handleTime);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			Double lat = safeAlarm.getLat();
+			if(lat!=null){
+				warning.setLat( new BigDecimal(lat));
+			}
+			Double lon = safeAlarm.getLon();
+			if(lon!=null){
+				warning.setLon(new BigDecimal(lon));
+			}
+			warning.setSim(safeAlarm.getSim());
+			Double speed = safeAlarm.getSpeed();
+			if(speed!=null){
+				warning.setSpeed(new BigDecimal(speed));
+			}
+			warning.setUploadTime(new Date());
+			warning.setWarningInfo(safeAlarm.getWarn_content());
+			Integer warnType = safeAlarm.getWarn_type();
+
+			warning.setWarningType(warnTypeMap.get(warnType+""));
+			if(warning.getWarningType()==null||warning.getWarningType().equals("")){
+				System.out.println("warnType========"+warnType);
+			}
+			//报警等级 低于50一级 高于50二级
+			if(speed!=null){
+				if(speed>50){
+					warning.setWarningLevel("2");
+				}else{
+					warning.setWarningLevel("1");
+				}
+
+			}else{
+				warning.setWarningLevel("1");
+			}
+			String id = userId + "_" + warning.getBid();
+			warning.setId(id);
+			if(starttimeStr==null || starttimeStr.length()>0){
+				int count = mapper.countById(warning);
+				if(count>0){
+					warning.setUpdateTime(new Date());
+					mapper.updateByPkSelectiveAndFenPian(warning);
+				}else{
+					mapper.insert(warning);
+					//如果是疲劳或者超速报警同时插入alarm表
+					String warningType = warning.getWarningType();
+					if(warningType.contains("超速") || warningType.contains("疲劳")){
+						BigdataAlarmRecord bigdataAlarmRecord = new BigdataAlarmRecord();
+						bigdataAlarmRecord.setId(warning.getId());
+						bigdataAlarmRecord.setBid(warning.getBid());
+						bigdataAlarmRecord.setCompId(warning.getCompId());
+						bigdataAlarmRecord.setCompName(warning.getCompName());
+						bigdataAlarmRecord.setCreateTime(new Date());
+						bigdataAlarmRecord.setCarPlateNum(warning.getCarPlateNum());
+						bigdataAlarmRecord.setCarPlateColor(warning.getCarPlateColor());
+						bigdataAlarmRecord.setCarType(warning.getCarType());
+						bigdataAlarmRecord.setSimCode(warning.getSim());
+						if(warningType.contains("疲劳")){
+							bigdataAlarmRecord.setAlarmCls("1");
+							bigdataAlarmRecord.setAlarmType("2");
+						}
+						if(warningType.contains("超速")){
+							bigdataAlarmRecord.setAlarmCls("2");
+							bigdataAlarmRecord.setAlarmType("4");
+						}
+						bigdataAlarmRecord.setAlarmTime(warning.getStarttime());
+						bigdataAlarmRecord.setDriver(warning.getDriverName());
+						bigdataAlarmRecord.setLatitude(warning.getLat());
+						bigdataAlarmRecord.setLongitude(warning.getLon());
+						bigdataAlarmRecord.setAlarmSpeed(warning.getSpeed());
+						bigdataAlarmRecord.setCountDate(warning.getCountDate());
+						bigdataAlarmRecord.setCountMonth(warning.getCountMonth());
+						bigdataAlarmRecord.setEmpId(warning.getEmpId());
+						bigdataAlarmRecord.setEmpName(warning.getEmpName());
+						bigdataAlarmRecord.setEmpCode(warning.getEmpCode());
+						bigdataAlarmRecordMapper.insert(bigdataAlarmRecord);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * 更新车辆的实时状态
+	 * @param carRealtimeGpsList
+	 */
+	public void updateCarGps(List<CarRealtimeGps> carRealtimeGpsList,String userId,String userkey) {
+		//查询运营商
+		BigdataBeidouComp beidouComp = beidouCompService.loadById(userId);
+		if(beidouComp==null){
+			return;
+		}
+		String key = beidouComp.getSingKey();
+		if(!key.equals(userkey)){
+			return;
+		}
+		for(CarRealtimeGps car : carRealtimeGpsList){
+			BigdataBeidouSafetyCarInfo beidouSafetyCarInfo = new BigdataBeidouSafetyCarInfo();
+			beidouSafetyCarInfo.setAltitude(car.getAltitude());
+			beidouSafetyCarInfo.setLon(car.getLon());
+			beidouSafetyCarInfo.setLat(car.getLat());
+			beidouSafetyCarInfo.setMileage(car.getMileage());
+			beidouSafetyCarInfo.setState(car.getState());
+			beidouSafetyCarInfo.setDirection(car.getDirection());
+			beidouSafetyCarInfo.setAlarm(car.getAlarm());
+			beidouSafetyCarInfo.setSpeed(car.getSpeed());
+			beidouSafetyCarInfo.setCarPlateNum(car.getVehicle_no());
+			//车牌颜色代码
+			String colorCode = CarInfoService.genCarPlateColorCodeFromText(car.getVehicle_color());
+			beidouSafetyCarInfo.setCarPlateColor(colorCode);
+			beidouSafetyCarInfo.setUpdateTime(new Date());
+
+			bigdataBeidouSafetyCarInfoService.updateByCarPlateNum(beidouSafetyCarInfo);
+		}
+	}
+	/**
+	 * 将发送来的主动安全报警存到数据库里
+	 * @param safetyWarningList
+	 */
+	public void updateSafetyWarning(List<BeidouSafetyWarning> safetyWarningList, String compId) {
+		//查询运营商
+		BigdataBeidouComp beidouComp = beidouCompService.loadById(compId);
+		if(beidouComp==null){
+			return;
+		}
+		/*String key = beidouComp.getSingKey();
+		if(!key.equals(signKey)){
+			return;
+		}*/
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddmmhhss");
+		for(BeidouSafetyWarning safetyWarning : safetyWarningList){
+			String starttimeStr = safetyWarning.getStarttime();
+
+			BigdataSafetyWarning warning = new BigdataSafetyWarning();
+			warning.setAlarmState(safetyWarning.getAlarmState());
+			warning.setBid(safetyWarning.getbId());
+			String carPlateNum = safetyWarning.getCarPlateNum();
+			warning.setCarPlateNum(carPlateNum);
+			String carPlateColor = safetyWarning.getCarPlateColor();
+			warning.setCarPlateColor(carPlateColor);
+			//车牌颜色代码
+			String colorText = CarInfoService.genCarPlateColorTextFromCode(carPlateColor);
+			warning.setCarPlateColorText(colorText);
+			//查询车架号
+			BigdataBeidouSafetyCarInfo beidouSafetyCarInfo = new BigdataBeidouSafetyCarInfo();
+			beidouSafetyCarInfo.setCarPlateNum(carPlateNum);
+			beidouSafetyCarInfo.setCarPlateColor(carPlateColor);
+			BigdataBeidouSafetyCarInfo beidouSafetyCarInfo1 = bigdataBeidouSafetyCarInfoService.selectByCarPlateNumAndColor(beidouSafetyCarInfo);
+			if(beidouSafetyCarInfo1!=null){
+				warning.setCarFrameNum(beidouSafetyCarInfo1.getCarFrameNum());
+				warning.setCarType(beidouSafetyCarInfo1.getCarType());
+				warning.setOwnerTeamId(beidouSafetyCarInfo1.getTeamId());
+				warning.setOwnerTeamName(beidouSafetyCarInfo1.getTeamName());
+				warning.setProvinceId(beidouSafetyCarInfo1.getProvinceId());
+				warning.setProvinceName(beidouSafetyCarInfo1.getProvinceName());
+				warning.setCityId(beidouSafetyCarInfo1.getCityId());
+				warning.setCityName(beidouSafetyCarInfo1.getCityName());
+				warning.setXianquId(beidouSafetyCarInfo1.getXianquId());
+				warning.setXianquName(beidouSafetyCarInfo1.getXianquName());
+			}
+			String carId = carPlateNum + "_" + carPlateColor;
+			CarInfo carInfo = carInfoService.loadById(carId);
+			if(carInfo!=null){
+				warning.setEmpCode(carInfo.getEmpCode());
+				warning.setEmpIdCard(carInfo.getEmpCode());
+				warning.setEmpName(carInfo.getEmpPhone());
+				warning.setEmpId(carInfo.getEmpId());
+			}
+			warning.setCompId(beidouComp.getId());
+			warning.setCompName(beidouComp.getCompName());
+
+			if(starttimeStr!=null && starttimeStr.length()>0){
+				try {
+					Date starttime = sdf.parse(starttimeStr);
+					String startDay = starttimeStr.substring(0,8);
+					Integer countDate = new Integer(startDay);
+					warning.setCountDate(countDate);
+					warning.setCountMonth(countDate/100);
+					warning.setStarttime(starttime);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			warning.setCreateTime(new Date());
+
+			warning.setDeviceno(safetyWarning.getDeviceno());
+			Double direction = safetyWarning.getDirection();
+			if(direction!=null){
+				warning.setDirection(new BigDecimal(direction));
+			}
+			String endtimeStr = safetyWarning.getEndtime();
+			if(endtimeStr!=null && endtimeStr.length()>0){
+				try {
+					Date endtime = sdf.parse(endtimeStr);
+					warning.setEndtime(endtime);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			warning.setDriverName(safetyWarning.getDriverName());
+			warning.setDriverCard(safetyWarning.getDriverCard());
+			//处理结果描述
+			warning.setDetailInfo(safetyWarning.getDetailInfo());
+			warning.setHandlePeople(safetyWarning.getHandlePeople());
+			warning.setHandleState(safetyWarning.getHandleState());
+			warning.setHandleType(safetyWarning.getHandleType());
+			String handleTimeStr = safetyWarning.getHandleTime();
+			if(handleTimeStr!=null && handleTimeStr.length()>0){
+				try {
+					Date handleTime = sdf.parse(handleTimeStr);
+					warning.setHandleTime(handleTime);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			Double lat = safetyWarning.getLat();
+			if(lat!=null){
+				warning.setLat( new BigDecimal(lat));
+			}
+			Double lon = safetyWarning.getLon();
+			if(lon!=null){
+				warning.setLon(new BigDecimal(lon));
+			}
+			warning.setSim(safetyWarning.getSim());
+			Double speed = safetyWarning.getSpeed();
+			if(speed!=null){
+				warning.setSpeed(new BigDecimal(speed));
+			}
+			warning.setUploadTime(new Date());
+			warning.setWarningInfo(safetyWarning.getWarningInfo());
+			int warnType = safetyWarning.getWarningType();
+			warning.setWarningType(warnTypeMap.get(warnType+""));
+			//报警等级 低于50一级 高于50二级
+			if(speed!=null){
+				if(speed>50){
+					warning.setWarningLevel("2");
+				}else{
+					warning.setWarningLevel("1");
+				}
+
+			}else{
+				warning.setWarningLevel("1");
+			}
+			String id = compId + "_" + warning.getBid();
+			warning.setId(id);
+			if(starttimeStr==null || starttimeStr.length()>0){
+				int count = mapper.countById(warning);
+				if(count>0){
+					warning.setUpdateTime(new Date());
+					mapper.updateByPkSelectiveAndFenPian(warning);
+				}else{
+					mapper.insert(warning);
+					//如果是疲劳或者超速报警同时插入alarm表
+					String warningType = warning.getWarningType();
+					if(warningType.contains("超速") || warningType.contains("疲劳")){
+						BigdataAlarmRecord bigdataAlarmRecord = new BigdataAlarmRecord();
+						bigdataAlarmRecord.setId(warning.getId());
+						bigdataAlarmRecord.setBid(warning.getBid());
+						bigdataAlarmRecord.setCompId(warning.getCompId());
+						bigdataAlarmRecord.setCompName(warning.getCompName());
+						bigdataAlarmRecord.setCreateTime(new Date());
+						bigdataAlarmRecord.setCarPlateNum(warning.getCarPlateNum());
+						bigdataAlarmRecord.setCarPlateColor(warning.getCarPlateColor());
+						bigdataAlarmRecord.setCarType(warning.getCarType());
+						bigdataAlarmRecord.setSimCode(warning.getSim());
+						if(warningType.contains("疲劳")){
+							bigdataAlarmRecord.setAlarmCls("1");
+							bigdataAlarmRecord.setAlarmType("2");
+						}
+						if(warningType.contains("超速")){
+							bigdataAlarmRecord.setAlarmCls("2");
+							bigdataAlarmRecord.setAlarmType("4");
+						}
+						bigdataAlarmRecord.setAlarmTime(warning.getStarttime());
+						bigdataAlarmRecord.setDriver(warning.getDriverName());
+						bigdataAlarmRecord.setLatitude(warning.getLat());
+						bigdataAlarmRecord.setLongitude(warning.getLon());
+						bigdataAlarmRecord.setAlarmSpeed(warning.getSpeed());
+						bigdataAlarmRecord.setCountDate(warning.getCountDate());
+						bigdataAlarmRecord.setCountMonth(warning.getCountMonth());
+						bigdataAlarmRecord.setEmpId(warning.getEmpId());
+						bigdataAlarmRecord.setEmpName(warning.getEmpName());
+						bigdataAlarmRecord.setEmpCode(warning.getEmpCode());
+						bigdataAlarmRecordMapper.insert(bigdataAlarmRecord);
+					}
+				}
+			}
+		}
+	}
+	/**
+	 * 根据主键和分片字段统计查询
+	 * @param pk
+	 * @param countMonth
+	 * @return
+	 */
+	public int countByIdAndFenPian(String pk,int countMonth){
+		BigdataSafetyWarning warning = new BigdataSafetyWarning();
+		warning.setId(pk);
+		warning.setCountMonth(countMonth);
+		return mapper.countById(warning);
+	}
+
+}

@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.reportdata.mapper.AgentMapper" >
+
+    <resultMap id="YwTrainChargeBillMap" type="com.edgedo.reportdata.entity.YwTrainChargeBill" >
+        <id column="ID" property="id"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="PACKAGE_ID" property="packageId"/>
+        <result column="PACKAGE_NAME" property="packageName"/>
+        <result column="PRICE" property="price"/>
+        <result column="ORA_PRICE" property="oraPrice"/>
+        <result column="STUDY_TIMES_NUM" property="studyTimesNum"/>
+        <result column="BILL_STATE" property="billState"/>
+        <result column="PAY_TIME" property="payTime"/>
+        <result column="STU_ID" property="stuId"/>
+        <result column="STU_NAME" property="stuName"/>
+        <result column="COMP_ID" property="compId"/>
+        <result column="APP_ID" property="appId"/>
+        <result column="BILL_CODE" property="billCode"/>
+        <result column="PREPAY_ID" property="prepayId"/>
+        <result column="PROVINCE_ID" property="provinceId"/>
+        <result column="PROVINCE_NAME" property="provinceName"/>
+        <result column="CITY_ID" property="cityId"/>
+        <result column="CITY_NAME" property="cityName"/>
+        <result column="XIANQU_ID" property="xianquId"/>
+        <result column="XIANQU_NAME" property="xianquName"/>
+    </resultMap>
+
+
+    <!-- ******* 新增字段请修改这里  ******  -->
+    <sql id="Base_Column_List">
+        ID, MODEL_NAME, PARENT_ID, IS_LEAF, SORT_NUM, CREATE_TIME
+    </sql>
+
+    <!-- ******* 利用好这里的动态查询条件  ******  -->
+    <sql id="where">
+        <where>
+            <if test='queryObj != null and  queryObj.createTime != null'>
+                AND  CREATE_TIME = #{queryObj.createTime}
+            </if>
+        </where>
+
+    </sql>
+
+    <!--充值详情列表-->
+    <select id="listPageForChargeBill"  parameterType="com.edgedo.reportdata.queryvo.AgentQuery" resultMap="YwTrainChargeBillMap">
+    /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */ select * from yw_train_charge_bill
+        WHERE BILL_STATE = 'charged'
+            <if test="provinceId != null and  provinceId != ''">
+                AND  PROVINCE_ID = #{provinceId}
+            </if>
+            <if test="cityId != null and  cityId != ''">
+                AND  CITY_ID = #{cityId}
+            </if>
+            <if test="xianquId != null and  xianquId != ''">
+                AND  XIANQU_ID = #{xianquId}
+            </if>
+            <if test="startTime != null">
+                AND PAY_TIME >= #{startTime}
+            </if>
+            <if test="endTime != null">
+                AND PAY_TIME &lt;= #{endTime}
+            </if>
+            <if test="searchTime != null">
+                <choose>
+                    <when test="searchType != null and searchType =='YEAR'">
+                        AND DATE_FORMAT(PAY_TIME,'%Y') = DATE_FORMAT(#{searchTime},'%Y')
+                    </when>
+                    <when test="searchType != null and searchType =='MONTH'">
+                        AND DATE_FORMAT(PAY_TIME,'%Y-%m') = DATE_FORMAT(#{searchTime},'%Y-%m')
+                    </when>
+                    <when test="searchType != null and searchType =='DAY'">
+                        AND DATE_FORMAT(PAY_TIME,'%Y-%m-%d') = DATE_FORMAT(#{searchTime},'%Y-%m-%d')
+                    </when>
+                </choose>
+            </if>
+    </select>
+
+    <!--财务日统计充值详情列表-->
+    <select id="listPageForChargeBillByDay"  parameterType="com.edgedo.reportdata.queryvo.AgentQuery" resultMap="YwTrainChargeBillMap">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */ select * from yw_train_charge_bill
+        WHERE BILL_STATE = 'charged'
+        AND DATE_FORMAT(PAY_TIME,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        AND DATE_FORMAT(PAY_TIME,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        <if test="provinceId != null and  provinceId != ''">
+            AND  PROVINCE_ID = #{provinceId}
+        </if>
+        <if test="cityId != null and  cityId != ''">
+            AND  CITY_ID = #{cityId}
+        </if>
+        <if test="xianquId != null and  xianquId != ''">
+            AND  XIANQU_ID = #{xianquId}
+        </if>
+        <if test="stuName != null and  stuName != ''">
+            AND  STU_NAME = #{stuName}
+        </if>
+    </select>
+
+
+    <!--统计总的学习课时-->
+    <select id="countLessionNum" parameterType="com.edgedo.reportdata.queryvo.AgentQuery" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */ select count(1) from yw_train_consum_rec
+        WHERE DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        AND DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        <if test="provinceId != null and  provinceId != ''">
+            AND  PROVINCE_ID = #{provinceId}
+        </if>
+        <if test="cityId != null and  cityId != ''">
+            AND  CITY_ID = #{cityId}
+        </if>
+        <if test="xianquId != null and  xianquId != ''">
+            AND  XIANQU_ID = #{xianquId}
+        </if>
+    </select>
+    <!--统计手机学习的课时数-->
+    <select id="countphoneLessionNum" parameterType="com.edgedo.reportdata.queryvo.AgentQuery" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */ select count(1) from yw_train_consum_rec
+        WHERE DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        AND DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        AND LEARN_TYPE = '自主学习'
+        <if test="provinceId != null and  provinceId != ''">
+            AND  PROVINCE_ID = #{provinceId}
+        </if>
+        <if test="cityId != null and  cityId != ''">
+            AND  CITY_ID = #{cityId}
+        </if>
+        <if test="xianquId != null and  xianquId != ''">
+            AND  XIANQU_ID = #{xianquId}
+        </if>
+    </select>
+
+<!--统计电脑学习的课时数-->
+    <select id="countpcLessionNum" parameterType="com.edgedo.reportdata.queryvo.AgentQuery" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */ select count(1) from yw_train_consum_rec
+        WHERE DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        AND DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        AND LEARN_TYPE = '学习点学习'
+        <if test="provinceId != null and  provinceId != ''">
+            AND  PROVINCE_ID = #{provinceId}
+        </if>
+        <if test="cityId != null and  cityId != ''">
+            AND  CITY_ID = #{cityId}
+        </if>
+        <if test="xianquId != null and  xianquId != ''">
+            AND  XIANQU_ID = #{xianquId}
+        </if>
+    </select>
+
+<!--统计总的学习人数-->
+    <select id="countPersonNum" parameterType="com.edgedo.reportdata.queryvo.AgentQuery" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */ select count(DISTINCT STU_ID_CARD) from yw_train_consum_rec
+        WHERE DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        AND DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        <if test="provinceId != null and  provinceId != ''">
+            AND  PROVINCE_ID = #{provinceId}
+        </if>
+        <if test="cityId != null and  cityId != ''">
+            AND  CITY_ID = #{cityId}
+        </if>
+        <if test="xianquId != null and  xianquId != ''">
+            AND  XIANQU_ID = #{xianquId}
+        </if>
+
+    </select>
+
+    <!--统计应审车辆数-->
+    <select id="counttrialCarNum" parameterType="com.edgedo.reportdata.queryvo.AgentQuery" resultType="int">
+        /*!mycat:sql=select app_id from zhyg_db where app_id = '${cityId}' */ select count(DISTINCT car_frame_num) from transit_car_baseinfo
+        WHERE DATE_FORMAT(operating_stop_date,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        AND DATE_FORMAT(operating_stop_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        AND data_state = '1'
+        AND is_new = '1'
+        <if test="provinceId != null and  provinceId != ''">
+            AND  province_id = #{provinceId}
+        </if>
+        <if test="cityId != null and  cityId != ''">
+            AND  city_id = #{cityId}
+        </if>
+        <if test="xianquId != null and  xianquId != ''">
+            AND  xianqu_id = #{xianquId}
+        </if>
+    </select>
+
+    <!--统计充值金额-->
+    <select id="countrechargeMoney" parameterType="com.edgedo.reportdata.queryvo.AgentQuery" resultType="java.math.BigDecimal">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */ select sum(PRICE) from yw_train_charge_bill
+        WHERE DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        AND DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        AND BILL_STATE = 'charged'
+        <if test="provinceId != null and  provinceId != ''">
+            AND  PROVINCE_ID = #{provinceId}
+        </if>
+        <if test="cityId != null and  cityId != ''">
+            AND  CITY_ID = #{cityId}
+        </if>
+        <if test="xianquId != null and  xianquId != ''">
+            AND  XIANQU_ID = #{xianquId}
+        </if>
+    </select>
+
+    <!--消费金额-->
+
+    <select id="countconsumeMoney" parameterType="com.edgedo.reportdata.queryvo.AgentQuery" resultType="java.math.BigDecimal">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */ select sum(CONSUME_MONEY) from yw_train_consum_rec
+        WHERE DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        AND DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        <if test="provinceId != null and  provinceId != ''">
+            AND  PROVINCE_ID = #{provinceId}
+        </if>
+        <if test="cityId != null and  cityId != ''">
+            AND  CITY_ID = #{cityId}
+        </if>
+        <if test="xianquId != null and  xianquId != ''">
+            AND  XIANQU_ID = #{xianquId}
+        </if>
+    </select>
+    
+    <select id="sumXianQuLessionYear" parameterType="map" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        select count(1) from yw_train_consum_rec
+        where CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y') =#{year}
+        <if test="trainType!=null and trainType != ''">
+            and LEARN_TYPE=#{trainType}
+        </if>
+    </select>
+
+    <select id="sumXianQuLessionForPcYear" parameterType="map" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        select count(1) from yw_train_consum_rec
+        where CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y') =#{year}
+        <if test="placeType!=null and placeType != ''">
+            and PLACE_TYPE=#{placeType}
+        </if>
+    </select>
+
+
+
+
+    <select id="sumXianQuLessionMonth" parameterType="map" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        select count(1) from yw_train_consum_rec
+        where CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y-%m') =DATE_FORMAT(#{searchTime},'%Y-%m')
+        <if test="trainType!=null and trainType != ''">
+            and LEARN_TYPE=#{trainType}
+        </if>
+    </select>
+
+    <select id="sumXianQuLessionForPcMonth" parameterType="map" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        select count(1) from yw_train_consum_rec
+        where CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y-%m') =DATE_FORMAT(#{searchTime},'%Y-%m')
+        <if test="placeType!=null and placeType != ''">
+            and PLACE_TYPE=#{placeType}
+        </if>
+    </select>
+
+
+
+    <select id="sumPrestoredLessionYear" parameterType="map" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        select sum(STUDY_TIMES_NUM) from yw_train_charge_bill
+        where CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y') =DATE_FORMAT(#{searchTime},'%Y')
+        and BILL_STATE = 'charged'
+    </select>
+
+    <select id="sumPrestoredLessionMonth" parameterType="map" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        select sum(STUDY_TIMES_NUM) from yw_train_charge_bill
+        where CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y-%M') =DATE_FORMAT(#{searchTime},'%Y-%M')
+        and BILL_STATE = 'charged'
+    </select>
+
+    <select id="sumPrestoredLessionDay" parameterType="map" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        select sum(STUDY_TIMES_NUM) from yw_train_charge_bill
+        where CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y-%M-%D') =DATE_FORMAT(#{searchTime},'%Y-%M-%D')
+        and BILL_STATE = 'charged'
+    </select>
+
+
+
+    <select id="sumXianQuLessionDay" parameterType="map" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        select count(1) from yw_train_consum_rec
+        where CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') =DATE_FORMAT(#{searchTime},'%Y-%m-%d')
+        <if test="trainType!=null and trainType != ''">
+            and LEARN_TYPE=#{trainType}
+        </if>
+    </select>
+
+    <select id="sumXianQuLessionForPcDay" parameterType="map" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        select count(1) from yw_train_consum_rec
+        where CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') =DATE_FORMAT(#{searchTime},'%Y-%m-%d')
+        <if test="placeType!=null and placeType != ''">
+            and PLACE_TYPE=#{placeType}
+        </if>
+    </select>
+
+
+
+
+    <select id="sumXianQuPersonYear" parameterType="map" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        SELECT count(1)FROM
+        (
+        SELECT DISTINCT(STU_ID_CARD) FROM yw_train_consum_rec
+        WHERE CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y') =#{year}
+        ) a
+    </select>
+
+
+    <select id="sumXianQuPersonMonth" parameterType="map" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        SELECT count(1)FROM
+        (
+        SELECT DISTINCT(STU_ID_CARD) FROM yw_train_consum_rec
+        WHERE CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y-%m') =DATE_FORMAT(#{searchTime},'%Y-%m')
+        ) a
+    </select>
+
+    <select id="sumXianQuPersonDay" parameterType="map" resultType="int">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        SELECT count(1)FROM
+        (
+        SELECT DISTINCT(STU_ID_CARD) FROM yw_train_consum_rec
+        WHERE CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') =DATE_FORMAT(#{searchTime},'%Y-%m-%d')
+        ) a
+    </select>
+
+
+    <!--统计充值金额-年-->
+    <select id="sumXianQurechargeMoneyYear" parameterType="map" resultType="java.math.BigDecimal">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        SELECT sum(PRICE) FROM yw_train_charge_bill
+        WHERE BILL_STATE = 'charged' AND CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(PAY_TIME,'%Y') =#{year}
+    </select>
+
+    <!--统计充值金额-月-->
+
+    <select id="sumXianQurechargeMoneyMonth" parameterType="map" resultType="java.math.BigDecimal">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        SELECT sum(PRICE) FROM yw_train_charge_bill
+        WHERE BILL_STATE = 'charged' AND CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(PAY_TIME,'%Y-%m') =DATE_FORMAT(#{searchTime},'%Y-%m')
+    </select>
+
+    <!--统计充值金额-日-->
+
+    <select id="sumXianQurechargeMoneyDay" parameterType="map" resultType="java.math.BigDecimal">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        SELECT sum(PRICE) FROM yw_train_charge_bill
+        WHERE BILL_STATE = 'charged' AND CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(PAY_TIME,'%Y-%m-%d') =DATE_FORMAT(#{searchTime},'%Y-%m-%d')
+    </select>
+
+
+    <!--统计消费金额-年-->
+    <select id="sumXianQureconsumeMoneyYear" parameterType="map" resultType="java.math.BigDecimal">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        SELECT sum(CONSUME_MONEY) FROM yw_train_consum_rec
+        WHERE CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y') =#{year}
+    </select>
+
+    <!--统计消费金额-月-->
+    <select id="sumXianQureconsumeMoneyMonth" parameterType="map" resultType="java.math.BigDecimal">
+         /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        SELECT sum(CONSUME_MONEY) FROM yw_train_consum_rec
+        WHERE  CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y-%m') =DATE_FORMAT(#{searchTime},'%Y-%m')
+    </select>
+
+
+    <!--统计消费金额-月-->
+    <select id="sumXianQureconsumeMoneyDay" parameterType="map" resultType="java.math.BigDecimal">
+        /*!mycat:sql=select app_id from train_db where app_id = '${cityId}' */
+        SELECT sum(CONSUME_MONEY) FROM yw_train_consum_rec
+        WHERE  CITY_ID=#{cityId} and XIANQU_ID=#{xianquId}
+        and DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') =DATE_FORMAT(#{searchTime},'%Y-%m-%d')
+    </select>
+
+    <!--已审车辆数 -日-->
+    <select id="countfinishedCarNum" parameterType="com.edgedo.reportdata.queryvo.AgentQuery"  resultType="int">
+        /*!mycat:sql=select app_id from zhyg_db where app_id = '${cityId}' */ select count(1) from transit_car_year_varify_rec
+        WHERE DATE_FORMAT(THIS_VARIFIED_TIME,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        AND DATE_FORMAT(THIS_VARIFIED_TIME,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        AND IS_DONE = '1'
+        <if test="provinceId != null and  provinceId != ''">
+            AND  province_id = #{provinceId}
+        </if>
+        <if test="cityId != null and  cityId != ''">
+            AND  city_id = #{cityId}
+        </if>
+        <if test="xianquId != null and  xianquId != ''">
+            AND  xianqu_id = #{xianquId}
+        </if>
+    </select>
+
+
+</mapper>

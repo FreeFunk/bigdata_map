@@ -1,0 +1,2799 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+ <link rel="stylesheet" type="text/css" href="dialog/index_files/flavr0.css">
+
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.SuperSlide.2.1.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script src="js/layer/layer.js"></script>
+
+    <script src="js/tool.js"></script>
+</head>
+
+<body>
+
+
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+                
+                   
+               <!-- <input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " />-->
+            <input type="text" class="input_rl " id="searchDate" style="width:150px; height: 48px; margin-right: 10px; ">
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+    <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">超速分析</div>
+             <a href="shouye.html" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="main">
+      <div class="ind mt100" style="position:relative">
+    
+   
+      
+     <span style="position:absolute; right:20px; top:10px;" id="demo-alert" >
+        <span class="demo-actions">
+           <a href="javaScript:void(0);" onclick="goToOverSpeedCount();" class="cljg">汇总查询</a>
+        </span>
+      </span>
+      
+      
+      
+<div class="www360buy" style="margin:0 auto">
+  <div class="hd">
+    <ul>
+      <li>国 道</li>
+      <li>高 速</li>
+    
+    </ul>
+  </div>
+  <div class="bd">
+    <ul class="lh">
+                 <div class="mk left" style="width:32%; height:650px">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+               <div class="tit">
+                     <span class="tit_l"></span>
+                     <span class="tit_m">超速分析</span>
+                     <span class="tit_r"></span>
+               </div>
+               <div class="con clearfix">
+                   
+                               <div>
+                                   <div class="xs left" style="width:48%; margin-right:2%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速车辆</h4>
+                                      <h3 id="guoDaoNum">0<em>辆</em></h3>
+                                   </div> 
+                                   
+                                   <div class="xs left" style="width:48%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速时长</h4>
+                                      <h3 id="guoDaoTime">0<em>h</em></h3>
+                                   </div> 
+                                   
+                                   <!--<div class="xs right" style="width:32%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速里程</h4>
+                                      <h3 id="guoDaoMilage">0<em>Km</em></h3>
+                                   </div>  -->
+                                </div>
+                                <div class="blank40"></div>
+                                <div style=" width:100%;height:370px" id="aa1"></div>
+                      
+               </div>
+           </div>
+           
+           
+           
+           
+           <div class="mk left" style="width:32%; height:650px; margin-left:2%">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+               <div class="tit">
+                     <span class="tit_l"></span>
+                     <span class="tit_m">严重超速分析</span>
+                     <span class="tit_r"></span>
+               </div>
+               <div class="con clearfix">
+                   <div>
+                                   <div class="xs left" style="width:96%; margin-right:2%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速车辆</h4>
+                                      <h3 id="guoDaoSeriousNum">0<em>辆</em></h3>
+                                   </div> 
+                                   
+                                   <!--<div class="xs left" style="width:48%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速时长</h4>
+                                      <h3 id="guoDaoSeriousTime">0<em>h</em></h3>
+                                   </div> -->
+                                   
+                                 <!--  <div class="xs right" style="width:32%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速里程</h4>
+                                      <h3 id="guoDaoSeriousMilage">0<em>Km</em></h3>
+                                   </div>  -->
+                                </div>
+                    <div class="blank40"></div>
+                    <div style=" width:100%;height:370px" id="aa2"></div>
+                    
+                     
+               </div>
+           </div>
+           
+           
+           
+           <div class="mk right" style="width:32%; height:650px;">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+               <div class="tit">
+                     <span class="tit_l"></span>
+                     <span class="tit_m">危险时段超速分析</span>
+                     <span class="tit_r"></span>
+               </div>
+               <div class="con clearfix">
+                             <div>
+                                   <div class="xs left" style="width:48%; margin-right:2%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速车辆</h4>
+                                      <h3 id="guoDaoNightNum">0<em>辆</em></h3>
+                                   </div> 
+                                   
+                                   <div class="xs left" style="width:48%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速时长</h4>
+                                      <h3 id="guoDaoNightTime">0<em>h</em></h3>
+                                   </div> 
+                                   
+                                   <!--<div class="xs right" style="width:32%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速里程</h4>
+                                      <h3 id="guoDaoNightMilage">0<em>Km</em></h3>
+                                   </div>  -->
+                                </div>
+                    <div class="blank40"></div>
+                    <div style=" width:100%;height:370px" id="aa3"></div>
+                    
+                     
+               </div>
+           </div>
+    </ul>
+     <ul class="lh">
+                 <div class="mk left" style="width:32%; height:650px">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+               <div class="tit">
+                     <span class="tit_l"></span>
+                     <span class="tit_m">超速分析</span>
+                     <span class="tit_r"></span>
+               </div>
+               <div class="con clearfix">
+                   
+                               <div>
+                                   <div class="xs left" style="width:48%; margin-right:2%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速车辆</h4>
+                                      <h3 id="gaosuNum">0<em>辆</em></h3>
+                                   </div> 
+                                   
+                                   <div class="xs left" style="width:48%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速时长</h4>
+                                      <h3 id="gaosuTime">0<em>h</em></h3>
+                                   </div> 
+                                   
+                                   <!--<div class="xs right" style="width:32%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速里程</h4>
+                                      <h3 id="gaosuMileage">0<em>Km</em></h3>
+                                   </div>  -->
+                                </div>
+                                <div class="blank40"></div>
+                                <div style=" width:100%;height:370px" id="aa4"></div>
+                      
+               </div>
+           </div>
+           
+           
+           
+           
+           <div class="mk left" style="width:32%; height:650px; margin-left:2%">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+               <div class="tit">
+                     <span class="tit_l"></span>
+                     <span class="tit_m">严重超速分析</span>
+                     <span class="tit_r"></span>
+               </div>
+               <div class="con clearfix">
+                   <div>
+                                   <div class="xs left" style="width:96%; margin-right:2%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速车辆</h4>
+                                      <h3 id="gaosuSeriousNum">0<em>辆</em></h3>
+                                   </div> 
+                                   
+                                   <!--<div class="xs left" style="width:48%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速时长</h4>
+                                      <h3 id="gaosuSeriousTime">0<em>h</em></h3>
+                                   </div> -->
+                                   
+                                   <!--<div class="xs right" style="width:32%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速里程</h4>
+                                      <h3 id="gaosuSeriousMileage">0<em>Km</em></h3>
+                                   </div>  -->
+                                </div>
+                    <div class="blank40"></div>
+                    <div style=" width:100%;height:370px" id="aa5"></div>
+                    
+                     
+               </div>
+           </div>
+           
+           
+           
+           <div class="mk right" style="width:32%; height:650px;">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+               <div class="tit">
+                     <span class="tit_l"></span>
+                     <span class="tit_m">危险时段超速分析</span>
+                     <span class="tit_r"></span>
+               </div>
+               <div class="con clearfix">
+                             <div>
+                                   <div class="xs left" style="width:48%; margin-right:2%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速车辆</h4>
+                                      <h3 id="gaosuNightNum">0<em>辆</em></h3>
+                                   </div> 
+                                   
+                                   <div class="xs left" style="width:48%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速时长</h4>
+                                      <h3 id="gaosuNightTime">0<em>h</em></h3>
+                                   </div> 
+                                   
+                                   <!--<div class="xs right" style="width:32%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>超速里程</h4>
+                                      <h3 id="gaosuNightMileage">0<em>Km</em></h3>
+                                   </div>-->
+                                </div>
+                    <div class="blank40"></div>
+                    <div style=" width:100%;height:370px" id="aa6"></div>
+                    
+                     
+               </div>
+           </div>
+    </ul>
+  </div>
+    <script type="text/javascript">jQuery(".www360buy").slide({trigger:"click",effect:"left"});</script>   
+</div>
+      
+ 
+      
+      
+      
+      
+            
+           
+         
+      
+      </div> 
+</div>
+
+
+
+
+
+
+<div id="showValue" style="display:none; padding:20px">
+1231575756712315757567123157575671231575756712315757567123157575671231575756712315757567123157575671231575756712315757567123157575671231575756712315757567<br />
+1231575756712315757567123157575671231575756712315757567123157575671231575756712315757567123157575671231575756712315757567123157575671231575756712315757567<br />
+1231575756712315757567123157575671231575756712315757567123157575671231575756712315757567123157575671231575756712315757567123157575671231575756712315757567<br />
+1231575756712315757567123157575671231575756712315757567123157575671231575756712315757567123157575671231575756712315757567123157575671231575756712315757567<br />
+</div>
+
+
+
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+</script>
+
+<script type="text/javascript" src="dialog/index_files/bootstrap.min.js"></script>
+<script type="text/javascript" src="dialog/index_files/jquery.browser.js"></script>
+<script type="text/javascript" src="dialog/index_files/livedemo.js"></script>
+<script type="text/javascript" src="dialog/index_files/flavr.min.js"></script>
+<script type="text/javascript">
+
+    /*$(document).ready(function(){
+
+        
+
+        $('.livedemo').livedemo();        
+
+        
+
+        $('.footer .socials a').on('mouseenter', function(){
+
+            var animationEnd = 'webkitAnimationEnd oanimationend msAnimationEnd animationend';
+
+            $(this).addClass('swing animated').bind( animationEnd, function(){
+
+                $(this).removeClass('swing animated');
+
+            });            
+
+        });
+
+        
+
+        $('.demo-block .demo-actions .btn-demo').on('click', function(e){            
+
+            e.preventDefault();
+
+        });
+
+        
+
+/!*  =========================================================================================
+
+        flavr Examples
+
+    =========================================================================================
+
+*!/
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                Simple Alert
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-alert .demo-actions .btn-demo').on('click', function(){            
+                var showValue = document.getElementById("showValue").innerHTML;
+                new $.flavr(showValue);       
+
+            });
+
+
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                Confirm Dialog
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-confirm .demo-actions .btn-demo').on('click', function(){
+
+                
+
+                new $.flavr({
+
+                    content     : 'Are you sure to delete your memories?',
+
+                    dialog      : 'confirm',
+
+                    onConfirm   : function(){
+
+                        alert('Deleted');
+
+                    },
+
+                    onCancel    : function(){
+
+                        alert('Canceled');
+
+                    }
+
+                });
+
+
+
+            });
+
+        
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                Prompt Dialog
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-prompt .demo-actions .btn-demo').on('click', function(){
+
+                
+
+                new $.flavr({
+
+                    content     : 'How old are you?',
+
+                    dialog      : 'prompt',
+
+                    prompt      : { placeholder : 'Enter something' },
+
+                    onConfirm   : function( $container, $prompt ){
+
+                        alert( $prompt.val() );
+
+                        return false;
+
+                    },
+
+                    onCancel    : function(){
+
+                        alert('Canceled');
+
+                    }
+
+                });
+
+
+
+
+
+            });
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                Multiple Dialog Instance
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-multi-instance .demo-actions .btn-demo').on('click', function(){
+
+                
+
+                new $.flavr({
+
+                    content  : 'Nuff siad, here is the last one', 
+
+                    position : 'top-right'
+
+                }, function(){
+
+                    new $.flavr({
+
+                        content  : 'The stack is unlimited, pretty cool huh',
+
+                        position : 'top-left'
+
+                    }, function(){
+
+                        new $.flavr({
+
+                            content  : 'Here is the dialog #3',
+
+                            position : 'bottom-right'
+
+                        }, function(){
+
+                            new $.flavr({
+
+                                content  : 'Me dialog #2',
+
+                                position : 'bottom-mid'
+
+                            }, function(){
+
+                                new $.flavr({
+
+                                    content     :'I am dialog #1',
+
+                                    buttons     : {
+
+                                        exit    : { text: 'Close All', style: 'danger',
+
+                                                    action: function(){
+
+                                                        this.exit();
+
+                                                    }
+
+                                        },
+
+                                        close   : {}
+
+                                    }
+
+                                });
+
+                            });
+
+                        });
+
+                    });
+
+                });
+
+            });
+
+
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                Multiple Buttons
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-multi-buttons .demo-actions .btn-demo').on('click', function(){
+
+                
+
+                new $.flavr({
+
+                    content     : 'flavr box with multiple buttons',
+
+                    buttons     : {
+
+                        primary : { text: 'Primary', style: 'primary', 
+
+                                    action: function(){
+
+                                        alert('Primary button');
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        success : { text: 'Success', style: 'success',
+
+                                    action: function(){
+
+                                        alert('Mission succeed!');
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        info    : { text: 'Info', style: 'info',
+
+                                    action: function(){
+
+                                        alert('For your information');
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        warning : { text: 'Warning', style: 'warning',
+
+                                    action: function(){
+
+                                        alert('No good captain!');
+
+                                        return false;
+
+                                    }                    
+
+                        },
+
+                        danger  : { text: 'Danger', style: 'danger',
+
+                                    action: function(){
+
+                                        alert('Mission failed!');
+
+                                        return false;
+
+                                    }          
+
+                        },
+
+                        close   : { style: 'default' }
+
+                    }
+
+                });
+
+                
+
+            });
+
+
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                Stacked Buttons
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-stacked-buttons .demo-actions .btn-demo').on('click', function(){
+
+                
+
+                new $.flavr({
+
+                    buttonDisplay   : 'stacked',
+
+                    content         : 'flavr with stacked buttons',
+
+                    buttons         : {                    
+
+                        confirm     : { style: 'info' },
+
+                        remove      : { style: 'danger' },
+
+                        close       : { style: 'default' }
+
+
+                    }                
+
+                });
+
+
+
+            });
+
+
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                HTML Dialog
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-html .demo-actions .btn-demo').on('click', function(){
+
+                
+
+                var html =  
+
+                '   <div class="form-row">' +                        
+
+                '       <input type="text" name="username" placeholder="Username" />' +
+
+                '   </div>' +
+
+                '   <div class="form-row">' +                        
+
+                '       <input type="password" name="password" placeholder="Password" />' +
+
+                '   </div>' +
+
+                '   <div class="form-row">' +                        
+
+                '       <input type="checkbox" name="remember" id="check"/>' +
+
+                '       <label for="check">Remember me</label>' +
+
+                '   </div>';
+
+            
+
+                new $.flavr({                
+
+                    title       : 'Form',
+
+                    iconPath    : 'flavr/images/icons/',
+
+                    icon        : 'email.png',                
+
+                    content     : 'HTML form example',
+
+                    dialog      : 'form',
+
+                    form        : { content: html, method: 'post' },
+
+                    onSubmit    : function( $container, $form ){
+
+                        alert( $form.serialize() );
+
+                        return false;
+
+                    }            
+
+                });
+
+
+
+            });
+
+        
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Modeless Dialog
+
+            ------------------------------------------------------------------------------- *!/
+
+            var modeless = null;
+
+            $('#demo-modeless .demo-actions .btn-demo').on('click', function(){
+
+                modeless = new $.flavr({
+
+                    modal       : false,
+
+                    content     : 'This is a modeless dialog'
+
+                });   
+
+            }); 
+
+            $('#demo-modeless .demo-actions .btn-close').on('click', function(e){
+
+                e.preventDefault();
+
+                if( null !== modeless ) modeless.close();
+
+            });
+
+
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                Autoclose Dialog
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-autoclose .demo-actions .btn-demo').on('click', function(){
+
+                
+
+                new $.flavr({
+
+                    content     : 'Autoclosing the dialog in 5 seconds',
+
+                    autoclose   : true,
+
+                    timeout     : 5000  /!* Default timeout is 3 seconds *!/
+
+                });
+
+ 
+
+            }); 
+
+
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                Alternative Closing
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-alt-closing .demo-actions .btn-demo').on('click', function(){
+
+                
+
+                new $.flavr({
+
+                    content      : 'Try clicking the overlay or pressing the escape button',
+
+                    closeOverlay : true,
+
+                    closeEsc     : true                
+
+                });
+
+
+
+            }); 
+
+
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                CSS3 Animation
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-animation .demo-actions .btn-demo').on('click', function(){
+
+                
+
+                var select = $(this).parent().siblings('.demo-select');
+
+                var entrance = select.find('.animate-entrance :selected').text();
+
+                var closing = select.find('.animate-closing :selected').text();
+
+                
+
+                new $.flavr({                
+
+                    animateEntrance : entrance,
+
+                    animateClosing  : closing,
+
+                    content         : 'Animation example'
+
+                });
+
+
+
+
+
+            });         
+
+
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                Attention Seeker
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-attention .demo-actions .btn-demo').on('click', function(){
+
+                
+
+                new $.flavr({
+
+                    position        : 'top-mid',                
+
+                    content         : 'Attention seeker animation examples',                
+
+                    buttons         : {
+
+                        swing       : { style: 'info', action: function(){ this.swing(); return false }},
+
+                        shake       : { style: 'warning', action: function(){ this.shake(); return false }},
+
+                        wobble      : { style: 'danger', action: function(){ this.wobble(); return false }},
+
+                        flash       : { style: 'primary', action: function(){ this.flash(); return false }},
+
+                        tada        : { style: 'info', action: function(){ this.tada(); return false }},
+
+                        pulse       : { style: 'warning', action: function(){ this.pulse(); return false }},
+
+                        bounce      : { style: 'danger', action: function(){ this.animate('bounce'); return false }},
+
+                        close       : {}
+
+                    }
+
+                });
+
+                
+
+            }); 
+
+        
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                Dynamic Dialog
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-dynamic .demo-actions .btn-demo').on('click', function(){
+
+                
+
+                new $.flavr({
+
+                    content     : 'Resize your Dialog',                
+
+                    buttons     : {
+
+                        resize  : { text: 'Resize 700 x 300', style: 'info',
+
+                                    action: function(){
+
+                                        this.resize( 700, 300 );                                     
+
+                                        return false 
+
+                                    }
+
+                        },
+
+                        full    : { text: 'Fullscreen', style: 'warning', 
+
+                                    action: function(){
+
+                                        this.fullscreen();
+
+                                        return false
+
+                                    }
+
+                        },
+
+                        revert  : { text: 'Original Size', style: 'danger',
+
+                                    action: function(){                         
+
+                                        this.revert();
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        change  : { text: 'Change Content', style: 'info',
+
+                                    action: function(){
+
+                                        this.content('<p>This is the new content</p><br/><p>New line</p>');                                    
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        close   : {}
+
+                    }
+
+                });
+
+                
+
+            });        
+
+        
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                Callbacks
+
+            ------------------------------------------------------------------------------- *!/
+
+            var callbackflavr = null;
+
+            $('#demo-callback .demo-actions .btn-demo').on('click', function(){
+
+                callbackflavr = new $.flavr({
+
+                    content     : 'flavr callback examples',
+
+                    buttons     : {
+
+                        shake   : { style: 'primary', 
+
+                                    action: function(){
+
+                                        this.shake(function(){
+
+                                            alert('Shake animation callback');
+
+                                        });
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        hide    : { style: 'info', 
+
+                                    action: function(){
+
+                                        this.hide();
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        close   : { style: 'warning' }
+
+                    },
+
+                    onLoad      : function(){
+
+                        alert('The plugin has been loaded');
+
+                    },
+
+                    onBuild     : function(){
+
+                        alert('We have succesfully build the DOM elements');
+
+                    },
+
+                    onShow      : function(){
+
+                        alert('The dialog has been shown');
+
+                    },
+
+                    onHide      : function(){
+
+                        alert('Now hidding the dialog');
+
+                    },                
+
+                    onClose     : function(){
+
+                        alert('We\'re about to close the dialog');
+
+                    }
+
+                });
+
+            });
+
+            $('#demo-callback .demo-actions .btn-show').on('click', function(e){
+
+                e.preventDefault();
+
+                if( null !== callbackflavr ) callbackflavr.show();
+
+            });
+
+        
+
+        
+
+        /!*  -------------------------------------------------------------------------------
+
+                Iframe
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-iframe .demo-actions .btn-show').on('click', function(){
+
+                new $.flavr({
+
+                    title       : 'Charlie bit my finger',
+
+                    content     : '<iframe width="420" height="315" src="//www.youtube.com/embed/_OBlgSz8sSM"' + 
+
+                                    'frameborder="0" allowfullscreen></iframe>',
+
+                    buttons     : {
+
+                        close   : {}
+
+                    }
+
+                });
+
+                return false;
+
+            });
+
+        
+
+    }); */
+
+</script>
+
+
+<script type="text/javascript">
+		        
+					var effectScatterData = [];
+					for (var i = dataS1.length - 1; i >= 0; i--) {
+						 if (dataS1[i] != '-') {
+							effectScatterData.push([axisDataS1[i], dataS1[i]]);
+							break;
+						}
+					}
+				
+
+					
+</script>
+
+
+
+<script type="text/javascript">
+							/*// 基于准备好的dom，初始化echarts实例
+							var myChart = echarts.init(document.getElementById('aa1'));
+							// 指定图表的配置项和数据
+						   option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['3月10日', '3月11日', '3月12日', '3月13日', '3月14日', '3月15日', '3月16日'],
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    },
+            	min: 0,
+				max: 120,
+			splitLine: {
+					show: true,
+					lineStyle:{
+						 color: ['#237d88'],
+						 width: 1,
+						type: 'solid'
+					}
+
+			},
+        }
+    ],
+     legend: {
+        data:['超速次数'],
+		/!*orient: 'vertical',*!/
+        top: '0%',
+        right: '0%',
+		icon: "circle", 
+		textStyle: {
+                        color: "#fff",
+                        fontSize: 14,
+                       
+                    },
+    },
+    series : [
+        {
+            name:'超速次数',
+            type:'bar',
+            barWidth: '60%',
+            markLine : {
+                itemStyle : { 
+                    normal: { 
+                        borderWidth:1, 
+                        lineStyle: { 
+                            type: 'symbol', 
+                            color:'#ff0000', 
+                            width:1 
+                        }}} ,
+                data : [
+                  { name: '标线1起点', xAxis: 0, yAxis: 90, symbol: 'circle'},
+                  { name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                ]
+            },
+            itemStyle: {
+				normal: {
+					color: "#E3B25A",
+                    label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#fff',
+										fontSize: 16
+									}},
+
+					lineStyle: {
+						color: "#E3B25A"
+							   }}
+					   },
+            data:[100, 85, 90, 100, 86, 72, 65]
+        }
+    ]
+};
+					
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);*/
+            </script>    
+
+<script type="text/javascript">
+							// 基于准备好的dom，初始化echarts实例
+							/*var myChart = echarts.init(document.getElementById('aa2'));
+							// 指定图表的配置项和数据
+						   option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['3月10日', '3月11日', '3月12日', '3月13日', '3月14日', '3月15日', '3月16日'],
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    },
+            	min: 0,
+				max: 120,
+			splitLine: {
+					show: true,
+					lineStyle:{
+						 color: ['#237d88'],
+						 width: 1,
+						type: 'solid'
+					}
+
+			},
+        }
+    ],
+     legend: {
+        data:['超速次数'],
+		/!*orient: 'vertical',*!/
+        top: '0%',
+        right: '0%',
+		icon: "circle", 
+		textStyle: {
+                        color: "#fff",
+                        fontSize: 14,
+                       
+                    },
+    },
+    series : [
+        {
+            name:'超速次数',
+            type:'bar',
+            barWidth: '60%',
+            markLine : {
+                itemStyle : { 
+                    normal: { 
+                        borderWidth:1, 
+                        lineStyle: { 
+                            type: 'symbol', 
+                            color:'#ff0000', 
+                            width:1 
+                        }}} ,
+                data : [
+                  { name: '标线1起点', xAxis: 0, yAxis: 90, symbol: 'circle'},
+                  { name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                ]
+            },
+            itemStyle: {
+				normal: {
+					color: "#E3B25A",
+                    label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#fff',
+										fontSize: 16
+									}},
+
+					lineStyle: {
+						color: "#E3B25A"
+							   }}
+					   },
+            data:[100, 85, 90, 100, 86, 72, 65]
+        }
+    ]
+};
+					
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);*/
+            </script> 
+
+<script type="text/javascript">
+							// 基于准备好的dom，初始化echarts实例
+							/*var myChart = echarts.init(document.getElementById('aa3'));
+							// 指定图表的配置项和数据
+						   option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['3月10日', '3月11日', '3月12日', '3月13日', '3月14日', '3月15日', '3月16日'],
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    },
+            	min: 0,
+				max: 120,
+			splitLine: {
+					show: true,
+					lineStyle:{
+						 color: ['#237d88'],
+						 width: 1,
+						type: 'solid'
+					}
+
+			},
+        }
+    ],
+     legend: {
+        data:['超速次数'],
+		/!*orient: 'vertical',*!/
+        top: '0%',
+        right: '0%',
+		icon: "circle", 
+		textStyle: {
+                        color: "#fff",
+                        fontSize: 14,
+                       
+                    },
+    },
+    series : [
+        {
+            name:'超速次数',
+            type:'bar',
+            barWidth: '60%',
+            markLine : {
+                itemStyle : { 
+                    normal: { 
+                        borderWidth:1, 
+                        lineStyle: { 
+                            type: 'symbol', 
+                            color:'#ff0000', 
+                            width:1 
+                        }}} ,
+                data : [
+                  { name: '标线1起点', xAxis: 0, yAxis: 90, symbol: 'circle'},
+                  { name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                ]
+            },
+            itemStyle: {
+				normal: {
+					color: "#E3B25A",
+                    label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#fff',
+										fontSize: 16
+									}},
+
+					lineStyle: {
+						color: "#E3B25A"
+							   }}
+					   },
+            data:[100, 85, 90, 100, 86, 72, 65]
+        }
+    ]
+};
+					
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);*/
+            </script> 
+    
+    <script type="text/javascript">
+							/*// 基于准备好的dom，初始化echarts实例
+							var myChart = echarts.init(document.getElementById('aa4'));
+							// 指定图表的配置项和数据
+						   option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['3月10日', '3月11日', '3月12日', '3月13日', '3月14日', '3月15日', '3月16日'],
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    },
+            	min: 0,
+				max: 120,
+			splitLine: {
+					show: true,
+					lineStyle:{
+						 color: ['#237d88'],
+						 width: 1,
+						type: 'solid'
+					}
+
+			},
+        }
+    ],
+     legend: {
+        data:['超速次数'],
+		/!*orient: 'vertical',*!/
+        top: '0%',
+        right: '0%',
+		icon: "circle", 
+		textStyle: {
+                        color: "#fff",
+                        fontSize: 14,
+                       
+                    },
+    },
+    series : [
+        {
+            name:'超速次数',
+            type:'bar',
+            barWidth: '60%',
+            markLine : {
+                itemStyle : { 
+                    normal: { 
+                        borderWidth:1, 
+                        lineStyle: { 
+                            type: 'symbol', 
+                            color:'#ff0000', 
+                            width:1 
+                        }}} ,
+                data : [
+                  { name: '标线1起点', xAxis: 0, yAxis: 90, symbol: 'circle'},
+                  { name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                ]
+            },
+            itemStyle: {
+				normal: {
+					color: "#E3B25A",
+                    label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#fff',
+										fontSize: 16
+									}},
+
+					lineStyle: {
+						color: "#E3B25A"
+							   }}
+					   },
+            data:[100, 85, 90, 100, 86, 72, 65]
+        }
+    ]
+};
+					
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);*/
+            </script> 
+    
+    <script type="text/javascript">
+							// 基于准备好的dom，初始化echarts实例
+							/*var myChart = echarts.init(document.getElementById('aa5'));
+							// 指定图表的配置项和数据
+						   option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['3月10日', '3月11日', '3月12日', '3月13日', '3月14日', '3月15日', '3月16日'],
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    },
+            	min: 0,
+				max: 120,
+			splitLine: {
+					show: true,
+					lineStyle:{
+						 color: ['#237d88'],
+						 width: 1,
+						type: 'solid'
+					}
+
+			},
+        }
+    ],
+     legend: {
+        data:['超速次数'],
+		/!*orient: 'vertical',*!/
+        top: '0%',
+        right: '0%',
+		icon: "circle", 
+		textStyle: {
+                        color: "#fff",
+                        fontSize: 14,
+                       
+                    },
+    },
+    series : [
+        {
+            name:'超速次数',
+            type:'bar',
+            barWidth: '60%',
+            markLine : {
+                itemStyle : { 
+                    normal: { 
+                        borderWidth:1, 
+                        lineStyle: { 
+                            type: 'symbol', 
+                            color:'#ff0000', 
+                            width:1 
+                        }}} ,
+                data : [
+                  { name: '标线1起点', xAxis: 0, yAxis: 90, symbol: 'circle'},
+                  { name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                ]
+            },
+            itemStyle: {
+				normal: {
+					color: "#E3B25A",
+                    label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#fff',
+										fontSize: 16
+									}},
+
+					lineStyle: {
+						color: "#E3B25A"
+							   }}
+					   },
+            data:[100, 85, 90, 100, 86, 72, 65]
+        }
+    ]
+};
+					
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);*/
+            </script> 
+    
+    <script type="text/javascript">
+							// 基于准备好的dom，初始化echarts实例
+							/*var myChart = echarts.init(document.getElementById('aa6'));
+							// 指定图表的配置项和数据
+						   option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['3月10日', '3月11日', '3月12日', '3月13日', '3月14日', '3月15日', '3月16日'],
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    },
+            	min: 0,
+				max: 120,
+			splitLine: {
+					show: true,
+					lineStyle:{
+						 color: ['#237d88'],
+						 width: 1,
+						type: 'solid'
+					}
+
+			},
+        }
+    ],
+     legend: {
+        data:['超速次数'],
+		/!*orient: 'vertical',*!/
+        top: '0%',
+        right: '0%',
+		icon: "circle", 
+		textStyle: {
+                        color: "#fff",
+                        fontSize: 14,
+                       
+                    },
+    },
+    series : [
+        {
+            name:'超速次数',
+            type:'bar',
+            barWidth: '60%',
+            markLine : {
+                itemStyle : { 
+                    normal: { 
+                        borderWidth:1, 
+                        lineStyle: { 
+                            type: 'symbol', 
+                            color:'#ff0000', 
+                            width:1 
+                        }}} ,
+                data : [
+                  { name: '标线1起点', xAxis: 0, yAxis: 90, symbol: 'circle'},
+                  { name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                ]
+            },
+            itemStyle: {
+				normal: {
+					color: "#E3B25A",
+                    label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#fff',
+										fontSize: 16
+									}},
+
+					lineStyle: {
+						color: "#E3B25A"
+							   }}
+					   },
+            data:[100, 85, 90, 100, 86, 72, 65]
+        }
+    ]
+};
+					
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);*/
+            </script>
+
+<script type="text/javascript">
+    //初始化数据
+    $(document).ready(function(){
+        //获取参数
+        var queryArgs = getQueryParam();
+        queryArgs.carType = decodeURI(queryArgs.carType);
+        //初始化日期
+        initLayDate(queryArgs.searchTime);
+        //超速详情
+        overspeedDetail(queryArgs);
+        //柱状图数据
+        overspeedEcharts(queryArgs);
+    });
+
+    //初始化日期
+    function initLayDate(searchTime) {
+        laydate.render({
+            elem: '#searchDate',
+            theme: '#884898',
+            value: searchTime,
+            btns: ['confirm'],
+            done: function(value, date, endDate){
+                if(value!=""){
+                    var queryArgs = getQueryParam();
+                    queryArgs.carType = decodeURI(queryArgs.carType);
+                    queryArgs.searchTime = value;
+                    overspeedDetail(queryArgs);
+                    overspeedEcharts(queryArgs);
+                }
+            }
+        });
+    }
+    //超速详情
+    function overspeedDetail(queryArgs) {
+        //超速详情
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataOverspeedAnalysis/getOverspeedAnalysisData.jsn",
+            data: {'queryObj.carType':queryArgs.carType,'queryObj.countTime':queryArgs.searchTime},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+
+                    if(typeof(data.data) == "undefined"){
+//国道超速次数
+                        $("#guoDaoNum").html(0+"<em>辆</em>");
+                        $("#guoDaoTime").html(0+"<em>h</em>");
+                        $("#guoDaoMilage").html(0+"<em>Km</em>");
+                        $("#guoDaoSeriousNum").html(0+"<em>辆</em>");
+                        $("#guoDaoSeriousTime").html(0+"<em>h</em>");
+                        $("#guoDaoSeriousMilage").html(0+"<em>Km</em>");
+                        $("#guoDaoNightNum").html(0+"<em>辆</em>");
+                        $("#guoDaoNightTime").html(0+"<em>h</em>");
+                        $("#guoDaoNightMilage").html(0+"<em>Km</em>");
+                        //高速超速次数
+                        $("#gaosuNum").html(0+"<em>Km</em>");
+                        $("#gaosuTime").html(0+"<em>Km</em>");
+                        $("#gaosuMileage").html(0+"<em>Km</em>");
+                        $("#gaosuSeriousNum").html(0+"<em>Km</em>");
+                        $("#gaosuSeriousTime").html(0+"<em>Km</em>");
+                        $("#gaosuSeriousMileage").html(0+"<em>Km</em>");
+                        $("#gaosuNightNum").html(0+"<em>Km</em>");
+                        $("#gaosuNightTime").html(0+"<em>Km</em>");
+                        $("#gaosuNightMileage").html(0+"<em>Km</em>");
+                    }else {
+                        //国道超速次数
+                        $("#guoDaoNum").html(data.data.nationalOverspeedNum+"<em>辆</em>");
+                        $("#guoDaoTime").html(data.data.nationalOverspeedTime+"<em>h</em>");
+                        $("#guoDaoMilage").html(data.data.nationalOverspeedMileage+"<em>Km</em>");
+                        $("#guoDaoSeriousNum").html(data.data.nationalSeriousOverspeedNum+"<em>辆</em>");
+                        if(data.data.nationalSeriousOverspeedNum>0 && data.data.nationalSeriousOverspeedTime==0){
+                            $("#guoDaoSeriousTime").html("≈0.01<em>h</em>");
+                        }else {
+                            $("#guoDaoSeriousTime").html(data.data.nationalSeriousOverspeedTime+"<em>h</em>");
+                        }
+                        $("#guoDaoSeriousMilage").html(data.data.nationalSeriousOverspeedMileage+"<em>Km</em>");
+                        $("#guoDaoNightNum").html(data.data.nationalNightOverspeedNum+"<em>辆</em>");
+                        $("#guoDaoNightTime").html(data.data.nationalNightOverspeedTime+"<em>h</em>");
+                        $("#guoDaoNightMilage").html(data.data.nationalNightOverspeedMileage+"<em>Km</em>");
+                        //高速超速次数
+                        $("#gaosuNum").html(data.data.highOverspeedNum+"<em>辆</em>");
+                        $("#gaosuTime").html(data.data.highOverspeedTime+"<em>h</em>");
+                        $("#gaosuMileage").html(data.data.highOverspeedMileage+"<em>Km</em>");
+                        $("#gaosuSeriousNum").html(data.data.highSeriousOverspeedNum+"<em>辆</em>");
+                        if(data.data.highSeriousOverspeedNum>0 && data.data.highSeriousOverspeedTime==0){
+                            $("#gaosuSeriousTime").html("≈0.01<em>h</em>");
+                        }else {
+                            $("#gaosuSeriousTime").html(data.data.highSeriousOverspeedTime+"<em>h</em>");
+                        }
+                        $("#gaosuSeriousMileage").html(data.data.highSeriousOverspeedMileage+"<em>Km</em>");
+                        $("#gaosuNightNum").html(data.data.highNightOverspeedNum+"<em>辆</em>");
+                        $("#gaosuNightTime").html(data.data.highNightOverspeedTime+"<em>h</em>");
+                        $("#gaosuNightMileage").html(data.data.highNightOverspeedMileage+"<em>Km</em>");
+                    }
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+    //柱状图数据
+    function overspeedEcharts(queryArgs) {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataOverspeedAnalysis/getOverspeedEchartsData.jsn",
+            data: {'queryObj.carType':queryArgs.carType,'queryObj.countTime':queryArgs.searchTime,'limit':-6},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    //国道超速分析柱状图
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart1 = echarts.init(document.getElementById('aa1'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#3398DB'],
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                data : data.data.dateList,
+                                axisTick: {
+                                    alignWithLabel: true
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                },
+                             /*   min: 0,
+                                max: 2500,*/
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                            }
+                        ],
+                        legend: {
+                            data:['超速车辆'],
+                            /*orient: 'vertical',*/
+                            top: '0%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        series : [
+                            {
+                                name:'超速车辆',
+                                type:'bar',
+                                barWidth: '60%',
+                                markLine : {
+                                    itemStyle : {
+                                        normal: {
+                                            borderWidth:1,
+                                            lineStyle: {
+                                                type: 'symbol',
+                                                color:'#ff0000',
+                                                width:1
+                                            }}} ,
+                                    data : [
+                                        { name: '标线1起点', xAxis: 0, yAxis: data.data.nationalOverspeedNumLine, symbol: 'circle'},
+                                        //{ name: '标线1终点', xAxis: data.data.dateList[data.data.dateList.length-1], yAxis: data.data.nationalOverspeedNumLine, symbol: 'circle' },
+                                    ]
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "#E3B25A",
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }},
+
+                                        lineStyle: {
+                                            color: "#E3B25A"
+                                        }}
+                                },
+                                data:data.data.nationalOverspeedNumList
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart1.setOption(option);
+
+
+
+                    //国道严重超速分析
+                    var myChart2 = echarts.init(document.getElementById('aa2'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#3398DB'],
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                data : data.data.dateList,
+                                axisTick: {
+                                    alignWithLabel: true
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                },
+                                /*min: 0,
+                                max: 25,*/
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                            }
+                        ],
+                        legend: {
+                            data:['超速车辆'],
+                            /*orient: 'vertical',*/
+                            top: '0%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        series : [
+                            {
+                                name:'超速车辆',
+                                type:'bar',
+                                barWidth: '60%',
+                                markLine : {
+                                    itemStyle : {
+                                        normal: {
+                                            borderWidth:1,
+                                            lineStyle: {
+                                                type: 'symbol',
+                                                color:'#ff0000',
+                                                width:1
+                                            }}} ,
+                                    data : [
+                                        { name: '标线1起点', xAxis: 0, yAxis: data.data.nationalSeriousOverspeedNumLine, symbol: 'circle'},
+                                        //{ name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                                    ]
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "#E3B25A",
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }},
+
+                                        lineStyle: {
+                                            color: "#E3B25A"
+                                        }}
+                                },
+                                data:data.data.nationalSeriousOverspeedNumList
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart2.setOption(option);
+
+                    //国道危险时段超速分析
+                    var myChart3 = echarts.init(document.getElementById('aa3'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#3398DB'],
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                data : data.data.dateList,
+                                axisTick: {
+                                    alignWithLabel: true
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                },
+                                /*min: 0,
+                                max: 600,*/
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                            }
+                        ],
+                        legend: {
+                            data:['超速车辆'],
+                            /*orient: 'vertical',*/
+                            top: '0%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        series : [
+                            {
+                                name:'超速车辆',
+                                type:'bar',
+                                barWidth: '60%',
+                                markLine : {
+                                    itemStyle : {
+                                        normal: {
+                                            borderWidth:1,
+                                            lineStyle: {
+                                                type: 'symbol',
+                                                color:'#ff0000',
+                                                width:1
+                                            }}} ,
+                                    data : [
+                                        { name: '标线1起点', xAxis: 0, yAxis: data.data.nationalNightOverspeedNumLine, symbol: 'circle'},
+                                        //{ name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                                    ]
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "#E3B25A",
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }},
+
+                                        lineStyle: {
+                                            color: "#E3B25A"
+                                        }}
+                                },
+                                data:data.data.nationalNightOverspeedNumList
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart3.setOption(option);
+
+                    //高速超速分析
+                    var myChart4 = echarts.init(document.getElementById('aa4'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#3398DB'],
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                data : data.data.dateList,
+                                axisTick: {
+                                    alignWithLabel: true
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                },
+                                /*min: 0,
+                                max: 2500,*/
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                            }
+                        ],
+                        legend: {
+                            data:['超速车辆'],
+                            /*orient: 'vertical',*/
+                            top: '0%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        series : [
+                            {
+                                name:'超速车辆',
+                                type:'bar',
+                                barWidth: '60%',
+                                markLine : {
+                                    itemStyle : {
+                                        normal: {
+                                            borderWidth:1,
+                                            lineStyle: {
+                                                type: 'symbol',
+                                                color:'#ff0000',
+                                                width:1
+                                            }}} ,
+                                    data : [
+                                        { name: '标线1起点', xAxis: 0, yAxis: data.data.highOverspeedNumLine, symbol: 'circle'},
+                                        //{ name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                                    ]
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "#E3B25A",
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }},
+
+                                        lineStyle: {
+                                            color: "#E3B25A"
+                                        }}
+                                },
+                                data:data.data.highOverspeedNumList
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart4.setOption(option);
+
+                    //高速严重超速分析
+                    var myChart5 = echarts.init(document.getElementById('aa5'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#3398DB'],
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                data : data.data.dateList,
+                                axisTick: {
+                                    alignWithLabel: true
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                },
+                                /*min: 0,
+                                max: 800,*/
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                            }
+                        ],
+                        legend: {
+                            data:['超速车辆'],
+                            /*orient: 'vertical',*/
+                            top: '0%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        series : [
+                            {
+                                name:'超速车辆',
+                                type:'bar',
+                                barWidth: '60%',
+                                markLine : {
+                                    itemStyle : {
+                                        normal: {
+                                            borderWidth:1,
+                                            lineStyle: {
+                                                type: 'symbol',
+                                                color:'#ff0000',
+                                                width:1
+                                            }}} ,
+                                    data : [
+                                        { name: '标线1起点', xAxis: 0, yAxis: data.data.highSeriousOverspeedNumLine, symbol: 'circle'},
+                                       // { name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                                    ]
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "#E3B25A",
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }},
+
+                                        lineStyle: {
+                                            color: "#E3B25A"
+                                        }}
+                                },
+                                data:data.data.highSeriousOverspeedNumList
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart5.setOption(option);
+
+                    //高速危险时段超速分析
+                    var myChart = echarts.init(document.getElementById('aa6'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#3398DB'],
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                data : data.data.dateList,
+                                axisTick: {
+                                    alignWithLabel: true
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                },
+                                /*min: 0,
+                                max: 500,*/
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#237d88'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                            }
+                        ],
+                        legend: {
+                            data:['超速车辆'],
+                            /*orient: 'vertical',*/
+                            top: '0%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        series : [
+                            {
+                                name:'超速车辆',
+                                type:'bar',
+                                barWidth: '60%',
+                                markLine : {
+                                    itemStyle : {
+                                        normal: {
+                                            borderWidth:1,
+                                            lineStyle: {
+                                                type: 'symbol',
+                                                color:'#ff0000',
+                                                width:1
+                                            }}} ,
+                                    data : [
+                                        { name: '标线1起点', xAxis: 0, yAxis: data.data.highNightOverspeedNumLine, symbol: 'circle'},
+                                        //{ name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                                    ]
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "#E3B25A",
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }},
+
+                                        lineStyle: {
+                                            color: "#E3B25A"
+                                        }}
+                                },
+                                data:data.data.highNightOverspeedNumList
+                            }
+                        ]
+                    };
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+
+
+                    myChart1.getZr().on('click', function (params) {
+                        var pointInPixel= [params.offsetX, params.offsetY];
+                        if (myChart1.containPixel('grid',pointInPixel)) {
+                            var pointInGrid = myChart1.convertFromPixel({seriesIndex: 0}, pointInPixel);
+                            //X轴序号
+                            var xIndex = pointInGrid[0];
+                            //获取当前图表的option
+                            var op = myChart1.getOption();
+                            //获得图表中我们想要的数据
+                            var xdata = op.xAxis[0].data[xIndex];
+                            //获取时间
+                            var queryArgs = getQueryParam();
+                            queryArgs.carType = decodeURI(queryArgs.carType);
+                            var year = queryArgs.searchTime.substring(0, 4);
+                            var month = xdata.substring(0, 2);
+                            var day = xdata.substring(3, 5);
+                            var countDate = year + month + day;
+                            var countMonth = year + month;
+                            var carType = queryArgs.carType;
+                            var isGuodaoOverSpeed = "1";
+                            //国道
+                            window.location.href = "overSpeedCarListNational.html?carType=" + encodeURI(carType)
+                                + "&countDate=" + countDate + "&countMonth=" + countMonth
+                                + "&isGuodaoOverSpeed=" + isGuodaoOverSpeed
+                                + "&page=1&limit=13";
+                        }
+                    });
+                    myChart2.getZr().on('click', function (params) {
+                        var pointInPixel= [params.offsetX, params.offsetY];
+                        if (myChart2.containPixel('grid',pointInPixel)) {
+                            var pointInGrid = myChart2.convertFromPixel({seriesIndex: 0}, pointInPixel);
+                            //X轴序号
+                            var xIndex = pointInGrid[0];
+                            //获取当前图表的option
+                            var op = myChart2.getOption();
+                            //获得图表中我们想要的数据
+                            var xdata = op.xAxis[0].data[xIndex];
+                            //获取时间
+                            var queryArgs = getQueryParam();
+                            queryArgs.carType = decodeURI(queryArgs.carType);
+                            var year = queryArgs.searchTime.substring(0, 4);
+                            var month = xdata.substring(0, 2);
+                            var day = xdata.substring(3, 5);
+                            var countDate = year + month + day;
+                            var countMonth = year + month;
+                            var carType = queryArgs.carType;
+                            //严重超速
+                            var isGuodaoSerOverSpeed = "1";
+                            window.location.href = "overSpeedCarListNationalSerious.html?carType=" + encodeURI(carType)
+                                + "&countDate=" + countDate + "&countMonth=" + countMonth
+                                + "&isGuodaoSerOverSpeed=" + isGuodaoSerOverSpeed + "&page=1&limit=13";
+                        }
+                    });
+                    myChart3.getZr().on('click', function (params) {
+                        var pointInPixel= [params.offsetX, params.offsetY];
+                        if (myChart3.containPixel('grid',pointInPixel)) {
+                            var pointInGrid = myChart3.convertFromPixel({seriesIndex: 0}, pointInPixel);
+                            //X轴序号
+                            var xIndex = pointInGrid[0];
+                            //获取当前图表的option
+                            var op = myChart3.getOption();
+                            //获得图表中我们想要的数据
+                            var xdata = op.xAxis[0].data[xIndex];
+                            //获取时间
+                            var queryArgs = getQueryParam();
+                            queryArgs.carType = decodeURI(queryArgs.carType);
+                            var year = queryArgs.searchTime.substring(0, 4);
+                            var month = xdata.substring(0, 2);
+                            var day = xdata.substring(3, 5);
+                            var countDate = year + month + day;
+                            var countMonth = year + month;
+                            var carType = queryArgs.carType;
+                            //危险时段超速
+                            var isGuodaoDangerOverSpeed = "1";
+                            window.location.href = "overSpeedCarListNationalDangerTime.html?carType=" + encodeURI(carType)
+                                + "&countDate=" + countDate + "&countMonth=" + countMonth
+                                +"&isGuodaoDangerOverSpeed=" + isGuodaoDangerOverSpeed + "&page=1&limit=13";
+                        }
+                    });
+                    myChart4.getZr().on('click', function (params) {
+                        var pointInPixel= [params.offsetX, params.offsetY];
+                        if (myChart4.containPixel('grid',pointInPixel)) {
+                            var pointInGrid = myChart4.convertFromPixel({seriesIndex: 0}, pointInPixel);
+                            //X轴序号
+                            var xIndex = pointInGrid[0];
+                            //获取当前图表的option
+                            var op = myChart4.getOption();
+                            //获得图表中我们想要的数据
+                            var xdata = op.xAxis[0].data[xIndex];
+                            //获取时间
+                            var queryArgs = getQueryParam();
+                            queryArgs.carType = decodeURI(queryArgs.carType);
+                            var year = queryArgs.searchTime.substring(0, 4);
+                            var month = xdata.substring(0, 2);
+                            var day = xdata.substring(3, 5);
+                            var countDate = year + month + day;
+                            var countMonth = year + month;
+                            var carType = queryArgs.carType;
+                            //国道
+                            var isHighWayOverSpeed = "1";
+                            window.location.href = "overSpeedCarListGaoSu.html?carType=" + encodeURI(carType)
+                                + "&countDate=" + countDate + "&countMonth=" + countMonth
+                                + "&isHighWayOverSpeed=" + isHighWayOverSpeed + "&page=1&limit=13";
+                        }
+                    });
+                    myChart5.getZr().on('click', function (params) {
+                        var pointInPixel= [params.offsetX, params.offsetY];
+                        if (myChart5.containPixel('grid',pointInPixel)) {
+                            var pointInGrid = myChart5.convertFromPixel({seriesIndex: 0}, pointInPixel);
+                            //X轴序号
+                            var xIndex = pointInGrid[0];
+                            //获取当前图表的option
+                            var op = myChart5.getOption();
+                            //获得图表中我们想要的数据
+                            var xdata = op.xAxis[0].data[xIndex];
+                            //获取时间
+                            var queryArgs = getQueryParam();
+                            queryArgs.carType = decodeURI(queryArgs.carType);
+                            var year = queryArgs.searchTime.substring(0, 4);
+                            var month = xdata.substring(0, 2);
+                            var day = xdata.substring(3, 5);
+                            var countDate = year + month + day;
+                            var countMonth = year + month;
+                            var carType = queryArgs.carType;
+                            //严重超速
+                            var isHighWaySerOverSpeed = "1";
+                            window.location.href = "overSpeedCarListGaoSuSerious.html?carType=" + encodeURI(carType)
+                                + "&countDate=" + countDate + "&countMonth=" + countMonth
+                                + "&isHighWaySerOverSpeed=" + isHighWaySerOverSpeed + "&page=1&limit=13";
+                        }
+                    });
+                    myChart.getZr().on('click', function (params) {
+                        var pointInPixel= [params.offsetX, params.offsetY];
+                        if (myChart.containPixel('grid',pointInPixel)) {
+                            var pointInGrid = myChart.convertFromPixel({seriesIndex: 0}, pointInPixel);
+                            //X轴序号
+                            var xIndex = pointInGrid[0];
+                            //获取当前图表的option
+                            var op = myChart.getOption();
+                            //获得图表中我们想要的数据
+                            var xdata = op.xAxis[0].data[xIndex];
+                            //获取时间
+                            var queryArgs = getQueryParam();
+                            queryArgs.carType = decodeURI(queryArgs.carType);
+                            var year = queryArgs.searchTime.substring(0, 4);
+                            var month = xdata.substring(0, 2);
+                            var day = xdata.substring(3, 5);
+                            var countDate = year + month + day;
+                            var countMonth = year + month;
+                            var carType = queryArgs.carType;
+                            //危险时段超速
+                            var isHighWayDangerOverSpeed = "1";
+                            window.location.href = "overSpeedCarListGaoSuDangerTime.html?carType=" + encodeURI(carType)
+                                + "&countDate=" + countDate + "&countMonth=" + countMonth
+                                + "&isHighWayDangerOverSpeed=" + isHighWayDangerOverSpeed + "&page=1&limit=13";
+                        }
+                    });
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function goToOverSpeedCount() {
+        //获取参数
+        var queryArgs = getQueryParam();
+        queryArgs.carType = decodeURI(queryArgs.carType);
+        window.location.href = "overspeedcount.html?searchTime="+queryArgs.searchTime+"&carType="+encodeURI(queryArgs.carType);
+    }
+
+    function goShouYe() {
+        window.location.href = "shouye.html";
+    }
+</script>
+</body>
+</html>

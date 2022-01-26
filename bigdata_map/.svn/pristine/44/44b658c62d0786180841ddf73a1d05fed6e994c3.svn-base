@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataBeidouCompDayCheckMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataBeidouCompDayCheck" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="UPDATE_TIME" property="updateTime"/>
+			<result column="COMP_ID" property="compId"/>
+			<result column="COMP_NAME" property="compName"/>
+			<result column="CAR_NUM" property="carNum"/>
+			<result column="ONLINE_RATE" property="onlineRate"/>
+			<result column="ONLINE_CAR_NUM" property="onlineCarNum"/>
+			<result column="OPERATION_RATE" property="operationRate"/>
+			<result column="OPERATION_NUM" property="operationNum"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="XIANQU_TYPE" property="xianquType"/>
+			<result column="ALARM_NUM" property="alarmNum"/>
+			<result column="SAFETY_NUM" property="safetyNum"/>
+			<result column="DRIVER_CARD_REC_NUM" property="driverCardRecNum"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataBeidouCompDayCheckView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, UPDATE_TIME, COMP_ID, COMP_NAME, CAR_NUM, ONLINE_RATE, ONLINE_CAR_NUM, OPERATION_RATE,
+	 OPERATION_NUM, CAR_TYPE, XIANQU_TYPE,ALARM_NUM,SAFETY_NUM, DRIVER_CARD_REC_NUM,COUNT_DATE, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.updateTime != null'>
+					AND  UPDATE_TIME = #{queryObj.updateTime}
+				</if>
+				<if test='queryObj != null and  queryObj.carNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.carNum)'>
+					AND  CAR_NUM = #{queryObj.carNum}
+				</if>
+				<if test='queryObj != null and  queryObj.onlineCarNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.onlineCarNum)'>
+					AND  ONLINE_CAR_NUM = #{queryObj.onlineCarNum}
+				</if>
+				<if test='queryObj != null and  queryObj.operationNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.operationNum)'>
+					AND  OPERATION_NUM = #{queryObj.operationNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countDate)'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.yearNum)'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouCompDayCheckQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_comp_day_check 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataBeidouCompDayCheckQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_beidou_comp_day_check 
+  		<include refid="where"/>
+  </select>
+
+
+	<select id="listForBeidouCompByCountDate" parameterType="com.edgedo.bigdata.entity.BigdataBeidouCompDayCheck" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_beidou_comp_day_check
+		WHERE  COUNT_DATE = #{countDate} and CAR_NUM >0
+		<if test='xianquType != null and xianquType != ""'>
+			AND XIANQU_TYPE = #{xianquType}
+		</if>
+		<if test='carType != null and carType != ""'>
+			AND CAR_TYPE = #{carType}
+		</if>
+		order by CAR_NUM DESC
+	</select>
+  
+  
+</mapper>

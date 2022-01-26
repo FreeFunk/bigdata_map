@@ -1,0 +1,25 @@
+########################备注信息###########################
+######### 根据com.edgedo下面包结构书写下面内容  ###########
+#永不执行的表达式 '-'
+timetask:
+  #########alarm包
+  alarm:
+    Get2gAlertAndCardInfoFromQueue:
+      enable: true
+      cron:
+        #下载报警
+        downQueueAlert2Db: 0/3 * * * * ?
+        #下载司机卡记录到数据库中
+        downDriverCardRec2Db: 0/3 * * * * ?
+    GetAlarmFromRedis:
+      enable: true
+      cron:
+        #从缓存中获取天地通的主动安全报警
+        getAlarm: 0/30 * * * * ?
+        #将报警信息放进队列里
+        leftPushAttachRequest: 0/30 * * * * ?
+        #从缓存中回去附件信息
+        getSafetyFileInfo: 0/30 * * * * ?
+        #清理key
+        deleteAlarmTimeKey: 0 0 6 * * ?
+

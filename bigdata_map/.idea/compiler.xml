@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="bigdata-car-analysis-oper-job" />
+        <module name="bigdata-car-analysis-gps-job" />
+        <module name="bigdata-drawing" />
+        <module name="tdp-codegen" />
+        <module name="bigdata-web" />
+        <module name="bigdata-gps-809-client" />
+        <module name="bigdata-car-analysis-check-job" />
+        <module name="bigdata-car-alarm-job" />
+        <module name="bigdata-constant" />
+        <module name="report-data-analyse-servivce" />
+        <module name="bigdata-car-analysis" />
+        <module name="bigdata-car-trail-job" />
+        <module name="bigdata-car-analysis-alarm-job" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="bigdata-car-alarm-job" target="1.8" />
+      <module name="bigdata-car-analysis" target="1.8" />
+      <module name="bigdata-car-analysis-alarm-job" target="1.8" />
+      <module name="bigdata-car-analysis-check-job" target="1.8" />
+      <module name="bigdata-car-analysis-gps-job" target="1.8" />
+      <module name="bigdata-car-analysis-oper-job" target="1.8" />
+      <module name="bigdata-car-trail-job" target="1.8" />
+      <module name="bigdata-constant" target="1.5" />
+      <module name="bigdata-drawing" target="1.8" />
+      <module name="bigdata-gps-809-client" target="1.8" />
+      <module name="bigdata-web" target="1.8" />
+      <module name="common-base" target="1.8" />
+      <module name="project" target="1.8" />
+      <module name="report-data-analyse-servivce" target="1.8" />
+      <module name="sys-mng-web" target="1.8" />
+      <module name="tdp-codegen" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="bigdata-car-alarm-job" options="-parameters" />
+      <module name="bigdata-car-analysis" options="-parameters" />
+      <module name="bigdata-car-analysis-alarm-job" options="-parameters" />
+      <module name="bigdata-car-analysis-check-job" options="-parameters" />
+      <module name="bigdata-car-analysis-gps-job" options="-parameters" />
+      <module name="bigdata-car-analysis-oper-job" options="-parameters" />
+      <module name="bigdata-car-trail-job" options="-parameters" />
+      <module name="bigdata-drawing" options="-parameters" />
+      <module name="bigdata-gps-809-client" options="-parameters" />
+      <module name="bigdata-web" options="-parameters" />
+      <module name="common-base" options="-parameters" />
+      <module name="report-data-analyse-servivce" options="-parameters" />
+      <module name="sys-mng-web" options="-parameters" />
+    </option>
+  </component>
+</project>

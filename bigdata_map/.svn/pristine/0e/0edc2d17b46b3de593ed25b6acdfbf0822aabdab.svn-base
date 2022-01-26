@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="BigdataFenxiAlarmTime-form" id="BigdataFenxiAlarmTime-form" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">更新时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="updateTime" id="updateTime" lay-verify="required" placeholder="请输入更新时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">0点-1点</label>
+            <div class="layui-input-block">
+                <input type="text" name="zeroOne" lay-verify="required|number" placeholder="请输入0点-1点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">1点-2点</label>
+            <div class="layui-input-block">
+                <input type="text" name="oneTwo" lay-verify="required|number" placeholder="请输入1点-2点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">2点-3点</label>
+            <div class="layui-input-block">
+                <input type="text" name="twoThree" lay-verify="required|number" placeholder="请输入2点-3点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">3点-4点</label>
+            <div class="layui-input-block">
+                <input type="text" name="threeFour" lay-verify="required|number" placeholder="请输入3点-4点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">4点-5点</label>
+            <div class="layui-input-block">
+                <input type="text" name="fourFive" lay-verify="required|number" placeholder="请输入4点-5点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">5点-6点</label>
+            <div class="layui-input-block">
+                <input type="text" name="fiveSix" lay-verify="required|number" placeholder="请输入5点-6点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">6点-7点</label>
+            <div class="layui-input-block">
+                <input type="text" name="sixSeven" lay-verify="required|number" placeholder="请输入6点-7点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">7点-8点</label>
+            <div class="layui-input-block">
+                <input type="text" name="sevenEight" lay-verify="required|number" placeholder="请输入7点-8点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">8点-9点</label>
+            <div class="layui-input-block">
+                <input type="text" name="eightNine" lay-verify="required|number" placeholder="请输入8点-9点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">9点-10点</label>
+            <div class="layui-input-block">
+                <input type="text" name="nineTen" lay-verify="required|number" placeholder="请输入9点-10点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">10点-11点</label>
+            <div class="layui-input-block">
+                <input type="text" name="tenEleven" lay-verify="required|number" placeholder="请输入10点-11点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">11点-12点</label>
+            <div class="layui-input-block">
+                <input type="text" name="elevenTwelve" lay-verify="required|number" placeholder="请输入11点-12点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">12点-13点</label>
+            <div class="layui-input-block">
+                <input type="text" name="twelveThirteen" lay-verify="required|number" placeholder="请输入12点-13点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">13点-14点</label>
+            <div class="layui-input-block">
+                <input type="text" name="thirteenFourteen" lay-verify="required|number" placeholder="请输入13点-14点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">14点-15点</label>
+            <div class="layui-input-block">
+                <input type="text" name="fourteenFifteen" lay-verify="required|number" placeholder="请输入14点-15点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">15点-16点</label>
+            <div class="layui-input-block">
+                <input type="text" name="fifteenSixteen" lay-verify="required|number" placeholder="请输入15点-16点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">16点-17点</label>
+            <div class="layui-input-block">
+                <input type="text" name="sixteenSeventeen" lay-verify="required|number" placeholder="请输入16点-17点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">17点-18点</label>
+            <div class="layui-input-block">
+                <input type="text" name="seventeenEighteen" lay-verify="required|number" placeholder="请输入17点-18点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">18点-19点</label>
+            <div class="layui-input-block">
+                <input type="text" name="eighteenNineteen" lay-verify="required|number" placeholder="请输入18点-19点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">19点-20点</label>
+            <div class="layui-input-block">
+                <input type="text" name="nineteenTwenty" lay-verify="required|number" placeholder="请输入19点-20点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">20点-21点</label>
+            <div class="layui-input-block">
+                <input type="text" name="twentyTwentyone" lay-verify="required|number" placeholder="请输入20点-21点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">21点-22点</label>
+            <div class="layui-input-block">
+                <input type="text" name="twentyoneTwentytwo" lay-verify="required|number" placeholder="请输入21点-22点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">22点-23点</label>
+            <div class="layui-input-block">
+                <input type="text" name="twentytwoTwentythree" lay-verify="required|number" placeholder="请输入22点-23点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">23点-24点</label>
+            <div class="layui-input-block">
+                <input type="text" name="twentythreeTwentyfour" lay-verify="required|number" placeholder="请输入23点-24点" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">报警分类</label>
+            <div class="layui-input-block">
+                <input type="text" name="alarmType" lay-verify="required" placeholder="请输入报警分类" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据类型（ 报警、处理）</label>
+            <div class="layui-input-block">
+                <input type="text" name="dataType" lay-verify="required" placeholder="请输入数据类型（ 报警、处理）" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">省ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="provinceId" lay-verify="required" placeholder="请输入省ID" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">省名</label>
+            <div class="layui-input-block">
+                <input type="text" name="provinceName" lay-verify="required" placeholder="请输入省名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">城市ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="cityId" lay-verify="required" placeholder="请输入城市ID" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">城市名</label>
+            <div class="layui-input-block">
+                <input type="text" name="cityName" lay-verify="required" placeholder="请输入城市名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">县区ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="xianquId" lay-verify="required" placeholder="请输入县区ID" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">县区名</label>
+            <div class="layui-input-block">
+                <input type="text" name="xianquName" lay-verify="required" placeholder="请输入县区名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">区域统计类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="countType" lay-verify="required" placeholder="请输入区域统计类型" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车辆类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="carType" lay-verify="required" placeholder="请输入车辆类型" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">统计日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="countDate" lay-verify="required|number" placeholder="请输入统计日期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">统计月份</label>
+            <div class="layui-input-block">
+                <input type="text" name="countMonth" lay-verify="required|number" placeholder="请输入统计月份" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">统计年份</label>
+            <div class="layui-input-block">
+                <input type="text" name="yearNum" lay-verify="required|number" placeholder="请输入统计年份" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+   <!-- <div class="layui-form-item">
+        <label class="layui-form-label">省名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="name" lay-verify="required" placeholder="请输入省名" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">区域</label>
+        <div class="layui-input-inline">
+            <input type="text" name="area" lay-verify="required" placeholder="请输入区域" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="orderNumber" lay-verify="required" placeholder="请输入区域" autocomplete="off" class="layui-input">
+        </div>
+    </div>-->
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="BigdataFenxiAlarmTime-form-submit" id="BigdataFenxiAlarmTime-form-submit" value="确认添加">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'form','laydate'], function(){
+            var $ = layui.$
+                ,laydate = layui.laydate
+                ,admin  = layui.admin
+                ,form = layui.form;
+
+            //监听提交
+            form.on('submit(BigdataFenxiAlarmTime-form-submit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //提交 Ajax 成功后，关闭当前弹层并重载表格
+                admin.req({
+                    url:layui.setter.basePath +'/admin/bigdataFenxiAlarmTime/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('BigdataFenxiAlarmTime-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('添加成功', {
+                            icon: 1
+                        });
+                    },
+                });
+
+            });
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#updateTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

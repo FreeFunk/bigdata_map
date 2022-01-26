@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataFenxiCarMonthMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataFenxiCarMonth" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="UPDATE_TIME" property="updateTime"/>
+			<result column="PROVINCE_ID" property="provinceId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_ID" property="cityId"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="XIANQU_ID" property="xianquId"/>
+			<result column="XIANQU_NAME" property="xianquName"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="TRANSIT_TYPE" property="transitType"/>
+			<result column="OWNER_TEAM_ID" property="ownerTeamId"/>
+			<result column="OWNER_TEAM_NAME" property="ownerTeamName"/>
+			<result column="RUN_MILEAGE" property="runMileage"/>
+			<result column="RUN_TIME_LENGTH" property="runTimeLength"/>
+			<result column="RUN_TIME_LENGTH_TEXT" property="runTimeLengthText"/>
+			<result column="ALARM_NUM" property="alarmNum"/>
+			<result column="ALARM_RATE" property="alarmRate"/>
+			<result column="SAFE_SCORE" property="safeScore"/>
+			<result column="CAR_RANKING" property="carRanking"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataFenxiCarMonthView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, UPDATE_TIME, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, XIANQU_ID, XIANQU_NAME, CAR_PLATE_NUM, CAR_PLATE_COLOR, CAR_FRAME_NUM, CAR_TYPE, TRANSIT_TYPE, OWNER_TEAM_ID, OWNER_TEAM_NAME, RUN_MILEAGE, RUN_TIME_LENGTH, RUN_TIME_LENGTH_TEXT, ALARM_NUM, ALARM_RATE, SAFE_SCORE, CAR_RANKING, COUNT_DATE, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.updateTime != null'>
+					AND  UPDATE_TIME = #{queryObj.updateTime}
+				</if>
+				<if test='queryObj != null and  queryObj.runTimeLength != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.runTimeLength)'>
+					AND  RUN_TIME_LENGTH = #{queryObj.runTimeLength}
+				</if>
+				<if test='queryObj != null and  queryObj.alarmNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.alarmNum)'>
+					AND  ALARM_NUM = #{queryObj.alarmNum}
+				</if>
+				<if test='queryObj != null and  queryObj.xianquId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.xianquId)'>
+					AND  XIANQU_ID = #{queryObj.xianquId}
+				</if>
+				<if test='queryObj != null and  queryObj.carType != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.carType)'>
+					AND  CAR_TYPE = #{queryObj.carType}
+				</if>
+				<if test='queryObj != null and  queryObj.transitType != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.transitType)'>
+					AND  TRANSIT_TYPE = #{queryObj.transitType}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+				<if test='queryObj != null and  queryObj.carPlateNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.carPlateNum)'>
+					AND  (CAR_PLATE_NUM like concat('%',#{queryObj.carPlateNum},'%') OR OWNER_TEAM_NAME like concat('%',#{queryObj.ownerTeamName},'%'))
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiCarMonthQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fenxi_car_month 
+  		<include refid="where"/>
+	  ORDER BY CAR_PLATE_NUM DESC
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiCarMonthQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fenxi_car_month 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectByMonthQianShi" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_car_month
+		<where>
+			<if test='carType != ""'>
+				AND CAR_TYPE = #{carType}
+			</if>
+			<if test='xianQuId == "130300"'>
+				AND CITY_ID = #{xianQuId}
+			</if>
+			<if test='xianQuId != "130300"'>
+				AND XIANQU_ID = #{xianQuId}
+			</if>
+			and COUNT_MONTH=#{timeCount} order by SAFE_SCORE desc limit 10
+		</where>
+	</select>
+
+	<select id="selectByMonthHouShi" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_car_month
+		<where>
+			<if test='carType != ""'>
+				AND CAR_TYPE = #{carType}
+			</if>
+			<if test='xianQuId == "130300"'>
+				AND CITY_ID = #{xianQuId}
+			</if>
+			<if test='xianQuId != "130300"'>
+				AND XIANQU_ID = #{xianQuId}
+			</if>
+			and COUNT_MONTH=#{timeCount} order by SAFE_SCORE asc limit 10
+		</where>
+	</select>
+
+	<select id="selectById" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiCarMonthQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_car_month
+		where ID = #{queryObj.id,jdbcType=VARCHAR}
+		and YEAR_NUM = #{queryObj.yearNum} and COUNT_MONTH = #{queryObj.countMonth}
+	</select>
+
+	<select id="selectTopTenRunMileageByTeamId" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiCarMonthQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_car_week
+		where OWNER_TEAM_ID = #{queryObj.ownerTeamId}
+		and YEAR_NUM = #{queryObj.yearNum} and COUNT_MONTH = #{queryObj.countMonth}
+		ORDER BY RUN_MILEAGE DESC
+		limit 10
+	</select>
+
+	<select id="selectTopTenAlarmNumByTeamId" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiCarMonthQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_car_week
+		where OWNER_TEAM_ID = #{queryObj.ownerTeamId}
+		and YEAR_NUM = #{queryObj.yearNum} and COUNT_MONTH = #{queryObj.countMonth}
+		ORDER BY ALARM_NUM DESC
+		limit 10
+	</select>
+  
+</mapper>

@@ -1,0 +1,1904 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+ <link rel="stylesheet" type="text/css" href="dialog/index_files/flavr0.css">
+
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.SuperSlide.2.1.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script src="js/layer/layer.js"></script>
+
+    <script src="js/tool.js"></script>
+</head>
+
+<body>
+
+
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+                
+                   
+                <!--<input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " /> -->
+            <input type="text" class="input_rl " id="searchDate" style="width:150px; height: 48px; margin-right: 10px; ">
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+    <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">危险时段</div>
+             <a href="shouye.html" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="main">
+      <div class="ind mt60" >
+    
+      
+      
+      <span id="demo-alert" style=" float: right" >
+        <span class="demo-actions">
+           <a href="javaScript:void (0);" onclick="goDangerTimeCount();" class="cljg">汇总查询</a>
+        </span>
+      </span>
+      
+      
+      <div class="blank40"></div>
+
+
+    <ul class="lh">
+                 <div class="mk left" style="width:32%; height:750px">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+               <div class="tit">
+                     <span class="tit_l"></span>
+                     <span class="tit_m">一类</span>
+                     <span class="tit_r"></span>
+               </div>
+               <div class="con clearfix">
+                   
+                               <div>
+                                   <div class="xs left" style="width:98%;">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>车辆数</h4>
+                                      <h3 id="firstCarNum">0<em>辆</em></h3>
+                                   </div> 
+                                   
+                                 <!--  <div class="xs right" style="width:49%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>行驶里程</h4>
+                                      <h3 id="firstMeilage">0<em>Km</em></h3>
+                                   </div> -->
+                                  
+                                </div>
+                                <div class="blank40"></div>
+                                <div style=" width:100%;height:470px" id="aa1"></div>
+                      
+               </div>
+           </div>
+           
+           
+           
+           
+           <div class="mk left" style="width:32%; height:750px; margin-left:2%">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+               <div class="tit">
+                     <span class="tit_l"></span>
+                     <span class="tit_m">二类</span>
+                     <span class="tit_r"></span>
+               </div>
+               <div class="con clearfix">
+                                                <div>
+                                   <div class="xs left" style="width:98%;">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>车辆数</h4>
+                                      <h3 id="secondCarNum">0<em>辆</em></h3>
+                                   </div> 
+                                   
+                                   <!--<div class="xs right" style="width:49%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>行驶里程</h4>
+                                      <h3 id="secondMeilage">0<em>Km</em></h3>
+                                   </div> -->
+                                  
+                                </div>
+                    <div class="blank40"></div>
+                    <div style=" width:100%;height:470px" id="aa2"></div>
+                    
+                     
+               </div>
+           </div>
+           
+           
+           
+           <div class="mk right" style="width:32%; height:750px;">
+               <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+               <div class="tit">
+                     <span class="tit_l"></span>
+                     <span class="tit_m">三类</span>
+                     <span class="tit_r"></span>
+               </div>
+               <div class="con clearfix">
+                                                           <div>
+                                   <div class="xs left" style="width:98%;">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>车辆数</h4>
+                                      <h3 id="thiirdCarNum">0<em>辆</em></h3>
+                                   </div> 
+                                   
+                                  <!-- <div class="xs right" style="width:49%">
+                                      <em class="c1"></em><em class="c2"></em><em class="c3"></em><em class="c4"></em>
+                                      <h4>行驶里程</h4>
+                                      <h3 id="thirdMeilage">0<em>Km</em></h3>
+                                   </div>-->
+                                  
+                                </div>
+                    <div class="blank40"></div>
+                    <div style=" width:100%;height:470px" id="aa3"></div>
+                    
+                     
+               </div>
+           </div>
+    </ul>
+     
+  </div>
+    <script type="text/javascript">jQuery(".www360buy").slide({trigger:"click",effect:"left"});</script>   
+</div>
+      
+ 
+      
+      
+      
+      
+            
+           
+         
+      
+      </div> 
+</div>
+
+
+
+
+
+
+
+
+
+
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+</script>
+
+<script type="text/javascript" src="dialog/index_files/bootstrap.min.js"></script>
+<script type="text/javascript" src="dialog/index_files/jquery.browser.js"></script>
+<script type="text/javascript" src="dialog/index_files/livedemo.js"></script>
+<script type="text/javascript" src="dialog/index_files/flavr.min.js"></script>
+<script type="text/javascript">
+
+/*    $(document).ready(function(){
+
+
+
+        $('.livedemo').livedemo();
+
+
+
+        $('.footer .socials a').on('mouseenter', function(){
+
+            var animationEnd = 'webkitAnimationEnd oanimationend msAnimationEnd animationend';
+
+            $(this).addClass('swing animated').bind( animationEnd, function(){
+
+                $(this).removeClass('swing animated');
+
+            });
+
+        });
+
+
+
+        $('.demo-block .demo-actions .btn-demo').on('click', function(e){
+
+            e.preventDefault();
+
+        });
+
+
+
+/!*  =========================================================================================
+
+        flavr Examples
+
+    =========================================================================================
+
+*!/
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Simple Alert
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-alert .demo-actions .btn-demo').on('click', function(){
+                var showValue = document.getElementById("showValue").innerHTML;
+                new $.flavr(showValue);
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Confirm Dialog
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-confirm .demo-actions .btn-demo').on('click', function(){
+
+
+
+                new $.flavr({
+
+                    content     : 'Are you sure to delete your memories?',
+
+                    dialog      : 'confirm',
+
+                    onConfirm   : function(){
+
+                        alert('Deleted');
+
+                    },
+
+                    onCancel    : function(){
+
+                        alert('Canceled');
+
+                    }
+
+                });
+
+
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Prompt Dialog
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-prompt .demo-actions .btn-demo').on('click', function(){
+
+
+
+                new $.flavr({
+
+                    content     : 'How old are you?',
+
+                    dialog      : 'prompt',
+
+                    prompt      : { placeholder : 'Enter something' },
+
+                    onConfirm   : function( $container, $prompt ){
+
+                        alert( $prompt.val() );
+
+                        return false;
+
+                    },
+
+                    onCancel    : function(){
+
+                        alert('Canceled');
+
+                    }
+
+                });
+
+
+
+
+
+            });
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Multiple Dialog Instance
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-multi-instance .demo-actions .btn-demo').on('click', function(){
+
+
+
+                new $.flavr({
+
+                    content  : 'Nuff siad, here is the last one',
+
+                    position : 'top-right'
+
+                }, function(){
+
+                    new $.flavr({
+
+                        content  : 'The stack is unlimited, pretty cool huh',
+
+                        position : 'top-left'
+
+                    }, function(){
+
+                        new $.flavr({
+
+                            content  : 'Here is the dialog #3',
+
+                            position : 'bottom-right'
+
+                        }, function(){
+
+                            new $.flavr({
+
+                                content  : 'Me dialog #2',
+
+                                position : 'bottom-mid'
+
+                            }, function(){
+
+                                new $.flavr({
+
+                                    content     :'I am dialog #1',
+
+                                    buttons     : {
+
+                                        exit    : { text: 'Close All', style: 'danger',
+
+                                                    action: function(){
+
+                                                        this.exit();
+
+                                                    }
+
+                                        },
+
+                                        close   : {}
+
+                                    }
+
+                                });
+
+                            });
+
+                        });
+
+                    });
+
+                });
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Multiple Buttons
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-multi-buttons .demo-actions .btn-demo').on('click', function(){
+
+
+
+                new $.flavr({
+
+                    content     : 'flavr box with multiple buttons',
+
+                    buttons     : {
+
+                        primary : { text: 'Primary', style: 'primary',
+
+                                    action: function(){
+
+                                        alert('Primary button');
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        success : { text: 'Success', style: 'success',
+
+                                    action: function(){
+
+                                        alert('Mission succeed!');
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        info    : { text: 'Info', style: 'info',
+
+                                    action: function(){
+
+                                        alert('For your information');
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        warning : { text: 'Warning', style: 'warning',
+
+                                    action: function(){
+
+                                        alert('No good captain!');
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        danger  : { text: 'Danger', style: 'danger',
+
+                                    action: function(){
+
+                                        alert('Mission failed!');
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        close   : { style: 'default' }
+
+                    }
+
+                });
+
+
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Stacked Buttons
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-stacked-buttons .demo-actions .btn-demo').on('click', function(){
+
+
+
+                new $.flavr({
+
+                    buttonDisplay   : 'stacked',
+
+                    content         : 'flavr with stacked buttons',
+
+                    buttons         : {
+
+                        confirm     : { style: 'info' },
+
+                        remove      : { style: 'danger' },
+
+                        close       : { style: 'default' }
+
+
+                    }
+
+                });
+
+
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                HTML Dialog
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-html .demo-actions .btn-demo').on('click', function(){
+
+
+
+                var html =
+
+                '   <div class="form-row">' +
+
+                '       <input type="text" name="username" placeholder="Username" />' +
+
+                '   </div>' +
+
+                '   <div class="form-row">' +
+
+                '       <input type="password" name="password" placeholder="Password" />' +
+
+                '   </div>' +
+
+                '   <div class="form-row">' +
+
+                '       <input type="checkbox" name="remember" id="check"/>' +
+
+                '       <label for="check">Remember me</label>' +
+
+                '   </div>';
+
+
+
+                new $.flavr({
+
+                    title       : 'Form',
+
+                    iconPath    : 'flavr/images/icons/',
+
+                    icon        : 'email.png',
+
+                    content     : 'HTML form example',
+
+                    dialog      : 'form',
+
+                    form        : { content: html, method: 'post' },
+
+                    onSubmit    : function( $container, $form ){
+
+                        alert( $form.serialize() );
+
+                        return false;
+
+                    }
+
+                });
+
+
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Modeless Dialog
+
+            ------------------------------------------------------------------------------- *!/
+
+            var modeless = null;
+
+            $('#demo-modeless .demo-actions .btn-demo').on('click', function(){
+
+                modeless = new $.flavr({
+
+                    modal       : false,
+
+                    content     : 'This is a modeless dialog'
+
+                });
+
+            });
+
+            $('#demo-modeless .demo-actions .btn-close').on('click', function(e){
+
+                e.preventDefault();
+
+                if( null !== modeless ) modeless.close();
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Autoclose Dialog
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-autoclose .demo-actions .btn-demo').on('click', function(){
+
+
+
+                new $.flavr({
+
+                    content     : 'Autoclosing the dialog in 5 seconds',
+
+                    autoclose   : true,
+
+                    timeout     : 5000  /!* Default timeout is 3 seconds *!/
+
+                });
+
+
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Alternative Closing
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-alt-closing .demo-actions .btn-demo').on('click', function(){
+
+
+
+                new $.flavr({
+
+                    content      : 'Try clicking the overlay or pressing the escape button',
+
+                    closeOverlay : true,
+
+                    closeEsc     : true
+
+                });
+
+
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                CSS3 Animation
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-animation .demo-actions .btn-demo').on('click', function(){
+
+
+
+                var select = $(this).parent().siblings('.demo-select');
+
+                var entrance = select.find('.animate-entrance :selected').text();
+
+                var closing = select.find('.animate-closing :selected').text();
+
+
+
+                new $.flavr({
+
+                    animateEntrance : entrance,
+
+                    animateClosing  : closing,
+
+                    content         : 'Animation example'
+
+                });
+
+
+
+
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Attention Seeker
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-attention .demo-actions .btn-demo').on('click', function(){
+
+
+
+                new $.flavr({
+
+                    position        : 'top-mid',
+
+                    content         : 'Attention seeker animation examples',
+
+                    buttons         : {
+
+                        swing       : { style: 'info', action: function(){ this.swing(); return false }},
+
+                        shake       : { style: 'warning', action: function(){ this.shake(); return false }},
+
+                        wobble      : { style: 'danger', action: function(){ this.wobble(); return false }},
+
+                        flash       : { style: 'primary', action: function(){ this.flash(); return false }},
+
+                        tada        : { style: 'info', action: function(){ this.tada(); return false }},
+
+                        pulse       : { style: 'warning', action: function(){ this.pulse(); return false }},
+
+                        bounce      : { style: 'danger', action: function(){ this.animate('bounce'); return false }},
+
+                        close       : {}
+
+                    }
+
+                });
+
+
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Dynamic Dialog
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-dynamic .demo-actions .btn-demo').on('click', function(){
+
+
+
+                new $.flavr({
+
+                    content     : 'Resize your Dialog',
+
+                    buttons     : {
+
+                        resize  : { text: 'Resize 700 x 300', style: 'info',
+
+                                    action: function(){
+
+                                        this.resize( 700, 300 );
+
+                                        return false
+
+                                    }
+
+                        },
+
+                        full    : { text: 'Fullscreen', style: 'warning',
+
+                                    action: function(){
+
+                                        this.fullscreen();
+
+                                        return false
+
+                                    }
+
+                        },
+
+                        revert  : { text: 'Original Size', style: 'danger',
+
+                                    action: function(){
+
+                                        this.revert();
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        change  : { text: 'Change Content', style: 'info',
+
+                                    action: function(){
+
+                                        this.content('<p>This is the new content</p><br/><p>New line</p>');
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        close   : {}
+
+                    }
+
+                });
+
+
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Callbacks
+
+            ------------------------------------------------------------------------------- *!/
+
+            var callbackflavr = null;
+
+            $('#demo-callback .demo-actions .btn-demo').on('click', function(){
+
+                callbackflavr = new $.flavr({
+
+                    content     : 'flavr callback examples',
+
+                    buttons     : {
+
+                        shake   : { style: 'primary',
+
+                                    action: function(){
+
+                                        this.shake(function(){
+
+                                            alert('Shake animation callback');
+
+                                        });
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        hide    : { style: 'info',
+
+                                    action: function(){
+
+                                        this.hide();
+
+                                        return false;
+
+                                    }
+
+                        },
+
+                        close   : { style: 'warning' }
+
+                    },
+
+                    onLoad      : function(){
+
+                        alert('The plugin has been loaded');
+
+                    },
+
+                    onBuild     : function(){
+
+                        alert('We have succesfully build the DOM elements');
+
+                    },
+
+                    onShow      : function(){
+
+                        alert('The dialog has been shown');
+
+                    },
+
+                    onHide      : function(){
+
+                        alert('Now hidding the dialog');
+
+                    },
+
+                    onClose     : function(){
+
+                        alert('We\'re about to close the dialog');
+
+                    }
+
+                });
+
+            });
+
+            $('#demo-callback .demo-actions .btn-show').on('click', function(e){
+
+                e.preventDefault();
+
+                if( null !== callbackflavr ) callbackflavr.show();
+
+            });
+
+
+
+
+
+        /!*  -------------------------------------------------------------------------------
+
+                Iframe
+
+            ------------------------------------------------------------------------------- *!/
+
+            $('#demo-iframe .demo-actions .btn-show').on('click', function(){
+
+                new $.flavr({
+
+                    title       : 'Charlie bit my finger',
+
+                    content     : '<iframe width="420" height="315" src="//www.youtube.com/embed/_OBlgSz8sSM"' +
+
+                                    'frameborder="0" allowfullscreen></iframe>',
+
+                    buttons     : {
+
+                        close   : {}
+
+                    }
+
+                });
+
+                return false;
+
+            });
+
+
+
+    });  */
+
+</script>
+
+
+<!--<script type="text/javascript">
+		        
+					var effectScatterData = [];
+					for (var i = dataS1.length - 1; i >= 0; i&#45;&#45;) {
+						 if (dataS1[i] != '-') {
+							effectScatterData.push([axisDataS1[i], dataS1[i]]);
+							break;
+						}
+					}
+				
+
+					
+</script>-->
+
+
+
+<!--<script type="text/javascript">
+							// 基于准备好的dom，初始化echarts实例
+							var myChart = echarts.init(document.getElementById('aa1'));
+							// 指定图表的配置项和数据
+						   option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['3月10日', '3月11日', '3月12日', '3月13日', '3月14日', '3月15日', '3月16日'],
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    },
+            	min: 0,
+				max: 900,
+            splitNumber:9,
+			splitLine: {
+					show: true,
+					lineStyle:{
+						 color: ['#27506A'],
+						 width: 1,
+						type: 'solid'
+					}
+
+			},
+        }
+    ],
+     legend: {
+        data:[''],
+		/*orient: 'vertical',*/
+        top: '0%',
+        right: '0%',
+		icon: "circle", 
+		textStyle: {
+                        color: "#fff",
+                        fontSize: 14,
+                       
+                    },
+    },
+    series : [
+        {
+            name:'',
+            type:'bar',
+            barWidth: '40%',
+            markLine : {
+                itemStyle : { 
+                    normal: { 
+                        borderWidth:1, 
+                        lineStyle: { 
+                            type: 'symbol', 
+                            color:'#ff0000', 
+                            width:1 
+                        }}} ,
+                data : [
+                  { name: '标线1起点', xAxis: 0, yAxis: 90, symbol: 'circle'},
+                  { name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                ]
+            },
+            itemStyle: {
+				normal: {
+					color: "#25C0D4",
+                    label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#fff',
+										fontSize: 16
+									}},
+
+					lineStyle: {
+						color: "#25C0D4"
+							   }}
+					   },
+            data:[600, 700, 800, 500, 600, 700, 800]
+        }
+    ]
+};
+					
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);
+            </script>  -->
+
+<!--<script type="text/javascript">
+							// 基于准备好的dom，初始化echarts实例
+							var myChart = echarts.init(document.getElementById('aa2'));
+							// 指定图表的配置项和数据
+						   option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['3月10日', '3月11日', '3月12日', '3月13日', '3月14日', '3月15日', '3月16日'],
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    },
+            	min: 0,
+				max: 900,
+            splitNumber:9,
+			splitLine: {
+					show: true,
+					lineStyle:{
+						 color: ['#27506A'],
+						 width: 1,
+						type: 'solid'
+					}
+
+			},
+        }
+    ],
+     legend: {
+        data:[''],
+		/*orient: 'vertical',*/
+        top: '0%',
+        right: '0%',
+		icon: "circle", 
+		textStyle: {
+                        color: "#fff",
+                        fontSize: 14,
+                       
+                    },
+    },
+    series : [
+        {
+            name:'',
+            type:'bar',
+            barWidth: '40%',
+            markLine : {
+                itemStyle : { 
+                    normal: { 
+                        borderWidth:1, 
+                        lineStyle: { 
+                            type: 'symbol', 
+                            color:'#ff0000', 
+                            width:1 
+                        }}} ,
+                data : [
+                  { name: '标线1起点', xAxis: 0, yAxis: 90, symbol: 'circle'},
+                  { name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                ]
+            },
+            itemStyle: {
+				normal: {
+					color: "#25C0D4",
+                    label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#fff',
+										fontSize: 16
+									}},
+
+					lineStyle: {
+						color: "#25C0D4"
+							   }}
+					   },
+            data:[600, 700, 800, 500, 600, 700, 800]
+        }
+    ]
+};
+					
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);
+            </script> -->
+
+<!--<script type="text/javascript">
+							// 基于准备好的dom，初始化echarts实例
+							var myChart = echarts.init(document.getElementById('aa3'));
+							// 指定图表的配置项和数据
+						   option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['3月10日', '3月11日', '3月12日', '3月13日', '3月14日', '3月15日', '3月16日'],
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLine:{
+		                        lineStyle:{
+		                            color:'#21EDE8',
+		                            width:1,//这里是为了突出显示加上的
+		                        }
+		                    },
+            	min: 0,
+				max: 900,
+            splitNumber:9,
+			splitLine: {
+					show: true,
+					lineStyle:{
+						 color: ['#27506A'],
+						 width: 1,
+						type: 'solid'
+					}
+
+			},
+        }
+    ],
+     legend: {
+        data:[''],
+		/*orient: 'vertical',*/
+        top: '0%',
+        right: '0%',
+		icon: "circle", 
+		textStyle: {
+                        color: "#fff",
+                        fontSize: 14,
+                       
+                    },
+    },
+    series : [
+        {
+            name:'',
+            type:'bar',
+            barWidth: '40%',
+            markLine : {
+                itemStyle : { 
+                    normal: { 
+                        borderWidth:1, 
+                        lineStyle: { 
+                            type: 'symbol', 
+                            color:'#ff0000', 
+                            width:1 
+                        }}} ,
+                data : [
+                  { name: '标线1起点', xAxis: 0, yAxis: 90, symbol: 'circle'},
+                  { name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },
+                ]
+            },
+            itemStyle: {
+				normal: {
+					color: "#25C0D4",
+                    label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#fff',
+										fontSize: 16
+									}},
+
+					lineStyle: {
+						color: "#25C0D4"
+							   }}
+					   },
+            data:[600, 700, 800, 500, 600, 700, 800]
+        }
+    ]
+};
+					
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);
+            </script>-->
+
+
+<script type="text/javascript">
+    //初始化数据
+    $(document).ready(function(){
+
+        //获取参数
+        var queryArgs = getQueryParam();
+        queryArgs.carType = decodeURI(queryArgs.carType);
+        //初始化日期
+        initLayDate(queryArgs.searchTime);
+        //超速详情
+        timeDetail(queryArgs);
+        timeDetailEcharts(queryArgs);
+    });
+    //初始化日期
+    function initLayDate(searchTime) {
+        laydate.render({
+            elem: '#searchDate',
+            theme: '#884898',
+            value: searchTime,
+            btns: ['confirm'],
+            done: function(value, date, endDate){
+                if(value!=""){
+                    var queryArgs = getQueryParam();
+                    queryArgs.carType = decodeURI(queryArgs.carType);
+                    queryArgs.searchTime = value;
+                    timeDetail(queryArgs);
+                    timeDetailEcharts(queryArgs);
+                }
+            }
+        });
+    }
+
+    function timeDetail(queryArgs) {
+        //超速详情
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataTimeAnalysis/getTimeAnalysisData.jsn",
+            data: {'queryObj.carType':queryArgs.carType,'queryObj.countTime':queryArgs.searchTime},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    if(typeof(data.data) == "undefined"){
+                        $("#firstCarNum").html(0+"<em>辆</em>");
+                        $("#firstMeilage").html(0+"<em>Km</em>");
+                        $("#secondCarNum").html(0+"<em>辆</em>");
+                        $("#secondMeilage").html(0+"<em>Km</em>");
+                        $("#thiirdCarNum").html(0+"<em>辆</em>");
+                        $("#thirdMeilage").html(0+"<em>Km</em>");
+                    }else {
+                        $("#firstCarNum").html(data.data.firstDangerTimeNum+"<em>辆</em>");
+                        $("#firstMeilage").html(data.data.firstDangerMileage+"<em>Km</em>");
+                        $("#secondCarNum").html(data.data.secondDangerTimeNum+"<em>辆</em>");
+                        $("#secondMeilage").html(data.data.secondDangerMileage+"<em>Km</em>");
+                        $("#thiirdCarNum").html(data.data.thirdDangerTimeNum+"<em>辆</em>");
+                        $("#thirdMeilage").html(data.data.thirdDangerMileage+"<em>Km</em>");
+                    }
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+
+    function timeDetailEcharts(queryArgs) {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataTimeAnalysis/getTimeEchartsData.jsn",
+            data: {'queryObj.carType':queryArgs.carType,'queryObj.countTime':queryArgs.searchTime,'limit':-6},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart1 = echarts.init(document.getElementById('aa1'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#3398DB'],
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                data : data.data.dateList,
+                                axisTick: {
+                                    alignWithLabel: true
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                },
+                               /* min: 0,
+                                max: 2000,*/
+                                splitNumber:9,
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#27506A'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                            }
+                        ],
+                        legend: {
+                            data:[''],
+                            /*orient: 'vertical',*/
+                            top: '0%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        series : [
+                            {
+                                name:'',
+                                type:'bar',
+                                barWidth: '40%',
+                                markLine : {
+                                    itemStyle : {
+                                        normal: {
+                                            borderWidth:1,
+                                            lineStyle: {
+                                                type: 'symbol',
+                                                color:'#ff0000',
+                                                width:1
+                                            }}} ,
+                                    data : [
+                                        { name: '标线1起点', xAxis: 0, yAxis: data.data.firstDangerCarNumLine, symbol: 'circle'},
+                                        /*{ name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },*/
+                                    ]
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "#25C0D4",
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }},
+
+                                        lineStyle: {
+                                            color: "#25C0D4"
+                                        }}
+                                },
+                                data:data.data.firstCarNumList
+                            }
+                        ]
+                    };
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart1.setOption(option);
+
+
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart2 = echarts.init(document.getElementById('aa2'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#3398DB'],
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                data : data.data.dateList,
+                                axisTick: {
+                                    alignWithLabel: true
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                },
+                                /*min: 0,
+                                max: 3000,*/
+                                splitNumber:9,
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#27506A'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                            }
+                        ],
+                        legend: {
+                            data:[''],
+                            /*orient: 'vertical',*/
+                            top: '0%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        series : [
+                            {
+                                name:'',
+                                type:'bar',
+                                barWidth: '40%',
+                                markLine : {
+                                    itemStyle : {
+                                        normal: {
+                                            borderWidth:1,
+                                            lineStyle: {
+                                                type: 'symbol',
+                                                color:'#ff0000',
+                                                width:1
+                                            }}} ,
+                                    data : [
+                                        { name: '标线1起点', xAxis: 0, yAxis: data.data.secondDangerCarNumLine, symbol: 'circle'},
+                                      /*  { name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },*/
+                                    ]
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "#25C0D4",
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }},
+
+                                        lineStyle: {
+                                            color: "#25C0D4"
+                                        }}
+                                },
+                                data:data.data.secondCarNumList
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart2.setOption(option);
+
+
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart3 = echarts.init(document.getElementById('aa3'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#3398DB'],
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                data : data.data.dateList,
+                                axisTick: {
+                                    alignWithLabel: true
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                },
+                                /*min: 0,
+                                max: 2500,*/
+                                splitNumber:9,
+                                splitLine: {
+                                    show: true,
+                                    lineStyle:{
+                                        color: ['#27506A'],
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+
+                                },
+                            }
+                        ],
+                        legend: {
+                            data:[''],
+                            /*orient: 'vertical',*/
+                            top: '0%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+                        series : [
+                            {
+                                name:'',
+                                type:'bar',
+                                barWidth: '40%',
+                                markLine : {
+                                    itemStyle : {
+                                        normal: {
+                                            borderWidth:1,
+                                            lineStyle: {
+                                                type: 'symbol',
+                                                color:'#ff0000',
+                                                width:1
+                                            }}} ,
+                                    data : [
+                                        { name: '标线1起点', xAxis: 0, yAxis: data.data.thirdDangerCarNumLine, symbol: 'circle'},
+                                       /* { name: '标线1终点', xAxis: '3月16日', yAxis: 90, symbol: 'circle' },*/
+                                    ]
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "#25C0D4",
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }},
+
+                                        lineStyle: {
+                                            color: "#25C0D4"
+                                        }}
+                                },
+                                data:data.data.thirdCarNumList
+                            }
+                        ]
+                    };
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart3.setOption(option);
+
+                    myChart1.getZr().on('click', function (params) {
+                        var pointInPixel= [params.offsetX, params.offsetY];
+                        if (myChart1.containPixel('grid',pointInPixel)) {
+                            var pointInGrid = myChart1.convertFromPixel({seriesIndex: 0}, pointInPixel);
+                            //X轴序号
+                            var xIndex = pointInGrid[0];
+                            //获取当前图表的option
+                            var op = myChart1.getOption();
+                            //获得图表中我们想要的数据
+                            var xdata = op.xAxis[0].data[xIndex];
+                            //获取时间
+                            var queryArgs = getQueryParam();
+                            queryArgs.carType = decodeURI(queryArgs.carType);
+                            var year = queryArgs.searchTime.substring(0,4);
+                            var month = xdata.substring(0,2);
+                            var day = xdata.substring(3,5);
+                            var countDate = year+month+day;
+                            var countMonth = year+month;
+                            var carType = queryArgs.carType;
+                            var firstDangerTimeFlag = "1";
+                            window.location.href= "dangerTimeCarList.html?carType="+encodeURI(carType)+"&countMonth="+countMonth
+                                +"&countDate="+countDate+"&firstDangerTimeFlag="+firstDangerTimeFlag
+                                +"&page=1&limit=13";
+                        }
+                    });
+                    myChart2.getZr().on('click', function (params) {
+                        debugger
+                        var pointInPixel= [params.offsetX, params.offsetY];
+                        if (myChart2.containPixel('grid',pointInPixel)) {
+                            var pointInGrid = myChart2.convertFromPixel({seriesIndex: 0}, pointInPixel);
+                            //X轴序号
+                            var xIndex = pointInGrid[0];
+                            //获取当前图表的option
+                            var op = myChart2.getOption();
+                            //获得图表中我们想要的数据
+                            var xdata = op.xAxis[0].data[xIndex];
+                            //获取时间
+                            var queryArgs = getQueryParam();
+                            queryArgs.carType = decodeURI(queryArgs.carType);
+                            var year = queryArgs.searchTime.substring(0,4);
+                            var month = xdata.substring(0,2);
+                            var day = xdata.substring(3,5);
+                            var countDate = year + month + day;
+                            var countMonth = year + month;
+                            var carType = queryArgs.carType;
+                            var secondDangerTimeFlag = "1";
+                            window.location.href = "dangerTimeCarList.html?carType=" + encodeURI(carType)
+                                + "&countMonth=" + countMonth + "&countDate=" + countDate + "&secondDangerTimeFlag=" + secondDangerTimeFlag
+                                + "&page=1&limit=13";
+                        }
+                    });
+                    myChart3.getZr().on('click', function (params) {
+                        var pointInPixel= [params.offsetX, params.offsetY];
+                        if (myChart3.containPixel('grid',pointInPixel)) {
+                            var pointInGrid = myChart3.convertFromPixel({seriesIndex: 0}, pointInPixel);
+                            //X轴序号
+                            var xIndex = pointInGrid[0];
+                            //获取当前图表的option
+                            var op = myChart3.getOption();
+                            //获得图表中我们想要的数据
+                            var xdata = op.xAxis[0].data[xIndex];
+                            //获取时间
+                            var queryArgs = getQueryParam();
+                            queryArgs.carType = decodeURI(queryArgs.carType);
+                            var year = queryArgs.searchTime.substring(0,4);
+                            var month = xdata.substring(0,2);
+                            var day = xdata.substring(3, 5);
+                            var countDate = year + month + day;
+                            var countMonth = year + month;
+                            var carType = queryArgs.carType;
+                            var thirdDangerTimeFlag = "1";
+                            window.location.href = "dangerTimeCarList.html?carType=" + encodeURI(carType)
+                                + "&countMonth=" + countMonth + "&countDate=" + countDate + "&thirdDangerTimeFlag=" + thirdDangerTimeFlag
+                                + "&page=1&limit=13";
+                        }
+                    });
+
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    };
+                }
+            }
+        });
+    }
+    
+    
+    function goDangerTimeCount() {
+        //获取参数
+        var queryArgs = getQueryParam();
+        queryArgs.carType = decodeURI(queryArgs.carType);
+        window.location.href = "dangerTimeCount.html?searchTime="+queryArgs.searchTime+"&carType="+encodeURI(queryArgs.carType);
+    }
+
+    function goShouYe() {
+        window.location.href = "shouye.html";
+    }
+</script>
+</body>
+</html>

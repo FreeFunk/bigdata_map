@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataDangerRoadClsMonthMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataDangerRoadClsMonth" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="DANGER_ROAD_CLS_NAME" property="dangerRoadClsName"/>
+			<result column="DANGER_ROAD_PASS_NUM" property="dangerRoadPassNum"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+			<result column="LONGITUDE" property="longitude"/>
+			<result column="LATITUDE" property="latitude"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataDangerRoadClsMonthView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, DANGER_ROAD_CLS_NAME, DANGER_ROAD_PASS_NUM, COUNT_MONTH, YEAR_NUM, LONGITUDE, LATITUDE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.dangerRoadPassNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.dangerRoadPassNum)'>
+					AND  DANGER_ROAD_PASS_NUM = #{queryObj.dangerRoadPassNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.yearNum)'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataDangerRoadClsMonthQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_danger_road_cls_month 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataDangerRoadClsMonthQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_danger_road_cls_month 
+  		<include refid="where"/>
+  </select>
+
+	<!--  汇总统计 -->
+	<select id="selectGroupByDangerRoadName" resultMap="BaseResultMap">
+		select sum(DANGER_ROAD_PASS_NUM) DANGER_ROAD_PASS_NUM,DANGER_ROAD_CLS_NAME,LONGITUDE,LATITUDE
+		from bigdata_danger_road_cls_month
+		group by DANGER_ROAD_CLS_NAME
+	</select>
+  
+  
+</mapper>

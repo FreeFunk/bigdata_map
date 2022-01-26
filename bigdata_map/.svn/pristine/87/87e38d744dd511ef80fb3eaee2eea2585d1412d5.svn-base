@@ -1,0 +1,404 @@
+package com.edgedo.timetask;
+
+import com.edgedo.bigdata.entity.BigdataCarRealtimeGps;
+import com.edgedo.bigdata.service.BigdataCarRealtimeGpsService;
+import com.edgedo.common.util.BaiDuMapApiUtil;
+import com.edgedo.common.util.MapPointInfo;
+import com.edgedo.common.util.RedisUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.io.*;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**
+ * 分析车辆任务
+ */
+@Component
+public class BigDataAnalysisRealGpsCar {
+    //实时文件的路径
+    @Value("${bigdata.dataRealTimeGpsFilePath}")
+    private String dataRealTimeGpsFilePath;
+    @Autowired
+    BigdataCarRealtimeGpsService bigdataCarRealtimeGpsService;
+    @Autowired
+    RedisUtil redisUtil ;
+    @Autowired
+    BaiDuMapApiUtil baiDuMapApiUtil;
+
+    //格式化
+    static  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    //清空地图点
+    @Scheduled(cron = "0 2 0 * * ?")
+    public void clearCatchGps(){
+        try{
+            redisUtil.del(BigdataCarRealtimeGpsService.CAR_REAL_TIME_GPS_MAP_KEY);
+//            redisUtil.del(BigdataCarRealtimeGpsService.CAR_REAL_TIME_STOP_MAP_KEY);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //将redis缓存中的数据存入数据库并且查询出来地理区域
+    /*@Scheduled(cron = "0 1 15 * * ?")
+    public void tem(){
+        String key = "car-real-gps-map";
+        long startMill = System.currentTimeMillis();
+        Map<Object,Object> gpsMap = redisUtil.hmget(key);
+        Set<Map.Entry<Object,Object>> mapEntrySet = gpsMap.entrySet();
+        Object[] arr = mapEntrySet.toArray();
+        int length = arr.length;
+        int batchNum = 1000000;
+        int times = length/batchNum + 1;
+        for(int i=0;i<=times;i++){
+            int finalI = i;
+            Thread t = new Thread(){
+                public void run(){
+                    int index = finalI *batchNum;
+                    int end = (finalI +1)*batchNum;
+                    for( ; index<end&&index<arr.length; index++){
+                        Object temO = arr[index];
+                        Map.Entry<Object,Object> temEntry = (Map.Entry<Object,Object>)temO;
+                        Object obj = temEntry.getValue();
+                        if(obj!=null && obj instanceof  BigdataCarRealtimeGps){
+                            //查询地址
+
+                            BigdataCarRealtimeGps carGps = (BigdataCarRealtimeGps)obj;
+                            Object temObj = redisUtil.hget(key,carGps.getId());
+                            if(temObj!=null){
+                                carGps = (BigdataCarRealtimeGps)temObj;
+                                try {
+                                    carGps.setTodayTimeTotal(carGps.getTodayTimeTotal().divide(new BigDecimal(1.2)));
+                                }catch (Exception e){}
+                                try {
+                                carGps.setDuskMinuteNum(carGps.getDuskMinuteNum().divide(new BigDecimal(1.2)) );
+                            }catch (Exception e){}
+                                try {
+                                carGps.setLingchenMinuteNum(carGps.getLingchenMinuteNum().divide(new BigDecimal(1.2)) );
+                        }catch (Exception e){}
+                                try {
+                                carGps.setMorningMileage(carGps.getMorningMileage().divide(new BigDecimal(1.2)) );
+                    }catch (Exception e){}
+                                try {
+                                carGps.setNoonMinuteNum(carGps.getNoonMinuteNum().divide(new BigDecimal(1.2)) );
+                }catch (Exception e){}
+//                                carGps.setAreaUpTime(new Date());
+                                redisUtil.hset(key,carGps.getId(),carGps);
+                            }
+                        }
+                    }
+                    long endMill = System.currentTimeMillis();
+                    System.out.print("总共耗时:" + (endMill - startMill));
+                }
+            };
+            t.start();
+        }
+
+
+
+    }*/
+
+    //清空地图点
+   /* @Scheduled(cron = "0 54 10 * * ?")
+    public void deleteSomeCatchGps(){
+        try{
+            redisUtil.hset( BigdataCarRealtimeGpsService.CAR_REAL_TIME_GPS_MAP_KEY,"冀C88321_2",null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+*/
+
+    //分析车辆实时位置
+    @Scheduled(cron = "0 * * * * ?")
+    public void fenxiReadGps(){
+        //如果时间在凌晨0点 5分之前返回
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minu = cal.get(Calendar.MINUTE);
+        int temNum = hour*10 +minu;
+        if(temNum<=5){
+            return;
+        }
+        try{
+
+            InputStreamReader isr = null;
+            BufferedReader br = null;
+            try {
+                isr = new InputStreamReader(new FileInputStream(dataRealTimeGpsFilePath), "GBK");
+                br = new BufferedReader(isr);
+                String temLine = null;
+                List<String> gpsLineList = new ArrayList<String>();
+                long start = System.currentTimeMillis();
+                while ((temLine = br.readLine()) != null) {
+                    BigdataCarRealtimeGps realtimeGps = fenxiOneRealPosition(temLine);
+                    if(realtimeGps==null){
+                        continue;
+                    }
+                    String carPlateNum = realtimeGps.getCarPlateNum();
+                    if(carPlateNum==null || carPlateNum.indexOf("冀C")<0){
+                        continue;
+                    }
+                    String id = carPlateNum + "_" + realtimeGps.getCarPlateColor();
+                    realtimeGps.setId(id);
+
+                    bigdataCarRealtimeGpsService.putCarToCache(realtimeGps);
+
+                }
+                long end = System.currentTimeMillis();
+                long cah = end-start;
+                System.out.println(cah  +"===== fenxi gps done" + new Date() );
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }finally {
+                try {
+                    if(br!=null){
+                        br.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if(isr!=null){
+                        isr.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    //分析车辆实时位置
+    @Scheduled(cron = "0/20 * * * * ?")
+    public void UpdateReadGps(){
+        //如果时间在凌晨0点 5分之前返回
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minu = cal.get(Calendar.MINUTE);
+        int temNum = hour*10 +minu;
+        if(temNum<=5){
+            return;
+        }
+        try{
+            InputStreamReader isr = null;
+            BufferedReader br = null;
+            try {
+                isr = new InputStreamReader(new FileInputStream(dataRealTimeGpsFilePath), "GBK");
+                br = new BufferedReader(isr);
+                String temLine = null;
+                List<String> gpsLineList = new ArrayList<String>();
+                long start = System.currentTimeMillis();
+                while ((temLine = br.readLine()) != null) {
+                    BigdataCarRealtimeGps realtimeGps = fenxiOneRealPosition(temLine);
+                    if(realtimeGps==null){
+                        continue;
+                    }
+                    String carPlateNum = realtimeGps.getCarPlateNum();
+                    if(carPlateNum==null || carPlateNum.indexOf("冀C")<0){
+                        continue;
+                    }
+                    String id = carPlateNum + "_" + realtimeGps.getCarPlateColor();
+                    realtimeGps.setId(id);
+
+                    bigdataCarRealtimeGpsService.updateCarLocaltion(realtimeGps);
+
+                }
+                long end = System.currentTimeMillis();
+                long cah = end-start;
+                System.out.println(cah  +"===== fenxi gps done" + new Date() );
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }finally {
+                try {
+                    if(br!=null){
+                        br.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if(isr!=null){
+                        isr.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //将redis缓存中的数据存入数据库并且查询出来地理区域
+    @Scheduled(cron = "0 13/30 * * * ?")
+    public void saveGpsFromRedis2dbWithCityInfo(){
+        String key = "car-real-gps-map";
+        long startMill = System.currentTimeMillis();
+        Map<Object,Object> gpsMap = redisUtil.hmget(key);
+        Set<Map.Entry<Object,Object>> mapEntrySet = gpsMap.entrySet();
+        Object[] arr = mapEntrySet.toArray();
+        int length = arr.length;
+        int batchNum = 1000000;
+        int times = length/batchNum + 1;
+        for(int i=0;i<=times;i++){
+            int finalI = i;
+            Thread t = new Thread(){
+                public void run(){
+                    int index = finalI *batchNum;
+                    int end = (finalI +1)*batchNum;
+                    for( ; index<end&&index<arr.length; index++){
+                        Object temO = arr[index];
+                        Map.Entry<Object,Object> temEntry = (Map.Entry<Object,Object>)temO;
+                        Object obj = temEntry.getValue();
+                        if(obj!=null && obj instanceof  BigdataCarRealtimeGps){
+                            //查询地址
+
+                            BigdataCarRealtimeGps carGps = (BigdataCarRealtimeGps)obj;
+                            BigDecimal lng = carGps.getPointLong();
+                            BigDecimal lat = carGps.getPointLat();
+                            try {
+                                MapPointInfo mapPointInfo =  baiDuMapApiUtil.latLongSearch(lat + "," + lng);
+                                Object temObj = redisUtil.hget(key,carGps.getId());
+
+                                if(temObj!=null && mapPointInfo!=null){
+                                    carGps = (BigdataCarRealtimeGps)temObj;
+                                    carGps.setMapCountry(mapPointInfo.getCountry());
+                                    carGps.setMapProvince(mapPointInfo.getProvince());
+                                    String cityName = mapPointInfo.getCity();
+                                    if(cityName==null || cityName.equals("")){
+                                        carGps.setMapCity(mapPointInfo.getDistrict());
+                                    }else{
+                                        carGps.setMapCity(mapPointInfo.getCity());
+                                    }
+                                    carGps.setMapXianqu(mapPointInfo.getDistrict());
+                                    carGps.setMapDetail(mapPointInfo.getSematic_description());
+                                    carGps.setAreaUpTime(new Date());
+                                    redisUtil.hset(key,carGps.getId(),carGps);
+
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        try {
+                            Thread.currentThread().sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    long endMill = System.currentTimeMillis();
+                    System.out.print("总共耗时:" + (endMill - startMill));
+                }
+            };
+            t.start();
+        }
+
+
+
+    }
+
+
+
+
+
+
+    private BigdataCarRealtimeGps fenxiOneRealPosition(String temLine){
+        String key = "IP_KEY";
+        String[] arr = temLine.split(",");
+        if(arr.length<13){
+            return null;
+        }
+        String ip = arr[0];
+        //更新缓存的ip的时间
+        redisUtil.hset(key,ip,new Date());
+        //车牌号
+        String carPlateNum = arr[1];
+        //上次的更新时间
+        String lastPositionTime = arr[2];
+        //经度
+        String pointLong = arr[3];
+        //纬度
+        String pointLat = arr[4] ;
+        //实时速度
+        String realSpeed = arr[5];
+        //gps速度
+        String gpsSpeed = arr[6];
+        //里程
+        String mileage = arr[7];
+        //方向
+        String direction = arr[8];
+        //海拔
+        String altitude = arr[9];
+        //车辆状态
+        String carState = arr[10];
+        //报警状态
+        String alarmState = arr[11];
+        //车牌颜色
+        String carPlateColor = arr[12];
+
+        BigdataCarRealtimeGps bigdataCarRealtimeGps = new BigdataCarRealtimeGps();
+        bigdataCarRealtimeGps.setIp(ip);
+        //冀CWL468
+        int start = carPlateNum.length()-8;
+        start = start>=0?start:0;
+        bigdataCarRealtimeGps.setCarPlateNum(carPlateNum.substring(start));
+        Date lastPostime = new Date();
+        try{
+            lastPostime = sdf.parse(lastPositionTime);
+            bigdataCarRealtimeGps.setLastPositionTime(lastPostime);
+            bigdataCarRealtimeGps.setPointLat(new BigDecimal(pointLat));
+            bigdataCarRealtimeGps.setPointLong(new BigDecimal(pointLong));
+            bigdataCarRealtimeGps.setRealSpeed(new BigDecimal(realSpeed));
+            bigdataCarRealtimeGps.setGpsSpeed(new BigDecimal(gpsSpeed));
+            bigdataCarRealtimeGps.setMileage(new BigDecimal(mileage));
+            bigdataCarRealtimeGps.setDirection(new BigDecimal(direction));
+            bigdataCarRealtimeGps.setAltitude(new BigDecimal(altitude));
+            bigdataCarRealtimeGps.setCarState(carState);
+            bigdataCarRealtimeGps.setAlarmState(alarmState);
+            bigdataCarRealtimeGps.setCarPlateColor(carPlateColor);
+            bigdataCarRealtimeGps.setLastUpTime(new Date());
+            return bigdataCarRealtimeGps;
+        }catch (Exception e){}
+            return null;
+
+    }
+
+
+    /*public static void main(String[] args) throws IOException  {
+        FileInputStream fis=new FileInputStream("D:\\20190701.log");
+        InputStreamReader isr=new InputStreamReader(fis, "GBK");
+        BufferedReader br = new BufferedReader(isr);
+        String line="";
+        List<BigdataCarRealtimeGps> bigdataCarRealtimeGpsList = new ArrayList<>();
+        while ((line=br.readLine())!=null) {
+            BigdataCarRealtimeGps bigdataCarRealtimeGps = fenxiOneRealPosition(line);
+            bigdataCarRealtimeGpsList.add(bigdataCarRealtimeGps);
+        }
+        Date date = new Date();
+        List<BigdataCarRealtimeGps> carRealtimeGpsList =
+                bigdataCarRealtimeGpsList.stream()
+                        .filter(
+                                bg -> bg.getLastPositionTime().getTime() > date.getTime()
+                                && bg.getLastPositionTime().getTime() < date.getTime())
+                        .collect(Collectors.toList());
+        //查询
+        System.out.println(bigdataCarRealtimeGpsList.size());
+        br.close();
+        isr.close();
+        fis.close();
+    }*/
+}
+

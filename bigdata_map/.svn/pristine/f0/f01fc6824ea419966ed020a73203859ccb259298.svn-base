@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.SysWxPayRecordMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.SysWxPayRecord" >
+			<id column="ID" property="id"/>
+			<result column="PAY_TYPE" property="payType"/>
+			<result column="BILL_ID" property="billId"/>
+			<result column="BILL_TYPE" property="billType"/>
+			<result column="TRANSACTION_ID" property="transactionId"/>
+			<result column="PAY_RESULT" property="payResult"/>
+			<result column="PAY_MONEY" property="payMoney"/>
+			<result column="NOTIFY_BODY" property="notifyBody"/>
+			<result column="PREPAY_BODY" property="prepayBody"/>
+			<result column="APP_ID" property="appId"/>
+			<result column="DEVICE_INFO" property="deviceInfo"/>
+			<result column="NONCE_STR" property="nonceStr"/>
+			<result column="SIGN" property="sign"/>
+			<result column="BODY" property="body"/>
+			<result column="DETAIL" property="detail"/>
+			<result column="ATTACH" property="attach"/>
+			<result column="OUT_TRADE_NO" property="outTradeNo"/>
+			<result column="TOTAL_FEE" property="totalFee"/>
+			<result column="SPBILL_CREATE_IP" property="spbillCreateIp"/>
+			<result column="COUPON_FEE" property="couponFee"/>
+			<result column="TIME_START" property="timeStart"/>
+			<result column="TIME_EXPIRE" property="timeExpire"/>
+			<result column="GOODS_TAG" property="goodsTag"/>
+			<result column="NOTIFY_URL" property="notifyUrl"/>
+			<result column="TRADE_TYPE" property="tradeType"/>
+			<result column="PRODUCT_ID" property="productId"/>
+			<result column="OPENID" property="openid"/>
+			<result column="PREPAY_ID" property="prepayId"/>
+			<result column="RETURN_MSG" property="returnMsg"/>
+			<result column="RESULT_CODE" property="resultCode"/>
+			<result column="ERR_CODE" property="errCode"/>
+			<result column="ERR_CODE_DES" property="errCodeDes"/>
+			<result column="BANK_TYPE" property="bankType"/>
+			<result column="TIME_END" property="timeEnd"/>
+			<result column="PREPAY_TIME" property="prepayTime"/>
+			<result column="PAY_TIME" property="payTime"/>
+			<result column="SUCCESS_URL" property="successUrl"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.SysWxPayRecordView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, PAY_TYPE, BILL_ID, BILL_TYPE, TRANSACTION_ID, PAY_RESULT, PAY_MONEY,
+	  NOTIFY_BODY, PREPAY_BODY, APP_ID, DEVICE_INFO, NONCE_STR, SIGN, BODY, DETAIL,
+	   ATTACH, OUT_TRADE_NO, TOTAL_FEE, SPBILL_CREATE_IP, COUPON_FEE, TIME_START,
+	   TIME_EXPIRE, GOODS_TAG, NOTIFY_URL, TRADE_TYPE, PRODUCT_ID, OPENID, PREPAY_ID,
+	    RETURN_MSG, RESULT_CODE, ERR_CODE, ERR_CODE_DES, BANK_TYPE, TIME_END, PREPAY_TIME,
+	     PAY_TIME, SUCCESS_URL
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.prepayTime != null'>
+					AND  PREPAY_TIME = #{queryObj.prepayTime}
+				</if>
+				<if test='queryObj != null and  queryObj.payTime != null'>
+					AND  PAY_TIME = #{queryObj.payTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.SysWxPayRecordQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_wx_pay_record 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.SysWxPayRecordQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_wx_pay_record 
+  		<include refid="where"/>
+  </select>
+
+	<update id="updateSuccess" parameterType="com.edgedo.sys.entity.SysWxPayRecord" >
+		update sys_wx_pay_record
+		<set >
+			<if test="payType != null" >
+				PAY_TYPE = #{payType,jdbcType=VARCHAR},
+			</if>
+			<if test="billId != null" >
+				BILL_ID = #{billId,jdbcType=VARCHAR},
+			</if>
+			<if test="billType != null" >
+				BILL_TYPE = #{billType,jdbcType=VARCHAR},
+			</if>
+			<if test="transactionId != null" >
+				TRANSACTION_ID = #{transactionId,jdbcType=VARCHAR},
+			</if>
+			<if test="payResult != null" >
+				PAY_RESULT = #{payResult,jdbcType=VARCHAR},
+			</if>
+			<if test="payMoney != null" >
+				PAY_MONEY = #{payMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="notifyBody != null" >
+				NOTIFY_BODY = #{notifyBody,jdbcType=VARCHAR},
+			</if>
+			<if test="prepayBody != null" >
+				PREPAY_BODY = #{prepayBody,jdbcType=VARCHAR},
+			</if>
+			<if test="appId != null" >
+				APP_ID = #{appId,jdbcType=VARCHAR},
+			</if>
+
+			<if test="deviceInfo != null" >
+				DEVICE_INFO = #{deviceInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="nonceStr != null" >
+				NONCE_STR = #{nonceStr,jdbcType=VARCHAR},
+			</if>
+			<if test="sign != null" >
+				SIGN = #{sign,jdbcType=VARCHAR},
+			</if>
+			<if test="body != null" >
+				BODY = #{body,jdbcType=VARCHAR},
+			</if>
+			<if test="detail != null" >
+				DETAIL = #{detail,jdbcType=VARCHAR},
+			</if>
+			<if test="attach != null" >
+				ATTACH = #{attach,jdbcType=VARCHAR},
+			</if>
+			<if test="outTradeNo != null" >
+				OUT_TRADE_NO = #{outTradeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="totalFee != null" >
+				TOTAL_FEE = #{totalFee,jdbcType=DECIMAL},
+			</if>
+			<if test="spbillCreateIp != null" >
+				SPBILL_CREATE_IP = #{spbillCreateIp,jdbcType=VARCHAR},
+			</if>
+			<if test="couponFee != null" >
+				COUPON_FEE = #{couponFee,jdbcType=DECIMAL},
+			</if>
+			<if test="timeStart != null" >
+				TIME_START = #{timeStart,jdbcType=VARCHAR},
+			</if>
+			<if test="timeExpire != null" >
+				TIME_EXPIRE = #{timeExpire,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsTag != null" >
+				GOODS_TAG = #{goodsTag,jdbcType=VARCHAR},
+			</if>
+			<if test="notifyUrl != null" >
+				NOTIFY_URL = #{notifyUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeType != null" >
+				TRADE_TYPE = #{tradeType,jdbcType=VARCHAR},
+			</if>
+			<if test="productId != null" >
+				PRODUCT_ID = #{productId,jdbcType=VARCHAR},
+			</if>
+			<if test="openid != null" >
+				OPENID = #{openid,jdbcType=VARCHAR},
+			</if>
+			<if test="prepayId != null" >
+				PREPAY_ID = #{prepayId,jdbcType=VARCHAR},
+			</if>
+			<if test="returnMsg != null" >
+				RETURN_MSG = #{returnMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="resultCode != null" >
+				RESULT_CODE = #{resultCode,jdbcType=VARCHAR},
+			</if>
+			<if test="errCode != null" >
+				ERR_CODE = #{errCode,jdbcType=VARCHAR},
+			</if>
+			<if test="errCodeDes != null" >
+				ERR_CODE_DES = #{errCodeDes,jdbcType=VARCHAR},
+			</if>
+			<if test="bankType != null" >
+				BANK_TYPE = #{bankType,jdbcType=VARCHAR},
+			</if>
+			<if test="timeEnd != null" >
+				TIME_END = #{timeEnd,jdbcType=VARCHAR},
+			</if>
+			<if test="prepayTime != null" >
+				PREPAY_TIME = #{prepayTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payTime != null" >
+				PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id} and (PAY_RESULT is null or  PAY_RESULT!='SUCCESS')
+	</update>
+
+  
+</mapper>

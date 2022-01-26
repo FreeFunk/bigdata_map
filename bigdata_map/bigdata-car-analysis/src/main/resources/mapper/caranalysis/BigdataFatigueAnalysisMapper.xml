@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataFatigueAnalysisMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataFatigueAnalysis" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="HIGH_FATIGUE_MILEAGE" property="highFatigueMileage"/>
+			<result column="HIGH_FATIGUE_TIME" property="highFatigueTime"/>
+			<result column="HIGH_FATIGUE_NUM" property="highFatigueNum"/>
+			<result column="HIGH_SERIOUS_FATIGUE_MILEAGE" property="highSeriousFatigueMileage"/>
+			<result column="HIGH_SERIOUS_FATIGUE_TIME" property="highSeriousFatigueTime"/>
+			<result column="HIGH_SERIOUS_FATIGUE_NUM" property="highSeriousFatigueNum"/>
+			<result column="HIGH_NIGHT_FATIGUE_MILEAGE" property="highNightFatigueMileage"/>
+			<result column="HIGH_NIGHT_FATIGUE_TIME" property="highNightFatigueTime"/>
+			<result column="HIGH_NIGHT_FATIGUE_NUM" property="highNightFatigueNum"/>
+			<result column="NATIONAL_FATIGUE_MILEAGE" property="nationalFatigueMileage"/>
+			<result column="NATIONAL_FATIGUE_TIME" property="nationalFatigueTime"/>
+			<result column="NATIONAL_FATIGUE_NUM" property="nationalFatigueNum"/>
+			<result column="NATIONAL_SERIOUS_FATIGUE_MILEAGE" property="nationalSeriousFatigueMileage"/>
+			<result column="NATIONAL_SERIOUS_FATIGUE_TIME" property="nationalSeriousFatigueTime"/>
+			<result column="NATIONAL_SERIOUS_FATIGUE_NUM" property="nationalSeriousFatigueNum"/>
+			<result column="NATIONAL_NIGHT_FATIGUE_MILEAGE" property="nationalNightFatigueMileage"/>
+			<result column="NATIONAL_NIGHT_FATIGUE_TIME" property="nationalNightFatigueTime"/>
+			<result column="NATIONAL_NIGHT_FATIGUE_NUM" property="nationalNightFatigueNum"/>
+			<result column="OTHER_FATIGUE_MILEAGE" property="otherFatigueMileage"/>
+			<result column="OTHER_FATIGUE_TIME" property="otherFatigueTime"/>
+			<result column="OTHER_FATIGUE_NUM" property="otherFatigueNum"/>
+			<result column="OTHER_SERIOUS_FATIGUE_MILEAGE" property="otherSeriousFatigueMileage"/>
+			<result column="OTHER_SERIOUS_FATIGUE_TIME" property="otherSeriousFatigueTime"/>
+			<result column="OTHER_SERIOUS_FATIGUE_NUM" property="otherSeriousFatigueNum"/>
+			<result column="OTHER_NIGHT_FATIGUE_MILEAGE" property="otherNightFatigueMileage"/>
+			<result column="OTHER_NIGHT_FATIGUE_TIME" property="otherNightFatigueTime"/>
+			<result column="OTHER_NIGHT_FATIGUE_NUM" property="otherNightFatigueNum"/>
+			<result column="SUM_FATIGUE_MILEAGE" property="sumFatigueMileage"/>
+			<result column="SUM_FATIGUE_TIME" property="sumFatigueTime"/>
+			<result column="SUM_FATIGUE_NUM" property="sumFatigueNum"/>
+			<result column="SUM_SERIOUS_FATIGUE_MILEAGE" property="sumSeriousFatigueMileage"/>
+			<result column="SUM_SERIOUS_FATIGUE_TIME" property="sumSeriousFatigueTime"/>
+			<result column="SUM_SERIOUS_FATIGUE_NUM" property="sumSeriousFatigueNum"/>
+			<result column="SUM_NIGHT_FATIGUE_MILEAGE" property="sumNightFatigueMileage"/>
+			<result column="SUM_NIGHT_FATIGUE_TIME" property="sumNightFatigueTime"/>
+			<result column="SUM_NIGHT_FATIGUE_NUM" property="sumNightFatigueNum"/>
+			<result column="NATIONAL_FATIGUE_RATE" property="nationalFatigueRate"/>
+			<result column="NATIONAL_FATIGUE_FlAG" property="nationalfatigueflAg"/>
+			<result column="HIGH_FATIGUE_RATE" property="highFatigueRate"/>
+			<result column="HIGH_FATIGUE_FlAG" property="highfatigueflAg"/>
+			<result column="OTHER_FATIGUE_RATE" property="otherFatigueRate"/>
+			<result column="OTHER_FATIGUE_FlAG" property="otherfatigueflAg"/>
+			<result column="SERIOUS_FATIGUE_RATE" property="seriousFatigueRate"/>
+			<result column="SERIOUS_FATIGUE_FlAG" property="seriousfatigueflAg"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_TIME" property="countTime"/>
+			<result column="SUM_NIGHT_FATIGUE_NUM_NO" property="sumNightFatigueNumNo"/>
+			<result column="NIGHT_FATIGUE_RATE" property="nightFatigueRate"/>
+			<result column="NIGHT_FATIGUE_FlAG" property="nightfatigueflAg"/>
+			<result column="NIGHT_FATIGUE_NO_RATE" property="nightFatigueNoRate"/>
+			<result column="NIGHT_FATIGUE_NO_FlAG" property="nightFatigueNoflAg"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataFatigueAnalysisView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+ ID, CREATE_TIME, HIGH_FATIGUE_MILEAGE, HIGH_FATIGUE_TIME, HIGH_FATIGUE_NUM, HIGH_SERIOUS_FATIGUE_MILEAGE,
+	  HIGH_SERIOUS_FATIGUE_TIME, HIGH_SERIOUS_FATIGUE_NUM, HIGH_NIGHT_FATIGUE_MILEAGE, HIGH_NIGHT_FATIGUE_TIME,
+	  HIGH_NIGHT_FATIGUE_NUM, NATIONAL_FATIGUE_MILEAGE, NATIONAL_FATIGUE_TIME, NATIONAL_FATIGUE_NUM,
+	  NATIONAL_SERIOUS_FATIGUE_MILEAGE, NATIONAL_SERIOUS_FATIGUE_TIME, NATIONAL_SERIOUS_FATIGUE_NUM,
+	  NATIONAL_NIGHT_FATIGUE_MILEAGE, NATIONAL_NIGHT_FATIGUE_TIME, NATIONAL_NIGHT_FATIGUE_NUM, OTHER_FATIGUE_MILEAGE,
+	   OTHER_FATIGUE_TIME, OTHER_FATIGUE_NUM, OTHER_SERIOUS_FATIGUE_MILEAGE, OTHER_SERIOUS_FATIGUE_TIME,
+	   OTHER_SERIOUS_FATIGUE_NUM, OTHER_NIGHT_FATIGUE_MILEAGE, OTHER_NIGHT_FATIGUE_TIME, OTHER_NIGHT_FATIGUE_NUM,
+	   SUM_FATIGUE_MILEAGE, SUM_FATIGUE_TIME, SUM_FATIGUE_NUM, SUM_SERIOUS_FATIGUE_MILEAGE, SUM_SERIOUS_FATIGUE_TIME,
+	    SUM_SERIOUS_FATIGUE_NUM, SUM_NIGHT_FATIGUE_MILEAGE, SUM_NIGHT_FATIGUE_TIME, SUM_NIGHT_FATIGUE_NUM,
+	    NATIONAL_FATIGUE_RATE, NATIONAL_FATIGUE_FlAG, HIGH_FATIGUE_RATE, HIGH_FATIGUE_FlAG, OTHER_FATIGUE_RATE,
+	    OTHER_FATIGUE_FlAG, SERIOUS_FATIGUE_RATE, SERIOUS_FATIGUE_FlAG, CAR_TYPE, COUNT_TIME,SUM_NIGHT_FATIGUE_NUM_NO,
+	    NIGHT_FATIGUE_RATE,NIGHT_FATIGUE_FlAG,NIGHT_FATIGUE_NO_RATE,NIGHT_FATIGUE_NO_FlAG,COUNT_DATE,COUNT_MONTH
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.highFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.highFatigueNum)'>
+					AND  HIGH_FATIGUE_NUM = #{queryObj.highFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.highSeriousFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.highSeriousFatigueNum)'>
+					AND  HIGH_SERIOUS_FATIGUE_NUM = #{queryObj.highSeriousFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.highNightFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.highNightFatigueNum)'>
+					AND  HIGH_NIGHT_FATIGUE_NUM = #{queryObj.highNightFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.nationalFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.nationalFatigueNum)'>
+					AND  NATIONAL_FATIGUE_NUM = #{queryObj.nationalFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.nationalSeriousFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.nationalSeriousFatigueNum)'>
+					AND  NATIONAL_SERIOUS_FATIGUE_NUM = #{queryObj.nationalSeriousFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.nationalNightFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.nationalNightFatigueNum)'>
+					AND  NATIONAL_NIGHT_FATIGUE_NUM = #{queryObj.nationalNightFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.otherFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.otherFatigueNum)'>
+					AND  OTHER_FATIGUE_NUM = #{queryObj.otherFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.otherSeriousFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.otherSeriousFatigueNum)'>
+					AND  OTHER_SERIOUS_FATIGUE_NUM = #{queryObj.otherSeriousFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.otherNightFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.otherNightFatigueNum)'>
+					AND  OTHER_NIGHT_FATIGUE_NUM = #{queryObj.otherNightFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.sumFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sumFatigueNum)'>
+					AND  SUM_FATIGUE_NUM = #{queryObj.sumFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.sumSeriousFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sumSeriousFatigueNum)'>
+					AND  SUM_SERIOUS_FATIGUE_NUM = #{queryObj.sumSeriousFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.sumNightFatigueNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sumNightFatigueNum)'>
+					AND  SUM_NIGHT_FATIGUE_NUM = #{queryObj.sumNightFatigueNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataFatigueAnalysisQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fatigue_analysis 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataFatigueAnalysisQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fatigue_analysis 
+  		<include refid="where"/>
+  </select>
+
+
+	<select id="getVoByQuery" parameterType="com.edgedo.bigdata.entity.BigdataFatigueAnalysis" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_fatigue_analysis
+		WHERE CAR_TYPE = #{carType}
+		AND date_format(COUNT_TIME,'%Y%m%d') = date_format(#{countTime},'%Y%m%d')
+	</select>
+
+	<!--  月度的分组统计  -->
+	<select id="selectGroupSumCountMonth" parameterType="int" resultMap="BaseResultMap">
+		select
+			sum(SUM_FATIGUE_MILEAGE) SUM_FATIGUE_MILEAGE,
+			sum(SUM_FATIGUE_TIME) SUM_FATIGUE_TIME,
+			sum(SUM_FATIGUE_NUM) SUM_FATIGUE_NUM,
+			sum(SUM_SERIOUS_FATIGUE_MILEAGE) SUM_SERIOUS_FATIGUE_MILEAGE,
+			sum(SUM_SERIOUS_FATIGUE_TIME) SUM_SERIOUS_FATIGUE_TIME,
+			sum(SUM_SERIOUS_FATIGUE_NUM) SUM_SERIOUS_FATIGUE_NUM,
+			sum(SUM_NIGHT_FATIGUE_MILEAGE) SUM_NIGHT_FATIGUE_MILEAGE,
+			sum(SUM_NIGHT_FATIGUE_TIME) SUM_NIGHT_FATIGUE_TIME,
+			sum(SUM_NIGHT_FATIGUE_NUM) SUM_NIGHT_FATIGUE_NUM,
+			CAR_TYPE
+			from bigdata_fatigue_analysis
+			where COUNT_MONTH=#{countMonth} group by CAR_TYPE
+	</select>
+
+
+  
+  
+</mapper>

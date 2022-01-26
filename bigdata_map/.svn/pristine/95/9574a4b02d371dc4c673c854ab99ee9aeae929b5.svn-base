@@ -1,0 +1,312 @@
+package com.edgedo.timetask.alarm;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPObject;
+import com.edgedo.bigdata.entity.*;
+import com.edgedo.bigdata.queryvo.BigdataBeidouCompView;
+import com.edgedo.bigdata.service.BigdataBeidouCompService;
+import com.edgedo.bigdata.service.BigdataSafetyWarningFileService;
+import com.edgedo.bigdata.service.BigdataSafetyWarningService;
+import com.edgedo.bigdata.service.CarInfoService;
+import com.edgedo.common.util.RedisUtil;
+import com.edgedo.util.DateUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+/**
+ * @ClassName GetAlarmFromRedis
+ * @Description 从redis中获取报警信息
+ * @Author 床前明月光
+ * @Date 2019/10/24 14:41
+ **/
+@Component
+public class GetAlarmFromRedis {
+
+    @Autowired
+    RedisUtil redisUtil;
+    @Autowired
+    BigdataSafetyWarningService bigdataSafetyWarningService;
+    @Autowired
+    BigdataSafetyWarningFileService bigdataSafetyWarningFileService;
+    @Autowired
+    BigdataBeidouCompService bigdataBeidouCompService;
+    @Autowired
+    CarInfoService carInfoService;
+
+    SimpleDateFormat sdfDateInt = new SimpleDateFormat("yyyyMMdd");
+
+    String key = "alarmList";
+
+    String keyTemp = "alarmListTemp";
+
+    String attachRequestKey = "attachRequest";
+
+    String safeFileKey = "attachList";
+
+    @Scheduled(cron = "0/30 * * * * ?")
+    public void getAlarm(){
+        for (int i=0;i<50;i++){
+            Object obj = redisUtil.rightPop(key);
+            try {
+                if(obj!=null){
+                    String jsonStr= JSON.toJSONString(obj);
+                    AlarmInfo alarmInfo = JSON.parseObject(jsonStr, AlarmInfo.class);//json字符串转对象
+                    String sessionKey = alarmInfo.getSESSION_KEY();
+                    String servIp ="";
+                    if(sessionKey!=null && !sessionKey.equals("")){
+                        servIp = sessionKey.split(":")[0];
+                    }
+                    BigdataBeidouCompView bigdataBeidouCompView = bigdataBeidouCompService.selectByIp809Addr(servIp);
+                    if(bigdataBeidouCompView!=null){
+                        BigdataSafetyWarning bigdataSafetyWarning = new BigdataSafetyWarning();
+                        bigdataSafetyWarning.setCreateTime(new Date());
+                        String compId = bigdataBeidouCompView.getId();
+                        bigdataSafetyWarning.setCompId(compId);
+                        bigdataSafetyWarning.setCompName(bigdataBeidouCompView.getCompName());
+                        bigdataSafetyWarning.setBid(alarmInfo.getALARM_ID());
+                        bigdataSafetyWarning.setLon(alarmInfo.getLONGITUDE());
+                        bigdataSafetyWarning.setLat(alarmInfo.getLATITUDE());
+                        String speed = alarmInfo.getSPEED().substring(2,4);
+                        long dec_num = Long.parseLong(speed, 16);
+                        bigdataSafetyWarning.setSpeed(new BigDecimal(dec_num));
+                        bigdataSafetyWarning.setStarttime(alarmInfo.getWARN_TIME());
+                        //查询车辆信息
+                        CarInfo carInfo = carInfoService.loadById(alarmInfo.getCAR_CODE()+"_"+alarmInfo.getCAR_COLOR());
+                        if(carInfo!=null) {
+                            bigdataSafetyWarning.setCarPlateNum(carInfo.getCarPlateNum());
+                            bigdataSafetyWarning.setCarFrameNum(carInfo.getCarFrameNum());
+                            bigdataSafetyWarning.setCarPlateColor(carInfo.getCarPlateColour());
+                            bigdataSafetyWarning.setCarPlateColorText(carInfo.getCarPlateColorText());
+                            bigdataSafetyWarning.setCarType(carInfo.getCarType());
+                            bigdataSafetyWarning.setEmpCode(carInfo.getEmpCode());
+                            bigdataSafetyWarning.setEmpIdCard(carInfo.getEmpCode());
+                            bigdataSafetyWarning.setEmpName(carInfo.getEmpPhone());
+                            bigdataSafetyWarning.setEmpId(carInfo.getEmpId());
+                            bigdataSafetyWarning.setOwnerTeamId(carInfo.getOwnerTeamId());
+                            bigdataSafetyWarning.setOwnerTeamName(carInfo.getOwnerTeamName());
+                            bigdataSafetyWarning.setProvinceId(carInfo.getProvinceId());
+                            bigdataSafetyWarning.setProvinceName(carInfo.getProvinceName());
+                            bigdataSafetyWarning.setCityId(carInfo.getCityId());
+                            bigdataSafetyWarning.setCityName(carInfo.getCityName());
+                            bigdataSafetyWarning.setXianquId(carInfo.getXianquId());
+                            bigdataSafetyWarning.setXianquName(carInfo.getXianquName());
+
+                            bigdataSafetyWarning.setUploadTime(alarmInfo.getRECV_TIME());
+                            bigdataSafetyWarning.setAlarmState("开始");
+                            bigdataSafetyWarning.setHandleState("未处理");
+                            bigdataSafetyWarning.setWarningInfo("");
+                            String markStatus = alarmInfo.getMARK_STATUS();
+                            if (markStatus.equals("0X01") || markStatus.equals("0X00")) {
+                                bigdataSafetyWarning.setStarttime(alarmInfo.getWARN_TIME());
+                            } else if (markStatus.equals("0X02")) {
+                                bigdataSafetyWarning.setEndtime(alarmInfo.getWARN_TIME());
+                            }
+                            String dateIntStr = sdfDateInt.format(alarmInfo.getWARN_TIME());
+                            int dateInt = new Integer(dateIntStr);
+                            int countMonth = dateInt / 100;
+                            bigdataSafetyWarning.setCountDate(dateInt);
+                            bigdataSafetyWarning.setCountMonth(countMonth);
+                            //获取报警等级
+                            String alarmGrade = alarmInfo.getALARM_GRADE();
+                            bigdataSafetyWarning.setWarningLevel(getWarningLevel(alarmGrade));
+                            //获取报警类型
+                            Integer warnType = alarmInfo.getWARN_TYPE();
+                            String eventType = alarmInfo.getEVENT_TYPE();
+                            if (warnType == 100) {
+                                String eventType1 = getEventType1(eventType);
+                                if(eventType1.equals("")){
+                                    continue;
+                                }
+                                bigdataSafetyWarning.setWarningType(eventType1);
+                            } else if (warnType == 101) {
+                                String eventType2 = getEventType2(eventType);
+                                if(eventType2.equals("")){
+                                    continue;
+                                }
+                                bigdataSafetyWarning.setWarningType(getEventType2(eventType));
+                            }
+                            String id = compId + "_" + bigdataSafetyWarning.getBid();
+                            bigdataSafetyWarning.setId(id);
+                            int count = bigdataSafetyWarningService.countById(bigdataSafetyWarning);
+                            if (count > 0) {
+                                bigdataSafetyWarning.setUpdateTime(new Date());
+                                bigdataSafetyWarningService.updateByPkSelectiveAndFenPian(bigdataSafetyWarning);
+                            } else {
+                                bigdataSafetyWarningService.insertNew(bigdataSafetyWarning);
+                            }
+                            /*
+                            * 加入到临时队列里面
+                            * */
+                            redisUtil.leftPush(keyTemp,obj);
+                        }
+                    }
+                }
+            }catch (Exception e){
+                redisUtil.leftPush(key,obj);
+            }
+        }
+    }
+
+    @Scheduled(cron = "0/30 * * * * ?")
+    public void getAlarmTemp(){
+        for (int i=0;i<50;i++){
+            Object obj = redisUtil.rightPop(keyTemp);
+            try {
+                if(obj!=null){
+                    String jsonStr= JSON.toJSONString(obj);
+                    AlarmInfo alarmInfo = JSON.parseObject(jsonStr, AlarmInfo.class);//json字符串转对象
+                    //判断是否超过5分钟
+                    Date warnTime = alarmInfo.getWARN_TIME();
+                    Calendar beforeTime = Calendar.getInstance();
+                    beforeTime.add(Calendar.MINUTE, -30);
+                    Date beforeD = beforeTime.getTime();
+                    if(warnTime!=null && warnTime.compareTo(beforeD)<0){
+                        String sessionKey = alarmInfo.getSESSION_KEY();
+                        String alarmId = alarmInfo.getALARM_ID();
+                        String carCode =alarmInfo.getCAR_CODE();
+                        String carColor = alarmInfo.getCAR_COLOR();
+                        AlarmTempVo alarmTempVo = new AlarmTempVo();
+                        alarmTempVo.setSESSION_KEY(sessionKey);
+                        alarmTempVo.setALARM_ID(alarmId);
+                        alarmTempVo.setCAR_CODE(carCode);
+                        alarmTempVo.setCAR_COLOR(carColor);
+                        String jsonStr1 = JSON.toJSONString(alarmTempVo);
+                        JSONObject jsonObj = JSONObject.parseObject(jsonStr1);
+                        redisUtil.leftPush(attachRequestKey,jsonObj);
+                    }else {
+                        redisUtil.rightPush(keyTemp,obj);
+                    }
+                }
+            }catch (Exception e){
+                redisUtil.leftPush(keyTemp,obj);
+            }
+        }
+    }
+
+    //从缓存中回去附件信息
+    @Scheduled(cron = "0/30 * * * * ?")
+    public void getSafetyFileInfo(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        int dateInt = Integer.parseInt(sdf.format(new Date()));
+        int dateIntLast = Integer.parseInt(sdf.format(DateUtil.getLastMonthDate(new Date())));
+        int countDate = dateInt;
+        int countMonth = dateInt/100;
+        int countMonthLast = dateIntLast/100;
+        for (int i=0;i<50;i++){
+            Object obj = redisUtil.rightPop(safeFileKey);
+            try {
+                if(obj!=null){
+                    String jsonStr= JSON.toJSONString(obj);
+                    AttachVo attachVo = JSON.parseObject(jsonStr, AttachVo.class);//json字符串转对象
+                    String servIp = attachVo.getSERV_IP();
+                    String servInfo = attachVo.getSERV_INFO();
+                    Integer servPort = attachVo.getSERV_PORT();
+                    String userName = attachVo.getUSER_NAME();
+                    //判断FILE_LIST是否为空
+                    List<AttachFileVo> attachFileVoList = attachVo.getFILE_LIST();
+                    if(attachFileVoList==null || attachFileVoList.size()==0){
+                        continue;
+                    }
+                    BigdataBeidouCompView bigdataBeidouCompView = bigdataBeidouCompService.selectByIp809Addr(servIp);
+                    if(bigdataBeidouCompView!=null){
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("BId",attachVo.getALARM_ID());
+                        map.put("countMonth",countMonth);
+                        BigdataSafetyWarning bigdataSafetyWarning = bigdataSafetyWarningService.selectByBId(map);
+                        if(bigdataSafetyWarning==null){
+                            //查询上个与的数据
+                            map.put("countMonth",countMonthLast);
+                            bigdataSafetyWarning = bigdataSafetyWarningService.selectByBId(map);
+                            if(bigdataSafetyWarning==null){
+                                continue;
+                            }
+                        }
+                        for(AttachFileVo f:attachFileVoList){
+                            BigdataSafetyWarningFile bigdataSafetyWarningFile = new BigdataSafetyWarningFile();
+                            bigdataSafetyWarningFile.setCreateTime(new Date());
+                            bigdataSafetyWarningFile.setOwnerSafetyWarningId(bigdataSafetyWarning.getId());
+                            bigdataSafetyWarningFile.setCarPlateNum(bigdataSafetyWarning.getCarPlateNum());
+                            bigdataSafetyWarningFile.setCarFrameNum(bigdataSafetyWarning.getCarFrameNum());
+                            bigdataSafetyWarningFile.setCountDate(bigdataSafetyWarning.getCountDate());
+                            bigdataSafetyWarningFile.setCountMonth(bigdataSafetyWarning.getCountMonth());
+                            bigdataSafetyWarningFile.setServInfo(servInfo);
+                            bigdataSafetyWarningFile.setServPort(servPort);
+                            bigdataSafetyWarningFile.setUserName(userName);
+                            bigdataSafetyWarningFile.setIsDownload("0");
+                            bigdataSafetyWarningFile.setFileName(f.getFILE_NAME());
+                            bigdataSafetyWarningFile.setFileUrl(f.getFILE_URL());
+                            String s = f.getFILE_URL().substring(f.getFILE_URL().lastIndexOf(".")+1);
+                            if(s.equals("mp4")){
+                                bigdataSafetyWarningFile.setFileType("video");
+                            }
+                            if(s.equals("jpg") || s.equals("png")){
+                                bigdataSafetyWarningFile.setFileType("picture");
+                            }
+                            if(!s.equals("mp4") && !s.equals("jpg") && !s.equals("png")){
+                                bigdataSafetyWarningFile.setFileType(s);
+                            }
+                            bigdataSafetyWarningFileService.insert(bigdataSafetyWarningFile);
+                        }
+                    }
+                }
+            }catch (Exception e){
+                redisUtil.leftPush(safeFileKey,obj);
+            }
+        }
+    }
+    //返回报警等级
+    public String getWarningLevel(String alarmGrade){
+        if(alarmGrade.equals("0X01")){
+            return "1";
+        }
+        if(alarmGrade.equals("0X02")){
+            return "2";
+        }
+        return "";
+    }
+    //高级驾驶辅助系统报警
+    public String getEventType1(String eventType){
+        if(eventType.equals("0X01")){
+            return "前向碰撞预警";
+        }
+        if(eventType.equals("0X02")){
+            return "车辆偏离预警";
+        }
+        if(eventType.equals("0X03")){
+            return "车距过近预警";
+        }
+        if(eventType.equals("0X04")){
+            return "行人碰撞报警";
+        }
+        if(eventType.equals("0X06")){
+            return "限速标志识别";
+        }
+        return "";
+    }
+    //驾驶人状态监测系统报警
+    public String getEventType2(String eventType){
+        if(eventType.equals("0X01")){
+            return "疲劳驾驶报警";
+        }
+        if(eventType.equals("0X02")){
+            return "接打电话报警";
+        }
+        if(eventType.equals("0X03")){
+            return "抽烟报警";
+        }
+        if(eventType.equals("0X04")){
+            return "注意力分散报警";
+        }
+        if(eventType.equals("0X05")){
+            return "异常报警";
+        }
+        return "";
+    }
+
+}

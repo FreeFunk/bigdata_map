@@ -1,0 +1,27 @@
+package com.edgedo.bigdata.queryvo;
+import com.edgedo.common.base.QueryObj;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
+
+public class BigdataTimeCarDayRecQuery extends QueryObj{
+	@JsonSerialize(include=Inclusion.NON_EMPTY) 
+	private BigdataTimeCarDayRecView queryObj = new BigdataTimeCarDayRecView();
+
+	private int searchCount;
+
+	public int getSearchCount() {
+		return searchCount;
+	}
+
+	public void setSearchCount(int searchCount) {
+		this.searchCount = searchCount;
+	}
+
+	public BigdataTimeCarDayRecView getQueryObj() {
+		return queryObj;
+	}
+
+	public void setQueryObj(BigdataTimeCarDayRecView queryObj) {
+		this.queryObj = queryObj;
+	}
+}

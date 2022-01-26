@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.SysWxUserMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.SysWxUser" >
+			<id column="ID" property="id"/>
+			<result column="ORA_ID" property="oraId"/>
+			<result column="OPEN_ID" property="openId"/>
+			<result column="NICK_NAME" property="nickName"/>
+			<result column="HEAD_PHOTO" property="headPhoto"/>
+			<result column="GENDER" property="gender"/>
+			<result column="CITY" property="city"/>
+			<result column="PROVINCE" property="province"/>
+			<result column="COUNTRY" property="country"/>
+			<result column="LANGUAGE" property="language"/>
+			<result column="LAST_LOGIN_TIME" property="lastLoginTime"/>
+			<result column="LAST_SESSION_KEY" property="lastSessionKey"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="YW_USER_ID" property="ywUserId"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.SysWxUserView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, ORA_ID, OPEN_ID, NICK_NAME, HEAD_PHOTO, GENDER, CITY, PROVINCE, COUNTRY, LANGUAGE, LAST_LOGIN_TIME, LAST_SESSION_KEY, CREATE_TIME, YW_USER_ID
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.lastLoginTime != null'>
+					AND  LAST_LOGIN_TIME = #{queryObj.lastLoginTime}
+				</if>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.SysWxUserQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_wx_user 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.SysWxUserQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_wx_user 
+  		<include refid="where"/>
+  </select>
+
+	<!-- 根据业务用户id获得微信用户 -->
+	<select id="selectWxUserByYwUserID" parameterType="java.lang.String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from sys_wx_user
+		where YW_USER_ID=#{ywUserId}
+	</select>
+
+
+	<!-- 根据openid获取微信用户 -->
+	<select id="selectWxUserByOpenId" parameterType="java.lang.String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from sys_wx_user
+		where OPEN_ID=#{openId}
+	</select>
+
+
+
+  
+  
+</mapper>

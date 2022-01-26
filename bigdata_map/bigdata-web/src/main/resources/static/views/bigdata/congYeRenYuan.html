@@ -1,0 +1,1137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>秦皇岛市智慧交通北斗大数据分析平台</title>
+    <link href="css/animate.min.css" rel="stylesheet" type="text/css">
+    <link href="css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery.SuperSlide.2.1.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/tool.js"></script>
+    <script src="js/doT/doT.js"></script>
+
+    <style type="text/css">
+
+
+        .tab0 .nav-tabs0{
+            padding-left: 15px;
+            border-bottom: 4px solid #026C9C;
+        }
+        .tab0 .nav-tabs0 li a{
+            color: #fff;
+            padding: 8px 40px;
+            margin-right: 10px;
+            background: #026C9C;
+            text-shadow: 1px 1px 2px #000;
+            border: none;
+            float: left;
+            border-radius: 0;
+            opacity: 0.5;
+            position: relative;
+            transition: all 0.3s ease 0s;
+        }
+        .tab0 .nav-tabs0 li a:hover{
+            background: #026C9C;
+            opacity: 0.8;
+        }
+        .tab0 .nav-tabs0 li.active a{
+            opacity: 1;
+        }
+        .tab0 .nav-tabs0 li.active a,
+        .tab0 .nav-tabs0 li.active a:hover,
+        .tab0 .nav-tabs0 li.active a:focus{
+            color: #fff;
+            background: #026C9C;
+            border: none;
+            border-radius: 0;
+        }
+        .tab0 .nav-tabs0 li a:before,
+        .tab0 .nav-tabs0 li a:after{
+            content: "";
+            border-top: 42px solid transparent;
+            position: absolute;
+            top: -2px;
+        }
+        .tab0 .nav-tabs0 li a:before{
+            border-right: 15px solid #026C9C;
+            left: -15px;
+        }
+        .tab0 .nav-tabs0 li a:after{
+            border-left: 15px solid #026C9C;
+            right: -15px;
+        }
+        .tab0 .nav-tabs0 li a i,
+        .tab0 .nav-tabs0 li.active a i{
+            display: inline-block;
+            padding-right: 5px;
+            font-size: 17px;
+            text-shadow: none;
+        }
+        .tab0 .nav-tabs0 li a span{
+            display: inline-block;
+            font-size: 17px;
+            letter-spacing: -3px;
+
+            transition: all 0.3s ease 0s;
+        }
+        .tab0 .nav-tabs0 li a:hover span,
+        .tab0 .nav-tabs0 li.active a span{
+            letter-spacing: 5px;
+            opacity: 1;
+            transition: all 0.3s ease 0s;
+        }
+        .tab0 .tab-content0{
+            padding: 30px;
+            background: #fff;
+            font-size: 16px;
+            color: #6c6c6c;
+            line-height: 25px;
+        }
+        .tab0 .tab-content0 h3{
+            font-size: 24px;
+            margin-top: 0;
+        }
+        @media only screen and (max-width: 479px){
+            .tab0 .nav-tabs0 li{
+                width: 100%;
+                margin-bottom: 5px;
+                text-align: center;
+            }
+            .tab0 .nav-tabs0 li a span{
+                letter-spacing: 1px;
+                opacity: 1;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+
+
+            <!--<input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " />-->
+            <span id=localtime></span>
+            <script type="text/javascript">
+                function showLocale(objD){
+                    var str,colorhead,colorfoot;
+                    var yy = objD.getYear();
+                    if(yy<1900) yy = yy+1900;
+                    var MM = objD.getMonth()+1;
+                    if(MM<10) MM = '0' + MM;
+                    var dd = objD.getDate();
+                    if(dd<10) dd = '0' + dd;
+                    var hh = objD.getHours();
+                    if(hh<10) hh = '0' + hh;
+                    var mm = objD.getMinutes();
+                    if(mm<10) mm = '0' + mm;
+                    var ss = objD.getSeconds();
+                    if(ss<10) ss = '0' + ss;
+                    var ww = objD.getDay();
+                    if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+                    if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+                    if  (ww==0)  ww="星期日";
+                    if  (ww==1)  ww="星期一";
+                    if  (ww==2)  ww="星期二";
+                    if  (ww==3)  ww="星期三";
+                    if  (ww==4)  ww="星期四";
+                    if  (ww==5)  ww="星期五";
+                    if  (ww==6)  ww="星期六";
+                    colorfoot="</font>"
+                    str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+                    return(str);
+                }
+
+                function tick(){
+                    var today;
+                    today = new Date();
+                    document.getElementById("localtime").innerHTML = showLocale(today);
+                    window.setTimeout("tick()", 1000);
+                }
+
+                tick();
+            </script>
+        </div>
+    </div>
+    <div class="top_l">
+
+        <div class="bt">
+            <div class="bt_name left">从业人员</div>
+            <a href="javaScript:history.back(-1);" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+
+
+<div class="main">
+    <div class="ind">
+
+
+
+        <Div style="width:51%; float: left">
+
+            <div class=" mk" style="height:420px">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                <div class="tit0">
+                    <span class="tit0_l"></span>
+                    <span class="tit0_m">驾驶员基本信息</span>
+                    <span class="tit0_r"></span>
+                </div>
+                <div class="blank10"></div>
+                <div class="con0 clearfix">
+                    <!--<div style="width:22%; float: left">
+
+                        <div style="text-align: center">
+                            <img id="headPhoto" src="" style="width:100%; height:270px">
+                        </div>
+
+                        <div class="fs"><span class="counter">85</span></div>
+                    </div>-->
+                    <div style="width:25%; float: left">
+
+                        <div style="text-align: center">
+                            <img id="headPhoto" src="" style="width:100%; height:280px">
+                        </div>
+
+                        <div class="fs" id="fenshu" onclick="goToDrawingDriver()"><span style="cursor:pointer;">85</span></div>
+                    </div>
+<input id="empId" type="hidden" />
+                    <div style="width: 75%; float:right">
+                        <table width="100%" class="jsxx">
+                            <tbody>
+                            <tr>
+                                <td style="text-align: right">姓名：</td>
+                                <td id="empName" class="wz_h"></td>
+                                <td style="width:20%; text-align: right">年龄：</td>
+                                <td id="empAge" style="width:30%" class="wz_h"></td>
+                            </tr>
+                            <tr>
+                                <td  style="text-align: right">身份证号：</td>
+                                <td id="empIdCard" class="wz_h"></td>
+                                <td  style="text-align: right">资格证号：</td>
+                                <td id="licenceCode" class="wz_h"></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right">入职日期：</td>
+                                <td id="empEntryDay" class="wz_h"></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right">企业：</td>
+                                <td id="ownerTeamName" class="wz_h" colspan="3"></td>
+
+                            </tr>
+                            <tr>
+                                <td style="width:20%; text-align: right">性别：</td>
+                                <td id="empSex" style="width:30%" class="wz_h"></td>
+                            </tr>
+                            <tr>
+                                <td  style="text-align: right">籍贯：</td>
+                                <td id="empJG" colspan="3" class="wz_h"></td>
+
+                            </tr>
+                            <tr>
+                                <td  style="text-align: right">联系电话：</td>
+                                <td id="phone" colspan="3" class="wz_h"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="blank10"></div>
+
+
+            <Div style="float: left; width: 49%">
+
+
+
+                <div class=" mk" style="height:518px">
+                    <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+
+                    <div class="tab0 clearfix" role="tabpanel" style="padding: 20px 10px 10px;">
+
+                        <ul class="nav0 nav-tabs0 clearfix" role="tablist">
+                            <li role="presentation" class="active"><a href="#Section01" aria-controls="home" role="tab" data-toggle="tab"><span>关联车辆</span></a></li>
+                            <li role="presentation"><a href="#Section02" aria-controls="profile" role="tab" data-toggle="tab"><span>健康档案</span></a></li>
+
+                        </ul>
+                        <div class="tab-content tabs">
+                            <div role="tabpanel" class="tab-pane fade in active" id="Section01">
+                                <table id="relatedCar" width="100%" class="grid03">
+                                    <tr>
+                                        <th style="width:30%">车牌号</th>
+                                        <th style="width:40%">时间</th>
+                                        <th style="width:30%">身份</th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="Section02">
+                               <!-- <img id="healthMessage" src="" style="width: 100%; height:430px">-->
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
+
+
+
+            </Div>
+
+
+            <Div style="float: right; width:50%">
+
+
+                <div class=" mk" style="height:518px">
+                    <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+
+
+                    <div class="tab0 clearfix" role="tabpanel" style="padding: 20px 10px 10px;">
+
+                        <ul class="nav0 nav-tabs0 clearfix" role="tablist">
+                            <li role="presentation" class="active"><a href="#Section03" aria-controls="home" role="tab" data-toggle="tab"><span>定向推送记录</span></a></li>
+                            <li role="presentation"><a href="#Section04" aria-controls="profile" role="tab" data-toggle="tab"><span>继续教育记录</span></a></li>
+
+                        </ul>
+                        <div class="tab-content tabs">
+                            <div role="tabpanel" class="tab-pane fade in active" id="Section03">
+                                <table id="pushLearnRecList" width="100%" class="grid03" style="table-layout: fixed">
+                                </table>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="Section04">
+                                <table id="continueLearnRec" width="100%" class="grid03">
+                                    <tr>
+                                        <th style="width:20%">序号</th>
+                                        <th style="width:40%">开始时间</th>
+                                        <th style="width:40%">有效时间</th>
+                                    </tr>
+
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+
+
+            </Div>
+
+
+        </Div>
+
+
+
+
+
+        <Div style="width:48%; float: right">
+
+            <div class=" mk" style="height:470px">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                <div class="tit0">
+                    <span class="tit0_l"></span>
+                    <span class="tit0_m">安全培训记录</span>
+                    <span class="tit0_r"></span>
+                </div>
+                <div class="blank10"></div>
+                <div class="con0 clearfix" style="height: 380px;overflow-y: scroll">
+                    <table id="safetyTrainRec" width="100%" class="grid03">
+                        <tr>
+                            <th style="width:20%">计划名称</th>
+                            <th style="width:15%">开始时间</th>
+                            <th style="width:15%">结束时间</th>
+                            <th style="width:15%">学习类型</th>
+                            <th style="width:15%">车牌号</th>
+                            <th style="width:15%">学习状态</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="blank10"></div>
+
+
+            <div class=" mk" style="height:470px">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                <div class="tit0">
+                    <span class="tit0_l" style="margin-left: 200px;"></span>
+                    <span class="tit0_m">危险驾驶信息</span>
+                    <span class="tit0_r"></span>
+                    <input type="text" class="input_rl " id="searchDate" style="width:150px; height: 48px; margin-left: 45px; ">
+                </div>
+                <div class="blank10"></div>
+                <div class="con0 clearfix" style="height: 350px;overflow-y: scroll">
+                    <table id="dangerDrivingList" width="100%" class="grid03">
+                    </table>
+                </div>
+            </div>
+        </Div>
+
+<input type="hidden" id="empType"/>
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/tool.js"></script>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+<script src="js/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="js/jquery.countup.min.js"></script>
+<script type="text/javascript">
+    /*$('.counter').countUp();*/
+</script>
+
+<script id="dangerDrivingtmpl" type="text/x-dot-template">
+    <tr>
+        <th style="width:15%">报警时间</th>
+        <th style="width:15%">车牌号</th>
+        <th style="width:15%">报警类型</th>
+        <th style="width:10%">报警速度</th>
+        <th style="width:10%">限速值</th>
+        <th style="width:15%">道路类型</th>
+        <th style="width:20%">处理结果</th>
+    </tr>
+    {{~it.dangerDrivingList:value:index}}
+    <tr>
+        <td style="width:15%">{{= value.createTime.substring(5,16) }}</td>
+        <td style="width:15%">{{= value.carPlateNum }}</td>
+        <td style="width:15%">
+            <span class=\"wtg\">
+            {{? typeof(value.alarmType)=='undefined'}}
+
+            {{?? value.alarmType=='2' }}
+                超速
+            {{?? value.alarmType=='4' }}
+                疲劳
+            {{?? value.alarmType.length >2 }}
+                {{= value.alarmType }}
+            {{?}}
+            </span>
+        </td>
+        <td style="width:10%"><span>{{= value.alarmSpeed }}</span></td>
+        <td style="width:10%">
+            <span>
+                {{? typeof(value.roadSpeedLimit)=='undefined'}}
+
+                {{??}}
+                      {{= value.roadSpeedLimit }}
+                {{?}}
+            </span>
+        </td>
+        <td style="width:15%">
+            <span>
+                {{? typeof(value.roadLevel)=='undefined'}}
+
+                {{?? value.roadLevel=='41000' }}
+                    高速公路
+                {{?? value.roadLevel=='42000' }}
+                    城市快速路
+                {{?? value.roadLevel=='51000' }}
+                    省道
+                {{?? value.roadLevel=='44000' }}
+                    主要道路
+                {{?? value.roadLevel=='45000' }}
+                    次要道路
+                {{?? value.roadLevel=='52000' }}
+                    乡公路
+                {{?? value.roadLevel=='53000' }}
+                    县乡村道路
+                {{?? value.roadLevel=='54000' }}
+                    县乡村道路
+                {{?? value.roadLevel=='47000' }}
+                    普通道路
+                {{?? value.roadLevel=='49' }}
+                    非导航道路
+                {{?}}
+            </span>
+        </td>
+        <td style="width:20%"><span class=\"tg\">系统提醒</span></td>
+    </tr>";
+    {{~}}
+    {{? it.dangerDrivingList.length==0}}
+    <tr><td colspan='7'>暂无信息</td></tr>
+    {{?}}
+</script>
+
+<script id="pushLearnRectmpl" type="text/x-dot-template">
+    <tr>
+        <th style="width:15%">月份</th>
+        <th style="width:20%">违章类型</th>
+        <th style="width:35%">课件名称</th>
+        <th style="width:20%">结果</th>
+    </tr>
+
+    {{ for(var prop in it) { }}
+        {{~it[prop]:value:index}}
+        <tr>
+            <td style="width:15%"><a href="javaScript:void(0);" onclick="goToPushLearnRecInfo('{{= value.empId }}')">
+                {{? parseInt((value.countMonth+"").substring(4,6))>=10 }}
+                {{= (value.countMonth+"").substring(4,6) }}月份
+                {{??}}
+                {{= (value.countMonth+"").substring(5,6) }}月份
+                {{?}}
+            </a></td>
+            <td style="width:20%">{{= value.alarmType }} </td>
+            <td title="{{= value.lessonName }}" style="width:35%;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{= value.lessonName }}</td>
+            <td style="width:20%">{{= value.studyState }}</td>
+        </tr>
+        {{~}}
+    {{ } }}
+  <!--  {{~it.pushLearnRecList:value:index}}
+    <tr>
+        <td style="width:15%"><a href="javaScript:void(0);" onclick="goToPushLearnRecInfo('{{= value.empId }}')">
+            {{? parseInt((value.countMonth+"").substring(4,6))>=10 }}
+            {{= (value.countMonth+"").substring(4,6) }}月份
+            {{??}}
+            {{= (value.countMonth+"").substring(5,6) }}月份
+            {{?}}
+        </a></td>
+        <td style="width:20%">{{= value.alarmType }} </td>
+        <td title="{{= value.lessonName }}" style="width:35%;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{= value.lessonName }}</td>
+        <td style="width:20%">{{= value.studyState }}</td>
+    </tr>
+    {{~}}
+    {{? it.pushLearnRecList.length==0}}
+    <tr><td colspan='4'>暂无信息</td></tr>
+    {{?}}-->
+</script>
+
+<!--<script id="pushLearnRectmpl" type="text/x-dot-template">
+    <tr>
+        <th style="width:15%">月份</th>
+        <th style="width:20%">违章类型</th>
+        <th style="width:35%">课件名称</th>
+        <th style="width:20%">结果</th>
+    </tr>
+    {{~it.pushLearnRecList:value:index}}
+    <tr>
+        <td style="width:15%"><a href="javaScript:void(0);" onclick="goToPushLearnRecInfo('{{= value.empId }}')">
+            {{? parseInt((value.countMonth+"").substring(4,6))>=10 }}
+                {{= (value.countMonth+"").substring(4,6) }}月份
+            {{??}}
+                {{= (value.countMonth+"").substring(5,6) }}月份
+            {{?}}
+        </a></td>
+        <td style="width:20%">{{= value.alarmType }} </td>
+        <td title="{{= value.lessonName }}" style="width:35%;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{= value.lessonName }}</td>
+        <td style="width:20%">{{= value.studyState }}</td>
+    </tr>
+    {{~}}
+    {{? it.pushLearnRecList.length==0}}
+    <tr><td colspan='4'>暂无信息</td></tr>
+    {{?}}
+</script>-->
+
+<script type="text/javascript">
+
+    $(function(){
+        var queryArgs = getQueryParam();
+        //参数整理
+        var param = "cityId=130300";
+        var param1 = "cityId=130300";
+        var paramQuery = "";
+        var empName = decodeURI(queryArgs.empName);
+        if(empName != null && empName != "" && empName != "undefined"){
+            param += "&empName=";
+            param += empName;
+            paramQuery += "&queryObj.empName=";
+            paramQuery += empName;
+        }
+        var empPhone = decodeURI(queryArgs.empPhone);
+        if(empPhone != null && empPhone != "" && empPhone != "undefined"){
+            param += "&empPhone=";
+            param += empPhone;
+            paramQuery += "&queryObj.empPhone=";
+            paramQuery += empPhone;
+        }
+        var ownerCarTeamName = decodeURI(queryArgs.ownerCarTeamName);
+        if(ownerCarTeamName != null && ownerCarTeamName != "" && ownerCarTeamName != "undefined"){
+            param += "&ownerCarTeamName=";
+            param += ownerCarTeamName;
+            paramQuery += "&queryObj.ownerTeamName=";
+            paramQuery += ownerCarTeamName;
+        }
+        var carPlateNum = decodeURI(queryArgs.carPlateNum);
+        if(carPlateNum != null && carPlateNum != "" && carPlateNum != "undefined"){
+            param += "&carPlateNum=";
+            param += carPlateNum;
+            paramQuery += "&queryObj.carPlateNum=";
+            paramQuery += carPlateNum;
+        }
+        var empIdCard = decodeURI(queryArgs.empIdCard);
+        if(empIdCard != null && empIdCard != "" && empIdCard != "undefined"){
+            param += "&empIdCard=";
+            param += empIdCard;
+            paramQuery += "&queryObj.empIdCard=";
+            paramQuery += empIdCard;
+        }
+        var empCode = decodeURI(queryArgs.empCode);
+        if(empCode != null && empCode != "" && empCode != "undefined"){
+            param += "&empCode=";
+            param += empCode;
+            paramQuery += "&queryObj.empCode=";
+            paramQuery += empCode;
+        }
+        var empType = decodeURI(queryArgs.empType);
+        if(empType != null && empType != "" && empType != "undefined"){
+            param += "&empType=";
+            param += empType;
+            paramQuery += "&queryObj.empType=";
+            paramQuery += empType;
+        }
+        var id = decodeURI(queryArgs.id);
+        if(id != "undefined"){
+            param += "&id="+id;
+            param1 +="&queryObj.empId="+id;
+        }
+        //查询从业人员详细的信息
+        searchEmpInfo(param);
+
+        var day1 = new Date();
+        //day1.setDate(day1.getDate() - 1);
+        var searchTime = day1.format("yyyy-MM-dd");
+        laydate.render({
+            elem: '#searchDate',
+            theme: '#884898',
+            value: searchTime,
+            trigger: 'click',
+            btns: ['confirm'],
+            done: function(value, date, endDate){
+                var yearNum = value.substring(0,4);
+                var month = value.substring(5,7);
+                var date = value.substring(8,10);
+                var countMonth = yearNum + month;
+                var countDate = yearNum + month+date;
+                var s = param1+"&queryObj.countMonth="+countMonth+"&queryObj.countDate="+countDate;
+                empPeccancyRec(s);
+            }
+        });
+    });
+
+    function goToDrawingDriver() {
+        var queryArgs = getQueryParam();
+        var id = $("#empId").val();
+        var empType = $("#empType").val();
+        $.ajax({
+            type:"POST",
+            url:basePathUrl + "/admin/sysUser/getLoginUser.jsn",
+            data:{},
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    var defaultRole = data.data.defaultRole;
+                    if (defaultRole=='DRAW_ADMIN'){
+                        if(empType=='1'){
+                            //跳转到画像页面
+                            window.location.href = "../drawing/DrawingDriver.html?id="+id;
+                        }else {
+                            alert("该人员不是驾驶员！");
+                        }
+                    }
+                }else{
+                    alert("后台异常！");
+                }
+            }
+        });
+
+    }
+
+    function searchEmpInfo(queryArgs){
+        $.ajax({
+            type:'POST',
+            url: basePathUrl + '/admin/bigdatadata/selectEmpByQuery.jsn',
+            data:queryArgs,
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                var emp = data;
+                if(emp.success){
+                    var empData = emp.list;
+                    $("#empId").val(empData[0].id);
+                    $("#empName").html(empData[0].empName);
+                    if(empData[0].empName=='胡铁华'){
+                        $("#fenshu").html("<span style='color: red;'>60</span>");
+                    }
+                    var htmlToYh = "<a href='javaScript:void(0);' onclick=gotoYunShuYeHu('"+empData[0].ownerCarTeamId+"')>"+empData[0].ownerCarTeamName+"</a>";
+                    $("#ownerTeamName").html(htmlToYh);
+                    $("#empSex").html(empData[0].empSex);
+                    $("#empAge").html(empData[0].empAge);
+                    $("#empJG").html(empData[0].provinceName+'>'+empData[0].cityName+'>'+empData[0].xianQuName);
+                    $("#phone").html(empData[0].empPhone);
+                    $("#empIdCard").html(empData[0].empIdCard);
+                    $("#licenceCode").html(empData[0].licenceCode);
+                    if(typeof (empData[0].empEntryDay)!='undefined'){
+                        $("#empEntryDay").html(empData[0].empEntryDay.substring(0,10));
+                    }
+                    if(empData[0].healthMessage != null && empData[0].healthMessage != ''){
+                        $("#healthMessage").attr('src',empData[0].healthMessage);
+                    }
+                    if(empData[0].headPhoto != null && empData[0].headPhoto != ''){
+                        $("#headPhoto").attr("src",empData[0].headPhoto);
+                    }
+                    //关联车辆
+$("#empType").val(empData[0].empType);
+                    var html = "";
+                    if(empData[0].carPlateNum != null && empData[0].carPlateNum != ''){
+                        html + "<tr>";
+                        html += "<td><a href='javaScript:void(0);' onclick=gotoYingYunCL('"+empData[0].carPlateNum+"')>"+empData[0].carPlateNum+"</a></td>";
+                        html += "<td>"+dateFormat("yyyy-MM-dd",new Date(empData[0].createTime))+"</td>";
+                        html += "<td>驾驶员</td>";
+                        html += "</tr>";
+                    }else{
+                        html += "<tr><td colspan='3'>暂无信息</td></tr>";
+                    }
+
+                    $("#relatedCar").html($("#relatedCar").html() + html);
+
+                    //查询学习记录
+                    empSafetyRec(empData[0].id);
+                    //empSafetyRec( empData[0].licenceCode);
+                    var paramQuery = "queryObj.empName="+empData[0].empName + "&queryObj.empIdCard="+empData[0].empIdCard+"&queryObj.empCode="+empData[0].licenceCode;
+                    var param = "queryObj.empId="+empData[0].id;
+                    var empId = empData[0].id;
+                    //从业人员继续教育记录
+                    empLearnRec(paramQuery);
+                    //从业人员的诚信考核记录
+                    //empCheckRec(paramQuery);
+                    //从业人员定向学习记录
+                    empPushLearnRec(empId);
+                    //从业人员违章驾驶记录
+                    var countTime = dateFormat("yyyyMMdd",new Date());
+                    var yearNum = countTime.substring(0,4);
+                    var month = countTime.substring(4,6);
+                    var date = countTime.substring(6,8);
+                    var countMonth = yearNum + month;
+                    var countDate = yearNum + month+date;
+                    param = param+"&queryObj.countMonth="+countMonth+"&queryObj.countDate="+countDate;
+                    empPeccancyRec(param);
+
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        })
+    }
+
+    function gotoYingYunCL(carPlateNum){
+        window.location.href = "yingYunCheLiang.html?queryObj.carPlateNum="+carPlateNum;
+    }
+
+    function gotoYunShuYeHu(teamId){
+        window.location.href = "yunShuYeHu.html?teamId="+teamId;
+    }
+
+    function empLearnRec(queryArgs) {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/continueLearnRec/listpageLearnRec.jsn",
+            data: queryArgs,
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    var continueLearnRec = data.list;
+                    var html = "";
+                    if(continueLearnRec.length>0){
+                        for(var i=0;i<continueLearnRec.length;i++){
+                            html += "<tr>";
+                            html += "<td>"+(i+1)+"</td>";
+                            html += "<td>"+dateFormat("yyyy-MM-dd",new Date(continueLearnRec[i].startTime))+"</td>";
+                            html += "<td>"+dateFormat("yyyy-MM-dd",new Date(continueLearnRec[i].endTime))+"</td>";
+                            html += "</tr>";
+                        }
+                    }else{
+                        html += "<td colspan='3'>暂无信息</td>";
+                    }
+                    $("#continueLearnRec").html($("#continueLearnRec").html() + html);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    };
+                }
+            }
+        });
+    }
+    //定向推送学习记录
+    function empPushLearnRec(empId) {
+        var yearNum = dateFormat("yyyy",new Date());
+        var url = basePathUrl+"/admin/bigdataPushLearnRec/selectByEmpId.jsn";
+        var params = {"empId":empId,"yearNum":yearNum};
+        adminReq(url,params,function (data) {
+
+            var html = "  <tr>\n" +
+                "        <th style=\"width:15%\">月份</th>\n" +
+                "        <th style=\"width:20%\">违章类型</th>\n" +
+                "        <th style=\"width:35%\">课件名称</th>\n" +
+                "        <th style=\"width:20%\">结果</th>\n" +
+                "    </tr>";
+            var obj = data.data;
+            if(JSON.stringify(obj) == '{}'){
+                html +=" <tr><td colspan='4'>暂无信息</td></tr>";
+            }else {
+                for(let key  in obj){
+                    var d = obj[key];
+                    if(d.length>1){
+                        html +=" <tr>\n" +
+                            "        <td rowspan='2' style=\"width:15%\"><a href=\"javaScript:void(0);\" onclick=\"goToPushLearnRecInfo('"+d[0].empId+"')\">\n" ;
+                        if( parseInt((d[0].countMonth+"").substring(4,6))>=10){
+                            html +=(d[0].countMonth+"").substring(4,6)+"月份";
+                        }else {
+                            html +=(d[0].countMonth+"").substring(5,6)+"月份";
+                        }
+
+                        html += "  </a></td>\n" +
+                            "        <td style=\"width:20%\"> "+d[0].alarmType+"</td>\n" +
+                            "        <td title='"+d[0].lessonName+"' style=\"width:35%;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;\">"+d[0].lessonName+"</td>\n" +
+                            "        <td style=\"width:20%\">"+d[0].studyState+"</td>\n" +
+                            "    </tr>"
+                        html +=" <tr>\n" +
+                            "        <td style=\"width:20%\"> "+d[1].alarmType+"</td>\n" +
+                            "        <td title='"+d[1].lessonName+"' style=\"width:35%;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;\">"+d[1].lessonName+"</td>\n" +
+                            "        <td style=\"width:20%\">"+d[1].studyState+"</td>\n" +
+                            "    </tr>"
+                    }else {
+                        html +=" <tr>\n" +
+                            "        <td style=\"width:15%\"><a href=\"javaScript:void(0);\" onclick=\"goToPushLearnRecInfo('"+d[0].empId+"')\">\n" ;
+                        if( parseInt((d[0].countMonth+"").substring(4,6))>=10){
+                            html +=(d[0].countMonth+"").substring(4,6)+"月份";
+                        }else {
+                            html +=(d[0].countMonth+"").substring(5,6)+"月份";
+                        }
+
+                        html += "  </a></td>\n" +
+                            "        <td style=\"width:20%\"> "+d[0].alarmType+"</td>\n" +
+                            "        <td title='"+d[0].lessonName+"' style=\"width:35%;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;\">"+d[0].lessonName+"</td>\n" +
+                            "        <td style=\"width:20%\">"+d[0].studyState+"</td>\n" +
+                            "    </tr>"
+                    }
+                }
+            }
+            $("#pushLearnRecList").html(html);
+           /* var dataArr = {"pushLearnRecList":data.data};
+            var arrText = doT.template($("#pushLearnRectmpl").text());
+            $("#pushLearnRecList").html(arrText(dataArr));*/
+        })
+    }
+
+    function goToPushLearnRecInfo(empId) {
+        var yearNum = dateFormat("yyyy",new Date());
+        window.location.href = "PushLearnRecInfo.html?empId="+empId+"&yearNum="+yearNum;
+    }
+
+   /* function empCheckRec(queryArgs) {
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/credibilityCheckRec/listpageCheckRec.jsn",
+            data: queryArgs,
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    var checkRec = data.list;
+                    var html = "";
+                    if(checkRec.length>0){
+                        for(var i=0;i<checkRec.length;i++){
+                            html += "<tr>";
+                            html += "<td>"+dateFormat("yyyy-MM-dd",new Date(checkRec[i].startTime))+"</td>";
+                            html += "<td>"+dateFormat("yyyy-MM-dd",new Date(checkRec[i].endTime))+"</td>";
+                            html += "<td>"+checkRec[i].evaluate+"</td>";
+                            html += "</tr>";
+                        }
+                    }else{
+                        html += "<tr><td colspan='3'>暂无信息</td></tr>";
+                    }
+                    $("#checkRec").html($("#checkRec").html() + html);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    };
+                }
+            }
+        });
+    }*/
+
+    /**
+     *@Author:ZhaoSiDa
+     *@Description: 危险驾驶信息
+     *@DateTime 2020/4/14 13:39
+     */
+    function empPeccancyRec(queryArgs) {
+        var url =  basePathUrl+"/admin/bigdataAlarmRecord/selectAlarmRecordByCar.jsn";
+        adminReq(url,queryArgs,function (data) {
+            debugger
+            var dataArr = {"dangerDrivingList":data.list};
+            var arrText = doT.template($("#dangerDrivingtmpl").text());
+            $("#dangerDrivingList").html(arrText(dataArr));
+        });
+    }
+
+    function empSafetyRec(empId) {
+        var url = basePathUrl+"/admin/bigdataPushLearnRec/selectSafetyRec.jsn";
+        var params = {"empId":empId};
+        adminReq(url,params,function (data) {
+            var safetyRec = data.data;
+            var html = "";
+            if(safetyRec.length > 0){
+                for(var i=0;i<safetyRec.length;i++){
+                    html += "<tr>";
+                    html += "<td>"+safetyRec[i].planName+"</td>";
+                    if(safetyRec[i].beginTime != null){
+                        html += "<td>"+safetyRec[i].beginTime.substring(5,16)+"</td>";
+                    }else{
+                        html += "<td></td>";
+                    }
+                    if(safetyRec[i].endTime != null){
+                        html += "<td>"+safetyRec[i].endTime.substring(5,16)+"</td>";
+                    }else{
+                        html += "<td></td>";
+                    }
+                    html += "<td>"+safetyRec[i].learnType+"</td>";
+                    html += "<td>"+safetyRec[i].carPlateNum+"</td>";
+                    if(safetyRec[i].shenheState != "1"){
+                        html += "<td><span class=\"wtg\">未通过</span></td>";
+                    }else{
+                        html += "<td><span class=\"tg\">通过</span></td>";
+                    }
+                    html += "</tr>";
+                }
+            }else{
+                html += "<tr><td colspan='6'>暂无信息</td></tr>";
+            }
+            $("#safetyTrainRec").html($("#safetyTrainRec").html() + html);
+        })
+    }
+    /*function empSafetyRec(empId) {
+        var param = "cityId=130300&id="+empId;
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdatadata/selectEmpSafetyRec.jsn",
+            data: param,
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    var safetyRec = data.data;
+                    var html = "";
+                    if(safetyRec.length > 0){
+                        for(var i=0;i<safetyRec.length;i++){
+                            html += "<tr>";
+                            html += "<td>"+safetyRec[i].trainTitle+"</td>";
+                            if(safetyRec[i].beginTime != null){
+                                html += "<td>"+safetyRec[i].beginTime.substring(5,16)+"</td>";
+                            }else{
+                                html += "<td></td>";
+                            }
+                            if(safetyRec[i].endTime != null){
+                                html += "<td>"+safetyRec[i].endTime.substring(5,16)+"</td>";
+                            }else{
+                                html += "<td></td>";
+                            }
+                            html += "<td>"+safetyRec[i].traingType+"</td>";
+                            html += "<td>"+safetyRec[i].carPlateNum+"</td>";
+                            if(safetyRec[i].studyState == "未开始"){
+                                html += "<td><span class=\"wtg\">"+safetyRec[i].studyState+"</span></td>";
+                            }else{
+                                html += "<td><span class=\"tg\">"+safetyRec[i].studyState+"</span></td>";
+                            }
+                            html += "</tr>";
+                        }
+                    }else{
+                        html += "<tr><td colspan='6'>暂无信息</td></tr>";
+                    }
+                    $("#safetyTrainRec").html($("#safetyTrainRec").html() + html);
+                    //$("#name4").html(data.data[0].id);
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }*/
+
+    function searchEmpType(empType){
+        var empTypeHZ = "";
+        if(empType == "0"){
+            empTypeHZ = "其他";
+        }
+        if(empType == "1"){
+            empTypeHZ = "驾驶员";
+        }
+        if(empType == "2"){
+            empTypeHZ = "押运员";
+        }
+        if(empType == "3"){
+            empTypeHZ = "装卸员";
+        }
+        if(empType == "4"){
+            empTypeHZ = "经理";
+        }
+        if(empType == "5"){
+            empTypeHZ = "财务";
+        }
+        if(empType == "6"){
+            empTypeHZ = "业务";
+        }
+        if(empType == "7"){
+            empTypeHZ = "内勤";
+        }
+    }
+
+    function getAlarmType(alarmType){
+        if(alarmType == "1"){
+            return "线路";
+        }
+        if(alarmType == "2"){
+            return "超速";
+        }
+        if(alarmType == "3"){
+            return "紧急";
+        }
+        if(alarmType == "4"){
+            return "疲劳";
+        }
+    }
+
+    function getRoadLevel(num) {
+        if(num=='41000'){
+            return "高速公路";
+        }
+        if(num=='42000'){
+            return "国道";
+        }
+        if(num=='43000'){
+            return "城市快速路";
+        }
+        if(num=='51000'){
+            return "省道";
+        }
+        if(num=='44000'){
+            return "主要道路";
+        }
+        if(num=='45000'){
+            return "次要道路";
+        }
+        if(num=='52000'){
+            return "乡公路";
+        }
+        if(num=='53000'){
+            return "县乡村道路";
+        }
+        if(num=='54000'){
+            return "县乡村道路";
+        }
+        if(num=='47000'){
+            return "普通道路";
+        }
+        if(num=='49'){
+            return "非导航道路";
+        }
+    }
+
+    Date.prototype.format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
+    function goShouYe() {
+        window.location.href = "shouye.html";
+    }
+</script>
+
+
+
+</body>
+</html>

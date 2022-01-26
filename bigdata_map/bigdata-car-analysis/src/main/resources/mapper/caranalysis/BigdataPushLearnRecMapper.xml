@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataPushLearnRecMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataPushLearnRec" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="UPDATE_TIME" property="updateTime"/>
+			<result column="EMP_ID" property="empId"/>
+			<result column="ALARM_TYPE" property="alarmType"/>
+			<result column="LESSION_ID" property="lessionId"/>
+			<result column="LESSON_NAME" property="lessonName"/>
+			<result column="STUDY_STATE" property="studyState"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataPushLearnRecView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, UPDATE_TIME, EMP_ID, ALARM_TYPE, LESSION_ID, LESSON_NAME, STUDY_STATE, COUNT_DATE, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.updateTime != null'>
+					AND  UPDATE_TIME = #{queryObj.updateTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countDate)'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null '>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataPushLearnRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_push_learn_rec 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataPushLearnRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_push_learn_rec 
+  		<include refid="where"/>
+  </select>
+<!--根据EmpID查询记录-->
+	<select id="selectByEmpId" parameterType="com.edgedo.bigdata.entity.BigdataPushLearnRec" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_push_learn_rec
+		where YEAR_NUM = #{yearNum} and EMP_ID = #{empId}
+	</select>
+
+	<select id="countSafetyRec" parameterType="map" resultType="int">
+		select count(1) from yw_train_consum_rec
+		WHERE LICENCE_CODE = #{empCode}
+		and date_format(PLAN_CREATE_TIME,'%Y%m') = #{countMonth}
+	</select>
+
+
+	<select id="getLessionByClsId" parameterType="java.lang.String" resultType="com.edgedo.bigdata.entity.YwTrainLession">
+		  SELECT ID id,LESSON_TITLE lessonTitle
+		  	FROM yw_train_lession
+        	WHERE OWNER_CLS_ID = #{clsId}
+	</select>
+
+	<select id="selectByVo" parameterType="com.edgedo.bigdata.entity.BigdataPushLearnRec" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_push_learn_rec
+		WHERE  YEAR_NUM = #{yearNum} and EMP_ID = #{empId} and COUNT_MONTH = #{countMonth}  and ALARM_TYPE = #{alarmType}
+	</select>
+
+	<update id="updateNew" parameterType="com.edgedo.bigdata.entity.BigdataPushLearnRec" >
+		UPDATE bigdata_push_learn_rec
+		<set>
+			<if test='updateTime != null'>
+				UPDATE_TIME = #{updateTime},
+			</if>
+			<if test='studyState != null'>
+				STUDY_STATE = #{studyState}
+			</if>
+		</set>
+		where YEAR_NUM = #{yearNum} and  ID = #{id}
+	</update>
+
+	<select id="selectUnLearnRec" parameterType="java.lang.Integer" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_push_learn_rec
+		WHERE  YEAR_NUM = #{yearNum} and STUDY_STATE = '未学习' GROUP BY EMP_ID,COUNT_MONTH
+	</select>
+
+  
+</mapper>

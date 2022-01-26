@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.alarm.mapper.IclogsMapper" >
+
+    <!--  查询秦皇岛的司机的拔插卡记录数据  -->
+    <select id="listIcLogs" resultType="com.edgedo.alarm.entity.Iclogs" parameterType="map">
+      select tid,tcarcode,tname,tids,tstauts,ttimes,tcoid
+      from iclogs
+       where tcarcode like '冀C%'
+        and (
+            ttimes like concat('%',#{searchTime1},'%')
+            or ttimes like concat('%',#{searchTime2},'%')
+            or ttimes like concat('%',#{searchTime3},'%')
+        )
+    </select>
+
+
+</mapper>

@@ -1,0 +1,793 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="css/default.css">
+<link rel="stylesheet" href="css/common.css">    
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/tool.js"></script>
+   
+</head>
+
+<body >
+
+<div class="top ">
+    <div class="top_r">
+        <div class="time">
+                
+                   
+                
+				<span style="float: right" id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+ <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">人员画像</div>
+             <a href="../bigdata/congYeRenYuanJianSuo.html" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+    
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+
+
+<div class="main">
+      
+    <div class="blank20"></div>
+    
+    <Div class="fx_l left animated fadeInLeft">
+        <Div style="padding:50px 30px 10px;">
+           <div>
+             <div class="left" style="width: 40%"><img  style="width: 120%;
+    border-radius: 5px;" id="driverPhotoUrl" src=""></div>
+             <div class="right" style="width: 60%; text-align: center">
+                  <div class="name" id="driverName"></div>
+                  <div class="fenzhi">B+</div>
+             </div>
+          </div>
+            <div class="blank10"></div>
+            <table width="100%" class="tablexx">
+              <tbody>
+                <tr>
+                  <th style="width:30%">年龄</th>
+                  <td style="width:70%" id="driverAge"></td>
+                </tr>
+                <tr>
+                  <th>身份证</th>
+                  <td id="driverIdCard"></td>
+                </tr>
+                <tr>
+                    <th>企业</th>
+                    <td id="teamName"></td>
+                </tr>
+                <tr>
+                  <th>入职日期</th>
+                  <td id="driverEntryDay"></td>
+                </tr>
+                <tr>
+                  <th>性别</th>
+                  <td id="driverSex"></td>
+                </tr>
+               <tr>
+                  <th>籍贯</th>
+                  <td id="provinceName"></td>
+                </tr>
+                <tr>
+                  <th>联系电话</th>
+                  <td id="driverPhone"></td>
+                </tr>
+                <tr>
+                  <th>资格证书</th>
+                  <td id="driverCode"></td>
+                </tr>
+                <tr>
+                    <th>车牌号</th>
+                    <td id="carPlateNum"></td>
+                </tr>
+                <tr>
+                  <th>驾驶证类型</th>
+                  <td>A</td>
+                </tr>
+               <!-- <tr>
+                  <th>驾驶证号</th>
+                  <td></td>
+                </tr>-->
+                <tr>
+                  <th>准驾车型</th>
+                  <td>大货车，小型汽车等</td>
+                </tr>
+               <tr>
+                  <th>车辆更换情况</th>
+                  <td>&nbsp;</td>
+                </tr>
+                
+              </tbody>
+            </table>
+            <div class="blank10"></div>
+                                   <table width="100%" class="grid03" id="carChangeInfo">
+                                          <!--<tr>
+                                            <th style="width:25%">车牌号</th>
+                                            <th style="width:30%">时间</th>
+                                            <th style="width:45%">所属企业</th>
+                                          </tr>
+                                       <tr>
+                                           <td id="carPlateNumNew"></td>
+                                           <td id="driverEntryDayNew"></td>
+                                           <td id="teamNameNew"></td>
+                                       </tr>-->
+                                         <!-- <tr>
+                                            <td>冀C UY293</td>
+                                            <td>2019-03-12</td>
+                                            <td>某某某某某某某运输队</td>
+                                          </tr>
+                                          <tr>
+                                            <td>冀C UY293</td>
+                                            <td>2019-03-12</td>
+                                            <td>某某某某某某某运输队</td>
+                                          </tr>
+                                          <tr>
+                                            <td>冀C UY293</td>
+                                            <td>2019-03-12</td>
+                                            <td>某某某某某某某运输队</td>
+                                          </tr>-->
+                                         
+                                       
+                                       </table>
+            
+
+        </Div>
+    </Div>
+    
+    
+    <Div class="fx_r right">
+        
+        
+        
+        <div class="blank20"></div>
+    
+        <div id="showcase" class="noselect  ">
+        <div class="card animated zoomIn">
+             <div class="blank80"></div>
+            <a href="javaScript:void(0);" onclick="gotoDriverMileage()"><h4 class="icon1">行驶里程</h4></a>
+             <div class="zm" onclick="gotoDriverMileage()">A</div>
+             <div class="sjfx">
+                    <ul>
+                        <li>全年行驶里程 <em id="yearRunMileage">0</em> <span>万公里</span></li>
+                        <li>危险时段行驶 <em id="dangerRunMileage">0</em> <span>万公里</span></li>
+                        <li>白 天 <em id="dayRunMileage">0</em> <span>万公里</span></li>
+                        <li>夜 晚 <em id="nightRunMileage">0</em> <span>万公里</span></li>
+                    </ul>
+             </div>
+            <div class="zj"><em id="runMileageDesc"></em> </div>
+            <!-- <div class="zj">超过本市 <em>80%</em> 驾驶员</div>-->
+        </div>
+            
+            <div class="card animated zoomIn">
+              <div class="blank80"></div>
+             <h4 class="icon8">保障情况</h4>
+            <div class="zm">A</div>
+            <div class="sjfx">
+                <ul>
+                  <li>社保情况<em class="xzt" id="sinState"></em></li>
+              <!--      <li>健康档案</li>
+                    <li><em class="xzt">1、2019年健康档案记录</em></li>
+                    <li><em class="xzt">2、2020年健康档案记录</em></li>-->
+                </ul>
+             </div>
+                <div class="zj"><em id="sinDesc"></em></div>
+            <!--<div class="zj">超过本市 <em>65%</em> 驾驶员</div>-->
+        </div>
+          <!--   <div class="card animated zoomIn">
+              <div class="blank80"></div>
+             <h4 class="icon7">继续教育</h4>
+            <div class="zm">A</div>
+            <div class="sjfx">
+                    <ul>
+                      <li>2018年继续教育记录</li>
+                        <li>2020年继续教育记录</li>
+                    </ul>
+             </div>
+            &lt;!&ndash;<div class="zj">超过本市 <em>65%</em> 驾驶员</div>&ndash;&gt;
+                 <div class="zj"><em>继续教育合格</em></div>
+        </div>-->
+            
+             <div class="card animated zoomIn">
+              <div class="blank80"></div>
+                 <a href="javaScript:void(0);" onclick="gotoDriverSafetyTrain()"><h4 class="icon6">安全作业</h4></a>
+            <div class="zm" onclick="gotoDriverSafetyTrain()">B</div>
+             <div class="sjfx">
+                    <ul>
+                      <li>安全培训情况 <em class="xzt" id="safetrainNum">0/24</em> <span>次</span></li>
+                      <li>安全监管情况 <em class="xzt">已纳入三方监管</em></li>
+                      <li>实名认证情况 <em class="xzt">已实名认证</em> </li>
+                    <!--  <li>驾驶证 </li>-->
+                      
+                    </ul>
+             </div>
+             <!--<div class="zj">超过本市 <em>65%</em> 驾驶员</div>-->
+                <!-- <div class="zj"><em style="color: #ff2c2c">安全培训不合格</em></div>-->
+        </div>
+       
+            
+       
+       
+        <div class="card animated zoomIn">
+            <div class="blank80"></div>
+            <a href="javaScript:void(0);" onclick="gotoDriverAlarm()"><h4 class="icon5">告警情况</h4></a>
+            <div class="zm" onclick="gotoDriverAlarm()">A</div>
+             <div class="sjfx">
+                    <ul>
+                      <li>超速 <em id="overspeedNum">0</em> <span>次</span>&nbsp;&nbsp;&nbsp;严重超速 <em id="seriousOverspeedNum">0</em> <span>次</span></li>
+                     
+                      <li>疲劳 <em id="tiredNum">0</em> <span>次</span>&nbsp;&nbsp;&nbsp;严重疲劳 <em id="seriousTiredNum"></em> <span>次</span></li>
+                      
+                      <li>主动安全报警 <em id="safetyWarningNum"></em> <span>次</span></li>
+                    </ul>
+             </div>
+             <!--<div class="zj">超过本市 <em>86%</em> 驾驶员</div>-->
+            <div class="zj"><em id="alarmDesc"></em></div>
+        </div>
+            
+            
+        <div class="card animated zoomIn" >
+              <div class="blank80"></div>
+              <a href="javaScript:void(0);" onclick="gotoDriverStopCity()"><h4 class="icon4">常去城市</h4></a>
+              <div class="zm" onclick="gotoDriverStopCity()">A</div>
+              <div class="sjfx">
+                    <ul>
+                      <li>高频次停靠点 </li>
+                      <li><em class="xzt" id="stopCity1">1、无</em></li>
+                      <li><em class="xzt" id="stopCity2">2、无</em></li>
+                      <li><em class="xzt" id="stopCity3">3、无</em></li>
+                    </ul>
+              </div>
+              <!--<div class="zj">超过本市 <em>86%</em> 驾驶员</div>-->
+            <div class="zj"><em></em></div>
+        </div>
+       
+         <div class="card animated zoomIn">
+              <div class="blank80"></div>
+             <a href="javaScript:void(0);" onclick="gotoDriverSpeed();"><h4 class="icon3">行驶速度</h4></a>
+             <div class="zm" onclick="gotoDriverSpeed();">A</div>
+             <div class="sjfx">
+                    <ul>
+                    <!--  <li>全年最高时速 <em id="highestSpeed">0</em> <span>千米/小时</span></li>-->
+                        <li>全年平均时速 <em id="averageSpeed">0</em> <span>千米/小时</span></li>
+                        <li>危险时段行驶<em id="dangerRunAverageSpeed">0</em> <span>千米/小时</span></li>
+                        <li>白 天 <em id="dayRunAverageSpeed">0</em> <span>千米/小时</span></li>
+                        <li>夜 晚 <em id="nightRunAverageSpeed">0</em> <span>千米/小时</span></li>
+                    </ul>
+             </div>
+         <!--    <div class="zj">超过本市 <em>86%</em> 驾驶员</div>-->
+             <div class="zj"><em id="runSpeedDesc"></em></div>
+        </div>
+           <div class="card animated zoomIn" >
+              <div class="blank80"></div>
+               <a href="javaScript:void(0);" onclick="gotoDriverDuration()"><h4 class="icon2">行驶时长</h4></a>
+              <div class="zm" onclick="gotoDriverDuration()">B</div>
+             <div class="sjfx">
+                    <ul>
+                      <li>全年驾驶时长 <em id="yearRunTimeLength">0</em> <span>小时</span></li>
+                      <li>危险时段驾驶 <em id="dangerRunTimeLength">0</em> <span>小时</span></li>
+                      <li>白 天 <em id="dayRunTimeLength">0</em> <span>小时</span></li>
+                      <li>夜 晚 <em id="nightRunTimeLength">0</em> <span>小时</span></li>
+                    </ul>
+             </div>
+             <!--<div class="zj">超过本市 <em>65%</em> 车辆</div>-->
+               <div class="zj"><em id="runTimeLengthDesc"></em></div>
+        </div>  
+            
+      </div>
+     
+         
+      <Div class="blank40"></Div><Div class="blank40"></Div><Div class="blank40"></Div>
+        
+
+       <div class="card0 animated fadeInUp" >
+            <div class="fg"></div>
+             <h4 class="icon9">经营分析</h4>
+            <div class="zm" style="top:50px!important;">B+</div>
+            
+            <div class="sjfx" style="width: 1000px; padding:10px 0px 0px 20px; margin-top: 10px !important;">
+                    <ul>
+                      <li>本地从业情况</li>
+                      <li><em class="xzt" id="empDesc"></em></li>
+                      <li>驾驶行为分析</li>
+                      <li><em class="xzt" id="drivingDesc"></em></li>
+                        <li>安全生产管理制度落实情况</li>
+                        <li><em class="xzt" id="safetyDesc"></em></li>
+                    </ul>
+             </div>
+           <!-- <div class="zj" style="bottom:20px!important;">超过本市 <em>65%</em> 驾驶员</div>-->
+        </div>
+
+    
+    </Div>
+    
+  <!--  <div class="wrap clearfix">
+
+      <div id="showcase" class="noselect">
+        <div class="card">
+             <div class="blank80"></div>
+             <h4 class="icon1">行驶里程</h4>
+        </div>
+        <div class="card">
+              <div class="blank80"></div>
+              <h4 class="icon1">行驶时长</h4>
+        </div>
+        <div class="card">
+              <div class="blank80"></div>
+             <h4 class="icon1">行驶速度</h4>
+        </div>
+        <div class="card" >
+              <div class="blank80"></div>
+             <h4 class="icon1">常去城市</h4>
+        </div>
+        <div class="card">
+               <div class="blank80"></div>
+             <h4 class="icon1">危险驾驶</h4>
+        </div>
+        <div class="card">
+              <div class="blank80"></div>
+             <h4 class="icon1">安全生产</h4>
+        </div>
+        <div class="card">
+              <div class="blank80"></div>
+             <h4 class="icon1">诚信考核</h4>
+        </div>
+        <div class="card">
+              <div class="blank80"></div>
+             <h4 class="icon1">健康档案</h4>
+        </div>
+      </div>
+
+    </div>  --> 
+</div>
+
+
+
+
+
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+
+<script type="text/javascript">
+							// 基于准备好的dom，初始化echarts实例
+							var myChart = echarts.init(document.getElementById('aa'));
+							// 指定图表的配置项和数据
+						   option = { 
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: { // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '5%',
+        containLabel: true
+    },
+                               
+    xAxis: [{
+        type: 'category',
+        data: ['全年行驶里程', '国道行驶里程', '高速行驶里程'],
+        axisLine: {
+            lineStyle: {
+                color: '#8FA3B7', //y轴颜色
+            }
+        },
+        axisLabel: {
+            show: true,
+            textStyle: {
+                color: '#fff',
+            }
+        },
+        axisTick: {
+            show: false
+        }
+
+    }],
+    yAxis: {
+          type: 'value',
+          max:'50',
+          axisLine: {
+            show: false,
+            lineStyle: {
+              color: 'white'
+            }
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: 'rgba(255,255,255,0.3)'
+            }
+          },
+          axisLabel: {}
+        },
+    
+    series: [
+             {
+          name: '',
+          type: 'bar',
+          barWidth: '15%',
+         itemStyle:{
+                    normal:{
+                        //柱体的颜色
+                        //右，下，左，上（1，0，0，0）表示从正右开始向左渐变
+                        color: function(params){
+                            console.log(params);
+                            var colorList = [
+	          						['#fccb05','#f5804d'],
+	          						['#8bd46e','#09bcb7'],
+	          						['#248ff7','#6851f1']
+	          					
+			          			];
+                            var colorItem = colorList[params.dataIndex];
+                            return new echarts.graphic.LinearGradient(0,0,0,1,[
+                                        {
+                                            offset:0,
+                                            color: colorItem[0]
+                                        },
+                                        {
+                                            offset:1,
+                                            color: colorItem[1]
+                                        }
+                                        ],false);
+                            },barBorderRadius: 12,
+                        }
+                        
+                    },
+                data: [14,16,19]
+                }
+
+         
+            ]
+};
+    
+					
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);
+            </script> 
+
+    
+<script src="js/jquery.cloud9carousel.js"></script>
+  <script>
+    $(function() {
+
+    var queryArgs = getQueryParam();
+    var driverId = queryArgs.id;
+    //根据ID查询从业人员信息
+     $.ajax({
+            type:'POST',
+            url: basePathUrl + '/admin/bigdataDriverCardInfo/loadById.jsn',
+            data:{'id':driverId},
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    $("#driverName")[0].innerText = data.data.driverName;
+                    if(typeof (data.data.driverAge)=='undefined'){
+                        $("#driverAge")[0].innerText = "";
+                    }else {
+                        $("#driverAge")[0].innerText = data.data.driverAge;
+                    }
+                    if(typeof (data.data.driverIdCard)=='undefined'){
+                        $("#driverIdCard")[0].innerText = "";
+                    }else {
+                        $("#driverIdCard")[0].innerText = data.data.driverIdCard;
+                    }
+                    if(typeof (data.data.driverEntryDay)=='undefined'){
+                        $("#driverEntryDay")[0].innerText = "";
+                    }else {
+                        $("#driverEntryDay")[0].innerText = data.data.driverEntryDay.substring(0,10);
+                    }
+                    if(typeof (data.data.carPlateNum)=='undefined'){
+                        $("#carPlateNum")[0].innerText = "";
+                    }else {
+                        $("#carPlateNum")[0].innerText = data.data.carPlateNum;
+                    }
+                    $("#teamName")[0].innerText = data.data.teamName;
+                    if(typeof (data.data.driverSex)=='undefined'){
+                        $("#driverSex")[0].innerText = "";
+                    }else {
+                        $("#driverSex")[0].innerText = data.data.driverSex;
+                    }
+                    $("#provinceName")[0].innerText = data.data.provinceName+ data.data.cityName+ data.data.xianquName;
+                    if(typeof (data.data.driverPhone)=='undefined'){
+                        $("#driverPhone")[0].innerText = "";
+                    }else {
+                        $("#driverPhone")[0].innerText = data.data.driverPhone;
+                    }
+                    $("#driverCode")[0].innerText = data.data.driverCode;
+                    $("#driverPhotoUrl")[0].src = "https://trainimg.qhd12328.com/130300"+data.data.driverPhotoUrl;
+                  /*  $("#driverEntryDayNew")[0].innerText = data.data.driverEntryDay.substring(0,10)+"-至今";
+                    $("#teamNameNew")[0].innerText = data.data.teamName;
+                    $("#carPlateNumNew")[0].innerText = data.data.carPlateNum;*/
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        alert("未查到相关信息！");
+                    }
+                }
+            }
+        })
+    //根据ID查询人员画像信息
+        //查询今年的
+        var countDate = dateFormat("yyyy-MM-dd",new Date());
+        var year = countDate.substring(0,4);
+    $.ajax({
+        type:'POST',
+        url: basePathUrl + '/admin/bigdataDriverDrawInfo/loadByDriverIdAndYear.jsn',
+        data:{'driverId':driverId,'yearNum':year},
+        dataType:'json',
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+        },
+        success:function(data){
+            if(data.success){
+                if(typeof(data.data) == 'undefined' || data.data==null){
+
+                }else {
+                    //行驶里程
+                    $("#yearRunMileage")[0].innerText = (data.data.yearRunMileage/10000).toFixed(2);
+                    $("#dayRunMileage")[0].innerText = (data.data.dayRunMileage/10000).toFixed(2);
+                    $("#nightRunMileage")[0].innerText = (data.data.nightRunMileage/10000).toFixed(2);
+                    $("#dangerRunMileage")[0].innerText = (data.data.dangerRunMileage/10000).toFixed(2);
+                    $("#runMileageDesc")[0].innerText = data.data.runMileageDesc;
+                    //保障情况
+                    if(typeof (data.data.sinState)=='undefined'){
+                        $("#sinState")[0].innerText = "无";
+                    }else if(data.data.sinState =='1') {
+                        $("#sinState")[0].innerText = "已上";
+                    }else {
+                        $("#sinState")[0].innerText = "未上";
+                    }
+                    $("#sinDesc")[0].innerText = data.data.sinDesc;
+                    //安全作业
+                    $("#safetrainNum")[0].innerText = data.data.safetrainNum+"/24";
+                    //告警情况
+                    $("#overspeedNum")[0].innerText = data.data.overspeedNum;
+                    $("#seriousOverspeedNum")[0].innerText = data.data.seriousOverspeedNum;
+                    $("#tiredNum")[0].innerText = data.data.tiredNum;
+                    $("#seriousTiredNum")[0].innerText = data.data.seriousTiredNum;
+                    $("#safetyWarningNum")[0].innerText = data.data.safetyWarningNum;
+                    $("#alarmDesc")[0].innerText = data.data.alarmDesc;
+                    //行驶速度
+                    //$("#highestSpeed")[0].innerText = data.data.highestSpeed;
+                    $("#averageSpeed")[0].innerText = data.data.averageSpeed;
+                    $("#dayRunAverageSpeed")[0].innerText = data.data.dayRunAverageSpeed;
+                    $("#nightRunAverageSpeed")[0].innerText = data.data.nightRunAverageSpeed;
+                    $("#dangerRunAverageSpeed")[0].innerText = data.data.dangerRunAverageSpeed;
+                    $("#runSpeedDesc")[0].innerText = data.data.runSpeedDesc;
+                    //行驶时长
+                    $("#yearRunTimeLength")[0].innerText = (data.data.yearRunTimeLength/60).toFixed(2);
+                    $("#dangerRunTimeLength")[0].innerText =  (data.data.dangerRunTimeLength/60).toFixed(2);
+                    $("#dayRunTimeLength")[0].innerText =  (data.data.dayRunTimeLength/60).toFixed(2);
+                    $("#nightRunTimeLength")[0].innerText =  (data.data.nightRunTimeLength/60).toFixed(2);
+                    $("#runTimeLengthDesc")[0].innerText = data.data.runTimeLengthDesc;
+                    //经营分析
+                    $("#empDesc")[0].innerText = data.data.empDesc;
+                    $("#drivingDesc")[0].innerText = data.data.drivingDesc;
+                    $("#safetyDesc")[0].innerText = data.data.safetyDesc;
+                    //停靠城市
+                    var stopCity = data.data.stopCity;
+                    if(stopCity!=''){
+                        var stopCityArr = stopCity.split(",");
+                        $("#stopCity1")[0].innerText ="1、"+stopCityArr[0];
+                        if(stopCityArr.length>1){
+                            $("#stopCity2")[0].innerText ="2、"+stopCityArr[1];
+                        }
+                        if(stopCityArr.length>2){
+                            $("#stopCity3")[0].innerText ="3、"+stopCityArr[2];
+                        }
+                    }
+                }
+            }else{
+                if(data.code==1001){
+                    location.href = '../../login.html';
+                }else {
+                    alert("未查到相关信息！");
+                }
+            }
+        }
+    });
+
+    //车辆更换情况
+        $.ajax({
+            type:'POST',
+            url: basePathUrl + '/admin/bigdataDriverChangeCarRec/selectByDriverId.jsn',
+            data:{'driverId':driverId},
+            dataType:'json',
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success:function(data){
+                if(data.success){
+                    var html = "<tr>\n" +
+                        "                                            <th style=\"width:25%\">车牌号</th>\n" +
+                        "                                            <th style=\"width:30%\">开始时间</th>\n" +
+                        "                                            <th style=\"width:45%\">所属企业</th>\n" +
+                        "                                          </tr>\n" ;
+                    for (var i=0;i<data.data.length;i++){
+                        html += " <tr>\n" +
+                            "                                           <td id=\"carPlateNumNew\"> "+data.data[i].carPlateNum+"</td>\n" +
+                            "                                           <td id=\"driverEntryDayNew\">"+data.data[i].startTime.substring(0,10)+"</td>\n" +
+                            "                                           <td id=\"teamNameNew\">"+data.data[i].teamName+"</td>\n" +
+                            "                                       </tr>" ;
+                        $("#carChangeInfo").html(html);
+                    }
+                }else{
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        alert("未查到相关信息！");
+                    }
+                }
+            }
+        });
+
+
+        init();
+    })
+    function init() {
+        var showcase = $("#showcase")
+        showcase.Cloud9Carousel( {
+            yOrigin: 42,
+            yRadius: 40,
+            itemClass: "card",
+            buttonLeft: $(".nav.left"),
+            buttonRight: $(".nav.right"),
+            autoPlay: 1,
+            bringToFront: true,
+            onLoaded: function() {
+                showcase.css( 'visibility', 'visible' )
+                showcase.css( 'display', 'none' )
+                showcase.fadeIn( 1500 )
+            }
+        } )
+        //
+        // Simulate physical button click effect
+        //
+        $('.nav').click( function( e ) {
+            var b = $(e.target).addClass( 'down' )
+            setTimeout( function() { b.removeClass( 'down' ) }, 80 )
+        } )
+        $(document).keydown( function( e ) {
+            //
+            // More codes: http://www.javascripter.net/faq/keycodes.htm
+            //
+            switch( e.keyCode ) {
+                /* left arrow */
+                case 37:
+                    $('.nav.left').click()
+                    break
+
+                /* right arrow */
+                case 39:
+                    $('.nav.right').click()
+            }
+        } )
+    }
+
+    //跳转到行驶里程详情界面
+    function gotoDriverMileage(){
+        var queryArgs = getQueryParam();
+        var driverId = queryArgs.id;
+        //查询今年的
+        var countDate = dateFormat("yyyy-MM-dd",new Date());
+        var year = countDate.substring(0,4);
+        window.location.href = "DrawingDriverMileage.html?driverId="+driverId+"&yearNum="+year;
+    }
+
+    //跳转到行驶时长详情界面
+    function gotoDriverDuration(){
+        var queryArgs = getQueryParam();
+        var driverId = queryArgs.id;
+        //查询今年的
+        var countDate = dateFormat("yyyy-MM-dd",new Date());
+        var year = countDate.substring(0,4);
+        window.location.href = "DrawingDriverDuration.html?driverId="+driverId+"&yearNum="+year;
+    }
+
+    //跳转到行驶时长详情界面
+    function gotoDriverSpeed(){
+        var queryArgs = getQueryParam();
+        var driverId = queryArgs.id;
+        //查询今年的
+        var countDate = dateFormat("yyyy-MM-dd",new Date());
+        var year = countDate.substring(0,4);
+        window.location.href = "DrawingDriverSpeed.html?driverId="+driverId+"&yearNum="+year;
+    }
+
+    //跳转到常去城市详情界面
+    function gotoDriverStopCity(){
+        var queryArgs = getQueryParam();
+        var driverId = queryArgs.id;
+        //查询今年的
+        var countDate = dateFormat("yyyy-MM-dd",new Date());
+        var year = countDate.substring(0,4);
+        window.location.href = "DrawingDriverStopCity.html?driverId="+driverId+"&yearNum="+year;
+    }
+
+    //跳转到告警情况详情界面
+    function gotoDriverAlarm(){
+        var queryArgs = getQueryParam();
+        var driverId = queryArgs.id;
+        //查询今年的
+        var countDate = dateFormat("yyyy-MM-dd",new Date());
+        var year = countDate.substring(0,4);
+        window.location.href = "DrawingDriverAlarm.html?driverId="+driverId+"&yearNum="+year;
+    }
+
+    //跳转到安全作业详情界面
+    function gotoDriverSafetyTrain(){
+        var queryArgs = getQueryParam();
+        var driverId = queryArgs.id;
+        //查询今年的
+        var countDate = dateFormat("yyyy-MM-dd",new Date());
+        var year = countDate.substring(0,4);
+        window.location.href = "DrawingDriverSafetyTrain.html?driverId="+driverId+"&yearNum="+year;
+    }
+
+    function goShouYe() {
+        window.location.href = "../bigdata/shouye.html";
+    }
+
+  </script>
+</body>
+</html>

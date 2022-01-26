@@ -1,0 +1,416 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script src="js/layer/layer.js"></script>
+
+    <script src="js/tool.js"></script>
+</head>
+
+<body>
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time">
+                
+                   
+               <!-- <input type="text" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " /> -->
+
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+    <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">数据接入月统计</div>
+             <a  href="javaScript:void(0)" onclick="goBack();" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+<div class="main">
+      <div class="ind">
+                 
+         
+              <Div class="blank40"></Div>
+          
+             <div class="mk" style="position: relative ;  height:900px">
+                <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                 <div class="blank20"></div>
+                <div class="tit">
+                     <span class="tit_l"></span>
+                     <span class="tit_m">北斗数据接入月统计</span>
+                     <span class="tit_r"></span>
+                </div>
+                 
+              
+                 
+                 <div style="position: absolute; right: 25px; top: 10px; width: 500px">
+                     <!-- <a style="float: right" href="javaScript:void(0);" class="chaxun" onclick="searchInfoByName()">搜索</a>-->
+                     <input type="text" class="input_rl " id="searchDate" style="width:150px; height: 48px; margin-right: 10px;float: right ">
+                 <!--    <div class="mingcheng0" style="display: inline-block;padding-right: 5px;    padding-top: 9px;">月份:</div>-->
+                 </div>
+                 
+                <Div class="blank20"></Div>
+                <div class="con0 clearfix">
+                              <table width="100%" class="grid06" id="beidouDataInfo">
+                                  <!--<tr>
+                                    <th style="width:5%">序号</th>
+                                    <th style="width:8%">运营商名称</th>
+                                    <th style="width:8%">在网车辆总数</th>
+                                    <th style="width:8%">上传时间</th>
+                                    <th style="width:8%">上传数</th>
+                                    <th style="width:8%">上传率</th>
+                                    <th style="width:8%">丢包数</th>
+                                    <th style="width:8%">丢包率</th>
+                                    <th style="width:8%">接收数</th>
+                                    <th style="width:8%">接收率</th>
+                                    <th style="width:8%">合格数</th>
+                                    <th style="width:8%">合格率</th>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>中交兴路</td>
+                                    <td class="bg_ys5">50000</td>
+                                    <td>2018-08-08</td>
+                                    <td class="bg_ys5">40000</td>
+                                    <td>80%</td>
+                                    <td class="bg_ys5">4000</td>
+                                    <td>10%</td>
+                                    <td class="bg_ys5">36000</td>
+                                    <td>72%</td>
+                                    <td class="bg_ys5">32000</td>
+                                    <td>80%</td>
+                                  </tr>
+                                  <tr>
+                                    <td>2</td>
+                                    <td>中交兴路</td>
+                                    <td class="bg_ys5">50000</td>
+                                    <td>2018-08-08</td>
+                                    <td class="bg_ys5">40000</td>
+                                    <td>80%</td>
+                                    <td class="bg_ys5">4000</td>
+                                    <td>10%</td>
+                                    <td class="bg_ys5">36000</td>
+                                    <td>72%</td>
+                                    <td class="bg_ys5">32000</td>
+                                    <td>80%</td>
+                                  </tr>
+                                  <tr>
+                                    <td>3</td>
+                                    <td>中交兴路</td>
+                                    <td class="bg_ys5">50000</td>
+                                    <td>2018-08-08</td>
+                                    <td class="bg_ys5">40000</td>
+                                    <td>80%</td>
+                                    <td class="bg_ys5">4000</td>
+                                    <td>10%</td>
+                                    <td class="bg_ys5">36000</td>
+                                    <td>72%</td>
+                                    <td class="bg_ys5">32000</td>
+                                    <td>80%</td>
+                                  </tr>
+                                  <tr>
+                                    <td>4</td>
+                                    <td>中交兴路</td>
+                                    <td class="bg_ys5">50000</td>
+                                    <td>2018-08-08</td>
+                                    <td class="bg_ys5">40000</td>
+                                    <td>80%</td>
+                                    <td class="bg_ys5">4000</td>
+                                    <td>10%</td>
+                                    <td class="bg_ys5">36000</td>
+                                    <td>72%</td>
+                                    <td class="bg_ys5">32000</td>
+                                    <td>80%</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>中交兴路</td>
+                                    <td class="bg_ys5">50000</td>
+                                    <td>2018-08-08</td>
+                                    <td class="bg_ys5">40000</td>
+                                    <td>80%</td>
+                                    <td class="bg_ys5">4000</td>
+                                    <td>10%</td>
+                                    <td class="bg_ys5">36000</td>
+                                    <td>72%</td>
+                                    <td class="bg_ys5">32000</td>
+                                    <td>80%</td>
+                                  </tr>-->
+                               </table>
+                </div>
+                          
+                 
+             </div>
+             
+      
+      </div> 
+</div>
+
+
+
+
+
+
+
+
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+</script>
+<script type="text/javascript">
+
+    var searchDate = "";
+    //初始化数据
+    $(document).ready(function(){
+        //获取参数
+        var queryArgs = getQueryParam();
+        //初始化日期
+        initLayDate(queryArgs.searchTime);
+        searchDate = queryArgs.searchTime;
+        beidouDetail(queryArgs);
+    });
+
+    //初始化日期
+    function initLayDate(searchTime) {
+        laydate.render({
+            elem: '#searchDate',
+            theme: '#884898',
+            value: searchTime.substring(0,7),
+            btns: ['confirm'],
+            type:'month',
+            done: function(value, date, endDate){
+                if(value!=""){
+                    var queryArgs = getQueryParam();
+                    queryArgs.searchTime = value;
+                    searchDate = value;
+                    beidouDetail(queryArgs);
+                }
+            }
+        });
+    }
+    //北斗数据接入详情
+    function beidouDetail(queryArgs) {
+        //北斗数据接入详情
+        var yearNum = queryArgs.searchTime.substring(0,4);
+        var month = queryArgs.searchTime.substring(5,7);
+        var date = queryArgs.searchTime.substring(8,10);
+        var countMonth = yearNum + month;
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataBeidouCompMonthCheck/listForBeidouCompMonthData.jsn",
+            data: {'queryObj.countMonth':countMonth},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    var html = " <tr>\n" +
+                        "                                    <th style=\"width:5%\">序号</th>\n" +
+                        "                                    <th style=\"width:8%\">运营商名称</th>\n" +
+                      /*  "                                    <th style=\"width:8%\">得分</th>\n" +*/
+                        "                                    <th style=\"width:8%\">车辆总数</th>\n" +
+                        "                                    <th style=\"width:8%\">当月上线数</th>\n" +
+                        "                                    <th style=\"width:8%\">上线率</th>\n" +
+                        "                                    <th style=\"width:8%\">联通率</th>\n" +
+                /*        "                                    <th style=\"width:8%\">轨迹完整率</th>\n" +
+                        "                                    <th style=\"width:8%\">数据合格率</th>\n" +
+                        "                                    <th style=\"width:8%\">司机卡上传率</th>\n" +
+                        "                                    <th style=\"width:8%\">司机卡准确率</th>\n" +
+                        "                                    <th style=\"width:8%\">分段限速报警准确率</th>\n" +*/
+                        "                                  </tr>\n" ;
+
+                    if(data.list!=null){
+                        for(var i =0 ;i<data.list.length;i++){
+                            html +="                                  <tr>\n" +
+                                "                                    <td>"+(i+1)+"</td>\n" +
+                                "                                    <td><a href='javaScript:void()' onclick='goToCompCarList("+data.list[i].compId+")'>"+data.list[i].compName+"</a></td>\n" +
+                           /*     "                                    <td class=\"bg_ys5\">"+data.list[i].score+"</td>\n" +*/
+                                "                                    <td>"+data.list[i].carNum+"</td>\n" +
+                                "                                    <td class=\"bg_ys5\">"+data.list[i].onlineCarNum+"</td>\n" +
+                                "                                    <td>"+parseInt(data.list[i].onlineRate*100)+"%</td>\n" +
+                                "                                    <td class=\"bg_ys5\">"+parseInt(data.list[i].linkRate*100)+"%</td>\n" +
+               /*                 "                                    <td>"+parseInt(data.list[i].traceCompleteRate*100)+"%</td>\n" +
+                                "                                    <td class=\"bg_ys5\">"+parseInt(data.list[i].dataQualifiedRate*100)+"%</td>\n" +
+                                "                                    <td>"+parseInt(data.list[i].driverCardUploadRate*100)  +"%</td>\n" +
+                                "                                    <td class=\"bg_ys5\">"+parseInt(data.list[i].driverCardQualifiedRate*100)  +"%</td>\n" +
+                                "                                    <td>"+parseInt(data.list[i].speedAlarmQualifiedRate*100)+"%</td>\n" +*/
+                                "                                  </tr>";
+                        }
+                        $("#beidouDataInfo").html(html);
+                    }
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function searchInfoByName() {
+        //获取参数
+        var yearNum = searchDate.substring(0,4);
+        var month = searchDate.substring(5,7);
+        var date = searchDate.substring(8,10);
+        var countMonth = yearNum + month;
+        var operatorName = $("#operatorName").val();
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataBeidouCompMonthCheck/listForBeidouCompMonthData.jsn",
+            data: {'queryObj.countMonth':countMonth,'queryObj.compName':operatorName},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+                    var html = " <tr>\n" +
+                        "                                    <th style=\"width:5%\">序号</th>\n" +
+                        "                                    <th style=\"width:8%\">运营商名称</th>\n" +
+                        "                                    <th style=\"width:8%\">得分</th>\n" +
+                        "                                    <th style=\"width:8%\">车辆总数</th>\n" +
+                        "                                    <th style=\"width:8%\">当月上线数</th>\n" +
+                        "                                    <th style=\"width:8%\">上线率</th>\n" +
+                        "                                    <th style=\"width:8%\">联通率</th>\n" +
+                        "                                    <th style=\"width:8%\">轨迹完整率</th>\n" +
+                        "                                    <th style=\"width:8%\">数据合格率</th>\n" +
+                        "                                    <th style=\"width:8%\">司机卡上传率</th>\n" +
+                        "                                    <th style=\"width:8%\">司机卡准确率</th>\n" +
+                        "                                    <th style=\"width:8%\">分段限速报警准确率</th>\n" +
+                        "                                  </tr>\n" ;
+
+                    if(data.list!=null){
+                        for(var i =0 ;i<data.list.length;i++){
+                            html +="                                  <tr>\n" +
+                                "                                    <td>"+(i+1)+"</td>\n" +
+                                "                                    <td>"+data.list[i].compName+"</td>\n" +
+                                "                                    <td class=\"bg_ys5\">"+data.list[i].score+"</td>\n" +
+                                "                                    <td>"+data.list[i].carNum+"</td>\n" +
+                                "                                    <td class=\"bg_ys5\">"+data.list[i].onlineCarNum+"</td>\n" +
+                                "                                    <td>"+parseInt(data.list[i].onlineRate*100)+"%</td>\n" +
+                                "                                    <td class=\"bg_ys5\">"+parseInt(data.list[i].linkRate*100)+"%</td>\n" +
+                                "                                    <td>"+parseInt(data.list[i].traceCompleteRate*100)+"%</td>\n" +
+                                "                                    <td class=\"bg_ys5\">"+parseInt(data.list[i].dataQualifiedRate*100)+"%</td>\n" +
+                                "                                    <td>"+parseInt(data.list[i].driverCardUploadRate*100)  +"%</td>\n" +
+                                "                                    <td class=\"bg_ys5\">"+parseInt(data.list[i].driverCardQualifiedRate*100)  +"%</td>\n" +
+                                "                                    <td>"+parseInt(data.list[i].speedAlarmQualifiedRate*100)+"%</td>\n" +
+                                "                                  </tr>";
+                        }
+                        $("#beidouDataInfo").html(html);
+                    }
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+    
+ /*   function goTobeiDouInfo() {
+        var queryArgs = getQueryParam();
+        //初始化日期
+        var searchTime = queryArgs.searchTime;
+        window.location.href="beidouInfo.html?searchTime="+searchTime;
+    }*/
+
+    function goShouYe() {
+        window.location.href = "shouye.html";
+    }
+
+    function goBack() {
+        var queryArgs = getQueryParam();
+        //初始化日期
+        var searchTime = queryArgs.searchTime;
+        window.location.href="beidouInfo.html?searchTime="+searchTime;
+    }
+
+    function goToCompCarList(compId) {
+        var queryArgs = getQueryParam();
+        //初始化日期
+        var searchTime = queryArgs.searchTime;
+        window.location.href="beidouComCarList.html?searchTime="+searchTime+"&compId="+compId+"&page=1&limit=13";
+    }
+</script>
+
+
+
+  
+</body>
+</html>

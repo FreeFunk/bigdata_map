@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataPushLearnRecMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataPushLearnRec" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="UPDATE_TIME" property="updateTime"/>
+			<result column="EMP_ID" property="empId"/>
+			<result column="ALARM_TYPE" property="alarmType"/>
+			<result column="LESSION_ID" property="lessionId"/>
+			<result column="LESSON_NAME" property="lessonName"/>
+			<result column="STUDY_STATE" property="studyState"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataPushLearnRecView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, UPDATE_TIME, EMP_ID, ALARM_TYPE, LESSION_ID, LESSON_NAME, STUDY_STATE, COUNT_DATE, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.updateTime != null'>
+					AND  UPDATE_TIME = #{queryObj.updateTime}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countDate)'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null '>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+				<if test="queryObj != null and  queryObj.empId != null   and  queryObj.empId != ''">
+					AND  EMP_ID = #{queryObj.empId}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataPushLearnRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_push_learn_rec 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataPushLearnRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_push_learn_rec 
+  		<include refid="where"/>
+  </select>
+<!--根据EmpID查询记录-->
+	<select id="selectByEmpId" parameterType="com.edgedo.bigdata.entity.BigdataPushLearnRec" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_push_learn_rec
+		where YEAR_NUM = #{yearNum} and EMP_ID = #{empId} order by COUNT_MONTH DESC
+	</select>
+
+	<resultMap id="TrainBaseResultMap" type="com.edgedo.bigdata.entity.YwTrainConsumRec" >
+		<id column="ID" property="id"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="LEARN_ID" property="learnId"/>
+		<result column="PLAN_ID" property="planId"/>
+		<result column="PLAN_NAME" property="planName"/>
+		<result column="PLAN_CREATE_TIME" property="planCreateTime"/>
+		<result column="STU_ID" property="stuId"/>
+		<result column="STU_PHONE_NUM" property="stuPhoneNum"/>
+		<result column="STU_ID_CARD" property="stuIdCard"/>
+		<result column="LICENCE_CODE" property="licenceCode"/>
+		<result column="STUDY_TIME" property="studyTime"/>
+		<result column="TRAIN_TIME_NUM" property="trainTimeNum"/>
+		<result column="LEARN_NUM" property="learnNum"/>
+		<result column="BEGIN_TIME" property="beginTime"/>
+		<result column="END_TIME" property="endTime"/>
+		<result column="COMP_ID" property="compId"/>
+		<result column="COMP_NAME" property="compName"/>
+		<result column="APP_ID" property="appId"/>
+		<result column="LEARN_TYPE" property="learnType"/>
+		<result column="STU_NAME" property="stuName"/>
+		<result column="REC_ID" property="recId"/>
+		<result column="PROVINCE_ID" property="provinceId"/>
+		<result column="PROVINCE_NAME" property="provinceName"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="XIANQU_ID" property="xianquId"/>
+		<result column="XIANQU_NAME" property="xianquName"/>
+		<result column="CONSUME_MONEY" property="consumeMoney"/>
+		<result column="CHARGE_BILL_ID" property="chargeBillId"/>
+		<result column="PLACE_TYPE" property="placeType"/>
+		<result column="PLACE_NAME" property="placeName"/>
+		<result column="PLACE_ID" property="placeId"/>
+		<result column="car_plate_num" property="carPlateNum"/>
+		<result column="car_frame_num" property="carFrameNum"/>
+		<result column="GLOBLE_PLAN_ID" property="globlePlanId"></result>
+		<result column="SHENHE_STATE" property="shenheState"></result>
+		<result column="FAIL_REASON" property="failReason"></result>
+		<result column="SH_USER_NAME" property="shUserName"></result>
+		<result column="SH_USER_ID" property="shUserId"></result>
+		<result column="SH_TIME" property="shTime"></result>
+		<result column="EMP_TYPE" property="empType"></result>
+
+
+	</resultMap>
+	<!--根据从业资格证号查询学习记录-->
+	<select id="selectSafetyRec" parameterType="java.lang.String" resultMap="TrainBaseResultMap">
+		select  ID, CREATE_TIME, LEARN_ID, PLAN_ID, PLAN_NAME, PLAN_CREATE_TIME, STU_ID, STU_PHONE_NUM,
+	 STU_ID_CARD, LICENCE_CODE, STUDY_TIME, TRAIN_TIME_NUM, LEARN_NUM, BEGIN_TIME, END_TIME,
+	 COMP_ID,COMP_NAME, APP_ID, LEARN_TYPE, STU_NAME,REC_ID,PROVINCE_ID,PROVINCE_NAME,
+	 CITY_ID,CITY_NAME,XIANQU_ID,XIANQU_NAME,CONSUME_MONEY,CHARGE_BILL_ID,
+	 PLACE_TYPE,PLACE_NAME,PLACE_ID,car_plate_num,car_frame_num,GLOBLE_PLAN_ID,SHENHE_STATE,
+	 FAIL_REASON,SH_USER_NAME,SH_USER_ID,SH_TIME,EMP_TYPE
+		 from yw_train_consum_rec
+		WHERE STU_ID = #{stuId} and (SHENHE_STATE='1' or SHENHE_STATE is null or SHENHE_STATE='') order by PLAN_CREATE_TIME DESC
+	</select>
+
+	<select id="loadByEmpId" parameterType="java.lang.String" resultType="string">
+		select  ID
+		from yw_train_student
+		WHERE THIRD_ID = #{empId} and DATA_STATE = '1' order by BIND_FLAG DESC limit 1
+	</select>
+
+
+
+  
+</mapper>

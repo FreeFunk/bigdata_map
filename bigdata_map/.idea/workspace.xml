@@ -1,0 +1,858 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ca0ce2cb-ae98-49c2-bf6d-841dd6937f03" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/bigdata-car-trail-job" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/common-base" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/sys-mng-web" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/sys-mng-web/sys-mng-web.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-car-alarm-job/bigdata-car-alarm-job.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-car-alarm-job/bigdata-car-alarm-job.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-car-analysis-alarm-job/bigdata-car-analysis-alarm-job.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-car-analysis-alarm-job/bigdata-car-analysis-alarm-job.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-car-analysis-check-job/bigdata-car-analysis-check-job.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-car-analysis-check-job/bigdata-car-analysis-check-job.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-car-analysis-gps-job/bigdata-car-analysis-gps-job.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-car-analysis-gps-job/bigdata-car-analysis-gps-job.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-car-analysis-oper-job/bigdata-car-analysis-oper-job.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-car-analysis-oper-job/bigdata-car-analysis-oper-job.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-car-analysis-oper-job/src/main/java/com/edgedo/timetask/analysis/BigDataTongBuRedTreeCarInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-car-analysis-oper-job/src/main/java/com/edgedo/timetask/analysis/BigDataTongBuRedTreeCarInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-car-analysis/bigdata-car-analysis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-car-analysis/bigdata-car-analysis.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-car-trail-job/bigdata-car-trail-job.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-car-trail-job/bigdata-car-trail-job.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-constant/bigdata-constant.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-constant/bigdata-constant.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-drawing/bigdata-drawing.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-drawing/bigdata-drawing.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-drawing/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-drawing/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-gps-809-client/bigdata-gps-809-client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-gps-809-client/bigdata-gps-809-client.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-web/bigdata-web.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-web/bigdata-web.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-web/doc/大数据最新.PDM" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-web/doc/大数据最新.PDM" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-web/src/main/resources/static/views/bigdata/beidou.html" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-web/src/main/resources/static/views/bigdata/beidou.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigdata-web/src/main/resources/static/views/bigdata/shouye.html" beforeDir="false" afterPath="$PROJECT_DIR$/bigdata-web/src/main/resources/static/views/bigdata/shouye.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-base/common-base.iml" beforeDir="false" afterPath="$PROJECT_DIR$/common-base/common-base.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/report-data-analyse-servivce/report-data-analyse-servivce.iml" beforeDir="false" afterPath="$PROJECT_DIR$/report-data-analyse-servivce/report-data-analyse-servivce.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tdp-codegen/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/tdp-codegen/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tdp-codegen/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tdp-codegen/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tdp-codegen/target/tdp-codegen-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/tdp-codegen/target/tdp-codegen-0.0.1-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tdp-codegen/tdp-codegen.iml" beforeDir="false" afterPath="$PROJECT_DIR$/tdp-codegen/tdp-codegen.iml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/project$BigdataDrawing.ic" NAME="BigdataDrawing Coverage Results" MODIFIED="1577155631513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/project$ReportDataAnalyseServivceApplication.ic" NAME="ReportDataAnalyseServivceApplication Coverage Results" MODIFIED="1569285790216" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/project$CarAnalysisOperJob.ic" NAME="CarAnalysisOperJob Coverage Results" MODIFIED="1571298609967" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="215" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="project" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\GitHub-Maven\repository" />
+        <option name="userSettingsFile" value="D:\GitHub-Maven\apache-maven-3.2.5\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1ZbjjAM1qPqOVmkKnFcFxFlQ4NC" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="188" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="188" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="187" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="188" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="188" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="188" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="188" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="187" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="188" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="188" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1579166840648" />
+    <property name="last_opened_file_path" value="F:/PuShiAiWorkObject/knowledge-builder-backend-DEV_WORK" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.44252872" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\work\hangling\bigdata_map\bigdata-car-analysis\src\main\resources\mapper\caranalysis" />
+      <recent name="D:\work\hangling\bigdata_map\bigdata-drawing\src\main\resources\static\layuiadmin" />
+      <recent name="D:\work\hangling\bigdata_map\bigdata-car-analysis\src\main\java\com\edgedo\bigdata\queryvo" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.edgedo.bigdata.service" />
+      <recent name="com.edgedo.bigdata.mapper" />
+      <recent name="com.edgedo.bigdata.entity" />
+      <recent name="com.edgedo.bigdata.controller" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\work\hangling\bigdata_map\bigdata-drawing\src\main\resources\static\views\darwing" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.BigdataWebApplication">
+    <configuration name="ExtCodeGenIn (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.code.ExtCodeGenIn" />
+      <module name="tdp-codegen" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.code.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExtCodeGenIn" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.code.ExtCodeGenIn" />
+      <module name="project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.code.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BigdataCarAlarmSynApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="bigdata-car-alarm-job" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edgedo.BigdataCarAlarmSynApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BigdataCarAnalysisApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="bigdata-car-analysis" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edgedo.BigdataCarAnalysisApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BigdataCarTrailJobApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="bigdata-car-trail-job" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edgedo.BigdataCarTrailJobApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BigdataDrawing" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="bigdata-drawing" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edgedo.BigdataDrawing" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BigdataWebApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="bigdata-web" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edgedo.BigdataWebApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CarAnalysisCheckJob" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="bigdata-car-analysis-check-job" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edgedo.CarAnalysisCheckJob" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CarAnalysisGpsJob" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="bigdata-car-analysis-gps-job" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edgedo.CarAnalysisGpsJob" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CarAnalysisOperJob" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="bigdata-car-analysis-oper-job" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edgedo.CarAnalysisOperJob" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CarFenXiJob" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="bigdata-car-analysis-alarm-job" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edgedo.CarFenXiJob" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Gps809ClientApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="bigdata-gps-809-client" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edgedo.Gps809ClientApp" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReportDataAnalyseServivceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="report-data-analyse-servivce" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edgedo.ReportDataAnalyseServivceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SysMngWebApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="sys-mng-web" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edgedo.SysMngWebApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ExtCodeGenIn (1)" />
+        <item itemvalue="Application.ExtCodeGenIn" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\Administrator\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="D:\D\work\hangling\bigdata_map" />
+          <option name="myCopyRoot" value="D:\D\work\hangling\bigdata_map" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="D:\D\work\hangling\bigdata_map" />
+          <option name="myCopyRoot" value="D:\D\work\hangling\bigdata_map" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ca0ce2cb-ae98-49c2-bf6d-841dd6937f03" name="Default Changelist" comment="" />
+      <created>1568787682929</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1568787682929</updated>
+      <workItem from="1568787692811" duration="1827000" />
+      <workItem from="1568853372763" duration="15709000" />
+      <workItem from="1568940237662" duration="40835000" />
+      <workItem from="1569027218519" duration="11001000" />
+      <workItem from="1569113540328" duration="1596000" />
+      <workItem from="1569145967847" duration="2551000" />
+      <workItem from="1569199022161" duration="27492000" />
+      <workItem from="1569284462456" duration="27886000" />
+      <workItem from="1569372291074" duration="14570000" />
+      <workItem from="1569399238161" duration="4602000" />
+      <workItem from="1569458956142" duration="10735000" />
+      <workItem from="1569469839817" duration="12726000" />
+      <workItem from="1569488321003" duration="2006000" />
+      <workItem from="1569544623838" duration="24661000" />
+      <workItem from="1569631900182" duration="10174000" />
+      <workItem from="1569719182212" duration="9847000" />
+      <workItem from="1569755001226" duration="3620000" />
+      <workItem from="1569760086702" duration="1647000" />
+      <workItem from="1569805324793" duration="14144000" />
+      <workItem from="1569825727003" duration="7344000" />
+      <workItem from="1570495310666" duration="26911000" />
+      <workItem from="1570581985389" duration="12888000" />
+      <workItem from="1570599276926" duration="14122000" />
+      <workItem from="1570684980506" duration="12216000" />
+      <workItem from="1570702471276" duration="2808000" />
+      <workItem from="1570761545461" duration="9163000" />
+      <workItem from="1570779189203" duration="7111000" />
+      <workItem from="1570841459851" duration="18170000" />
+      <workItem from="1570928349300" duration="4831000" />
+      <workItem from="1571013659320" duration="26775000" />
+      <workItem from="1571062866429" duration="522000" />
+      <workItem from="1571099566807" duration="25740000" />
+      <workItem from="1571186381061" duration="27076000" />
+      <workItem from="1571290470951" duration="13950000" />
+      <workItem from="1571359258277" duration="25601000" />
+      <workItem from="1571446223190" duration="5852000" />
+      <workItem from="1571532525840" duration="421000" />
+      <workItem from="1571533575271" duration="4478000" />
+      <workItem from="1571618374085" duration="9101000" />
+      <workItem from="1571705366257" duration="1322000" />
+      <workItem from="1571814335905" duration="237000" />
+      <workItem from="1571816235513" duration="643000" />
+      <workItem from="1571818549339" duration="662000" />
+      <workItem from="1572941038915" duration="2260000" />
+      <workItem from="1573095731449" duration="3040000" />
+      <workItem from="1573193740136" duration="750000" />
+      <workItem from="1573783649547" duration="7987000" />
+      <workItem from="1573864473316" duration="590000" />
+      <workItem from="1574040842785" duration="497000" />
+      <workItem from="1574646243413" duration="2221000" />
+      <workItem from="1574818750985" duration="2305000" />
+      <workItem from="1575009018235" duration="3260000" />
+      <workItem from="1576221599421" duration="4803000" />
+      <workItem from="1576545835229" duration="12070000" />
+      <workItem from="1576632663034" duration="1684000" />
+      <workItem from="1576805457250" duration="1050000" />
+      <workItem from="1576809802485" duration="2332000" />
+      <workItem from="1577061768754" duration="8627000" />
+      <workItem from="1577149042545" duration="14183000" />
+      <workItem from="1577234675206" duration="7845000" />
+      <workItem from="1577320947019" duration="4826000" />
+      <workItem from="1577408335639" duration="22806000" />
+      <workItem from="1577666739512" duration="1888000" />
+      <workItem from="1577674720747" duration="1239000" />
+      <workItem from="1577695954618" duration="1758000" />
+      <workItem from="1577925579775" duration="684000" />
+      <workItem from="1578272629359" duration="10416000" />
+      <workItem from="1578367206230" duration="16203000" />
+      <workItem from="1578444480684" duration="3677000" />
+      <workItem from="1578557124596" duration="2046000" />
+      <workItem from="1578702333069" duration="1561000" />
+      <workItem from="1578875625168" duration="2287000" />
+      <workItem from="1578961946389" duration="1054000" />
+      <workItem from="1579079244937" duration="1515000" />
+      <workItem from="1579098794591" duration="1420000" />
+      <workItem from="1579134650961" duration="1976000" />
+      <workItem from="1585114824046" duration="551000" />
+      <workItem from="1585152534808" duration="882000" />
+      <workItem from="1588904635862" duration="587000" />
+      <workItem from="1590455977436" duration="834000" />
+      <workItem from="1593484479107" duration="2513000" />
+      <workItem from="1629276875601" duration="3792000" />
+      <workItem from="1629335324734" duration="5576000" />
+      <workItem from="1629353136213" duration="3457000" />
+      <workItem from="1630313273958" duration="954000" />
+      <workItem from="1630370688308" duration="1404000" />
+      <workItem from="1630457232926" duration="1180000" />
+      <workItem from="1630562344555" duration="2684000" />
+      <workItem from="1630633106415" duration="3443000" />
+      <workItem from="1630891009874" duration="1368000" />
+      <workItem from="1631149859016" duration="2449000" />
+      <workItem from="1631496988439" duration="342000" />
+      <workItem from="1631846998686" duration="571000" />
+      <workItem from="1631930815013" duration="1692000" />
+      <workItem from="1632368910144" duration="584000" />
+      <workItem from="1633663762998" duration="156000" />
+      <workItem from="1633672758013" duration="2967000" />
+      <workItem from="1633768243457" duration="2263000" />
+      <workItem from="1633914635040" duration="561000" />
+      <workItem from="1635383653680" duration="1210000" />
+      <workItem from="1635991394588" duration="489000" />
+      <workItem from="1636091895335" duration="577000" />
+      <workItem from="1636358823434" duration="1664000" />
+    </task>
+    <task id="LOCAL-00031">
+      <created>1570517301312</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1570517301312</updated>
+    </task>
+    <task id="LOCAL-00032">
+      <created>1570527007342</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1570527007342</updated>
+    </task>
+    <task id="LOCAL-00033">
+      <created>1570610110955</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1570610110955</updated>
+    </task>
+    <task id="LOCAL-00034">
+      <created>1570848979119</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1570848979119</updated>
+    </task>
+    <task id="LOCAL-00035">
+      <created>1570850278267</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1570850278267</updated>
+    </task>
+    <task id="LOCAL-00036">
+      <created>1570872026080</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1570872026080</updated>
+    </task>
+    <task id="LOCAL-00037">
+      <created>1571034586896</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1571034586896</updated>
+    </task>
+    <task id="LOCAL-00038">
+      <created>1571039571048</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1571039571048</updated>
+    </task>
+    <task id="LOCAL-00039">
+      <created>1571100426925</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1571100426925</updated>
+    </task>
+    <task id="LOCAL-00040">
+      <created>1571102330239</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1571102330239</updated>
+    </task>
+    <task id="LOCAL-00041">
+      <created>1571103253519</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1571103253519</updated>
+    </task>
+    <task id="LOCAL-00042">
+      <created>1571118831011</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1571118831011</updated>
+    </task>
+    <task id="LOCAL-00043">
+      <created>1571125982727</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1571125982727</updated>
+    </task>
+    <task id="LOCAL-00044">
+      <created>1571126003240</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1571126003240</updated>
+    </task>
+    <task id="LOCAL-00045">
+      <created>1571129845966</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1571129845966</updated>
+    </task>
+    <task id="LOCAL-00046">
+      <created>1571197268907</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1571197268907</updated>
+    </task>
+    <task id="LOCAL-00047">
+      <created>1571204444757</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1571204444757</updated>
+    </task>
+    <task id="LOCAL-00048">
+      <created>1571204469454</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1571204469454</updated>
+    </task>
+    <task id="LOCAL-00049">
+      <created>1571205500185</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1571205500185</updated>
+    </task>
+    <task id="LOCAL-00050">
+      <created>1571206646284</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1571206646285</updated>
+    </task>
+    <task id="LOCAL-00051">
+      <created>1571212946439</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1571212946439</updated>
+    </task>
+    <task id="LOCAL-00052">
+      <created>1571213653872</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1571213653872</updated>
+    </task>
+    <task id="LOCAL-00053">
+      <created>1571213887247</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1571213887247</updated>
+    </task>
+    <task id="LOCAL-00054">
+      <created>1571218278133</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1571218278133</updated>
+    </task>
+    <task id="LOCAL-00055">
+      <created>1571218390873</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1571218390873</updated>
+    </task>
+    <task id="LOCAL-00056">
+      <created>1571294887801</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1571294887802</updated>
+    </task>
+    <task id="LOCAL-00057">
+      <created>1571301038991</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1571301038991</updated>
+    </task>
+    <task id="LOCAL-00058">
+      <created>1571301127189</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1571301127189</updated>
+    </task>
+    <task id="LOCAL-00059">
+      <created>1571363036585</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1571363036585</updated>
+    </task>
+    <task id="LOCAL-00060">
+      <created>1571363058993</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1571363058993</updated>
+    </task>
+    <task id="LOCAL-00061">
+      <created>1571368292949</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1571368292949</updated>
+    </task>
+    <task id="LOCAL-00062">
+      <created>1571369249397</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1571369249398</updated>
+    </task>
+    <task id="LOCAL-00063">
+      <created>1571379934937</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1571379934937</updated>
+    </task>
+    <task id="LOCAL-00064">
+      <created>1571380953216</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1571380953216</updated>
+    </task>
+    <task id="LOCAL-00065">
+      <created>1571386346846</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1571386346846</updated>
+    </task>
+    <task id="LOCAL-00066">
+      <created>1571448572258</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1571448572259</updated>
+    </task>
+    <task id="LOCAL-00067">
+      <created>1571537464113</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1571537464114</updated>
+    </task>
+    <task id="LOCAL-00068">
+      <created>1571628292170</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1571628292171</updated>
+    </task>
+    <task id="LOCAL-00069">
+      <created>1571819213254</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1571819213255</updated>
+    </task>
+    <task id="LOCAL-00070">
+      <created>1577159202468</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1577159202469</updated>
+    </task>
+    <task id="LOCAL-00071">
+      <created>1577173765767</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1577173765768</updated>
+    </task>
+    <task id="LOCAL-00072">
+      <created>1577327071941</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1577327071941</updated>
+    </task>
+    <task id="LOCAL-00073">
+      <created>1577410916295</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1577410916295</updated>
+    </task>
+    <task id="LOCAL-00074">
+      <created>1577437919511</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1577437919511</updated>
+    </task>
+    <task id="LOCAL-00075">
+      <created>1578279892579</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1578279892581</updated>
+    </task>
+    <task id="LOCAL-00076">
+      <created>1578376065817</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1578376065818</updated>
+    </task>
+    <task id="LOCAL-00077">
+      <created>1578383642370</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1578383642370</updated>
+    </task>
+    <task id="LOCAL-00078">
+      <created>1578384812396</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1578384812396</updated>
+    </task>
+    <task id="LOCAL-00079">
+      <created>1578388588355</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1578388588355</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1636361805521">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1636361805521" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1631149855623">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1631149855623" />
+    <state x="447" y="145" width="655" height="534" key="find.popup" timestamp="1633681613962">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="447" y="145" width="655" height="534" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1633681613962" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-car-analysis-oper-job/src/main/java/com/edgedo/timetask/BigDataFenXiTeamDay.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-car-analysis-oper-job/src/main/java/com/edgedo/timetask/BigdataFenxiTeam.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-car-analysis-oper-job/src/main/java/com/edgedo/timetask/BigdataFenxiTeam.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-car-analysis-oper-job/src/main/java/com/edgedo/timetask/BigdataFenXiCount.java</url>
+          <line>622</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-car-analysis-oper-job/src/main/java/com/edgedo/timetask/BigdataAlarmAndSafeCount.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="101" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-car-analysis-oper-job/src/main/java/com/timetask/fenxi/BigdataFenXiAlarmTime.java</url>
+          <line>117</line>
+          <option name="timeStamp" value="116" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-car-analysis-oper-job/src/main/java/com/timetask/fenxi/BigdataFenXiAlarmTime.java</url>
+          <line>143</line>
+          <option name="timeStamp" value="117" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-car-analysis-oper-job/src/main/java/com/edgedo/timetask/fenxi/BigdataFenXiTeamWeekAndMonth.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="218" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-drawing/src/main/java/com/edgedo/sys/controller/BigdataDriverDrawInfoController.java</url>
+          <line>116</line>
+          <option name="timeStamp" value="222" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-drawing/src/main/java/com/edgedo/sys/service/BigdataDriverDrawInfoService.java</url>
+          <line>99</line>
+          <option name="timeStamp" value="224" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-car-analysis/src/main/java/com/edgedo/bigdata/service/BigdataDriverCardRecService.java</url>
+          <line>172</line>
+          <option name="timeStamp" value="242" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-car-analysis/src/main/java/com/edgedo/bigdata/service/BigdataDriverCardRecService.java</url>
+          <line>174</line>
+          <option name="timeStamp" value="247" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bigdata-car-analysis/src/main/java/com/edgedo/bigdata/service/BigdataDriverCardRecService.java</url>
+          <line>203</line>
+          <option name="timeStamp" value="248" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+</project>

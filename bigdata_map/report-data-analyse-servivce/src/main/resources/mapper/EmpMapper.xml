@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.reportdata.mapper.EmpMapper" >
+
+    <resultMap id="empMap" type="com.edgedo.reportdata.entity.Emp" >
+        <result column="ID" jdbcType="VARCHAR" property="id"></result>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"></result>
+        <result column="CREATE_USREE_ID" jdbcType="VARCHAR" property="createUserId"></result>
+        <result column="CREATE_USER_NAME" jdbcType="VARCHAR" property="createUserName"></result>
+        <result column="OWNER_CAR_TEAM_ID" jdbcType="VARCHAR" property="ownerCarTeamId"></result>
+        <result column="OWNER_CAR_TEAM_NAME" jdbcType="VARCHAR" property="ownerCarTeamName"></result>
+        <result column="EMP_NAME" jdbcType="VARCHAR" property="empName"></result>
+        <result column="EMP_PHONE" jdbcType="VARCHAR" property="empPhone"></result>
+        <result column="EMP_ID_CARD" jdbcType="VARCHAR" property="empIdCard"></result>
+        <result column="EMP_SEX" jdbcType="VARCHAR" property="empSex"></result>
+        <result column="EMP_AGE" jdbcType="INTEGER" property="empAge"></result>
+        <result column="EMP_ENTRY_DAY" jdbcType="TIMESTAMP" property="empEntryDay"></result>
+        <result column="EMP_DESC" jdbcType="VARCHAR" property="empDesc"></result>
+        <result column="EMP_STATE" jdbcType="VARCHAR" property="empState"></result>
+        <result column="EMP_USER_CODE" jdbcType="VARCHAR" property="empUserCode"></result>
+        <result column="EMP_PASSWORD" jdbcType="VARCHAR" property="empPassword"></result>
+        <result column="TOTAL_TRAIN_TIMES" jdbcType="INTEGER" property="totalTrainTimes"></result>
+        <result column="ONLINE_TRAIN_TIMES" jdbcType="INTEGER" property="onlineTrainTimes"></result>
+        <result column="TRAIN_TIMES_LEFT" jdbcType="INTEGER" property="trainTimesLeft"></result>
+        <result column="BIND_TIME" jdbcType="TIMESTAMP" property="bingTime"></result>
+        <result column="openid" jdbcType="VARCHAR" property="openId"></result>
+        <result column="YW_WX_USER" jdbcType="VARCHAR" property="ywWxUser"></result>
+        <result column="SH_STATE" jdbcType="VARCHAR" property="shState"></result>
+        <result column="DATA_STATE" jdbcType="VARCHAR" property="dataState"></result>
+        <result column="PLATE_NUM" jdbcType="VARCHAR" property="plateNum"></result>
+        <result column="LICENCE_CODE" jdbcType="VARCHAR" property="licenceCode"></result>
+        <result column="EMP_TYPE" jdbcType="VARCHAR" property="empType"></result>
+        <result column="IS_TIYAN" jdbcType="VARCHAR" property="isTiyan"></result>
+        <result column="TONGBU_STATE" jdbcType="VARCHAR" property="tongBuState"></result>
+        <result column="CAR_PLATE_NUM" jdbcType="VARCHAR" property="carPlateNum"></result>
+        <result column="PROVINCE_ID" jdbcType="VARCHAR" property="provinceId"></result>
+        <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"></result>
+        <result column="CITY_ID" jdbcType="VARCHAR" property="cityId"></result>
+        <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName"></result>
+        <result column="XIANQU_ID" jdbcType="VARCHAR" property="xianQuId"></result>
+        <result column="XIANQU_NAME" jdbcType="VARCHAR" property="xianQuName"></result>
+        <result column="HEALTH_MESSAGE" jdbcType="VARCHAR" property="healthMessage"></result>
+    </resultMap>
+
+
+    <!-- ******* 新增字段请修改这里  ******  -->
+    <sql id="Base_Column_List">
+        ID, EMP_NAME, CAR_PLATE_NUM, EMP_ID_CARD, LICENCE_CODE,CREATE_TIME,EMP_PHONE,PLATE_NUM
+    </sql>
+
+    <!-- ******* 利用好这里的动态查询条件  ******  -->
+    <sql id="where">
+        <where>
+            <if test='queryObj != null and  queryObj.createTime != null'>
+                AND  CREATE_TIME = #{queryObj.createTime}
+            </if>
+        </where>
+
+    </sql>
+
+    <!--判断从业人员的数量-->
+    <select id="countEmpByQuery"  parameterType="com.edgedo.reportdata.queryvo.EmpQuery" resultType="int">
+    /*!mycat:sql=select app_id from zhyg_db where app_id = '${cityId}' */ select count(1) from team_employee
+        <trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+            data_state = '1'
+            <if test="empName != null and empName != ''">
+                AND  EMP_NAME LIKE concat('%',#{empName},'%')
+            </if>
+            <if test="empIdCard != null and empIdCard != ''">
+                AND  EMP_ID_CARD LIKE concat('%',#{empIdCard},'%')
+            </if>
+            <if test="empCode != null and empCode != ''">
+                AND  LICENCE_CODE LIKE concat('%',#{empCode},'%')
+            </if>
+            <if test="empType != null and empType != ''">
+                AND  EMP_TYPE = #{empType}
+            </if>
+            <if test="ownerCarTeamName != null and ownerCarTeamName != ''">
+                AND  OWNER_CAR_TEAM_NAME like concat('%',#{ownerCarTeamName},'%')
+            </if>
+            <if test="carPlateNum != null and carPlateNum != ''">
+                AND  CAR_PLATE_NUM = #{carPlateNum,jdbcType=VARCHAR}
+            </if>
+            <if test="empPhone != null and empPhone != ''">
+                AND  EMP_PHONE = #{empPhone}
+            </if>
+        </trim>
+    </select>
+
+    <!--根据车辆信息查询关联人员-->
+    <select id="selectEmpByCarInfo" parameterType="com.edgedo.reportdata.queryvo.EmpQuery" resultMap="empMap">
+      /*!mycat:sql = select app_id from zhyg_db where app_id = '${cityId}'*/ select <include refid="Base_Column_List"/>
+        from team_employee
+        <trim prefix="WHERE (" suffix=")" prefixOverrides="AND | OR">
+            <if test="carPlateNum != null and carPlateNum != ''">
+                AND CAR_PLATE_NUM = #{carPlateNum,jdbcType = VARCHAR}
+            </if>
+        </trim>
+        AND DATA_STATE = '1'
+    </select>
+
+    <select id="selectEmpByCarInfoNew" parameterType="com.edgedo.reportdata.queryvo.EmpQuery" resultMap="empMap">
+        /*!mycat:sql = select app_id from zhyg_db where app_id = '${cityId}'*/ select
+        ID, EMP_NAME, CAR_PLATE_NUM, EMP_ID_CARD, LICENCE_CODE,CREATE_TIME,EMP_PHONE
+        from team_employee
+        where DATA_STATE = '1'
+        <if test="carPlateNum != null and carPlateNum != ''">
+            AND PLATE_NUM = #{carPlateNum,jdbcType = VARCHAR}
+        </if>
+        order by EMP_TYPE ASC limit 1
+    </select>
+
+    <select id="selectHeadPhoto" parameterType="map" resultType="string">
+        /*!mycat:sql = select app_id from train_db where app_id = '${cityId}'*/ select FACE_PHOTO from yw_train_student
+        where DATA_STATE = '1'
+        and THIRD_ID = #{thirdId}
+    </select>
+
+    <select id="selectEmpByQueryListPage"  parameterType="com.edgedo.reportdata.queryvo.EmpQuery" resultMap="empMap">
+        /*!mycat:sql=select app_id from zhyg_db where app_id = '${cityId}' */ select * from team_employee
+        <trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+            data_state = '1'
+            <if test="id != null and id != ''">
+                AND  ID = #{id}
+            </if>
+            <if test="empName != null and empName != ''">
+                AND  EMP_NAME LIKE concat('%',#{empName},'%')
+            </if>
+            <if test="empIdCard != null and empIdCard != ''">
+                AND  EMP_ID_CARD LIKE concat('%',#{empIdCard},'%')
+            </if>
+            <if test="empCode != null and empCode != ''">
+                AND  LICENCE_CODE LIKE concat('%',#{empCode},'%')
+            </if>
+            <if test="empPhone != null and empPhone != ''">
+                AND  EMP_PHONE = #{empPhone}
+            </if>
+            <if test="ownerCarTeamName != null and ownerCarTeamName != ''">
+                AND  OWNER_CAR_TEAM_NAME LIKE concat('%',#{ownerCarTeamName},'%')
+            </if>
+            <if test="empType != null and empType != ''">
+                AND  EMP_TYPE = #{empType,jdbcType=VARCHAR}
+            </if>
+            <if test="carPlateNum != null and carPlateNum != ''">
+                AND  CAR_PLATE_NUM = #{carPlateNum,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </select>
+
+    <select id="listPageEmpByQuery"  parameterType="com.edgedo.reportdata.queryvo.EmpQuery" resultMap="empMap">
+        /*!mycat:sql=select app_id from zhyg_db where app_id = '${cityId}' */ select * from team_employee
+        <trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+            data_state = '1'
+            <if test="id != null and id != ''">
+                AND  ID = #{id}
+            </if>
+            <if test="empName != null and empName != ''">
+                AND  EMP_NAME LIKE concat('%',#{empName},'%')
+            </if>
+            <if test="empIdCard != null and empIdCard != ''">
+                AND  EMP_ID_CARD LIKE concat('%',#{empIdCard},'%')
+            </if>
+            <if test="empCode != null and empCode != ''">
+                AND  LICENCE_CODE LIKE concat('%',#{empCode},'%')
+            </if>
+            <if test="empPhone != null and empPhone != ''">
+                AND  EMP_PHONE = #{empPhone}
+            </if>
+            <if test="ownerCarTeamName != null and ownerCarTeamName != ''">
+                AND  OWNER_CAR_TEAM_NAME LIKE concat('%',#{ownerCarTeamName},'%')
+            </if>
+            <if test="empType != null and empType != ''">
+                AND  EMP_TYPE = #{empType,jdbcType=VARCHAR}
+            </if>
+            <if test="carPlateNum != null and carPlateNum != ''">
+                AND  CAR_PLATE_NUM = #{carPlateNum,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectEmpDetail"  parameterType="com.edgedo.reportdata.queryvo.EmpQuery" resultMap="empMap">
+        /*!mycat:sql=select app_id from zhyg_db where app_id = '${cityId}' */ select * from team_employee
+        <trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+            data_state = '1'
+            <if test="id != null and id != ''">
+                AND  ID = #{id}
+            </if>
+        </trim>
+    </select>
+
+    <resultMap id="SafetyTrainingRecEmpMap" type="com.edgedo.reportdata.entity.SafetyTrainingRecEmp">
+        <result column="ID" jdbcType="VARCHAR" property="id"></result>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"></result>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR"></result>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"></result>
+        <result column="OWNER_REC_ID" property="ownerRecId" jdbcType="VARCHAR"></result>
+        <result column="EMP_ID" property="empId" jdbcType="VARCHAR"></result>
+        <result column="OWNER_CAR_TEAM_ID" property="ownerCarTeamId"></result>
+        <result column="EMP_NAME" property="empName" jdbcType="VARCHAR"></result>
+        <result column="QIANDAO_TIME1" property="qiandaoTime1" jdbcType="TIMESTAMP"></result>
+        <result column="QINDAO_COORDINATE1" property="qiandaoCoordinate1" jdbcType="VARCHAR"></result>
+        <result column="QIANDAO_TIME2" property="qiandaoTime2" jdbcType="TIMESTAMP"></result>
+        <result column="QIANDAO_COORDINATE2" property="qiandaoCoordinate2" jdbcType="VARCHAR"></result>
+        <result column="STUDY_STATE" property="studyState" jdbcType="VARCHAR"></result>
+        <result column="DATA_STATE" property="dataState" jdbcType="VARCHAR"></result>
+        <result column="THIRD_DETAIL_ID" property="thirdDetailId" jdbcType="VARCHAR"></result>
+        <result column="LICENCE_CODE" property="licenceCode" jdbcType="VARCHAR"></result>
+        <result column="TRAING_TYPE" property="traingType" jdbcType="VARCHAR"></result>
+        <result column="CAR_ID" property="carId" jdbcType="VARCHAR"></result>
+        <result column="CAR_PLATE_NUM" property="carPlateNum" jdbcType="VARCHAR"></result>
+        <result column="TRAIN_TITLE" property="trainTitle" jdbcType="VARCHAR"></result>
+        <result column="IS_SEND_QIANTUI_MSG" property="isSendQianTuiMsg" jdbcType="VARCHAR"></result>
+        <result column="TRAIN_TITLE_CREATE_TIME" property="trainTitleCreateTime" jdbcType="TIMESTAMP"></result>
+        <result column="STUDY_TIME" property="studyTime" jdbcType="INTEGER"></result>
+        <result column="TRAIN_TIME_NUM" property="trainTimeNum" jdbcType="INTEGER"></result>
+        <result column="LEARN_NUM" property="learnNum" jdbcType="INTEGER"></result>
+        <result column="BEGIN_TIME" property="beginTime" jdbcType="TIMESTAMP"></result>
+        <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP"></result>
+        <result column="CONSUM_REC_ID" property="consumRecId" jdbcType="VARCHAR"></result>
+        <result column="OWNER_LEGER_ID" property="ownerLegerId" jdbcType="VARCHAR"></result>
+        <result column="PROVINCE_ID" property="provinceId" jdbcType="VARCHAR"></result>
+        <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR"></result>
+        <result column="CITY_ID" property="cityId" jdbcType="VARCHAR"></result>
+        <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR"></result>
+        <result column="XIANQU_ID" property="xianquId" jdbcType="VARCHAR"></result>
+        <result column="XIANQU_NAME" property="xianquName" jdbcType="VARCHAR"></result>
+        <result column="CONSUME_MONEY" property="consumeMoney" jdbcType="DECIMAL"></result>
+    </resultMap>
+
+    <select id="selectEmpSafetyRec"  parameterType="com.edgedo.reportdata.queryvo.EmpQuery" resultMap="SafetyTrainingRecEmpMap">
+        /*!mycat:sql=select app_id from zhyg_db where app_id = '${cityId}' */ select * from safety_training_rec_emp
+        WHERE DATA_STATE = '1'AND EMP_ID =#{id} order by TRAIN_TITLE_CREATE_TIME DESC
+    </select>
+
+    <select id="selectEmpListByCarTeam" parameterType="map" resultMap="empMap">
+        /*!mycat:sql = select app_id from zhyg_db where app_id = '${cityId}'*/ select * from team_employee
+        WHERE DATA_STATE = '1' AND OWNER_CAR_TEAM_ID = #{ownerCarTeamId,jdbcType = VARCHAR}
+    </select>
+
+
+    <select id="selectEmpByStartAndLimit" parameterType="map" resultMap="empMap">
+        /*!mycat:sql = select app_id from zhyg_db where app_id = '${cityId}'*/
+        select <include refid="Base_Column_List"/> from team_employee
+        WHERE DATA_STATE = '1'
+        order by id asc limit #{start},#{limit}
+    </select>
+
+    <!--  查询用户的id -->
+    <select id="selectTrainStuYwUserId" parameterType="map" resultType="java.lang.String">
+        /*!mycat:sql = select app_id from train_db where app_id = '${cityId}'*/
+       select YW_USER_ID from yw_train_student where THIRD_ID=#{empId}
+        WHERE DATA_STATE = '1'  limit 1
+    </select>
+    
+    
+    <insert id="updateSendSiteMsg" parameterType="map">
+        /*!mycat:sql = select app_id from train_db where app_id = '${cityId}'*/
+        insert into yw_site_msg_rec(
+            ID, USER_ID, MSG_TYPE, TITLE, CONTENT, CREATE_TIME, IS_READ,
+            READ_TIME, SEND_USER_ID, SEN_USER_NAME, DATE_STATE, OWNER_MSG
+        ) VALUES (
+          #{id},#{userId},#{msgType},#{title},#{content},#{createTime},#{isRead},
+          #{readTime},#{sendUserId},#{senUserName},#{dataState},#{ownerMsg}
+        )
+    </insert>
+
+    <!--  根据从业人员id查询学员 -->
+    <select id="selectTrainStuByEmpId" parameterType="map" resultType="com.edgedo.reportdata.entity.YwTrainStudent">
+       /*!mycat:sql = select app_id from train_db where app_id = '${cityId}'*/
+       select ID id, STU_NAME stuName, STU_PHONE_NUM stuPhoneNum, STU_ID_CARD stuIdCard, STU_SEX stuSex, LICENCE_CODE licenceCode,
+        YW_USER_ID ywUserId,PROVINCE_ID provinceId,PROVINCE_NAME provinceName,CITY_ID cityId,CITY_NAME cityName,
+        XIANQU_ID xianquId,XIANQU_NAME xianquName,COMP_ID compId, COMP_NAME compName,car_frame_num carFrameNum,CAR_PLATE_NUM carPlateNum
+         from yw_train_student where THIRD_ID=#{empId}
+        and DATA_STATE = '1' limit 1
+    </select>
+
+    <!--  根据课件类型统计课件数量 -->
+    <select id="countLessionByType" parameterType="map" resultType="int">
+        /*!mycat:sql = select app_id from train_db where app_id = '${cityId}'*/
+        select count(1) from yw_train_lession where LESSION_TYPE=#{lessionType}
+    </select>
+
+    <!--  随机从某个类型的课件中抽取出来一个课件 -->
+    <select id="selectOneLessionByType" parameterType="map" resultType="com.edgedo.reportdata.entity.YwTrainLession">
+      /*!mycat:sql = select app_id from train_db where app_id = '${cityId}'*/
+      select id,LESSON_TITLE lessionTitle  from yw_train_lession
+      where LESSION_TYPE=#{lessionType} limit #{start},1
+    </select>
+
+    <!--  下发定向课件  -->
+    <insert id="updateSendDirectLessionToStu" parameterType="map" >
+     /*!mycat:sql = select app_id from train_db where app_id = '${cityId}'*/
+      insert into yw_train_direct_lession_relation(
+        ID,CREATE_TIME,STUDY_DATE,STU_ID,STU_NAME,CAR_PLATE_NUM,CAR_FRAME_NUM,COMP_ID,
+        LESSION_ID,LESSION_TITLE,WARNING_COUNT,SERIOUS_WARNING_COUNT,WARNING_TYPE,START_MONTH,DATA_STATE
+      ) VALUES (
+        #{id},#{createTime},#{studyDate},#{stuId},#{stuName},#{carPlateNum},#{carFrameNum},#{compId},
+        #{lessionId},#{lessionTitle},#{warningCount},#{seriousWarningCount},#{warningType},#{startMonth},#{dataState}
+      )
+    </insert>
+
+    <!-- 统计定向课件是否下发 -->
+    <select id="countDirectLessionById" parameterType="map" resultType="int">
+     /*!mycat:sql = select app_id from train_db where app_id = '${cityId}'*/
+        select count(1) from yw_train_direct_lession_relation where id=#{id}
+    </select>
+
+
+
+
+</mapper>

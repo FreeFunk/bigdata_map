@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.CityTransportCapacityAnalysisMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.CityTransportCapacityAnalysis" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="CAR_TOTAL_NUM" property="carTotalNum"/>
+			<result column="ONLINE_NUM" property="onlineNum"/>
+			<result column="ONLINE_RATE" property="onlineRate"/>
+			<result column="OPERATION_NUM" property="operationNum"/>
+			<result column="OPERATION_RATE" property="operationRate"/>
+			<result column="DAY_TOTAL_MILEAGE" property="dayTotalMileage"/>
+			<result column="DAY_TOTAL_TIME" property="dayTotalTime"/>
+			<result column="CURRENT_OPERATION_MAX" property="currentOperationMax"/>
+			<result column="UPDATE_TIME" property="updateTime"/>
+			<result column="COUNT_TIME" property="countTime"></result>
+
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.CityTransportCapacityAnalysisView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CAR_TYPE, CAR_TOTAL_NUM, ONLINE_NUM, ONLINE_RATE, OPERATION_NUM, OPERATION_RATE,
+	 DAY_TOTAL_MILEAGE, DAY_TOTAL_TIME, CURRENT_OPERATION_MAX, UPDATE_TIME,COUNT_TIME
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.carTotalNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.carTotalNum)'>
+					AND  CAR_TOTAL_NUM = #{queryObj.carTotalNum}
+				</if>
+				<if test='queryObj != null and  queryObj.onlineNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.onlineNum)'>
+					AND  ONLINE_NUM = #{queryObj.onlineNum}
+				</if>
+				<if test='queryObj != null and  queryObj.operationNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.operationNum)'>
+					AND  OPERATION_NUM = #{queryObj.operationNum}
+				</if>
+				<if test='queryObj != null and  queryObj.updateTime != null'>
+					AND  UPDATE_TIME = #{queryObj.updateTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.CityTransportCapacityAnalysisQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from city_transport_capacity_analysis 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.CityTransportCapacityAnalysisQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from city_transport_capacity_analysis 
+  		<include refid="where"/>
+  </select>
+
+
+	<!-- 不分页条件查询  -->
+	<select id="getRealTimeData" parameterType="java.lang.String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from city_transport_capacity_analysis
+		WHERE  CAR_TYPE = #{carType}
+		ORDER BY UPDATE_TIME DESC limit 1
+	</select>
+  
+  
+</mapper>

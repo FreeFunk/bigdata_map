@@ -1,0 +1,59 @@
+跨周查询   一周处于两月中间
+前一天时间也在两月中间
+
+车辆安全评分(天按月分，周按月分，月按年分)
+天输入时 携带  2019yearNum  201909countMonth  20190919countDate
+周
+月输入本身携带 2019yearNum 201909countMonth
+企业报警排名(按天分，周和月在一张表里)
+
+大数据分析概况
+天(DAY) 周(WEEK) 月(MONTH)
+总(总) 客运(客运) 危货(危货) 普货(普货)
+区域统计类型 县区 城市
+一条记录对应一个统计日期
+一条记录对应一个车辆类型
+一条记录对应一个区域类型
+天数统计到7天集合成一周
+天数统计到30天集合成一个月
+一个县区统计天周月
+多个县区上升到市统计
+
+大数据报警时段统计(一天的每个小时的记录) bigdata_fenxi_alarm_time
+大数据报警周月统计(7天和30天) bigdata_fenxi_count
+
+报警数量 (全部   常规报警-bigdata_alarm_record   主动安全-bigdata_safety_warning)
+处理数量 (全部   常规报警-bigdata_alarm_record   主动安全-bigdata_safety_warning)
+
+print('Python 1024快乐!')
+===============================
+Sub Main()        
+       Console.WriteLine("VisualBasic  1024快乐!")    
+End Sub
+===============================
+public class OneZeroTwoFour{ 
+     public static void main(String args[]){
+           System.out.println("JAVA  1024快乐!"); 
+    } 
+}
+===============================
+#include <stdio.h> 
+      int main(void) { 
+          printf("C   1024快乐!"); 
+          return 0;
+ }
+===============================
+#include <iostream> 
+       int main(void) { 
+          std::cout<<"C++  1024快乐!"; 
+}
+===============================
+<?php 
+      echo "PHP  1024快乐!"; 
+ ?>
+===============================
+puts "Ruby  1024快乐!"
+===============================
+
+
+

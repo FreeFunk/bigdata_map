@@ -1,0 +1,259 @@
+package com.edgedo.bigdata.service;
+
+import com.edgedo.bigdata.entity.AlarmVo;
+import com.edgedo.bigdata.entity.BigdataFenxiTeamDay;
+import com.edgedo.bigdata.entity.BigdataFenxiTeamWeek;
+import com.edgedo.bigdata.entity.TransitCarTeam;
+import com.edgedo.bigdata.mapper.BigdataFenxiTeamWeekMapper;
+import com.edgedo.bigdata.queryvo.BigdataFenxiTeamWeekQuery;
+import com.edgedo.bigdata.queryvo.BigdataFenxiTeamWeekView;
+import com.edgedo.common.util.Guid;
+import com.edgedo.util.DateUtil;
+import org.apache.commons.collections.map.HashedMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class BigdataFenxiTeamWeekService {
+	
+	
+	@Autowired
+	private BigdataFenxiTeamWeekMapper mapper;
+	@Autowired
+	private BigdataFenxiTeamDayService bigdataFenxiTeamDayService;
+	@Autowired
+	private BigdataAlarmRecordService bigdataAlarmRecordService;
+	@Autowired
+	private BigdataSafetyWarningService bigdataSafetyWarningService;
+
+
+	
+	public List<BigdataFenxiTeamWeekView> listPage(BigdataFenxiTeamWeekQuery query){
+		List list = mapper.listPage(query);
+		query.setList(list);
+		return list;
+	}
+	
+	/***
+	 * 新增方法
+	 * @return
+	 */
+	public String insert(BigdataFenxiTeamWeek voObj) {
+		voObj.setId(Guid.guid());
+		mapper.insert(voObj);
+		return "";
+	}
+	
+	/***
+	 * 动态修改方法
+	 * @param
+	 * @return
+	 */
+	public String update(BigdataFenxiTeamWeek voObj) {
+		mapper.updateById(voObj);
+		return "";
+	}
+	
+	/***
+	 * 全修改
+	 * @param
+	 * @return
+	 */
+	public String updateAll(BigdataFenxiTeamWeek voObj) {
+		mapper.updateAllColumnById(voObj);
+		return "";
+	}
+	
+	
+	
+	/**
+	 * 单个删除
+	 * @param id
+	 */
+	public int delete(String id) {
+		
+		return mapper.deleteById(id);
+	}
+	
+	/**
+	 * 批量删除
+	 * @param ids
+	 */
+	public int deleteByIds(List<String> ids) {
+		
+		return mapper.deleteBatchIds(ids);
+	}
+	
+	
+	
+	/**
+	 * 加载单个
+	 * @param id
+	 */
+	public BigdataFenxiTeamWeek loadById(String id) {
+		return mapper.selectById(id);
+	}
+
+
+    public List<BigdataFenxiTeamWeek> selectByWeekAnQuanQianShi(String carType, String xianQuId, Integer timeChangeWeek) {
+    	return mapper.selectByWeekAnQuanQianShi( carType,  xianQuId,  timeChangeWeek);
+	}
+
+	public List<BigdataFenxiTeamWeek> selectByWeekAnQuanHouShi(String carType, String xianQuId, Integer timeChangeWeek) {
+		return mapper.selectByWeekAnQuanHouShi( carType,  xianQuId,  timeChangeWeek);
+	}
+
+	public List<BigdataFenxiTeamWeek> selectByWeekBaiGongLiQianShi(String carType, String xianQuId, Integer timeChangeWeek) {
+		return mapper.selectByWeekBaiGongLiQianShi( carType,  xianQuId,  timeChangeWeek);
+	}
+
+	public List<BigdataFenxiTeamWeek> selectByWeekBaiGongLiHouShi(String carType, String xianQuId, Integer timeChangeWeek) {
+		return mapper.selectByWeekBaiGongLiHouShi( carType,  xianQuId,  timeChangeWeek);
+	}
+
+	public BigdataFenxiTeamWeek selectById(BigdataFenxiTeamWeekQuery query){
+		return mapper.selectById(query);
+	}
+
+	public void insertOrUpdate(TransitCarTeam team, int weekYear, int weekOfYear, Date beginDate, Date endDate) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String beginDateStr = sdf.format(beginDate);
+		Integer countDate = Integer.parseInt(beginDateStr);
+		Integer countMonth = Integer.parseInt(beginDateStr)/100;
+		Map<String,Object> map = new HashedMap();
+		map.put("teamId",team.getId());
+		//统计该车的记录
+		BigdataFenxiTeamWeek bigdataFenxiTeamWeek = new BigdataFenxiTeamWeek();
+		bigdataFenxiTeamWeek.setId(Guid.guid());
+		bigdataFenxiTeamWeek.setProvinceId(team.getProvinceId());
+		bigdataFenxiTeamWeek.setProvinceName(team.getProvinceName());
+		bigdataFenxiTeamWeek.setCityId(team.getCityId());
+		bigdataFenxiTeamWeek.setCityName(team.getCityName());
+		bigdataFenxiTeamWeek.setXianquId(team.getXianquId());
+		bigdataFenxiTeamWeek.setXianquName(team.getXianquName());
+		bigdataFenxiTeamWeek.setTeamId(team.getId());
+		bigdataFenxiTeamWeek.setTeamName(team.getTeamName());
+		bigdataFenxiTeamWeek.setTeamType(team.getCompanyLevel());
+		bigdataFenxiTeamWeek.setTransitType(getTransitTypeText(team.getCompanyLevel()));
+		bigdataFenxiTeamWeek.setCountWeek(weekOfYear);
+		bigdataFenxiTeamWeek.setStartCountDate(beginDate);
+		bigdataFenxiTeamWeek.setEndCountDate(endDate);
+		bigdataFenxiTeamWeek.setCountDate(countDate);
+		bigdataFenxiTeamWeek.setCountMonth(countMonth);
+		bigdataFenxiTeamWeek.setYearNum(weekYear);
+		map.put("beginDate",beginDate);
+		map.put("endDate",endDate);
+		map.put("countMonth",countMonth);
+		map.put("yearNum",weekYear);
+		BigdataFenxiTeamWeek bigdataFenxiTeamWeek1 = bigdataFenxiTeamDayService.countMileageByWeek(map);
+		if(bigdataFenxiTeamWeek1==null){
+			bigdataFenxiTeamWeek1 = new BigdataFenxiTeamWeek();
+		}
+		BigDecimal runMileage = bigdataFenxiTeamWeek1.getRunMileage();
+		if(runMileage==null){
+			runMileage = new BigDecimal("0");
+		}
+		bigdataFenxiTeamWeek.setRunMileage(runMileage);
+		Integer runTimeLength = bigdataFenxiTeamWeek1.getRunTimeLength();
+		if(runTimeLength==null){
+			runTimeLength = 0;
+		}
+		//转为小时分
+		int hours = (int) Math.floor(runTimeLength / 60);
+		int minute = runTimeLength % 60;
+		String runTimeLengthText = hours+"小时"+minute+"分钟";
+		bigdataFenxiTeamWeek.setRunTimeLengthText(runTimeLengthText);
+		//转为小时
+		bigdataFenxiTeamWeek.setRunTimeLengthHour(new BigDecimal(runTimeLength).divide(new BigDecimal("60"),2, RoundingMode.HALF_UP));
+		bigdataFenxiTeamWeek.setRunTimeLength(runTimeLength);
+		Integer alarmNum = bigdataFenxiTeamWeek1.getAlarmNum();
+		if(alarmNum==null){
+			alarmNum = 0;
+		}
+		bigdataFenxiTeamWeek.setAlarmNum(alarmNum);
+		if(runMileage.compareTo(BigDecimal.ZERO)==0){
+			bigdataFenxiTeamWeek.setAlarmRate(new BigDecimal("0"));
+		}else {
+			bigdataFenxiTeamWeek.setAlarmRate(new BigDecimal(alarmNum).divide(runMileage,2, RoundingMode.HALF_UP));
+		}
+		//统计报警的数量
+		//报警信息周统计
+		List<AlarmVo> alarmVoList = new ArrayList<>();
+		List<AlarmVo> safetyWarningList = new ArrayList<>();
+		String teamTransitType = bigdataFenxiTeamWeek.getTransitType();
+//		if(teamTransitType!=null && !teamTransitType.equals("")){
+//			//分段限速
+//			alarmVoList = bigdataAlarmRecordService.countByTeamTransitType(map);
+//			//主动安全
+//			safetyWarningList = bigdataSafetyWarningService.countByTeamTransitType(map);
+//		}
+		//查询记录是否存在
+		BigdataFenxiTeamWeek bigdataFenxiTeamWeek3 = mapper.selectByFenqu(map);
+		if(bigdataFenxiTeamWeek3==null){
+			bigdataFenxiTeamWeek.setCreateTime(new Date());
+			mapper.insert(bigdataFenxiTeamWeek);
+		}else {
+			bigdataFenxiTeamWeek.setId(bigdataFenxiTeamWeek3.getId());
+			bigdataFenxiTeamWeek.setUpdateTime(new Date());
+			mapper.updateByfenPian(bigdataFenxiTeamWeek);
+		}
+		//分段限速报警统计
+//		for (AlarmVo a:alarmVoList){
+//			BigdataFenxiCarAlarmWeek bigdataFenxiCarAlarmWeek = new BigdataFenxiCarAlarmWeek();
+//			bigdataFenxiCarAlarmWeek.setOwnerCarDayId(bigdataFenxiCarWeek.getId());
+//			bigdataFenxiCarAlarmWeek.setAlarmNum(a.getAlarmNum());
+//			if(runMileage.compareTo(BigDecimal.ZERO)==0){
+//				bigdataFenxiCarAlarmWeek.setAlarmRate(new BigDecimal("0"));
+//			}else {
+//				bigdataFenxiCarAlarmWeek.setAlarmRate(new BigDecimal(a.getAlarmNum()).divide(runMileage,2, RoundingMode.HALF_UP));
+//			}
+//			bigdataFenxiCarAlarmWeek.setAlarmType(a.getAlarmType());
+//			bigdataFenxiCarAlarmWeek.setAlarmTypeDesc(getAlarmTypeDesc(a.getAlarmType()));
+//			bigdataFenxiCarAlarmWeek.setCountDate(countDate);
+//			bigdataFenxiCarAlarmWeek.setCountWeek(weekOfYear);
+//			bigdataFenxiCarAlarmWeek.setStartCountDate(beginDate);
+//			bigdataFenxiCarAlarmWeek.setEndCountDate(endDate);
+//			bigdataFenxiCarAlarmWeek.setCountMonth(countMonth);
+//			bigdataFenxiCarAlarmWeek.setYearNum(weekYear);
+//			bigdataFenxiCarAlarmWeekService.insertOrUpdate(bigdataFenxiCarAlarmWeek);
+//		}
+//		//主动安全报警统计
+//		for (AlarmVo a:safetyWarningList){
+//			BigdataFenxiCarAlarmWeek bigdataFenxiCarAlarmWeek = new BigdataFenxiCarAlarmWeek();
+//			bigdataFenxiCarAlarmWeek.setOwnerCarDayId(bigdataFenxiCarWeek.getId());
+//			bigdataFenxiCarAlarmWeek.setAlarmNum(a.getAlarmNum());
+//			if(runMileage.compareTo(BigDecimal.ZERO)==0){
+//				bigdataFenxiCarAlarmWeek.setAlarmRate(new BigDecimal("0"));
+//			}else {
+//				bigdataFenxiCarAlarmWeek.setAlarmRate(new BigDecimal(a.getAlarmNum()).divide(runMileage,2, RoundingMode.HALF_UP));
+//			}
+//			bigdataFenxiCarAlarmWeek.setAlarmType(getSafeType(a.getAlarmType()));
+//			bigdataFenxiCarAlarmWeek.setAlarmTypeDesc(a.getAlarmType());
+//			bigdataFenxiCarAlarmWeek.setCountDate(countDate);
+//			bigdataFenxiCarAlarmWeek.setCountWeek(weekOfYear);
+//			bigdataFenxiCarAlarmWeek.setStartCountDate(beginDate);
+//			bigdataFenxiCarAlarmWeek.setEndCountDate(endDate);
+//			bigdataFenxiCarAlarmWeek.setCountMonth(countMonth);
+//			bigdataFenxiCarAlarmWeek.setYearNum(weekYear);
+//			bigdataFenxiCarAlarmWeekService.insertOrUpdate(bigdataFenxiCarAlarmWeek);
+//		}
+	}
+
+	private String getTransitTypeText(String teamType){
+		if(teamType !=null && teamType.equals("TEAM_KY")){
+			return "客运";
+		}else if(teamType !=null && teamType.equals("TEAM_WXHWYS")){
+			return "危货";
+		}else{
+			return "普货";
+		}
+	}
+}

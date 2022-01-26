@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.SysOrgLevelRoleMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.SysOrgLevelRole" >
+			<id column="ID" property="id"/>
+			<result column="ROLE_NAME" property="roleName"/>
+			<result column="PARENT_ID" property="parentId"/>
+			<result column="IS_LEAF" property="isLeaf"/>
+			<result column="ORDER_NUMBER" property="orderNumber"/>
+			<result column="ROLE_HOME_PAGE" property="roleHomePage"/>
+			<result column="ROLE_HOME_PAGE_PATH" property="roleHomePagePath"/>
+			<result column="ROLE_HOME_PAGE_ID" property="roleHomePageId"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.SysOrgLevelRoleView" extends="BaseResultMap">
+
+    </resultMap>
+   	<resultMap id="CheckTreeMap" type="com.edgedo.common.base.CheckTreeObj">
+		<id column="ID" jdbcType="VARCHAR" property="id" />
+		<result column="TEXT" jdbcType="VARCHAR" property="text" />
+		<result column="IS_LEAF" jdbcType="INTEGER" property="isLeaf" />
+		<result column="PARENT_ID" jdbcType="INTEGER" property="parentId" />
+	</resultMap>
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, ROLE_NAME, PARENT_ID, IS_LEAF, ORDER_NUMBER, ROLE_HOME_PAGE, ROLE_HOME_PAGE_PATH, ROLE_HOME_PAGE_ID
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+  		<if test='queryObj != null and  queryObj.roleName != null and queryObj.roleName != ""'>
+			AND  ROLE_NAME like concat('%',#{queryObj.roleName},'%')
+		</if>
+		<if test='queryObj != null and  queryObj.orderNumber != null and queryObj.orderNumber != ""'>
+			AND  ORDER_NUMBER like concat('%',#{queryObj.orderNumber},'%')
+		</if>
+	
+		<!--准确查询-->
+		<if test='queryObj != null and  queryObj.id != null and queryObj.id != ""'>
+			AND  ID = #{queryObj.id}
+		</if>
+		<if test='queryObj != null and  queryObj.parentId != null and queryObj.parentId != ""'>
+			AND  PARENT_ID = #{queryObj.parentId}
+		</if>
+		<if test='queryObj != null and  queryObj.isLeaf != null and queryObj.isLeaf != ""'>
+			AND  IS_LEAF = #{queryObj.isLeaf}
+		</if>
+		<if test='queryObj != null and  queryObj.roleHomePage != null and queryObj.roleHomePage != ""'>
+			AND  ROLE_HOME_PAGE = #{queryObj.roleHomePage}
+		</if>
+		<if test='queryObj != null and  queryObj.roleHomePagePath != null and queryObj.roleHomePagePath != ""'>
+			AND  ROLE_HOME_PAGE_PATH = #{queryObj.roleHomePagePath}
+		</if>
+		<if test='queryObj != null and  queryObj.roleHomePageId != null and queryObj.roleHomePageId != ""'>
+			AND  ROLE_HOME_PAGE_ID = #{queryObj.roleHomePageId}
+		</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.SysOrgLevelRoleQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_org_level_role 
+  		<include refid="where"/> order by ORDER_NUMBER asc
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.SysOrgLevelRoleQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from sys_org_level_role 
+  		<include refid="where"/>  order by ORDER_NUMBER asc
+  </select>
+  <!-- 根据父节点获得角色子节点 -->
+	<select id="selectRoleForUserCheck" parameterType="map" resultMap="CheckTreeMap">
+		select role.ID ID,role.ROLE_NAME TEXT,role.IS_LEAF IS_LEAF,ur.USER_ID checked
+		from sys_org_level_role role left join sys_user_role ur on (role.ID=ur.ROLE_ID and ur.USER_ID=#{userId}) where PARENT_ID=#{parentId}
+
+	</select>
+
+	<!-- 根据用户id获得所有用户的角色id  -->
+	<select id="selectAllUserRolesByUserId" resultType="java.lang.String" resultMap="BaseResultViewMap">
+		  select <include refid="Base_Column_List"/> from sys_org_level_role where EXISTS (select ROLE_ID from sys_user_role where sys_user_role.USER_ID=#{userId} and sys_org_level_role.ID=sys_user_role.ROLE_ID)
+	</select>
+
+
+	<!-- 根据id查询角色  -->
+	<select id="selectUserRoleByParentId" resultType="java.lang.String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from sys_org_level_role where PARENT_ID = #{parentId}
+	</select>
+
+  
+</mapper>

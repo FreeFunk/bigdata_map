@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataFenxiCountMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataFenxiCount" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="UPDATE_TIME" property="updateTime"/>
+			<result column="ALARM_CAR_NUM" property="alarmCarNum"/>
+			<result column="ALARM_EMP_NUM" property="alarmEmpNum"/>
+			<result column="ALARM_COMP_NUM" property="alarmCompNum"/>
+			<result column="RUN_MILEAGE" property="runMileage"/>
+			<result column="RUN_TIME_LENGTH_HOUR" property="runTimeLengthHour"/>
+			<result column="COMMON_ALARM_NUM" property="commonAlarmNum"/>
+			<result column="COMMON_HANDLE_NUM" property="commonHandleNum"/>
+			<result column="SAFE_ALARM_NUM" property="safeAlarmNum"/>
+			<result column="SAFE_HANDLE_NUM" property="safeHandleNum"/>
+			<result column="PROVINCE_ID" property="provinceId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_ID" property="cityId"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="XIANQU_ID" property="xianquId"/>
+			<result column="XIANQU_NAME" property="xianquName"/>
+			<result column="COUNT_TYPE" property="countType"/>
+			<result column="TIME_TYPE" property="timeType"/>
+			<result column="COUNT_WEEK" property="countWeek"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="YEAR_NUM" property="yearNum"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataFenxiCountView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, UPDATE_TIME, ALARM_CAR_NUM, ALARM_EMP_NUM, ALARM_COMP_NUM, RUN_MILEAGE, RUN_TIME_LENGTH_HOUR, COMMON_ALARM_NUM, COMMON_HANDLE_NUM, SAFE_ALARM_NUM, SAFE_HANDLE_NUM, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, XIANQU_ID, XIANQU_NAME, COUNT_TYPE, TIME_TYPE, COUNT_WEEK, CAR_TYPE, COUNT_DATE, COUNT_MONTH, YEAR_NUM
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.updateTime != null'>
+					AND  UPDATE_TIME = #{queryObj.updateTime}
+				</if>
+				<if test='queryObj != null and  queryObj.alarmCarNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.alarmCarNum)'>
+					AND  ALARM_CAR_NUM = #{queryObj.alarmCarNum}
+				</if>
+				<if test='queryObj != null and  queryObj.alarmEmpNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.alarmEmpNum)'>
+					AND  ALARM_EMP_NUM = #{queryObj.alarmEmpNum}
+				</if>
+				<if test='queryObj != null and  queryObj.alarmCompNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.alarmCompNum)'>
+					AND  ALARM_COMP_NUM = #{queryObj.alarmCompNum}
+				</if>
+				<if test='queryObj != null and  queryObj.commonAlarmNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.commonAlarmNum)'>
+					AND  COMMON_ALARM_NUM = #{queryObj.commonAlarmNum}
+				</if>
+				<if test='queryObj != null and  queryObj.commonHandleNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.commonHandleNum)'>
+					AND  COMMON_HANDLE_NUM = #{queryObj.commonHandleNum}
+				</if>
+				<if test='queryObj != null and  queryObj.safeAlarmNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.safeAlarmNum)'>
+					AND  SAFE_ALARM_NUM = #{queryObj.safeAlarmNum}
+				</if>
+				<if test='queryObj != null and  queryObj.safeHandleNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.safeHandleNum)'>
+					AND  SAFE_HANDLE_NUM = #{queryObj.safeHandleNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countWeek != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countWeek)'>
+					AND  COUNT_WEEK = #{queryObj.countWeek}
+				</if>
+				<if test='queryObj != null and  queryObj.countDate != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countDate)'>
+					AND  COUNT_DATE = #{queryObj.countDate}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.yearNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.yearNum)'>
+					AND  YEAR_NUM = #{queryObj.yearNum}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiCountQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fenxi_count 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataFenxiCountQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_fenxi_count 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectByCarTypeAndXianQuIdAndTimeCount" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		<where>
+			<if test='carType != "总"'>
+                AND CAR_TYPE = #{carType}
+			</if>
+			<if test='xianQuId == "130300"'>
+                AND CITY_ID = #{xianQuId}
+			</if>
+			<if test='xianQuId != "130300"'>
+                AND XIANQU_ID = #{xianQuId}
+			</if>
+            and COUNT_MONTH=#{dateNum} and TIME_TYPE=#{timeType}
+		</where>
+	</select>
+
+	<select id="selectByDay" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		<where>
+			<if test='carType != "总"'>
+				AND CAR_TYPE = #{carType}
+			</if>
+			<if test='xianQuId == "130300"'>
+				AND CITY_ID = #{xianQuId}
+			</if>
+			<if test='xianQuId != "130300"'>
+				AND XIANQU_ID = #{xianQuId}
+			</if>
+			and TIME_TYPE=#{timeType} and COUNT_DATE=#{timeCount}
+		</where>
+	</select>
+
+	<select id="selectByWeek" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		<where>
+			<if test='carType != "总"'>
+				AND CAR_TYPE = #{carType}
+			</if>
+			<if test='xianQuId == "130300"'>
+				AND CITY_ID = #{xianQuId}
+			</if>
+			<if test='xianQuId != "130300"'>
+				AND XIANQU_ID = #{xianQuId}
+			</if>
+			and TIME_TYPE=#{timeType} and COUNT_WEEK=#{timeChangeWeek} and YEAR_NUM=#{timeChangeAge}
+		</where>
+	</select>
+
+	<select id="selectByMonth" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		<where>
+			<if test='carType != "总"'>
+				AND CAR_TYPE = #{carType}
+			</if>
+			<if test='xianQuId == "130300"'>
+				AND CITY_ID = #{xianQuId}
+			</if>
+			<if test='xianQuId != "130300"'>
+				AND XIANQU_ID = #{xianQuId}
+			</if>
+			and TIME_TYPE=#{timeType} and COUNT_MONTH=#{timeCount}
+		</where>
+	</select>
+
+	<select id="selectByTime" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		<where>
+			<if test='carType != "总"'>
+				AND CAR_TYPE = #{carType}
+			</if>
+			<if test='xianQuId == "130300"'>
+				AND CITY_ID = #{xianQuId}
+			</if>
+			<if test='xianQuId != "130300"'>
+				AND XIANQU_ID = #{xianQuId}
+			</if>
+			and TIME_TYPE=#{timeType} and COUNT_DATE BETWEEN #{bettTime} AND #{currTime} ORDER BY COUNT_DATE ASC
+		</where>
+	</select>
+
+	<select id="selectByTimeMonth" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		<where>
+			<if test='carType != "总"'>
+				AND CAR_TYPE = #{carType}
+			</if>
+			<if test='xianQuId == "130300"'>
+				AND CITY_ID = #{xianQuId}
+			</if>
+			<if test='xianQuId != "130300"'>
+				AND XIANQU_ID = #{xianQuId}
+			</if>
+			and TIME_TYPE=#{timeType} and COUNT_DATE BETWEEN #{firstArr} AND #{lastArr} ORDER BY COUNT_DATE ASC
+		</where>
+	</select>
+
+	<select id="selectAll" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		where COUNT_DATE=#{countDay} and COUNT_MONTH=#{countMonth} and YEAR_NUM=#{yearNum} and COUNT_TYPE=#{countType} AND CAR_TYPE != '总'
+	</select>
+
+	<select id="selectXianQuAndTimeAll" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		where XIANQU_NAME=#{xianQu} and COUNT_TYPE=#{countType}
+		  and COUNT_DATE &gt;= #{startTime} and COUNT_DATE &lt;= #{endTime} and TIME_TYPE=#{timeType} AND CAR_TYPE = '总'
+	</select>
+
+	<select id="selectCityAndTimeAll" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		where COUNT_TYPE=#{city} and COUNT_DATE &gt;= #{startTime} and COUNT_DATE &lt;= #{endTime} and TIME_TYPE=#{timeType} AND CAR_TYPE = '总'
+	</select>
+
+	<select id="selectXianQuAndTime" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		where XIANQU_NAME=#{xianQu} and COUNT_TYPE=#{countType}
+		  and COUNT_DATE &gt;= #{startTime} and COUNT_DATE &lt;= #{endTime} and TIME_TYPE=#{timeType} AND CAR_TYPE != '总'
+	</select>
+
+	<select id="selectCityAndTime" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		where COUNT_TYPE=#{city} and COUNT_DATE &gt;= #{startTime} and COUNT_DATE &lt;= #{endTime} and TIME_TYPE=#{timeType} AND CAR_TYPE != '总'
+	</select>
+
+	<select id="selectXianQuAndMonth" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		where XIANQU_NAME=#{xianQu} and COUNT_TYPE=#{countType}
+		  and YEAR_NUM=#{yearNum} and COUNT_MONTH=#{countMonth} and TIME_TYPE=#{timeType} AND CAR_TYPE = '总'
+	</select>
+
+	<select id="selectCityAndMonth" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		where COUNT_TYPE=#{city}
+		and YEAR_NUM=#{yearNum} and COUNT_MONTH=#{countMonth} and TIME_TYPE=#{timeType} AND CAR_TYPE = '总'
+	</select>
+
+	<select id="selectXianQuAndMonthAll" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		where XIANQU_NAME=#{xianQu} and COUNT_TYPE=#{countType}
+		and YEAR_NUM=#{yearNum} and COUNT_MONTH=#{countMonth} and TIME_TYPE=#{timeType} AND CAR_TYPE != '总'
+	</select>
+
+	<select id="selectCityAndMonthAll" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from bigdata_fenxi_count
+		where COUNT_TYPE=#{city}
+		and YEAR_NUM=#{yearNum} and COUNT_MONTH=#{countMonth} and TIME_TYPE=#{timeType} AND CAR_TYPE != '总'
+	</select>
+
+	<select id="selectByInfo" resultType="java.lang.Integer">
+		select count(1) from bigdata_fenxi_count
+		where COUNT_TYPE=#{countType}
+		and YEAR_NUM=#{yearNum} and COUNT_MONTH=#{countMonth} and COUNT_DATE=#{countDay} and TIME_TYPE=#{timeType} and  CAR_TYPE=#{carType}
+	</select>
+
+	<update id="updateByInfo" parameterType="com.edgedo.bigdata.entity.BigdataFenxiCount">
+		update bigdata_fenxi_count
+		<set>
+			UPDATE_TIME=#{updateTime},
+            ALARM_CAR_NUM=#{alarmCarNum},
+            ALARM_COMP_NUM=#{alarmCompNum},
+            RUN_MILEAGE=#{runMileage},
+            RUN_TIME_LENGTH_HOUR=#{runTimeLengthHour},
+            COMMON_ALARM_NUM=#{commonAlarmNum},
+            COMMON_HANDLE_NUM=#{commonHandleNum},
+            SAFE_ALARM_NUM=#{safeAlarmNum},
+            SAFE_HANDLE_NUM=#{safeHandleNum},
+		</set>
+		where
+			COUNT_DATE=#{countDate} and COUNT_MONTH=#{countMonth}
+            <if test='countType == "XIANQU"'>
+                AND XIANQU_ID = #{xianquId}
+            </if>
+            <if test='countType == "CITY"'>
+                AND CITY_ID = #{cityId}
+            </if>
+
+		  and YEAR_NUM=#{yearNum} AND CAR_TYPE=#{carType}
+          AND TIME_TYPE=#{timeType}
+	</update>
+
+</mapper>

@@ -1,0 +1,170 @@
+package com.edgedo.bigdata.controller;
+
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.edgedo.bigdata.entity.BigdataFenxiCarMonth;
+import com.edgedo.common.base.BaseController;
+import com.edgedo.bigdata.entity.BigdataFenxiCarWeek;
+import com.edgedo.bigdata.queryvo.BigdataFenxiCarWeekQuery;
+import com.edgedo.bigdata.service.BigdataFenxiCarWeekService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+
+@Api(tags = "BigdataFenxiCarWeek")
+@Controller
+@RequestMapping("/admin/bigdataFenxiCarWeek")
+public class BigdataFenxiCarWeekController extends BaseController{
+
+	@Autowired
+	private BigdataFenxiCarWeekService service;
+
+	/**
+	 * 分页查询
+	 * @param query
+	 * @return
+	 */
+	@ApiOperation(value = "分页查询BigdataFenxiCarWeek", notes = "分页查询BigdataFenxiCarWeek")
+	@ApiImplicitParam(name = "access-token", value = "用户登录秘钥", paramType = "header", required = true, dataType = "String")
+	@RequestMapping(value = "/listpage",method = RequestMethod.POST)
+	public ModelAndView listpage(@ModelAttribute BigdataFenxiCarWeekQuery query){
+		ModelAndView modelAndView = new ModelAndView();
+		service.listPage(query);
+		buildResponse(modelAndView,query);
+		return modelAndView;
+	}
+
+
+	/**
+	 * 新增修改
+	 * @param voObj
+	 * @return
+	 */
+	@ApiOperation(value = "新增修改BigdataFenxiCarWeek", notes = "新增修改BigdataFenxiCarWeek")
+	@ApiImplicitParam(name = "access-token", value = "用户登录秘钥", paramType = "header", required = true, dataType = "String")
+	@RequestMapping(value = "/saveOrUpdate",method = RequestMethod.POST)
+	public ModelAndView saveOrUpdate(BigdataFenxiCarWeek voObj){
+		ModelAndView modelAndView = new ModelAndView();
+		String errMsg = "";
+		String id = voObj.getId();
+		if(id==null || id.trim().equals("")){
+			errMsg = service.insert(voObj);
+		}else{
+			errMsg = service.update(voObj);
+		}
+		if(errMsg!=null && !errMsg.equals("")){
+			buildErrorResponse(modelAndView, errMsg);
+		}else{
+			buildResponse(modelAndView);
+		}
+		return modelAndView;
+	}
+
+
+	/**
+	 * 批量删除
+	 * @param ids
+	 * @return
+	 */
+	@ApiOperation(value = "根据ID批量删除BigdataFenxiCarWeek", notes = "根据ID批量删除BigdataFenxiCarWeek")
+	@ApiImplicitParam(name = "access-token", value = "用户登录秘钥", paramType = "header", required = true, dataType = "String")
+	@RequestMapping(value = "/deleteByIds",method = RequestMethod.POST)
+	public ModelAndView delete(String ids){
+		ModelAndView modelAndView = new ModelAndView();
+		String[] arr = ids.split(",");
+		List<String> list = new ArrayList<String>();
+		for(String str : arr){
+			list.add(str);
+		}
+		service.deleteByIds(list);
+		return buildResponse(modelAndView);
+	}
+
+
+	/**
+	 * 根据主键加载
+	 * @param id
+	 * @return
+	 */
+	@ApiOperation(value = "根据ID加载BigdataFenxiCarWeek", notes = "根据ID加载BigdataFenxiCarWeek")
+	@ApiImplicitParam(name = "access-token", value = "用户登录秘钥", paramType = "header", required = true, dataType = "String")
+	@RequestMapping(value = "/loadById",method = RequestMethod.POST)
+	public ModelAndView  loadById(String id){
+		ModelAndView modelAndView = new ModelAndView();
+		return buildResponse(modelAndView, service.loadById(id));
+	}
+
+	/**
+	 * 初始化安全评分
+	 * @return
+	 */
+	@RequestMapping(value = "/selectAnQuanPingFen",method = RequestMethod.POST)
+	public ModelAndView  selectAnQuanPingFen(String carType,String xianQuId,Integer timeCount,
+											 String timeChangeAge,String timeChangeWeek,Integer countMonth,String timeType){
+		//2.周  -- 对应县区  对应车辆类型  统计时间类型 第几周 年份 WEEK   ->list   升序(后十名) 降序(前十名)
+		ModelAndView modelAndView = new ModelAndView();
+		Map<String,Object> map = new HashMap<>();
+		if(timeChangeWeek.indexOf("@@")==-1){//当前周  第37周 201909  201908
+			List<BigdataFenxiCarWeek> listQianShi = service.selectByWeekQianShi(carType,xianQuId,new Integer(timeChangeAge),new Integer(timeChangeWeek),countMonth);
+			List<BigdataFenxiCarWeek> listHouShi = service.selectByWeekHouShi(carType,xianQuId,new Integer(timeChangeAge),new Integer(timeChangeWeek),countMonth);
+			List<String> carNumQianShiList = new ArrayList<>();
+			List<BigDecimal> scoreQianShiList = new ArrayList<>();
+			List<String> carNumHouShiList = new ArrayList<>();
+			List<BigDecimal> scoreHouShiList = new ArrayList<>();
+			for(BigdataFenxiCarWeek bigdataFenxiCarWeek : listQianShi){
+				carNumQianShiList.add(bigdataFenxiCarWeek.getCarPlateNum());
+				scoreQianShiList.add(bigdataFenxiCarWeek.getSafeScore());
+			}
+			for(BigdataFenxiCarWeek bigdataFenxiCarWeek : listHouShi){
+				carNumHouShiList.add(bigdataFenxiCarWeek.getCarPlateNum());
+				scoreHouShiList.add(bigdataFenxiCarWeek.getSafeScore());
+			}
+
+			map.put("carNumQianShiList",carNumQianShiList);
+			map.put("scoreQianShiList",scoreQianShiList);
+			map.put("carNumHouShiList",carNumHouShiList);
+			map.put("scoreHouShiList",scoreHouShiList);
+			return buildResponse(modelAndView, map);
+
+
+		}else {//第37周@@20190912-20190912
+			String[] str = timeChangeWeek.split("@@");
+			String[] str1 = str[0].split("");
+			List<BigdataFenxiCarWeek> listQianShi = service.selectByWeekQianShi(carType,xianQuId,new Integer(timeChangeAge),new Integer(str1[1]+str1[2]),countMonth);
+			List<BigdataFenxiCarWeek> listHouShi = service.selectByWeekHouShi(carType,xianQuId,new Integer(timeChangeAge),new Integer(str1[1]+str1[2]),countMonth);
+			List<String> carNumQianShiList = new ArrayList<>();
+			List<BigDecimal> scoreQianShiList = new ArrayList<>();
+			List<String> carNumHouShiList = new ArrayList<>();
+			List<BigDecimal> scoreHouShiList = new ArrayList<>();
+			for(BigdataFenxiCarWeek bigdataFenxiCarWeek : listQianShi){
+				carNumQianShiList.add(bigdataFenxiCarWeek.getCarPlateNum());
+				scoreQianShiList.add(bigdataFenxiCarWeek.getSafeScore());
+			}
+			for(BigdataFenxiCarWeek bigdataFenxiCarWeek : listHouShi){
+				carNumHouShiList.add(bigdataFenxiCarWeek.getCarPlateNum());
+				scoreHouShiList.add(bigdataFenxiCarWeek.getSafeScore());
+			}
+
+			map.put("carNumQianShiList",carNumQianShiList);
+			map.put("scoreQianShiList",scoreQianShiList);
+			map.put("carNumHouShiList",carNumHouShiList);
+			map.put("scoreHouShiList",scoreHouShiList);
+			return buildResponse(modelAndView, map);
+		}
+
+	}
+	
+	
+}

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.bigdata.mapper.BigdataOverspeedAnalysisMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.bigdata.entity.BigdataOverspeedAnalysis" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="HIGH_OVERSPEED_MILEAGE" property="highOverspeedMileage"/>
+			<result column="HIGH_OVERSPEED_TIME" property="highOverspeedTime"/>
+			<result column="HIGH_OVERSPEED_NUM" property="highOverspeedNum"/>
+			<result column="HIGH_SERIOUS_OVERSPEED_MILEAGE" property="highSeriousOverspeedMileage"/>
+			<result column="HIGH_SERIOUS_OVERSPEED_TIME" property="highSeriousOverspeedTime"/>
+			<result column="HIGH_SERIOUS_OVERSPEED_NUM" property="highSeriousOverspeedNum"/>
+			<result column="HIGH_NIGHT_OVERSPEED_MILEAGE" property="highNightOverspeedMileage"/>
+			<result column="HIGH_NIGHT_OVERSPEED_TIME" property="highNightOverspeedTime"/>
+			<result column="HIGH_NIGHT_OVERSPEED_NUM" property="highNightOverspeedNum"/>
+			<result column="NATIONAL_OVERSPEED_MILEAGE" property="nationalOverspeedMileage"/>
+			<result column="NATIONAL_OVERSPEED_TIME" property="nationalOverspeedTime"/>
+			<result column="NATIONAL_OVERSPEED_NUM" property="nationalOverspeedNum"/>
+			<result column="NATIONAL_SERIOUS_OVERSPEED_MILEAGE" property="nationalSeriousOverspeedMileage"/>
+			<result column="NATIONAL_SERIOUS_OVERSPEED_TIME" property="nationalSeriousOverspeedTime"/>
+			<result column="NATIONAL_SERIOUS_OVERSPEED_NUM" property="nationalSeriousOverspeedNum"/>
+			<result column="NATIONAL_NIGHT_OVERSPEED_MILEAGE" property="nationalNightOverspeedMileage"/>
+			<result column="NATIONAL_NIGHT_OVERSPEED_TIME" property="nationalNightOverspeedTime"/>
+			<result column="NATIONAL_NIGHT_OVERSPEED_NUM" property="nationalNightOverspeedNum"/>
+			<result column="OTHER_OVERSPEED_MILEAGE" property="otherOverspeedMileage"/>
+			<result column="OTHER_OVERSPEED_TIME" property="otherOverspeedTime"/>
+			<result column="OTHER_OVERSPEED_NUM" property="otherOverspeedNum"/>
+			<result column="OTHER_SERIOUS_OVERSPEED_MILEAGE" property="otherSeriousOverspeedMileage"/>
+			<result column="OTHER_SERIOUS_OVERSPEED_TIME" property="otherSeriousOverspeedTime"/>
+			<result column="OTHER_SERIOUS_OVERSPEED_NUM" property="otherSeriousOverspeedNum"/>
+			<result column="OTHER_NIGHT_OVERSPEED_MILEAGE" property="otherNightOverspeedMileage"/>
+			<result column="OTHER_NIGHT_OVERSPEED_TIME" property="otherNightOverspeedTime"/>
+			<result column="OTHER_NIGHT_OVERSPEED_NUM" property="otherNightOverspeedNum"/>
+			<result column="SUM_OVERSPEED_MILEAGE" property="sumOverspeedMileage"/>
+			<result column="SUM_OVERSPEED_TIME" property="sumOverspeedTime"/>
+			<result column="SUM_OVERSPEED_NUM" property="sumOverspeedNum"/>
+			<result column="SUM_SERIOUS_OVERSPEED_MILEAGE" property="sumSeriousOverspeedMileage"/>
+			<result column="SUM_SERIOUS_OVERSPEED_TIME" property="sumSeriousOverspeedTime"/>
+			<result column="SUM_SERIOUS_OVERSPEED_NUM" property="sumSeriousOverspeedNum"/>
+			<result column="SUM_NIGHT_OVERSPEED_MILEAGE" property="sumNightOverspeedMileage"/>
+			<result column="SUM_NIGHT_OVERSPEED_TIME" property="sumNightOverspeedTime"/>
+			<result column="SUM_NIGHT_OVERSPEED_NUM" property="sumNightOverspeedNum"/>
+			<result column="NATIONAL_OVERSPEED_RATE" property="nationalOverspeedRate"/>
+			<result column="NATIONAL_OVERSPEED_FlAG" property="nationaloverspeedflAg"/>
+			<result column="HIGH_OVERSPEED_RATE" property="highOverspeedRate"/>
+			<result column="HIGH_OVERSPEED_FlAG" property="highoverspeedflAg"/>
+			<result column="OTHER_OVERSPEED_RATE" property="otherOverspeedRate"/>
+			<result column="OTHER_OVERSPEED_FlAG" property="otheroverspeedflAg"/>
+			<result column="SERIOUS_OVERSPEED_RATE" property="seriousOverspeedRate"/>
+			<result column="SERIOUS_OVERSPEED_FlAG" property="seriousoverspeedflAg"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="COUNT_TIME" property="countTime"/>
+			<result column="COUNT_DATE" property="countDate"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.bigdata.queryvo.BigdataOverspeedAnalysisView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	ID, CREATE_TIME, HIGH_OVERSPEED_MILEAGE, HIGH_OVERSPEED_TIME, HIGH_OVERSPEED_NUM, HIGH_SERIOUS_OVERSPEED_MILEAGE,
+	HIGH_SERIOUS_OVERSPEED_TIME, HIGH_SERIOUS_OVERSPEED_NUM, HIGH_NIGHT_OVERSPEED_MILEAGE, HIGH_NIGHT_OVERSPEED_TIME,
+	HIGH_NIGHT_OVERSPEED_NUM, NATIONAL_OVERSPEED_MILEAGE, NATIONAL_OVERSPEED_TIME, NATIONAL_OVERSPEED_NUM,
+	NATIONAL_SERIOUS_OVERSPEED_MILEAGE, NATIONAL_SERIOUS_OVERSPEED_TIME, NATIONAL_SERIOUS_OVERSPEED_NUM,
+	NATIONAL_NIGHT_OVERSPEED_MILEAGE, NATIONAL_NIGHT_OVERSPEED_TIME, NATIONAL_NIGHT_OVERSPEED_NUM, OTHER_OVERSPEED_MILEAGE,
+	OTHER_OVERSPEED_TIME, OTHER_OVERSPEED_NUM, OTHER_SERIOUS_OVERSPEED_MILEAGE, OTHER_SERIOUS_OVERSPEED_TIME,
+	OTHER_SERIOUS_OVERSPEED_NUM, OTHER_NIGHT_OVERSPEED_MILEAGE, OTHER_NIGHT_OVERSPEED_TIME, OTHER_NIGHT_OVERSPEED_NUM,
+	SUM_OVERSPEED_MILEAGE, SUM_OVERSPEED_TIME, SUM_OVERSPEED_NUM, SUM_SERIOUS_OVERSPEED_MILEAGE, SUM_SERIOUS_OVERSPEED_TIME,
+	SUM_SERIOUS_OVERSPEED_NUM, SUM_NIGHT_OVERSPEED_MILEAGE, SUM_NIGHT_OVERSPEED_TIME, SUM_NIGHT_OVERSPEED_NUM, NATIONAL_OVERSPEED_RATE,
+	NATIONAL_OVERSPEED_FlAG, HIGH_OVERSPEED_RATE, HIGH_OVERSPEED_FlAG, OTHER_OVERSPEED_RATE, OTHER_OVERSPEED_FlAG, SERIOUS_OVERSPEED_RATE,
+	SERIOUS_OVERSPEED_FlAG, CAR_TYPE, COUNT_TIME,COUNT_DATE,COUNT_MONTH
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.highOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.highOverspeedNum)'>
+					AND  HIGH_OVERSPEED_NUM = #{queryObj.highOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.highSeriousOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.highSeriousOverspeedNum)'>
+					AND  HIGH_SERIOUS_OVERSPEED_NUM = #{queryObj.highSeriousOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.highNightOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.highNightOverspeedNum)'>
+					AND  HIGH_NIGHT_OVERSPEED_NUM = #{queryObj.highNightOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.nationalOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.nationalOverspeedNum)'>
+					AND  NATIONAL_OVERSPEED_NUM = #{queryObj.nationalOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.nationalSeriousOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.nationalSeriousOverspeedNum)'>
+					AND  NATIONAL_SERIOUS_OVERSPEED_NUM = #{queryObj.nationalSeriousOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.nationalNightOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.nationalNightOverspeedNum)'>
+					AND  NATIONAL_NIGHT_OVERSPEED_NUM = #{queryObj.nationalNightOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.otherOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.otherOverspeedNum)'>
+					AND  OTHER_OVERSPEED_NUM = #{queryObj.otherOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.otherSeriousOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.otherSeriousOverspeedNum)'>
+					AND  OTHER_SERIOUS_OVERSPEED_NUM = #{queryObj.otherSeriousOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.otherNightOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.otherNightOverspeedNum)'>
+					AND  OTHER_NIGHT_OVERSPEED_NUM = #{queryObj.otherNightOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.sumOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sumOverspeedNum)'>
+					AND  SUM_OVERSPEED_NUM = #{queryObj.sumOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.sumSeriousOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sumSeriousOverspeedNum)'>
+					AND  SUM_SERIOUS_OVERSPEED_NUM = #{queryObj.sumSeriousOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.sumNightOverspeedNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sumNightOverspeedNum)'>
+					AND  SUM_NIGHT_OVERSPEED_NUM = #{queryObj.sumNightOverspeedNum}
+				</if>
+				<if test='queryObj != null and  queryObj.countTime != null'>
+					AND  COUNT_TIME = #{queryObj.countTime}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.bigdata.queryvo.BigdataOverspeedAnalysisQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_overspeed_analysis 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.bigdata.queryvo.BigdataOverspeedAnalysisQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from bigdata_overspeed_analysis 
+  		<include refid="where"/>
+  </select>
+
+	<!--首页获取超速分析的数据-->
+	<select id="getOverspeedAnalysisData" parameterType="com.edgedo.bigdata.queryvo.BigdataOverspeedAnalysisQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_overspeed_analysis
+		WHERE CAR_TYPE = #{queryObj.carType}
+		AND date_format(COUNT_TIME,'%Y%m%d') = date_format(#{queryObj.countTime},'%Y%m%d') limit 1
+	</select>
+
+
+    <!--获取超速分析页面的柱状图数据-->
+    <select id="getOverspeedEchartsData" parameterType="com.edgedo.bigdata.queryvo.BigdataOverspeedAnalysisQuery" resultMap="BaseResultViewMap">
+        select <include refid="Base_Column_List"/> from bigdata_overspeed_analysis
+        WHERE CAR_TYPE = #{queryObj.carType}
+        AND date_format(COUNT_TIME,'%Y%m%d') >= date_format(#{startDate},'%Y%m%d')
+        AND date_format(COUNT_TIME,'%Y%m%d') &lt;= date_format(#{queryObj.countTime},'%Y%m%d')
+        order BY COUNT_TIME ASC
+    </select>
+
+
+	<select id="getVoByQuery" parameterType="com.edgedo.bigdata.entity.BigdataOverspeedAnalysis" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from bigdata_overspeed_analysis
+		WHERE CAR_TYPE = #{carType}
+		AND date_format(COUNT_TIME,'%Y%m%d') = date_format(#{countTime},'%Y%m%d')
+	</select>
+
+
+	<!--   分组统计月度的超速分析 -->
+	<select id="selectSumGroupByCarTypeMonth" parameterType="int" resultMap="BaseResultMap">
+		select
+		sum(SUM_OVERSPEED_MILEAGE) SUM_OVERSPEED_MILEAGE,
+		sum(SUM_OVERSPEED_TIME) SUM_OVERSPEED_TIME,
+		sum(SUM_OVERSPEED_NUM) SUM_OVERSPEED_NUM,
+		sum(SUM_SERIOUS_OVERSPEED_MILEAGE) SUM_SERIOUS_OVERSPEED_MILEAGE ,
+		sum(SUM_SERIOUS_OVERSPEED_TIME) SUM_SERIOUS_OVERSPEED_TIME,
+		sum(SUM_SERIOUS_OVERSPEED_NUM) SUM_SERIOUS_OVERSPEED_NUM,
+		sum(SUM_NIGHT_OVERSPEED_MILEAGE) SUM_NIGHT_OVERSPEED_MILEAGE,
+		sum(SUM_NIGHT_OVERSPEED_TIME) SUM_NIGHT_OVERSPEED_TIME,
+		sum(SUM_NIGHT_OVERSPEED_NUM) SUM_NIGHT_OVERSPEED_NUM,
+		CAR_TYPE from bigdata_overspeed_analysis
+		where COUNT_MONTH=#{countMonth} group by CAR_TYPE
+	</select>
+
+
+
+  
+  
+</mapper>

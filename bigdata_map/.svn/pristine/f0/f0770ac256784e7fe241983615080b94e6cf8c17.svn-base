@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通区块链北斗大数据分析平台</title>
+
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.min.js"></script><script type="text/javascript" src="js/jquery.SuperSlide.2.1.js"></script>   
+   	 
+
+</head> 
+<body>
+
+<div class="tabBar" style="margin:0 auto">
+		<div class="hd">
+			<ul>
+				<li>分段限速报警<em style="color: #ff0000 !important; margin-left: 8px">215</em><i class="iconfont icon-jiantouarrow499 hs"></i></li>
+				<li>主动安全预警<em style="color: #ff0000 !important; margin-left: 8px">215</em><i class="iconfont icon-jiantouarrow499 hs"></i></li>
+
+			</ul>
+		</div>
+		<div class="bd">
+
+				<div class="conWrap">
+
+							<div class="con" style="padding: 0px;">
+								<iframe src="a.html" scrolling="no" frameborder="0" width="100%" height="260px"></iframe>
+							</div>
+							<div class="con" style="padding: 0px;">
+								<iframe src="b.html" scrolling="no" frameborder="0" width="100%" height="260px"></iframe>
+							</div>
+							
+
+				</div>
+		
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+	jQuery(".tabBar").slide({ mainCell:".conWrap", effect:"left", trigger:"click", pnLoop:false });
+	</script>
+
+</body>
+</html>

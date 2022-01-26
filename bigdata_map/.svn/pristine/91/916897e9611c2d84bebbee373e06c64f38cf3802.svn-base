@@ -1,0 +1,1711 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>秦皇岛市智慧交通北斗大数据分析平台</title>
+<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font/iconfont.css" rel="stylesheet" type="text/css" />
+ <link rel="stylesheet" type="text/css" href="dialog/index_files/flavr0.css">
+
+<link rel="stylesheet" type="text/css" href="css/datedropper.css">
+<link rel="stylesheet" type="text/css" href="css/timedropper.min.css">
+    
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.SuperSlide.2.1.js"></script>
+
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script src="js/layer/layer.js"></script>
+
+    <script src="js/tool.js"></script>
+</head>
+
+<body>
+
+<div class="top" >
+    <div class="top_r">
+        <div class="time" style="margin-left: 150px">
+
+
+            <input type="hidden" class="input_rl " id="pickdate" style="width:150px; height: 48px; margin-right: 10px; " />
+				<span id=localtime></span>
+                <script type="text/javascript">
+					function showLocale(objD){
+						var str,colorhead,colorfoot;
+						var yy = objD.getYear();
+						if(yy<1900) yy = yy+1900;
+						var MM = objD.getMonth()+1;
+						if(MM<10) MM = '0' + MM;
+						var dd = objD.getDate();
+						if(dd<10) dd = '0' + dd;
+						var hh = objD.getHours();
+						if(hh<10) hh = '0' + hh;
+						var mm = objD.getMinutes();
+						if(mm<10) mm = '0' + mm;
+						var ss = objD.getSeconds();
+						if(ss<10) ss = '0' + ss;
+						var ww = objD.getDay();
+						if  ( ww==0 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww > 0 && ww < 6 )  colorhead="<font color=\"#35afbd\">";
+						if  ( ww==6 )  colorhead="<font color=\"#35afbd\">";
+						if  (ww==0)  ww="星期日";
+						if  (ww==1)  ww="星期一";
+						if  (ww==2)  ww="星期二";
+						if  (ww==3)  ww="星期三";
+						if  (ww==4)  ww="星期四";
+						if  (ww==5)  ww="星期五";
+						if  (ww==6)  ww="星期六";
+						colorfoot="</font>"
+						str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww + colorfoot;
+						return(str);
+					}
+					
+					function tick(){
+						var today;
+						today = new Date();
+						document.getElementById("localtime").innerHTML = showLocale(today);
+						window.setTimeout("tick()", 1000);
+					}
+					
+					tick();
+					</script>	
+        </div>
+    </div>
+    <div class="top_l">
+    
+        <div class="bt">
+             <div class="bt_name left">疲劳汇总</div>
+             <a href="javaScript:history.back(-1);" class="fanhui"><i class="iconfont icon-fanhui"></i></a>
+        </div>
+      
+    </div>
+
+    <div class="top_m "><div class="logo" onclick="goShouYe();"style="cursor:pointer">秦皇岛市智慧交通北斗大数据分析平台</div></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="main">
+      <div class="ind mt60">
+            
+         <div class="cleafix">
+             <div class="right mr10"><input type="text" class="input_xx" placeholder="" id="test7" style="width:225px;">
+                 <a href="javaScript:void (0)" onclick="searchByMonth('YEAR');" class="cljg" style="margin-left: 10px">年度查询</a></div>
+           
+             <div class="right mr10"><input type="text" class="input_xx" placeholder="" id="test8" style="width:225px;">
+                 <a href="javaScript:void (0)" onclick="searchByMonth('MONTH');" class="cljg" style="margin-left: 10px">月份查询</a></div>
+         </div>   
+        
+          <div class="blank20"></div>
+                                
+          <div class="snBrand" style="margin:0 auto; height:820px !important;">
+			 
+			<ol>
+				<li>疲劳分析</li>
+				<li>严重疲劳分析</li>
+				<li>危险时段疲劳分析</li>
+			</ol>
+			<ul>
+					<li>
+                        <div class="mk" style="width:100%; height:820px;">
+                            <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                            <div class="tit">
+                                <span class="tit_l"></span>
+                                <span class="tit_m">疲劳分析</span>
+                                <span class="tit_r"></span>
+                            </div>
+                            <div class="con clearfix">
+
+
+                                <div class="w49 left">
+                                    <div id="aa1" style="width: 100%; height: 700px;"></div>
+
+                                </div>
+
+                                <div class="w49 right">
+                                    <div id="aa2" style="width: 100%; height: 700px;"></div>
+                                </div>
+
+
+                            </div>
+                        </div>
+					</li>
+					<li>
+
+                        <div class="mk" style="width:100%; height:820px;">
+                            <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                            <div class="tit">
+                                <span class="tit_l"></span>
+                                <span class="tit_m">疲劳分析</span>
+                                <span class="tit_r"></span>
+                            </div>
+                            <div class="con clearfix">
+
+
+                                <div class="w49 left">
+                                    <div id="aa3" style="width: 100%; height: 700px;"></div>
+
+                                </div>
+
+                                <div class="w49 right">
+                                    <div id="aa4" style="width: 100%; height: 700px;"></div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </li>
+
+					<li>
+                        <div class="mk" style="width:100%; height:820px;">
+                            <em class="b1"></em><em class="b2"></em><em class="b3"></em><em class="b4"></em><em class="mid"></em>
+                            <div class="tit">
+                                <span class="tit_l"></span>
+                                <span class="tit_m">疲劳分析</span>
+                                <span class="tit_r"></span>
+                            </div>
+                            <div class="con clearfix">
+
+
+                                <div class="w49 left">
+                                    <div id="aa5" style="width: 100%; height: 700px;"></div>
+
+                                </div>
+
+                                <div class="w49 right">
+                                    <div id="aa6" style="width: 100%; height: 700px;"></div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </li>
+
+			
+			</ul>
+	</div>
+
+	<script type="text/javascript">jQuery(".snBrand").slide({ titCell:"ol li",mainCell:"ul",trigger:"click",effect:"left" });</script>
+                                
+                                
+                                
+                                
+           
+           
+           
+         
+      
+      </div> 
+</div>
+
+
+
+
+
+
+
+
+
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/echarts.min.js"></script>
+
+<script src="js/datedropper.min.js"></script>
+<script src="js/timedropper.min.js"></script>
+
+<!--<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChartP1 = echarts.init(document.getElementById('aa1'));
+    // 指定图表的配置项和数据
+    option = {
+        color: ['#3398DB'],
+
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data:['','',''],
+            /*orient: 'vertical',*/
+            top: '6%',
+            right: '0%',
+            icon: "circle",
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+
+        xAxis : [
+            {
+                type : 'category',
+
+                axisTick: {show: true},
+
+                data : ['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019'],
+                axisLabel : {interval:0},
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+
+                min: 0,
+                max: 16000,
+                splitNumber:8,
+                splitLine:{      //去掉背景水平网格线
+                    show:true,
+                    lineStyle: {
+                        color: ['#237D88']
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        series : [
+            {
+                name:'',
+                type:'bar',
+                barWidth: '40%',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                data:[3000, 4000, 5000, 1000,11000,12000,13000,14000,6000,7000,8000,9000]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChartP1.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChartL = echarts.init(document.getElementById('aa2'));
+    // 指定图表的配置项和数据
+    option = {
+
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+
+        legend: {
+            data:['','',''],
+            /*orient: 'vertical',*/
+            top: '6%',
+            right: '0%',
+            icon: "circle",
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                axisTick: {show: true},
+
+                data : ['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019'],
+                axisLabel : {interval:0},
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+
+                min: 0,
+                max: 16000,
+                splitNumber:8,
+                splitLine:{      //去掉背景水平网格线
+                    show:true,
+                    lineStyle: {
+                        color: ['#237D88']
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        series : [
+            {
+                name:'',
+                type:'line',
+                stack: '',
+                symbol:'none' ,
+                symbolSize: 10,
+                itemStyle: {
+                    normal: {
+                        color: "#F3891B",
+                        lineStyle: {
+                            color: "#F3891B"
+                        }}
+                },
+
+
+                data:[11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000]
+            },
+            {
+                name:'',
+                type:'line',
+                stack: '',
+                symbol:'none',
+                symbolSize: 10,
+                itemStyle: {
+                    normal: {
+                        color: "#ff0000",
+                        lineStyle: {
+                            color: "#ff0000"
+                        }}
+                },
+
+                data:[9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000]
+            },
+            {
+                name:'',
+                type:'line',
+                stack: '',
+                symbol:'circle',
+                symbolSize: 10,
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: "#3398DB",
+                        lineStyle: {
+                            color: "#3398DB"
+                        }}
+                },
+
+                data:[3000, 4000, 5000, 1000,11000,12000,13000,14000,6000,7000,8000,9000]
+            },
+
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChartL.setOption(option);
+</script>
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChartP1 = echarts.init(document.getElementById('aa3'));
+    // 指定图表的配置项和数据
+    option = {
+        color: ['#3398DB'],
+
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data:['','',''],
+            /*orient: 'vertical',*/
+            top: '6%',
+            right: '0%',
+            icon: "circle",
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+
+        xAxis : [
+            {
+                type : 'category',
+
+                axisTick: {show: true},
+
+                data : ['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019'],
+                axisLabel : {interval:0},
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+
+                min: 0,
+                max: 16000,
+                splitNumber:8,
+                splitLine:{      //去掉背景水平网格线
+                    show:true,
+                    lineStyle: {
+                        color: ['#237D88']
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        series : [
+            {
+                name:'',
+                type:'bar',
+                barWidth: '40%',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                data:[3000, 4000, 5000, 1000,11000,12000,13000,14000,6000,7000,8000,9000]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChartP1.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChartL = echarts.init(document.getElementById('aa4'));
+    // 指定图表的配置项和数据
+    option = {
+
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+
+        legend: {
+            data:['','',''],
+            /*orient: 'vertical',*/
+            top: '6%',
+            right: '0%',
+            icon: "circle",
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                axisTick: {show: true},
+
+                data : ['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019'],
+                axisLabel : {interval:0},
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+
+                min: 0,
+                max: 16000,
+                splitNumber:8,
+                splitLine:{      //去掉背景水平网格线
+                    show:true,
+                    lineStyle: {
+                        color: ['#237D88']
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        series : [
+            {
+                name:'',
+                type:'line',
+                stack: '',
+                symbol:'none' ,
+                symbolSize: 10,
+                itemStyle: {
+                    normal: {
+                        color: "#F3891B",
+                        lineStyle: {
+                            color: "#F3891B"
+                        }}
+                },
+
+
+                data:[11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000]
+            },
+            {
+                name:'',
+                type:'line',
+                stack: '',
+                symbol:'none',
+                symbolSize: 10,
+                itemStyle: {
+                    normal: {
+                        color: "#ff0000",
+                        lineStyle: {
+                            color: "#ff0000"
+                        }}
+                },
+
+                data:[9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000]
+            },
+            {
+                name:'',
+                type:'line',
+                stack: '',
+                symbol:'circle',
+                symbolSize: 10,
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: "#3398DB",
+                        lineStyle: {
+                            color: "#3398DB"
+                        }}
+                },
+
+                data:[3000, 4000, 5000, 1000,11000,12000,13000,14000,6000,7000,8000,9000]
+            },
+
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChartL.setOption(option);
+</script>
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChartP1 = echarts.init(document.getElementById('aa5'));
+    // 指定图表的配置项和数据
+    option = {
+        color: ['#3398DB'],
+
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data:['','',''],
+            /*orient: 'vertical',*/
+            top: '6%',
+            right: '0%',
+            icon: "circle",
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+
+        xAxis : [
+            {
+                type : 'category',
+
+                axisTick: {show: true},
+
+                data : ['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019'],
+                axisLabel : {interval:0},
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+
+                min: 0,
+                max: 16000,
+                splitNumber:8,
+                splitLine:{      //去掉背景水平网格线
+                    show:true,
+                    lineStyle: {
+                        color: ['#237D88']
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        series : [
+            {
+                name:'',
+                type:'bar',
+                barWidth: '40%',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                data:[3000, 4000, 5000, 1000,11000,12000,13000,14000,6000,7000,8000,9000]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChartP1.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChartL = echarts.init(document.getElementById('aa6'));
+    // 指定图表的配置项和数据
+    option = {
+
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+
+        legend: {
+            data:['','',''],
+            /*orient: 'vertical',*/
+            top: '6%',
+            right: '0%',
+            icon: "circle",
+            textStyle: {
+                color: "#fff",
+                fontSize: 14,
+
+            },
+        },
+
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                axisTick: {show: true},
+
+                data : ['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019'],
+                axisLabel : {interval:0},
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+
+                min: 0,
+                max: 16000,
+                splitNumber:8,
+                splitLine:{      //去掉背景水平网格线
+                    show:true,
+                    lineStyle: {
+                        color: ['#237D88']
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#21EDE8',
+                        width:1,//这里是为了突出显示加上的
+                    }
+                }
+            }
+        ],
+        series : [
+            {
+                name:'',
+                type:'line',
+                stack: '',
+                symbol:'none' ,
+                symbolSize: 10,
+                itemStyle: {
+                    normal: {
+                        color: "#F3891B",
+                        lineStyle: {
+                            color: "#F3891B"
+                        }}
+                },
+
+
+                data:[11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000]
+            },
+            {
+                name:'',
+                type:'line',
+                stack: '',
+                symbol:'none',
+                symbolSize: 10,
+                itemStyle: {
+                    normal: {
+                        color: "#ff0000",
+                        lineStyle: {
+                            color: "#ff0000"
+                        }}
+                },
+
+                data:[9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000]
+            },
+            {
+                name:'',
+                type:'line',
+                stack: '',
+                symbol:'circle',
+                symbolSize: 10,
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: "#3398DB",
+                        lineStyle: {
+                            color: "#3398DB"
+                        }}
+                },
+
+                data:[3000, 4000, 5000, 1000,11000,12000,13000,14000,6000,7000,8000,9000]
+            },
+
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChartL.setOption(option);
+</script>-->
+
+<script>
+$("#pickdate").dateDropper({
+	animate: false,
+	format: 'Y-m-d',
+	maxYear: '2020'
+});
+
+</script>
+ 
+            
+            
+ <script src="laydate/laydate.js"></script> <!-- 改成你的路径 -->
+<script>
+lay('#version').html('-v'+ laydate.v);
+
+//年范围
+laydate.render({
+    elem: '#test7',
+    theme: '#884898',
+    btns: ['confirm']
+    ,type: 'year'
+    ,range: true
+});
+//年月范围
+/*laydate.render({
+  elem: '#test8'
+  ,type: 'month'
+  ,range: true
+});*/
+</script>
+
+<script type="text/javascript">
+    //初始化数据
+    $(document).ready(function(){
+
+        //获取参数
+        var queryArgs = getQueryParam();
+        queryArgs.carType = decodeURI(queryArgs.carType);
+        //开始月份
+        var startMonthDate = queryArgs.searchTime.substring(0,4);
+        startMonthDate = startMonthDate+"-01";
+        var endMonthDate = queryArgs.searchTime.substring(0,7);
+        initLayDate(startMonthDate,endMonthDate);
+    });
+    //初始化日期
+    function initLayDate(startMonthDate,endMonthDate){
+        laydate.render({
+            elem: '#test8',
+            theme: '#884898',
+            value:startMonthDate+" - "+endMonthDate,
+            btns: ['confirm']
+            ,type: 'month'
+            ,range: true
+        });
+        //超速详情
+        searchByMonth('MONTH');
+    }
+
+    //月份查询
+    function searchByMonth(countType){
+        if(countType=='MONTH'){
+            var date = $("#test8").val();
+            if(date ==null || date =='' || typeof (date) =='undefined'){
+                alert("请输入日期！");
+                return "";
+            }
+            var arr = date.split(" - ");
+            var startMonthDate = arr[0]+"-01";
+            var endMonthDate = arr[1]+"-01";
+            getMonthEchartVo(startMonthDate,endMonthDate,countType);
+        }else if(countType == 'YEAR'){
+            var date = $("#test7").val();
+            if(date ==null || date =='' || typeof (date) =='undefined'){
+                alert("请输入日期！");
+                return "";
+            }
+            var arr = date.split(" - ");
+            var startMonthDate = arr[0]+"-01-01";
+            var endMonthDate = arr[1]+"-01-01";
+            getMonthEchartVo(startMonthDate,endMonthDate,countType);
+        }
+
+    }
+    function getMonthEchartVo(startMonthDate,endMonthDate,countType) {
+        var queryArgs = getQueryParam();
+        queryArgs.carType = decodeURI(queryArgs.carType);
+        $.ajax({
+            type: "POST",
+            url: basePathUrl+"/admin/bigdataFatigueAnalysisSumCount/getFatigueSumCountEchartsData.jsn",
+            data: {'queryObj.carType':queryArgs.carType,'queryObj.countType':countType,'startMonthDate':startMonthDate,
+                'endMonthDate':endMonthDate},
+            dataType: "json",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("access-token", getStorage("access_token"));
+            },
+            success: function(data){
+                if(data.success){
+
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChartP1 = echarts.init(document.getElementById('aa1'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#3398DB'],
+
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                            }
+                        },
+                        legend: {
+                            data:['','',''],
+                            /*orient: 'vertical',*/
+                            top: '6%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+
+                        xAxis : [
+                            {
+                                type : 'category',
+
+                                axisTick: {show: true},
+
+                                data : data.data.dateList,
+                                axisLabel : {interval:0},
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+
+                                /*min: 0,
+                                max: 16000,*/
+                                splitNumber:8,
+                                splitLine:{      //去掉背景水平网格线
+                                    show:true,
+                                    lineStyle: {
+                                        color: ['#237D88']
+                                    }
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'',
+                                type:'bar',
+                                barWidth: '40%',
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'top'
+                                    }
+                                },
+                                data:data.data.fatigueNumList
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChartP1.setOption(option);
+
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChartL2 = echarts.init(document.getElementById('aa2'));
+                    // 指定图表的配置项和数据
+                    option = {
+
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                            }
+                        },
+
+                        legend: {
+                            data:['','',''],
+                            /*orient: 'vertical',*/
+                            top: '6%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                axisTick: {show: true},
+
+                                data : data.data.dateList,
+                                axisLabel : {interval:0},
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+
+                                /*min: 0,
+                                max: 16000,*/
+                                splitNumber:8,
+                                splitLine:{      //去掉背景水平网格线
+                                    show:true,
+                                    lineStyle: {
+                                        color: ['#237D88']
+                                    }
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        series : [
+                            /*   {
+                                   name:'',
+                                   type:'line',
+                                   stack: '',
+                                   symbol:'none' ,
+                                   symbolSize: 10,
+                                   itemStyle: {
+                                       normal: {
+                                           color: "#F3891B",
+                                           lineStyle: {
+                                               color: "#F3891B"
+                                           }}
+                                   },
+
+
+                                   data:[11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000]
+                               },
+                               {
+                                   name:'',
+                                   type:'line',
+                                   stack: '',
+                                   symbol:'none',
+                                   symbolSize: 10,
+                                   itemStyle: {
+                                       normal: {
+                                           color: "#ff0000",
+                                           lineStyle: {
+                                               color: "#ff0000"
+                                           }}
+                                   },
+
+                                   data:[9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000]
+                               },*/
+                            {
+                                name:'',
+                                type:'line',
+                                stack: '',
+                                symbol:'circle',
+                                symbolSize: 10,
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'top'
+                                    }
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "#3398DB",
+                                        lineStyle: {
+                                            color: "#3398DB"
+                                        }}
+                                },
+
+                                data:data.data.fatigueNumList
+                            },
+
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChartL2.setOption(option);
+
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChartP3 = echarts.init(document.getElementById('aa3'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#3398DB'],
+
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                            }
+                        },
+                        legend: {
+                            data:['','',''],
+                            /*orient: 'vertical',*/
+                            top: '6%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+
+                        xAxis : [
+                            {
+                                type : 'category',
+
+                                axisTick: {show: true},
+
+                                data : data.data.dateList,
+                                axisLabel : {interval:0},
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+
+                                /*min: 0,
+                                max: 16000,*/
+                                splitNumber:8,
+                                splitLine:{      //去掉背景水平网格线
+                                    show:true,
+                                    lineStyle: {
+                                        color: ['#237D88']
+                                    }
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'',
+                                type:'bar',
+                                barWidth: '40%',
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'top'
+                                    }
+                                },
+                                data:data.data.seriousFatigueNumList
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChartP3.setOption(option);
+
+
+                    var myChartL4 = echarts.init(document.getElementById('aa4'));
+                    // 指定图表的配置项和数据
+                    option = {
+
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                            }
+                        },
+
+                        legend: {
+                            data:['','',''],
+                            /*orient: 'vertical',*/
+                            top: '6%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                axisTick: {show: true},
+
+                                data : data.data.dateList,
+                                axisLabel : {interval:0},
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+
+                                /*min: 0,
+                                max: 16000,*/
+                                splitNumber:8,
+                                splitLine:{      //去掉背景水平网格线
+                                    show:true,
+                                    lineStyle: {
+                                        color: ['#237D88']
+                                    }
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        series : [
+                            /*{
+                                name:'',
+                                type:'line',
+                                stack: '',
+                                symbol:'none' ,
+                                symbolSize: 10,
+                                itemStyle: {
+                                    normal: {
+                                        color: "#F3891B",
+                                        lineStyle: {
+                                            color: "#F3891B"
+                                        }}
+                                },
+
+
+                                data:[11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000]
+                            },
+                            {
+                                name:'',
+                                type:'line',
+                                stack: '',
+                                symbol:'none',
+                                symbolSize: 10,
+                                itemStyle: {
+                                    normal: {
+                                        color: "#ff0000",
+                                        lineStyle: {
+                                            color: "#ff0000"
+                                        }}
+                                },
+
+                                data:[9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000]
+                            },*/
+                            {
+                                name:'',
+                                type:'line',
+                                stack: '',
+                                symbol:'circle',
+                                symbolSize: 10,
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'top'
+                                    }
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "#3398DB",
+                                        lineStyle: {
+                                            color: "#3398DB"
+                                        }}
+                                },
+
+                                data:data.data.seriousFatigueNumList
+                            },
+
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChartL4.setOption(option);
+
+                    var myChartP5 = echarts.init(document.getElementById('aa5'));
+                    // 指定图表的配置项和数据
+                    option = {
+                        color: ['#3398DB'],
+
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                            }
+                        },
+                        legend: {
+                            data:['','',''],
+                            /*orient: 'vertical',*/
+                            top: '6%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+
+                        xAxis : [
+                            {
+                                type : 'category',
+
+                                axisTick: {show: true},
+
+                                data :data.data.dateList,
+                                axisLabel : {interval:0},
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+
+                                /*min: 0,
+                                max: 16000,*/
+                                splitNumber:8,
+                                splitLine:{      //去掉背景水平网格线
+                                    show:true,
+                                    lineStyle: {
+                                        color: ['#237D88']
+                                    }
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'',
+                                type:'bar',
+                                barWidth: '40%',
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'top'
+                                    }
+                                },
+                                data:data.data.dangerFatigueNumList
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChartP5.setOption(option);
+
+                    var myChartL6 = echarts.init(document.getElementById('aa6'));
+                    // 指定图表的配置项和数据
+                    option = {
+
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                            }
+                        },
+
+                        legend: {
+                            data:['','',''],
+                            /*orient: 'vertical',*/
+                            top: '6%',
+                            right: '0%',
+                            icon: "circle",
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: 14,
+
+                            },
+                        },
+
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                axisTick: {show: true},
+
+                                data : data.data.dateList,
+                                axisLabel : {interval:0},
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+
+                               /* min: 0,
+                                max: 16000,*/
+                                splitNumber:8,
+                                splitLine:{      //去掉背景水平网格线
+                                    show:true,
+                                    lineStyle: {
+                                        color: ['#237D88']
+                                    }
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#21EDE8',
+                                        width:1,//这里是为了突出显示加上的
+                                    }
+                                }
+                            }
+                        ],
+                        series : [
+                            /*{
+                                name:'',
+                                type:'line',
+                                stack: '',
+                                symbol:'none' ,
+                                symbolSize: 10,
+                                itemStyle: {
+                                    normal: {
+                                        color: "#F3891B",
+                                        lineStyle: {
+                                            color: "#F3891B"
+                                        }}
+                                },
+
+
+                                data:[11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000]
+                            },
+                            {
+                                name:'',
+                                type:'line',
+                                stack: '',
+                                symbol:'none',
+                                symbolSize: 10,
+                                itemStyle: {
+                                    normal: {
+                                        color: "#ff0000",
+                                        lineStyle: {
+                                            color: "#ff0000"
+                                        }}
+                                },
+
+                                data:[9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000, 9000,9000, 9000]
+                            },*/
+                            {
+                                name:'',
+                                type:'line',
+                                stack: '',
+                                symbol:'circle',
+                                symbolSize: 10,
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'top'
+                                    }
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "#3398DB",
+                                        lineStyle: {
+                                            color: "#3398DB"
+                                        }}
+                                },
+
+                                data: data.data.dangerFatigueNumList
+                            },
+
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChartL6.setOption(option);
+
+                }else {
+                    if(data.code==1001){
+                        location.href = '../../login.html';
+                    }else {
+                        layer.msg('后台异常', {
+                            icon: 5
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function goShouYe() {
+        window.location.href = "shouye.html";
+    }
+</script>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+  
+   
+</body>
+</html>
